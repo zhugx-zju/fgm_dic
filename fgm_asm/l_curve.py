@@ -15,7 +15,8 @@ from .inverse_solver import lbfgs_inverse_solver_scipy
 
 def find_optimal_gamma_lcurve(mesh_info, bc_info, U_measured, config,
                                gamma_min=1e-10, gamma_max=1e-4, n_gamma=15,
-                               E_min=0.001, E_max=1000.0, max_iter=2000, ftol=1e-12, gtol=1e-8):
+                               E_min=0.001, E_max=1000.0, max_iter=2000,
+                               ftol=1e-12, gtol=1e-8, regularization_mode='gradient'):
     """
     Use L-curve method to find optimal regularization parameter.
 
@@ -56,6 +57,8 @@ def find_optimal_gamma_lcurve(mesh_info, bc_info, U_measured, config,
         Function tolerance (default: 1e-12, set small to rely on gtol)
     gtol : float
         Gradient tolerance (default: 1e-8, primary convergence criterion)
+    regularization_mode : str
+        'gradient' or 'affine_detrended'
 
     Returns
     -------
@@ -78,6 +81,8 @@ def find_optimal_gamma_lcurve(mesh_info, bc_info, U_measured, config,
     print(f"Testing gamma range: [{gamma_min:.2e}, {gamma_max:.2e}]")
     print(f"Number of test points: {n_gamma}")
     print("="*70)
+    if n_gamma < 5:
+        raise ValueError("L-curve selection requires at least five gamma values")
     forward_config = coerce_forward_config(config)
 
     # Generate gamma values on log scale (from large to small for stability)
@@ -113,7 +118,8 @@ def find_optimal_gamma_lcurve(mesh_info, bc_info, U_measured, config,
             max_iter=max_iter,
             ftol=ftol,
             gtol=gtol,
-            nu=forward_config.nu
+            nu=forward_config.nu,
+            regularization_mode=regularization_mode,
         )
 
         # Update E_current for next iteration (warm-start)
@@ -176,7 +182,13 @@ def find_optimal_gamma_lcurve(mesh_info, bc_info, U_measured, config,
 
     # Find optimal gamma using maximum curvature
     k = 2  # Exclude k points at each end to avoid boundary effects
-    optimal_idx = np.argmax(curvature[k:-k]) + k
+    interior_curvature = curvature[k:-k]
+    if not np.all(np.isfinite(interior_curvature)) or np.max(interior_curvature) <= 0:
+        raise ValueError(
+            "L-curve has no resolved corner; gamma cannot be selected from this scan. "
+            "Inspect the residual/penalty sweep or use a separately validated fixed gamma."
+        )
+    optimal_idx = np.argmax(interior_curvature) + k
     gamma_optimal = gamma_values[optimal_idx]
 
     print("\n" + "="*70)

@@ -42,6 +42,7 @@ inverse_config = cfg.get_inverse_config()
 
 print(f"\nInverse Problem Parameters:")
 print(f"  Regularization coefficient: {inverse_config.gamma:.2e}")
+print(f"  Regularization mode: {inverse_config.regularization_mode}")
 print(f"  Modulus bounds: [{inverse_config.E_min}, {inverse_config.E_max}]")
 print(f"  Max iterations: {inverse_config.max_iter}")
 print(f"  ftol: {inverse_config.ftol:.2e}")
@@ -76,6 +77,7 @@ for noise_level in np.asarray(inverse_config.noise_levels, dtype=float):
         ftol=inverse_config.ftol,
         gtol=inverse_config.gtol,
         nu=forward_config.nu,
+        regularization_mode=inverse_config.regularization_mode,
     )
 
     elapsed_time = time.time() - start_time
@@ -96,7 +98,10 @@ for noise_level in np.asarray(inverse_config.noise_levels, dtype=float):
     print(f"  X-profile MAE: {x_profile['profile_mae_pct']:.4f}%")
     print(f"  Transverse RMS spread: {x_profile['transverse_rms_pct']:.4f}%")
 
-    noise_output_dir = get_noise_output_dir(output_dir, noise_level)
+    noise_output_dir = get_noise_output_dir(
+        output_dir, noise_level,
+        variant=f"{inverse_config.regularization_mode}_fixed",
+    )
     print(f"\nSaving results to {noise_output_dir}...")
     save_inverse_results(
         results,
@@ -107,6 +112,7 @@ for noise_level in np.asarray(inverse_config.noise_levels, dtype=float):
         extra_data={
             "n_iterations": results["n_iterations"],
             "elapsed_time_total_seconds": elapsed_time,
+            "U_measured": U_measured,
             "x_profile": x_profile,
         },
     )
@@ -117,6 +123,7 @@ for noise_level in np.asarray(inverse_config.noise_levels, dtype=float):
         "NOISE_OUTPUT_DIR": str(noise_output_dir),
         "NOISE_LEVEL": float(noise_level),
         "GAMMA_USED": float(inverse_config.gamma),
+        "REGULARIZATION_MODE": inverse_config.regularization_mode,
         "RESULT_SOURCE": "fixed_gamma_inverse_main",
         "CONVERGED": bool(results["converged"]),
         "MESSAGE": str(results["message"]),
@@ -155,6 +162,7 @@ for noise_level in np.asarray(inverse_config.noise_levels, dtype=float):
                 "Inverse Configuration",
                 {
                     "GAMMA": inverse_config.gamma,
+                    "REGULARIZATION_MODE": inverse_config.regularization_mode,
                     "E_MIN": inverse_config.E_min,
                     "E_MAX": inverse_config.E_max,
                     "MAX_ITER": inverse_config.max_iter,

@@ -75,9 +75,15 @@ def format_noise_tag(noise_level: float) -> str:
     return f"noise_{100.0 * float(noise_level):.2f}pct"
 
 
-def get_noise_output_dir(base_output_dir: Path | str, noise_level: float) -> Path:
-    """Create and return the output directory for a single noise level."""
-    noise_dir = Path(base_output_dir) / format_noise_tag(noise_level)
+def get_noise_output_dir(base_output_dir: Path | str, noise_level: float,
+                         variant: str | None = None) -> Path:
+    """Create an isolated output directory for a noise level and method."""
+    tag = format_noise_tag(noise_level)
+    if variant is not None:
+        if not variant or not variant.replace('_', '').isalnum():
+            raise ValueError("variant must contain only letters, digits, and underscores")
+        tag += f"_{variant}"
+    noise_dir = Path(base_output_dir) / tag
     noise_dir.mkdir(parents=True, exist_ok=True)
     return noise_dir
 

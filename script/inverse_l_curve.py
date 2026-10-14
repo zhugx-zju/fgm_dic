@@ -56,12 +56,16 @@ print(f"  Number of nodes: {mesh_info.n_nod}")
 
 print(f"\nParameters:")
 print(f"  Noise level: {noise_level*100:.2f}%")
+print(f"  Regularization mode: {lcurve_config.regularization_mode}")
 print(f"  Modulus bounds: [{lcurve_config.E_min}, {lcurve_config.E_max}]")
 print(f"  Max iterations: {lcurve_config.max_iter}")
 print(f"  ftol: {lcurve_config.ftol:.2e}, gtol: {lcurve_config.gtol:.2e}")
 
 output_dir = resolve_results_dir(forward_data_path, forward_data)
-noise_output_dir = get_noise_output_dir(output_dir, noise_level)
+noise_output_dir = get_noise_output_dir(
+    output_dir, noise_level,
+    variant=f"{lcurve_config.regularization_mode}_lcurve",
+)
 print(f"\nResults will be saved to: {output_dir}")
 print(f"Noise-specific output directory: {noise_output_dir}")
 
@@ -85,6 +89,7 @@ gamma_optimal, lcurve_results = find_optimal_gamma_lcurve(
     max_iter=lcurve_config.max_iter,
     ftol=lcurve_config.ftol,
     gtol=lcurve_config.gtol,
+    regularization_mode=lcurve_config.regularization_mode,
 )
 elapsed_time_lcurve = time.time() - start_time_lcurve
 print(f"\nL-curve analysis completed in {elapsed_time_lcurve:.2f} seconds")
@@ -111,6 +116,7 @@ results = lbfgs_inverse_solver_scipy(
     ftol=lcurve_config.ftol,
     gtol=lcurve_config.gtol,
     nu=forward_config.nu,
+    regularization_mode=lcurve_config.regularization_mode,
 )
 elapsed_time_rerun = time.time() - start_time_rerun
 E_reconstructed = results["E_final"]
@@ -160,6 +166,7 @@ lcurve_save_path = save_lcurve_analysis(
         "noise_output_dir": str(noise_output_dir),
         "selection_method": "lcurve_max_curvature",
         "gamma_optimal": gamma_optimal,
+        "regularization_mode": lcurve_config.regularization_mode,
         "optimal_idx": optimal_idx,
     },
 )
@@ -187,6 +194,7 @@ save_inverse_results(
             "results": scan_results,
         },
         "comparison_summary": comparison_summary,
+        "U_measured": U_measured,
         "x_profile": x_profile,
     },
 )
@@ -197,6 +205,7 @@ run_metadata = {
     "NOISE_OUTPUT_DIR": str(noise_output_dir),
     "NOISE_LEVEL": float(noise_level),
     "GAMMA_USED": float(gamma_optimal),
+    "REGULARIZATION_MODE": lcurve_config.regularization_mode,
     "RESULT_SOURCE": "final_rerun_after_lcurve",
     "SELECTION_METHOD": "lcurve_max_curvature",
     "OPTIMAL_IDX": int(optimal_idx),
@@ -241,6 +250,7 @@ config_snapshot_path = write_python_config_snapshot(
             "Inverse Configuration",
             {
                 "GAMMA": inverse_config.gamma,
+                "REGULARIZATION_MODE": lcurve_config.regularization_mode,
                 "E_MIN": inverse_config.E_min,
                 "E_MAX": inverse_config.E_max,
                 "MAX_ITER": inverse_config.max_iter,

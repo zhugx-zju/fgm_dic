@@ -6,7 +6,12 @@ import numpy as np
 from scipy.optimize import minimize
 
 from .fem_forward import fem_assemble, forward_solver, solve_system
-from .regularization import get_tikhonov_regularization, get_tikhonov_gradient
+from .regularization import (
+    get_affine_detrended_gradient,
+    get_affine_detrended_regularization,
+    get_tikhonov_gradient,
+    get_tikhonov_regularization,
+)
 
 
 def lambda_distance(fem_info, forw_U=None, U_measured=None, rhs=None):
@@ -65,7 +70,8 @@ def get_stiffness_gradient(fem_info, lambda_vec, forw_U):
     return np.bincount(id_list, weights=grad_E.T.ravel(), minlength=mesh_info.n_nod)
 
 
-def _evaluate_inverse_state(mesh_info, bc_info, U_measured, material_info, gamma, E_vec, iteration):
+def _evaluate_inverse_state(mesh_info, bc_info, U_measured, material_info, gamma,
+                            E_vec, iteration, regularization_mode='gradient'):
     """
     Evaluate the inverse objective, gradient, and reusable solver state.
 
@@ -89,12 +95,19 @@ def _evaluate_inverse_state(mesh_info, bc_info, U_measured, material_info, gamma
     mass_residual = np.asarray(mesh_info.M @ residual).ravel()
     cost_tar = 0.5 * float(residual @ mass_residual)
 
-    reg_value = get_tikhonov_regularization(mesh_info, material_info)
+    if regularization_mode == 'gradient':
+        reg_value = get_tikhonov_regularization(mesh_info, material_info)
+        reg_gradient = get_tikhonov_gradient(mesh_info, material_info)
+    elif regularization_mode == 'affine_detrended':
+        reg_value = get_affine_detrended_regularization(mesh_info, material_info)
+        reg_gradient = get_affine_detrended_gradient(mesh_info, material_info)
+    else:
+        raise ValueError(f"Unknown regularization mode: {regularization_mode!r}")
     cost_reg = 0.5 * gamma * reg_value
 
     lambda_vec = lambda_distance(fem_info, rhs=mass_residual)
     grad_tar_E = get_stiffness_gradient(fem_info, lambda_vec, forw_U)
-    grad_reg_E = 0.5 * gamma * get_tikhonov_gradient(mesh_info, material_info)
+    grad_reg_E = 0.5 * gamma * reg_gradient
 
     grad_tar_m = grad_tar_E * E_vec
     grad_reg_m = grad_reg_E * E_vec
@@ -122,7 +135,8 @@ def _evaluate_inverse_state(mesh_info, bc_info, U_measured, material_info, gamma
 
 def lbfgs_inverse_solver_scipy(mesh_info, bc_info, U_measured, E_init=None,
                                gamma=1e-6, E_min=0.001, E_max=1000.0,
-                               max_iter=2000, ftol=1e-12, gtol=1e-8, nu=0.3):
+                               max_iter=2000, ftol=1e-12, gtol=1e-8, nu=0.3,
+                               regularization_mode='gradient'):
     """
     Solve the inverse problem using SciPy's L-BFGS-B optimizer in m = ln(E) space.
 
@@ -138,12 +152,16 @@ def lbfgs_inverse_solver_scipy(mesh_info, bc_info, U_measured, E_init=None,
         ftol: Function tolerance
         gtol: Gradient tolerance in m space
         nu: Poisson's ratio
+        regularization_mode: 'gradient' or 'affine_detrended'
 
     Returns:
         results: Dictionary containing optimization results and cached final state
     """
     del E_max
     from .material import MaterialInfo
+
+    if regularization_mode not in {'gradient', 'affine_detrended'}:
+        raise ValueError(f"Unknown regularization mode: {regularization_mode!r}")
 
     if mesh_info.M is None:
         mesh_info.assemble_mass_matrix()
@@ -165,7 +183,8 @@ def lbfgs_inverse_solver_scipy(mesh_info, bc_info, U_measured, E_init=None,
     state_cache = {'m': np.array(m_vec0, copy=True), 'state': None}
 
     initial_state = _evaluate_inverse_state(
-        mesh_info, bc_info, U_measured, material_info, gamma, E_vec0, iteration=1
+        mesh_info, bc_info, U_measured, material_info, gamma, E_vec0,
+        iteration=1, regularization_mode=regularization_mode,
     )
     state_cache['state'] = initial_state
 
@@ -186,6 +205,7 @@ def lbfgs_inverse_solver_scipy(mesh_info, bc_info, U_measured, E_init=None,
             gamma,
             E_vec,
             iteration=evaluation_counter[0] + 1,
+            regularization_mode=regularization_mode,
         )
         state_cache['m'] = np.array(m_vec_use, copy=True)
         state_cache['state'] = state
@@ -204,6 +224,7 @@ def lbfgs_inverse_solver_scipy(mesh_info, bc_info, U_measured, E_init=None,
                 gamma,
                 np.exp(m_current),
                 iteration=evaluation_counter[0] + 1,
+                regularization_mode=regularization_mode,
             )
             state_cache['m'] = np.array(m_current, copy=True)
             state_cache['state'] = state
@@ -246,6 +267,7 @@ def lbfgs_inverse_solver_scipy(mesh_info, bc_info, U_measured, E_init=None,
             gamma,
             np.exp(result.x),
             iteration=evaluation_counter[0] + 1,
+            regularization_mode=regularization_mode,
         )
 
     E_final = final_state['E_vec']
@@ -268,6 +290,7 @@ def lbfgs_inverse_solver_scipy(mesh_info, bc_info, U_measured, E_init=None,
         'final_cost': final_state['objective'],
         'residual_norm': final_state['residual_norm'],
         'regularization_norm': final_state['regularization_norm'],
+        'regularization_mode': regularization_mode,
         'final_gradient': final_state['grad_m'],
         'final_grad_tar': final_state['grad_tar_m'],
         'final_grad_reg': final_state['grad_reg_m'],

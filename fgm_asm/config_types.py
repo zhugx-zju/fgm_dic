@@ -61,6 +61,7 @@ class InverseConfig:
     gtol: float
     noise_levels: tuple[float, ...]
     nu: float
+    regularization_mode: str = "gradient"
 
     @property
     def primary_noise_level(self) -> float:
@@ -87,6 +88,7 @@ class LCurveConfig:
     ftol: float
     gtol: float
     nu: float
+    regularization_mode: str = "gradient"
 
     def to_dict(self) -> dict:
         """Return a plain dictionary version for logging or serialization."""
@@ -136,6 +138,7 @@ def coerce_inverse_config(config: InverseConfig | Mapping[str, object]) -> Inver
         gtol=float(config["gtol"]),
         noise_levels=normalize_noise_levels(config["noise_levels"]),
         nu=float(config["nu"]),
+        regularization_mode=str(config.get("regularization_mode", "gradient")),
     )
 
 
@@ -153,4 +156,5 @@ def coerce_lcurve_config(config: LCurveConfig | Mapping[str, object]) -> LCurveC
         ftol=float(config["ftol"]),
         gtol=float(config["gtol"]),
         nu=float(config["nu"]),
+        regularization_mode=str(config.get("regularization_mode", "gradient")),
     )

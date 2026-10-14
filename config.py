@@ -45,6 +45,7 @@ GRF_SEED = 42
 ALPHA = 0.0     # Will be computed from material distribution
 BETA = 0.0      # Will be computed from material distribution
 GAMMA = 1e-6    # Regularization coefficient (default, can be found by L-curve)
+REGULARIZATION_MODE = 'affine_detrended'  # Retains affine E(x,y) trends
 
 # Optimization parameters
 E_MIN = 0.001       # Minimum modulus bound
@@ -97,6 +98,7 @@ def get_inverse_config():
         gtol=GTOL,
         noise_levels=normalize_noise_levels(NOISE_LEVELS),
         nu=NU,
+        regularization_mode=REGULARIZATION_MODE,
     )
 
 
@@ -112,6 +114,7 @@ def get_lcurve_config():
         ftol=FTOL,
         gtol=GTOL,
         nu=NU,
+        regularization_mode=REGULARIZATION_MODE,
     )
 
 

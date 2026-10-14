@@ -11,7 +11,12 @@ from .mesh import MeshInfo, shape_fun_at_gauss, get_body_force_load
 from .grf import generate_grf_field
 from .material import MaterialInfo, generate_fgm_modulus
 from .fem_forward import fem_assemble, forward_solver, compute_reaction_forces
-from .regularization import get_tikhonov_regularization, get_tikhonov_gradient
+from .regularization import (
+    get_affine_detrended_gradient,
+    get_affine_detrended_regularization,
+    get_tikhonov_gradient,
+    get_tikhonov_regularization,
+)
 from .inverse_solver import (
     lbfgs_inverse_solver_scipy,
     lambda_distance,
@@ -55,6 +60,8 @@ __all__ = [
     # Regularization
     'get_tikhonov_regularization',
     'get_tikhonov_gradient',
+    'get_affine_detrended_regularization',
+    'get_affine_detrended_gradient',
     # Inverse solver
     'lbfgs_inverse_solver_scipy',
     'lambda_distance',

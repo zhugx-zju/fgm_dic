@@ -109,6 +109,7 @@ class MeshInfo:
 
         self.M = None
         self.L_reg = None
+        self._integrated_gradients = None
 
         self._generate_sparse_indices()
         self._precompute_geometry()
@@ -217,6 +218,19 @@ class MeshInfo:
         if self.L_reg is None:
             self.assemble_regularization_matrix()
         return self.L_reg
+
+    def get_integrated_gradient_vectors(self):
+        """Return vectors g_x, g_y such that g_x @ E = integral(dE/dx)."""
+        # getattr also supports mesh instances loaded from older forward pickles.
+        if getattr(self, '_integrated_gradients', None) is None:
+            weights = self.gauss_abs_det_j * self.gauss_w[:, None]
+            node_ids = (self.ele_nods_id - 1).ravel()
+            gx_local = np.einsum('gea,ge->ea', self.gauss_dNdx, weights)
+            gy_local = np.einsum('gea,ge->ea', self.gauss_dNdy, weights)
+            gx = np.bincount(node_ids, weights=gx_local.ravel(), minlength=self.n_nod)
+            gy = np.bincount(node_ids, weights=gy_local.ravel(), minlength=self.n_nod)
+            self._integrated_gradients = (gx, gy, float(weights.sum()))
+        return self._integrated_gradients
 
 
 def get_body_force_load(mesh_info, bf_vec):

@@ -29,6 +29,14 @@ the same rigid-body gauge before inversion. The seven infill zones, DIC point
 mapping, specimen shoulder effects, and the validity of uniform end traction
 are not yet represented by this rectangular numerical model.
 
+For this linear synthetic truth, `config.py` selects
+`REGULARIZATION_MODE = 'affine_detrended'`. Its penalty is the integrated squared departure of
+`grad E` from its spatial mean, so an affine `E(x,y)` has zero penalty while
+every mesh node remains an independent inverse variable. The original
+`'gradient'` penalty remains selectable. This choice removes the artificial
+boundary preference for zero modulus slope in the present synthetic case;
+it does not establish identifiability for a seven-zone or noisy experiment.
+
 Validated on a small mesh with equal/opposite edge resultants, the analytical
 uniform-stress solution, zero gauge reactions, and a finite-difference check
 of the adjoint modulus gradient. Run `python -m unittest discover -s tests -v`
@@ -140,34 +148,30 @@ The scripts save results into a folder named like:
 Geo_110x20_Mesh_55x10_Alpha_0.0091_Beta_0.0000_Gamma_1e-06_TwoEnd_T3.2
 ```
 
-Inverse-result files are now organized in a noise-specific subfolder, for example:
+Inverse-result files are organized by noise level, penalty, and workflow. For example:
 
 ```text
 Geo_110x20_Mesh_55x10_Alpha_0.0091_Beta_0.0000_Gamma_1e-06_TwoEnd_T3.2/
-|-- noise_0.00pct/
+|-- noise_0.00pct_affine_detrended_fixed/
 |   |-- inverse_results.pkl
-|   |-- lcurve_analysis.pkl
-|   |-- reconstruction_results.png
+|   |-- inverse_results_noise_0pct.png
 |   |-- x_profile_reconstruction.png
-|   |-- iteration_history.png
-|   |-- gradient_field.png
-|   |-- reconstruction_comparison.png
-|   |-- lcurve.png
-|   `-- curvature_vs_gamma.png
+|   `-- config.py
+`-- noise_0.00pct/  # earlier gradient-penalty result, kept for comparison
 ```
+
+An L-curve run uses a separate `noise_XX.XXpct_<mode>_lcurve` folder.
 
 Typical generated files include:
 
 - `forward_problem_data.pkl`
 - `forward_results.png`
 - `forward_results.pdf`
-- `noise_XX.XXpct/inverse_results.pkl`
-- `noise_XX.XXpct/lcurve_analysis.pkl`
-- `noise_XX.XXpct/reconstruction_results.png`
-- `noise_XX.XXpct/x_profile_reconstruction.png` and `.pdf`
-- `noise_XX.XXpct/iteration_history.png`
-- `noise_XX.XXpct/gradient_field.png`
-- `noise_XX.XXpct/reconstruction_comparison.png`
+- `noise_XX.XXpct_<mode>_fixed/inverse_results.pkl`
+- `noise_XX.XXpct_<mode>_fixed/inverse_results_noise_0pct.png`
+- `noise_XX.XXpct_<mode>_fixed/x_profile_reconstruction.png` and `.pdf`
+- `noise_XX.XXpct_<mode>_lcurve/lcurve_analysis.pkl` when that workflow is run
+- `noise_XX.XXpct_<mode>_lcurve/reconstruction_comparison.png` when that workflow is run
 - additional exported figures from the plotting scripts
 
 Most plotting utilities automatically search for the most recently modified result folder that matches the `Geo_*_Mesh_*_Alpha_*_Beta_*_Gamma_*` pattern.
@@ -186,6 +190,7 @@ write and search the same root-level case folders even when launched with
 | `script/forward_job.py` | Main forward-analysis entry point. Generates the mesh, builds the modulus field, applies boundary conditions, solves the FE system, and saves data and plots. |
 | `script/inverse_main.py` | Single-gamma inverse solver entry point based on the shared SciPy L-BFGS-B implementation in `fgm_asm/inverse_solver.py`. Saves results into noise-specific subdirectories. |
 | `script/inverse_l_curve.py` | Inverse solver entry point using SciPy L-BFGS-B together with L-curve based gamma selection, followed by a fresh rerun from the default initialization using the selected `gamma`. |
+| `script/compare_regularization.py` | Compares two saved modulus and relative-error fields on shared color scales and exports PNG/PDF. |
 | `script/check_regularization_gradient.py` | Finite-difference verification script for the analytical Tikhonov gradient. Useful when changing the regularization code. |
 | `script/plot_forward_results.py` | Reloads saved forward results and exports standalone forward-problem figures. |
 | `script/plot_inverse_results.py` | Reloads saved inverse results and exports reconstruction, convergence, gradient, and scan-vs-rerun comparison plots. |
@@ -249,7 +254,7 @@ E_field = generate_grf_field(
 
 ### `script/inverse_l_curve.py`
 
-This is the most complete end-to-end inverse workflow in the current repository:
+This workflow selects a regularization coefficient through an L-curve scan:
 
 - loads the latest forward result set
 - assembles the mass matrix
@@ -265,7 +270,14 @@ This is the most complete end-to-end inverse workflow in the current repository:
 
 This script uses the same SciPy L-BFGS-B implementation as the L-curve workflow, but with a fixed user-specified `gamma`.
 
-It saves each noise case into its own `noise_XX.XXpct` subdirectory. The current repository is still more polished around the L-curve workflow, so `inverse_l_curve.py` remains the safer default entry point.
+It saves each noise case into `noise_XX.XXpct_<mode>_fixed`. The configured
+`gamma = 1e-6` and affine-detrended penalty were verified on the zero-noise
+linear synthetic case. The full L-curve selection has not been validated for
+this new penalty, whose affine nullspace can make the corner less informative.
+For an apples-to-apples field comparison of saved runs, use
+`python -m script.compare_regularization OLD/inverse_results.pkl NEW/inverse_results.pkl`;
+the comparison PNG and PDF are saved beside the candidate result with shared
+modulus and error color scales.
 
 ## Plotting
 
