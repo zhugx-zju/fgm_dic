@@ -17,9 +17,14 @@ vector and three-DOF gauge from the forward run, and reject forward data from
 a different loading mode. Output folders include `_TwoEnd_T<thickness>` to
 keep this branch's results separate from `main`.
 
-The default `0.01 N` load and bilinear modulus field are a numerical smoke
-case. Set measured force and independently calibrated modulus values before
-interpreting a physical experiment. DIC displacements must be registered to
+The default `0.01 N` load and linearly increasing synthetic `E(x)` field are a
+numerical smoke case. `EY = 1.0` sets the y gradient of the forward field to
+zero. The inverse optimizer still assigns an independent modulus to every 2D
+mesh node; no x-only constraint or transverse averaging enters its objective.
+The inverse outputs a separate `x_profile_reconstruction` plot and reports
+both error of the y-mean profile and variation across y. Set measured force
+and independently calibrated modulus values before interpreting a physical
+experiment. DIC displacements must be registered to
 the same rigid-body gauge before inversion. The seven infill zones, DIC point
 mapping, specimen shoulder effects, and the validity of uniform end traction
 are not yet represented by this rectangular numerical model.
@@ -88,7 +93,7 @@ The main defaults are defined in `config.py`, which now returns typed configurat
 - mesh: `55 x 10`
 - tensile force at each end: `0.01 N` (numerical demonstration)
 - Poisson ratio: `0.3`
-- modulus targets: `Ex = 2.0`, `Ey = 0.5`
+- modulus targets: `Ex = 2.0`, `Ey = 1.0` (synthetic truth depends on x only)
 - distribution type: `bil`
 - GRF defaults (used when `DIS_TYPE = 'grf'`): `E_max = 8.0`, `sigma_g = 1.0`, `ell = 25.0 mm`, `seed = 42`
 - default regularization parameter: `1e-6`
@@ -132,17 +137,18 @@ to the repository root. These outputs remain ignored by Git.
 The scripts save results into a folder named like:
 
 ```text
-Geo_110x20_Mesh_55x10_Alpha_0.0091_Beta_-0.0250_Gamma_1e-06_TwoEnd_T3.2
+Geo_110x20_Mesh_55x10_Alpha_0.0091_Beta_0.0000_Gamma_1e-06_TwoEnd_T3.2
 ```
 
 Inverse-result files are now organized in a noise-specific subfolder, for example:
 
 ```text
-Geo_110x20_Mesh_55x10_Alpha_0.0091_Beta_-0.0250_Gamma_1e-06_TwoEnd_T3.2/
+Geo_110x20_Mesh_55x10_Alpha_0.0091_Beta_0.0000_Gamma_1e-06_TwoEnd_T3.2/
 |-- noise_0.00pct/
 |   |-- inverse_results.pkl
 |   |-- lcurve_analysis.pkl
 |   |-- reconstruction_results.png
+|   |-- x_profile_reconstruction.png
 |   |-- iteration_history.png
 |   |-- gradient_field.png
 |   |-- reconstruction_comparison.png
@@ -158,6 +164,7 @@ Typical generated files include:
 - `noise_XX.XXpct/inverse_results.pkl`
 - `noise_XX.XXpct/lcurve_analysis.pkl`
 - `noise_XX.XXpct/reconstruction_results.png`
+- `noise_XX.XXpct/x_profile_reconstruction.png` and `.pdf`
 - `noise_XX.XXpct/iteration_history.png`
 - `noise_XX.XXpct/gradient_field.png`
 - `noise_XX.XXpct/reconstruction_comparison.png`

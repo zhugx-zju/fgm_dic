@@ -12,8 +12,10 @@ import numpy as np
 from script import REPO_ROOT
 from fgm_asm import lbfgs_inverse_solver_scipy
 from fgm_asm.results_io import get_noise_output_dir, save_inverse_results, write_python_config_snapshot
-from fgm_asm.utils import add_noise_to_displacement, compute_errors
-from fgm_asm.visualization import visualize_inverse_results
+from fgm_asm.utils import (
+    add_noise_to_displacement, compute_errors, summarize_x_only_reconstruction,
+)
+from fgm_asm.visualization import plot_x_profile_reconstruction, visualize_inverse_results
 from fgm_asm.workflows import load_latest_forward_problem, resolve_results_dir
 import config as cfg
 
@@ -79,6 +81,7 @@ for noise_level in np.asarray(inverse_config.noise_levels, dtype=float):
     elapsed_time = time.time() - start_time
     E_reconstructed = results["E_final"]
     errors = compute_errors(E_true.ravel(), E_reconstructed)
+    x_profile = summarize_x_only_reconstruction(mesh_info, E_true, E_reconstructed)
 
     print(f"\n{'='*70}")
     print(f"Results for Noise Level {noise_level*100:.2f}%:")
@@ -90,6 +93,8 @@ for noise_level in np.asarray(inverse_config.noise_levels, dtype=float):
     print(f"  MAE: {errors['mae']:.4f}%")
     print(f"  Max error: {errors['max_error']:.4f}%")
     print(f"  RMSE: {errors['rmse']:.4f}")
+    print(f"  X-profile MAE: {x_profile['profile_mae_pct']:.4f}%")
+    print(f"  Transverse RMS spread: {x_profile['transverse_rms_pct']:.4f}%")
 
     noise_output_dir = get_noise_output_dir(output_dir, noise_level)
     print(f"\nSaving results to {noise_output_dir}...")
@@ -102,6 +107,7 @@ for noise_level in np.asarray(inverse_config.noise_levels, dtype=float):
         extra_data={
             "n_iterations": results["n_iterations"],
             "elapsed_time_total_seconds": elapsed_time,
+            "x_profile": x_profile,
         },
     )
     run_metadata = {
@@ -171,6 +177,7 @@ for noise_level in np.asarray(inverse_config.noise_levels, dtype=float):
         noise_level,
         save_path=noise_output_dir,
     )
+    plot_x_profile_reconstruction(x_profile, save_path=noise_output_dir)
 
 print("\n" + "=" * 70)
 print("All inverse problems solved successfully!")

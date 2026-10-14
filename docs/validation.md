@@ -79,6 +79,7 @@ Suggested checks:
 - Checks: edge resultants, homogeneous analytic displacement, gauge reactions, adjoint gradient finite difference
 - Executed: `python -m unittest discover -s tests -v` (5 passed); default `55 x 10` forward solve (finite displacement, maximum gauge reaction `3.1e-16`); small-mesh inverse smoke run reduced objective from `3.41e-5` to `5.58e-10` in 20 iterations (iteration cap reached)
 - Open: paired full-specimen boundary-error study, DIC gauge registration, seven-zone parameterization and identifiability
+- Synthetic `E(x)` case: `EY=1.0`, `Ex=2.0`, `55 x 10` mesh, `F=0.01 N`, `gamma=1e-6`, zero added noise; the original 616-parameter `E(x,y)` inverse converged in 342 iterations. Full-field MAE `0.2123%`, y-mean x-profile MAE `0.1779%`, reconstructed transverse RMS spread `0.1709%` relative to mean true modulus. Largest local relative error `2.7182%`, concentrated near the loaded ends. The fixed-gamma workflow ran end to end; the 50-point L-curve workflow was not rerun.
 
 ### `disp_linear`
 

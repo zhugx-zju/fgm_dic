@@ -7,6 +7,8 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Any
 
+import numpy as np
+
 from .results_io import find_forward_data_path, load_forward_data
 
 
@@ -18,6 +20,14 @@ def load_latest_forward_problem(search_root: Path | str = ".") -> tuple[Path, di
         raise ValueError(
             f"{forward_data_path} was not generated with two-end traction; "
             "run python -m script.forward_job on this branch first"
+        )
+    true_field = np.asarray(forward_data["E_field"])
+    if true_field.ndim != 2 or not np.allclose(
+        true_field, true_field[0:1], rtol=1e-12, atol=1e-12
+    ):
+        raise ValueError(
+            f"{forward_data_path} has a y-dependent synthetic modulus; "
+            "run python -m script.forward_job with EY = 1.0 first"
         )
     return forward_data_path, forward_data
 

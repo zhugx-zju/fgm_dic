@@ -17,6 +17,7 @@ from fgm_asm.visualization import (
     plot_iteration_history,
     plot_reconstruction_comparison,
     plot_reconstruction_results,
+    plot_x_profile_reconstruction,
 )
 from fgm_asm.results_io import (
     get_noise_output_dir,
@@ -24,7 +25,9 @@ from fgm_asm.results_io import (
     save_lcurve_analysis,
     write_python_config_snapshot,
 )
-from fgm_asm.utils import add_noise_to_displacement, compute_errors
+from fgm_asm.utils import (
+    add_noise_to_displacement, compute_errors, summarize_x_only_reconstruction,
+)
 from fgm_asm.workflows import load_latest_forward_problem, resolve_results_dir
 import config as cfg
 
@@ -112,6 +115,7 @@ results = lbfgs_inverse_solver_scipy(
 elapsed_time_rerun = time.time() - start_time_rerun
 E_reconstructed = results["E_final"]
 errors = compute_errors(E_true.ravel(), E_reconstructed)
+x_profile = summarize_x_only_reconstruction(mesh_info, E_true, E_reconstructed)
 
 comparison_summary = {
     "scan_mae": scan_errors["mae"],
@@ -136,6 +140,8 @@ print(f"\nReconstruction Errors:")
 print(f"  MAE: {errors['mae']:.4f}%")
 print(f"  Max error: {errors['max_error']:.4f}%")
 print(f"  RMSE: {errors['rmse']:.4f}")
+print(f"  X-profile MAE: {x_profile['profile_mae_pct']:.4f}%")
+print(f"  Transverse RMS spread: {x_profile['transverse_rms_pct']:.4f}%")
 print(f"\nScan-optimum vs final rerun:")
 print(f"  Scan MAE: {scan_errors['mae']:.4f}%")
 print(f"  Rerun MAE: {errors['mae']:.4f}%")
@@ -181,6 +187,7 @@ save_inverse_results(
             "results": scan_results,
         },
         "comparison_summary": comparison_summary,
+        "x_profile": x_profile,
     },
 )
 run_metadata = {
@@ -268,6 +275,7 @@ plot_reconstruction_results(
     save_path=noise_output_dir,
     filename_stem="reconstruction_results",
 )
+plot_x_profile_reconstruction(x_profile, save_path=noise_output_dir)
 plot_iteration_history(
     results,
     save_path=noise_output_dir,

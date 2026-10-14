@@ -23,8 +23,8 @@ NEL_Y = 10  # 2 mm element size in y
 
 # Material properties
 F_TOT = 0.01     # Demonstration tensile force at each end, N; replace with measured F
-EX = 2.0        # Modulus ratio at x = geo_l
-EY = 0.5        # Modulus ratio at y = geo_h
+EX = 2.0        # Synthetic truth: E rises from 1 to 2 MPa along x
+EY = 1.0        # Zero y gradient in the synthetic truth; inverse remains 2D
 NU = 0.3        # Poisson's ratio
 
 # Distribution type: 'bil' (bilinear), 'exp' (exponential), or 'grf'

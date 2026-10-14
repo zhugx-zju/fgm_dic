@@ -298,6 +298,30 @@ def plot_reconstruction_results(mesh_info, E_true, E_reconstructed, errors,
     return fig
 
 
+def plot_x_profile_reconstruction(profile_summary, save_path=None,
+                                  filename_stem='x_profile_reconstruction'):
+    """Show the true E(x), reconstructed y-mean, and full transverse range."""
+    x = profile_summary['x_mm']
+    fig, ax = plt.subplots(figsize=(9, 4.5))
+    ax.fill_between(
+        x,
+        profile_summary['reconstructed_min'],
+        profile_summary['reconstructed_max'],
+        color='tab:blue', alpha=0.2, label='Reconstructed range across y',
+    )
+    ax.plot(x, profile_summary['true_profile'], color='black', linewidth=2,
+            label='True E(x)')
+    ax.plot(x, profile_summary['reconstructed_mean'], color='tab:blue', linewidth=2,
+            linestyle='--', label='Reconstructed mean across y')
+    ax.set(xlabel='x (mm)', ylabel="Young's modulus E (MPa)")
+    ax.set_xlim(float(x[0]), float(x[-1]))
+    ax.legend(frameon=False)
+    fig.tight_layout()
+    if save_path:
+        _save_figure(fig, save_path, filename_stem)
+    return fig
+
+
 def plot_iteration_history(results, save_path=None, noise_level=0.0, filename_stem=None):
     """
     Plot iteration history in one figure with three subplots.
