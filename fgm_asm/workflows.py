@@ -14,6 +14,11 @@ def load_latest_forward_problem(search_root: Path | str = ".") -> tuple[Path, di
     """Load the latest available forward-problem dataset."""
     forward_data_path, _ = find_forward_data_path(search_root)
     forward_data = load_forward_data(forward_data_path)
+    if forward_data["bc_info"].get("loading_mode") != "two_end_traction":
+        raise ValueError(
+            f"{forward_data_path} was not generated with two-end traction; "
+            "run python -m script.forward_job on this branch first"
+        )
     return forward_data_path, forward_data
 
 

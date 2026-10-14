@@ -1,5 +1,34 @@
 # FGM ASM Solver
 
+## Two-end traction research branch
+
+`force_bilateral_traction` starts from `main` and models the central
+`110 mm x 20 mm` parallel section of the dogbone specimen in plane stress.
+The left and right faces receive equal, opposite, uniform axial tractions
+`-q e_x` and `+q e_x`, with `q = F_TOT / (GEO_H * THICKNESS)`.
+`F_TOT` is the measured tensile force at **each** end, not the sum of both
+nodal force vectors. The model is assembled per unit thickness. The top and
+bottom faces are traction free. Only three DOFs are pinned to remove rigid
+translation and rotation; neither end is clamped.
+
+Run `python -m script.forward_job` before `python -m script.inverse_main` or
+`python -m script.inverse_l_curve`. The inverse scripts reuse the saved force
+vector and three-DOF gauge from the forward run, and reject forward data from
+a different loading mode. Output folders include `_TwoEnd_T<thickness>` to
+keep this branch's results separate from `main`.
+
+The default `0.01 N` load and bilinear modulus field are a numerical smoke
+case. Set measured force and independently calibrated modulus values before
+interpreting a physical experiment. DIC displacements must be registered to
+the same rigid-body gauge before inversion. The seven infill zones, DIC point
+mapping, specimen shoulder effects, and the validity of uniform end traction
+are not yet represented by this rectangular numerical model.
+
+Validated on a small mesh with equal/opposite edge resultants, the analytical
+uniform-stress solution, zero gauge reactions, and a finite-difference check
+of the adjoint modulus gradient. Run `python -m unittest discover -s tests -v`
+to repeat those checks.
+
 This repository contains a small finite element codebase for forward and inverse analysis of 2D functionally graded materials (FGMs) under plane-stress assumptions.
 
 The project covers:
@@ -16,6 +45,7 @@ The project covers:
 This repository is managed as a research codebase with one stable baseline branch and independent exploratory branches.
 
 - `main`: baseline branch for the current small-strain, linear-elastic, force-controlled workflow
+- `force_bilateral_traction`: two-end uniform traction on the cropped parallel section
 - `disp_linear`: displacement-controlled branch under small-strain linear elasticity
 - `disp_nonlinear`: displacement-controlled branch for finite-strain and nonlinear constitutive development
 
@@ -33,7 +63,7 @@ See [docs/branch_scope.md](docs/branch_scope.md) for the lightweight branch rule
 - Elements: 4-node bilinear quadrilateral elements
 - Integration: 2x2 Gauss quadrature
 - Material field: nodal Young's modulus with bilinear, exponential, or Gaussian random-field variation
-- Boundary conditions: left edge constrained, distributed load applied on the right edge
+- Boundary conditions on this branch: opposite uniform traction on both x ends; three rigid-body gauge DOFs
 - Inverse objective: displacement misfit plus Tikhonov smoothness regularization on the modulus field
 
 ## Dependencies
@@ -54,9 +84,9 @@ Current required packages:
 
 The main defaults are defined in `config.py`, which now returns typed configuration objects:
 
-- geometry: `9.0 x 9.0`
-- mesh: `39 x 39`
-- total load: `0.01`
+- geometry: `110.0 x 20.0 mm`, thickness `3.2 mm`
+- mesh: `55 x 10`
+- tensile force at each end: `0.01 N` (numerical demonstration)
 - Poisson ratio: `0.3`
 - modulus targets: `Ex = 2.0`, `Ey = 0.5`
 - distribution type: `bil`
@@ -102,13 +132,13 @@ to the repository root. These outputs remain ignored by Git.
 The scripts save results into a folder named like:
 
 ```text
-Geo_9x9_Mesh_39x39_Alpha_0.1111_Beta_-0.0556_Gamma_1e-06
+Geo_110x20_Mesh_55x10_Alpha_0.0091_Beta_-0.0250_Gamma_1e-06_TwoEnd_T3.2
 ```
 
 Inverse-result files are now organized in a noise-specific subfolder, for example:
 
 ```text
-Geo_9x9_Mesh_39x39_Alpha_0.1111_Beta_-0.0556_Gamma_1e-06/
+Geo_110x20_Mesh_55x10_Alpha_0.0091_Beta_-0.0250_Gamma_1e-06_TwoEnd_T3.2/
 |-- noise_0.00pct/
 |   |-- inverse_results.pkl
 |   |-- lcurve_analysis.pkl

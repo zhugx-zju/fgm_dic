@@ -17,6 +17,7 @@ class ForwardConfig:
     nel_x: int
     nel_y: int
     f_tot: float
+    thickness: float
     Ex: float
     Ey: float
     nu: float
@@ -38,13 +39,13 @@ class ForwardConfig:
                 f"Mesh_{self.nel_x}x{self.nel_y}_"
                 f"GRF_Emax_{self.grf_E_max:g}_"
                 f"Sigma_{self.grf_sigma_g:g}_Ell_{self.grf_ell:g}_"
-                f"Seed_{self.grf_seed}_Gamma_{gamma:.0e}"
+                f"Seed_{self.grf_seed}_Gamma_{gamma:.0e}_TwoEnd_T{self.thickness:g}"
             )
         return (
             f"Geo_{int(self.geo_l)}x{int(self.geo_h)}_"
             f"Mesh_{self.nel_x}x{self.nel_y}_"
             f"Alpha_{alpha:.4f}_Beta_{beta:.4f}_"
-            f"Gamma_{gamma:.0e}"
+            f"Gamma_{gamma:.0e}_TwoEnd_T{self.thickness:g}"
         )
 
 
@@ -110,6 +111,7 @@ def coerce_forward_config(config: ForwardConfig | Mapping[str, object]) -> Forwa
         nel_x=int(config["nel_x"]),
         nel_y=int(config["nel_y"]),
         f_tot=float(config[force_key]),
+        thickness=float(config.get("thickness", 1.0)),
         Ex=float(config["Ex"]),
         Ey=float(config["Ey"]),
         nu=float(config["nu"]),

@@ -77,9 +77,12 @@ material_info.update(E_vec, iteration=1)
 # Setup boundary conditions
 # ============================================================
 print("\nSetting up boundary conditions...")
-bc_info = setup_boundary_conditions(mesh_info, config.geo_l, config.geo_h, config.f_tot)
+bc_info = setup_boundary_conditions(
+    mesh_info, config.geo_l, config.geo_h, config.f_tot, config.thickness
+)
 print(f"  Fixed DOFs: {len(bc_info['fixdof'])}")
-print(f"  Total load: {bc_info['force'].sum():.6f}")
+print(f"  Traction magnitude at each end: {bc_info['traction_magnitude']:.6g}")
+print(f"  Tensile force at each end: {config.f_tot:.6g}")
 
 
 # ============================================================

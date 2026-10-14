@@ -237,39 +237,62 @@ def get_body_force_load(mesh_info, bf_vec):
     return np.asarray(mesh_info.M @ bf_vec).ravel()
 
 
-def setup_boundary_conditions(mesh_info, geo_l, geo_h, F_tot):
+def setup_boundary_conditions(mesh_info, geo_l, geo_h, F_tot, thickness=1.0):
     """
-    Setup boundary conditions for the FGM plane stress problem.
+    Apply equal and opposite uniform tensile tractions at both x ends.
+
+    The plane-stress system is assembled per unit thickness. ``F_tot`` is the
+    measured 3D tensile force at either end, so the 2D edge resultant is
+    ``F_tot / thickness``. Three point constraints remove only rigid motions.
 
     Args:
         mesh_info: MeshInfo object
         geo_l: Geometry length
         geo_h: Geometry height
-        F_tot: Total force magnitude
+        F_tot: Tensile force magnitude at each end
+        thickness: Specimen thickness, in the same length unit as the mesh
 
     Returns:
         bc_info: Dictionary containing boundary conditions
     """
+    if not np.isfinite(F_tot) or F_tot <= 0:
+        raise ValueError("F_tot must be a positive finite tensile force")
+    if not np.isfinite(thickness) or thickness <= 0:
+        raise ValueError("thickness must be positive and finite")
+    if not np.isclose(geo_l, mesh_info.geo_l) or not np.isclose(geo_h, mesh_info.geo_h):
+        raise ValueError("geo_l and geo_h must match mesh_info dimensions")
+
     coord = mesh_info.coord
     n_dof = mesh_info.n_dof
 
-    fix_edge = np.where(coord[:, 0] == 0)[0]
-    fix_dofs_x = 2 * fix_edge
-    fix_dofs_y = np.array([2 * fix_edge[0] + 1])
-    fix_dofs = np.sort(np.concatenate([fix_dofs_x, fix_dofs_y]))
+    left_edge = np.flatnonzero(np.isclose(coord[:, 0], 0.0))
+    right_edge = np.flatnonzero(np.isclose(coord[:, 0], geo_l))
+    if left_edge.size < 2 or right_edge.size < 2:
+        raise ValueError("each loaded edge must contain at least two nodes")
+
+    # Gauge: pin both translations at the lower-left corner and rotation via
+    # the lower-right y DOF. These do not prescribe axial displacement.
+    lower_left = left_edge[np.argmin(coord[left_edge, 1])]
+    lower_right = right_edge[np.argmin(coord[right_edge, 1])]
+    fix_dofs = np.array([2 * lower_left, 2 * lower_left + 1, 2 * lower_right + 1], dtype=np.int32)
 
     force = np.zeros(n_dof)
-    load_points = np.where(coord[:, 0] == geo_l)[0]
-    load_dofs = 2 * load_points
-
-    F_density = F_tot / geo_h
-    F_mag = F_density * mesh_info.eh
-
-    force[load_dofs] = F_mag
-    force[load_dofs[0]] -= F_mag / 2
-    force[load_dofs[-1]] -= F_mag / 2
+    traction = F_tot / (geo_h * thickness)
+    for edge, sign in ((left_edge, -1.0), (right_edge, 1.0)):
+        edge = edge[np.argsort(coord[edge, 1])]
+        segment_lengths = np.diff(coord[edge, 1])
+        if np.any(segment_lengths <= 0):
+            raise ValueError("loaded edge nodes must have distinct y coordinates")
+        # Consistent nodal load for a constant traction on linear edge segments.
+        segment_force = sign * traction * segment_lengths / 2.0
+        np.add.at(force, 2 * edge[:-1], segment_force)
+        np.add.at(force, 2 * edge[1:], segment_force)
 
     return {
         'fixdof': fix_dofs,
         'force': force,
+        'loading_mode': 'two_end_traction',
+        'tensile_end_force': float(F_tot),
+        'thickness': float(thickness),
+        'traction_magnitude': float(traction),
     }

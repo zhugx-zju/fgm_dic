@@ -11,6 +11,7 @@ This repository is used primarily for research. The preferred strategy is:
 | Branch | Role | Loading | Kinematics | Constitutive Model |
 | --- | --- | --- | --- | --- |
 | `main` | Current baseline and reference branch | Force-controlled | Small strain | Linear elastic |
+| `force_bilateral_traction` | Cropped parallel-section inverse model | Opposite uniform traction at both ends | Small strain | Linear elastic |
 | `disp_linear` | Displacement-controlled linear extension | Displacement-controlled | Small strain | Linear elastic |
 | `disp_nonlinear` | Nonlinear research branch | Displacement-controlled | Finite strain | Nonlinear constitutive model(s) |
 

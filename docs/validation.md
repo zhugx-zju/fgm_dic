@@ -72,6 +72,14 @@ Suggested checks:
 - Last checked:
 - Notes:
 
+### `force_bilateral_traction`
+
+- Status: two-end traction boundary condition and existing nodal-modulus inverse solver connected
+- Last checked: 2026-10-14
+- Checks: edge resultants, homogeneous analytic displacement, gauge reactions, adjoint gradient finite difference
+- Executed: `python -m unittest discover -s tests -v` (5 passed); default `55 x 10` forward solve (finite displacement, maximum gauge reaction `3.1e-16`); small-mesh inverse smoke run reduced objective from `3.41e-5` to `5.58e-10` in 20 iterations (iteration cap reached)
+- Open: paired full-specimen boundary-error study, DIC gauge registration, seven-zone parameterization and identifiability
+
 ### `disp_linear`
 
 - Status: planned / in development

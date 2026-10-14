@@ -13,15 +13,16 @@ from fgm_asm.config_types import ForwardConfig, InverseConfig, LCurveConfig, nor
 # ============================================================
 
 # Geometry parameters
-GEO_L = 9.0  # Domain length
-GEO_H = 9.0  # Domain height
+GEO_L = 110.0  # Central parallel-section length, mm
+GEO_H = 20.0   # Parallel-section width, mm
+THICKNESS = 3.2  # Specimen thickness, mm
 
 # Mesh parameters
-NEL_X = 39  # Number of elements in x direction
-NEL_Y = 39  # Number of elements in y direction
+NEL_X = 55  # 2 mm element size in x
+NEL_Y = 10  # 2 mm element size in y
 
 # Material properties
-F_TOT = 0.01     # Total applied force
+F_TOT = 0.01     # Demonstration tensile force at each end, N; replace with measured F
 EX = 2.0        # Modulus ratio at x = geo_l
 EY = 0.5        # Modulus ratio at y = geo_h
 NU = 0.3        # Poisson's ratio
@@ -73,6 +74,7 @@ def get_forward_config():
         nel_x=NEL_X,
         nel_y=NEL_Y,
         f_tot=F_TOT,
+        thickness=THICKNESS,
         Ex=EX,
         Ey=EY,
         nu=NU,
