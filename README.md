@@ -191,6 +191,7 @@ write and search the same root-level case folders even when launched with
 | `script/inverse_main.py` | Single-gamma inverse solver entry point based on the shared SciPy L-BFGS-B implementation in `fgm_asm/inverse_solver.py`. Saves results into noise-specific subdirectories. |
 | `script/inverse_l_curve.py` | Inverse solver entry point using SciPy L-BFGS-B together with L-curve based gamma selection, followed by a fresh rerun from the default initialization using the selected `gamma`. |
 | `script/compare_regularization.py` | Compares two saved modulus and relative-error fields on shared color scales and exports PNG/PDF. |
+| `script/benchmark_exponential_regularization.py` | Runs matched synthetic exponential `E(x)` comparisons for the two penalties and saves logs, field data, metrics, and common-scale figures. |
 | `script/check_regularization_gradient.py` | Finite-difference verification script for the analytical Tikhonov gradient. Useful when changing the regularization code. |
 | `script/plot_forward_results.py` | Reloads saved forward results and exports standalone forward-problem figures. |
 | `script/plot_inverse_results.py` | Reloads saved inverse results and exports reconstruction, convergence, gradient, and scan-vs-rerun comparison plots. |
