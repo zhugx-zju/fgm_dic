@@ -1,5 +1,7 @@
 # post_DIC
 
+> 2026-10-18：活动算法已合并至根 `fgm_asm/`，数据处理移至根 `lib/`，新入口见[根 README](../README.md)。本目录保留原始数据、既有结果和历史文档。下文描述迁移前的位移控制流程，不作为当前双端均布载荷实验的运行指南；旧代码可从根 Git 的 `696959c` 快照恢复。
+
 `post_DIC` is a DIC post-processing project for CSV files exported by the measurement software.
 
 The current maintained workflow is centered on **structured preprocessing** of two DIC exports:

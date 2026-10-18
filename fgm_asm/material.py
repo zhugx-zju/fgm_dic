@@ -14,7 +14,8 @@ class MaterialInfo:
     Stores material properties and modulus history during iterations.
     """
 
-    def __init__(self, nu, dis_type='exp', alpha=0.0, beta=0.0, store_history=False):
+    def __init__(self, nu, dis_type='exp', alpha=0.0, beta=0.0, store_history=False,
+                 modulus_function=None):
         """
         Initialize material information.
 
@@ -29,6 +30,9 @@ class MaterialInfo:
         self.alpha = alpha
         self.beta = beta
         self.store_history = store_history
+        # Optional independent forward material, evaluated at physical Gauss
+        # coordinates (e.g. sharp measured partitions). Inversion uses nodal E.
+        self.modulus_function = modulus_function
 
         # Iteration tracking
         self.iter = 1

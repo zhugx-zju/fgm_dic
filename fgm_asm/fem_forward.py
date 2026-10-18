@@ -40,6 +40,13 @@ class FEMInfo:
 
 def _get_gauss_modulus(mesh_info, material_info):
     """Interpolate the nodal modulus field to the Gauss points."""
+    if getattr(material_info, 'modulus_function', None) is not None:
+        x = np.einsum('en,gn->ge', mesh_info.x_ele, mesh_info.gauss_N)
+        y = np.einsum('en,gn->ge', mesh_info.y_ele, mesh_info.gauss_N)
+        values = np.asarray(material_info.modulus_function(x, y), dtype=float)
+        if values.shape != x.shape or not np.all(np.isfinite(values) & (values > 0)):
+            raise ValueError('Forward modulus function must return positive finite Gauss values')
+        return values
     E_vec = material_info.get_current_modulus()
     G_ele = E_vec[mesh_info.ele_nods_id - 1]
     return (G_ele @ mesh_info.gauss_N.T).T

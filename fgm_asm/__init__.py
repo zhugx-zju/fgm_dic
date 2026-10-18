@@ -8,6 +8,13 @@ A finite element analysis package for:
 """
 
 from .mesh import MeshInfo, shape_fun_at_gauss, get_body_force_load
+from .mesh import setup_boundary_conditions
+from .observation import (
+    ObservationPackage, build_observation_operator, build_observation_package,
+    load_observation_package, save_observation_package,
+    prepare_observation_package_from_grids,
+)
+from .load_case import ObservationCase
 from .grf import generate_grf_field
 from .material import MaterialInfo, generate_fgm_modulus
 from .fem_forward import fem_assemble, forward_solver, compute_reaction_forces
@@ -49,6 +56,14 @@ __all__ = [
     'MeshInfo',
     'shape_fun_at_gauss',
     'get_body_force_load',
+    'setup_boundary_conditions',
+    'ObservationPackage',
+    'ObservationCase',
+    'build_observation_operator',
+    'build_observation_package',
+    'load_observation_package',
+    'save_observation_package',
+    'prepare_observation_package_from_grids',
     # Material
     'MaterialInfo',
     'generate_fgm_modulus',

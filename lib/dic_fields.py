@@ -1,7 +1,7 @@
 import pandas as pd
 
 
-DEFAULT_REQUIRED_FIELDS = ["X", "Y", "DX", "DY", "EXX", "EYY", "EXY", "E1", "E2"]
+DEFAULT_REQUIRED_FIELDS = ["X", "Y", "DX", "DY"]
 
 
 def clean_data(df: pd.DataFrame, required_fields: list[str] | None = None) -> pd.DataFrame:

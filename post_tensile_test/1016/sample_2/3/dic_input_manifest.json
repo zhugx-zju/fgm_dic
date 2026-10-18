@@ -1,0 +1,356 @@
+{
+  "purpose": "Manifest for local DIC exports omitted from ordinary Git",
+  "displacement_reference": "initial_unloaded_image",
+  "platforms": {
+    "180N": {
+      "sources": [
+        {
+          "path": "post_tensile_test/1016/sample_2/3/180N/stage_00259.comdat_comdata.csv",
+          "stage": 259,
+          "sha256": "89fba0c7f11f3f0a7f8010d844de3b00f6bc1904c43b17b963689def843d65b4",
+          "raw_rows": 14058,
+          "valid_rows": 14058,
+          "duplicates_removed": 213
+        },
+        {
+          "path": "post_tensile_test/1016/sample_2/3/180N/stage_00260.comdat_comdata.csv",
+          "stage": 260,
+          "sha256": "13064e3b92b550ba673bccd7f99450428679ce2f36f800677c003d9cf7e71b30",
+          "raw_rows": 14058,
+          "valid_rows": 14058,
+          "duplicates_removed": 213
+        },
+        {
+          "path": "post_tensile_test/1016/sample_2/3/180N/stage_00261.comdat_comdata.csv",
+          "stage": 261,
+          "sha256": "9c369d81fbd87ce3518ec1f594239b0d4299290330528c57ade12f2a7e50076c",
+          "raw_rows": 14058,
+          "valid_rows": 14058,
+          "duplicates_removed": 213
+        },
+        {
+          "path": "post_tensile_test/1016/sample_2/3/180N/stage_00262.comdat_comdata.csv",
+          "stage": 262,
+          "sha256": "49cad3f741a68f7b8f2ca06b925008ce310b1b737287d647c973cfc68661935e",
+          "raw_rows": 14058,
+          "valid_rows": 14058,
+          "duplicates_removed": 213
+        },
+        {
+          "path": "post_tensile_test/1016/sample_2/3/180N/stage_00263.comdat_comdata.csv",
+          "stage": 263,
+          "sha256": "0512149794b690043ee07644d19126ac10751569040a485a8adbdf1942c7c57b",
+          "raw_rows": 14058,
+          "valid_rows": 14058,
+          "duplicates_removed": 213
+        },
+        {
+          "path": "post_tensile_test/1016/sample_2/3/180N/stage_00264.comdat_comdata.csv",
+          "stage": 264,
+          "sha256": "6b8512fda84d673f62c83ab8e6cd771f64937101ac5ddf441cb3f1b586822e63",
+          "raw_rows": 14058,
+          "valid_rows": 14058,
+          "duplicates_removed": 213
+        },
+        {
+          "path": "post_tensile_test/1016/sample_2/3/180N/stage_00265.comdat_comdata.csv",
+          "stage": 265,
+          "sha256": "cad6603ae15bfb825012930ab9948dcdbfdb614ef31f70a0025858ed28501b99",
+          "raw_rows": 14058,
+          "valid_rows": 14058,
+          "duplicates_removed": 213
+        },
+        {
+          "path": "post_tensile_test/1016/sample_2/3/180N/stage_00266.comdat_comdata.csv",
+          "stage": 266,
+          "sha256": "1a12f218909bf9587a2532ff3e8dcf060c1c12281af53bbbf2633f43b10639d9",
+          "raw_rows": 14058,
+          "valid_rows": 14058,
+          "duplicates_removed": 213
+        },
+        {
+          "path": "post_tensile_test/1016/sample_2/3/180N/stage_00267.comdat_comdata.csv",
+          "stage": 267,
+          "sha256": "c1d2469e87fab757dc1b620988aceb02eb1a96f96f39aa6d606af3628d50e437",
+          "raw_rows": 14058,
+          "valid_rows": 14058,
+          "duplicates_removed": 213
+        },
+        {
+          "path": "post_tensile_test/1016/sample_2/3/180N/stage_00268.comdat_comdata.csv",
+          "stage": 268,
+          "sha256": "fb3d39172936eee220a8618b1217c7859048eb12f0b492f5bd04030f32953ea9",
+          "raw_rows": 14058,
+          "valid_rows": 14058,
+          "duplicates_removed": 213
+        },
+        {
+          "path": "post_tensile_test/1016/sample_2/3/180N/stage_00269.comdat_comdata.csv",
+          "stage": 269,
+          "sha256": "921d49eacc09245ab9336d6c3dcae05d3b0579d4cb1a87f08002659467d36580",
+          "raw_rows": 14058,
+          "valid_rows": 14058,
+          "duplicates_removed": 213
+        },
+        {
+          "path": "post_tensile_test/1016/sample_2/3/180N/stage_00270.comdat_comdata.csv",
+          "stage": 270,
+          "sha256": "797a8822596f8dc367462e23b25b7d8b1288ab228fd1c93cb8933b56b1a9f3c0",
+          "raw_rows": 14058,
+          "valid_rows": 14058,
+          "duplicates_removed": 213
+        },
+        {
+          "path": "post_tensile_test/1016/sample_2/3/180N/stage_00271.comdat_comdata.csv",
+          "stage": 271,
+          "sha256": "ff30ac2fd9e03cf4e25be61d04f96e08e9febab38f20628a38bc16d87322fc78",
+          "raw_rows": 14058,
+          "valid_rows": 14058,
+          "duplicates_removed": 213
+        },
+        {
+          "path": "post_tensile_test/1016/sample_2/3/180N/stage_00272.comdat_comdata.csv",
+          "stage": 272,
+          "sha256": "7be371bfd8262cdf718e9be56b91690574527751283c03dcfd11bbe416c4d0c1",
+          "raw_rows": 14058,
+          "valid_rows": 14058,
+          "duplicates_removed": 213
+        },
+        {
+          "path": "post_tensile_test/1016/sample_2/3/180N/stage_00273.comdat_comdata.csv",
+          "stage": 273,
+          "sha256": "2d2b2f21c237b1ffee890a5e5beaf1ff4945817373bf1c6fbb768b60e3cce81f",
+          "raw_rows": 14058,
+          "valid_rows": 14058,
+          "duplicates_removed": 213
+        }
+      ],
+      "frame_count": 15,
+      "common_points": 13845,
+      "valid_points_per_frame": [
+        13845,
+        13845,
+        13845,
+        13845,
+        13845,
+        13845,
+        13845,
+        13845,
+        13845,
+        13845,
+        13845,
+        13845,
+        13845,
+        13845,
+        13845
+      ],
+      "reference_bounds": [
+        [
+          -13.73522769285,
+          -104.586312075
+        ],
+        [
+          23.333338607399998,
+          18.2033138077
+        ]
+      ],
+      "reference_span": [
+        37.06856630025,
+        122.7896258827
+      ],
+      "displacement_reference": "initial_unloaded_image",
+      "noise_note": "Temporal SD is diagnostic; frames are not assumed independent."
+    },
+    "280N": {
+      "sources": [
+        {
+          "path": "post_tensile_test/1016/sample_2/3/280N/stage_00436.comdat_comdata.csv",
+          "stage": 436,
+          "sha256": "e6a5a75fd8bc4062296b7b32b2184d1cad28e527024fa3b9abe21643c4167aef",
+          "raw_rows": 14058,
+          "valid_rows": 14058,
+          "duplicates_removed": 213
+        },
+        {
+          "path": "post_tensile_test/1016/sample_2/3/280N/stage_00437.comdat_comdata.csv",
+          "stage": 437,
+          "sha256": "f4aa6267bd771d1dd19be6a5657d63b3b5f2874b1b1281bbb0642cb9b1e0b4f1",
+          "raw_rows": 14058,
+          "valid_rows": 14058,
+          "duplicates_removed": 213
+        },
+        {
+          "path": "post_tensile_test/1016/sample_2/3/280N/stage_00438.comdat_comdata.csv",
+          "stage": 438,
+          "sha256": "1283d6ff3c3db74fc393d9c63f6578db30520f0c9e942b2f20a18e89c33ce4fc",
+          "raw_rows": 14058,
+          "valid_rows": 14058,
+          "duplicates_removed": 213
+        },
+        {
+          "path": "post_tensile_test/1016/sample_2/3/280N/stage_00439.comdat_comdata.csv",
+          "stage": 439,
+          "sha256": "4fefea0d36e3def6b1090c43d2ee16fd39d9e971bffa904dec654db9807cd123",
+          "raw_rows": 14058,
+          "valid_rows": 14058,
+          "duplicates_removed": 213
+        },
+        {
+          "path": "post_tensile_test/1016/sample_2/3/280N/stage_00440.comdat_comdata.csv",
+          "stage": 440,
+          "sha256": "dfb7343142ba500671e2ea99d9fdecbe76098f1f0016d40ded9693463fe1bda7",
+          "raw_rows": 14058,
+          "valid_rows": 14058,
+          "duplicates_removed": 213
+        },
+        {
+          "path": "post_tensile_test/1016/sample_2/3/280N/stage_00441.comdat_comdata.csv",
+          "stage": 441,
+          "sha256": "7b0bd377a3cfd817f067ecc8d4ecdd0519619d21b4036dbe57c191d35303adb9",
+          "raw_rows": 14058,
+          "valid_rows": 14058,
+          "duplicates_removed": 213
+        },
+        {
+          "path": "post_tensile_test/1016/sample_2/3/280N/stage_00442.comdat_comdata.csv",
+          "stage": 442,
+          "sha256": "17d94d5a533ee6701421f46aeb73e773ad87a948e7f90dcca9657de204839cc3",
+          "raw_rows": 14058,
+          "valid_rows": 14058,
+          "duplicates_removed": 213
+        },
+        {
+          "path": "post_tensile_test/1016/sample_2/3/280N/stage_00443.comdat_comdata.csv",
+          "stage": 443,
+          "sha256": "f65380951522ddf677291f3eea9481b5ab484662f0dcce4de0653f1ee36d0d58",
+          "raw_rows": 14058,
+          "valid_rows": 14058,
+          "duplicates_removed": 213
+        },
+        {
+          "path": "post_tensile_test/1016/sample_2/3/280N/stage_00444.comdat_comdata.csv",
+          "stage": 444,
+          "sha256": "81a9cd3c78764c93285dd57774747221be3fafe088e1c142d2cddf1b0ac4432a",
+          "raw_rows": 14058,
+          "valid_rows": 14058,
+          "duplicates_removed": 213
+        },
+        {
+          "path": "post_tensile_test/1016/sample_2/3/280N/stage_00445.comdat_comdata.csv",
+          "stage": 445,
+          "sha256": "dc239058fc5daa2ee291adf76fec370ab34592c68c15a5e12aa0defce1b125ed",
+          "raw_rows": 14058,
+          "valid_rows": 14058,
+          "duplicates_removed": 213
+        },
+        {
+          "path": "post_tensile_test/1016/sample_2/3/280N/stage_00446.comdat_comdata.csv",
+          "stage": 446,
+          "sha256": "bf0ed750f38f5a976b478adf6a8461c3923bbdc1092c02799e3784745478fca0",
+          "raw_rows": 14058,
+          "valid_rows": 14058,
+          "duplicates_removed": 213
+        },
+        {
+          "path": "post_tensile_test/1016/sample_2/3/280N/stage_00447.comdat_comdata.csv",
+          "stage": 447,
+          "sha256": "b981ce3b400af7bd8c26ff987b989e90ae5c31fcd857cc7fb58a62682836d4db",
+          "raw_rows": 14058,
+          "valid_rows": 14058,
+          "duplicates_removed": 213
+        },
+        {
+          "path": "post_tensile_test/1016/sample_2/3/280N/stage_00448.comdat_comdata.csv",
+          "stage": 448,
+          "sha256": "76b1698649ec1d56d7bcafe050e80bfcc8027a8799b2dfecadee4f02770dbf93",
+          "raw_rows": 14058,
+          "valid_rows": 14058,
+          "duplicates_removed": 213
+        },
+        {
+          "path": "post_tensile_test/1016/sample_2/3/280N/stage_00449.comdat_comdata.csv",
+          "stage": 449,
+          "sha256": "97a4ebc551e2095cb2667e93bc1dfa095a0ca4a398ebf50e2d983791165be654",
+          "raw_rows": 14058,
+          "valid_rows": 14058,
+          "duplicates_removed": 213
+        },
+        {
+          "path": "post_tensile_test/1016/sample_2/3/280N/stage_00450.comdat_comdata.csv",
+          "stage": 450,
+          "sha256": "a65beaf5241b1a41be631c3ca4b784ecfab3279b401eb475bccbbf358da975f3",
+          "raw_rows": 14058,
+          "valid_rows": 14058,
+          "duplicates_removed": 213
+        }
+      ],
+      "frame_count": 15,
+      "common_points": 13845,
+      "valid_points_per_frame": [
+        13845,
+        13845,
+        13845,
+        13845,
+        13845,
+        13845,
+        13845,
+        13845,
+        13845,
+        13845,
+        13845,
+        13845,
+        13845,
+        13845,
+        13845
+      ],
+      "reference_bounds": [
+        [
+          -13.735227692899999,
+          -104.586312083
+        ],
+        [
+          23.333338607399998,
+          18.2033138083
+        ]
+      ],
+      "reference_span": [
+        37.0685663003,
+        122.78962589129999
+      ],
+      "displacement_reference": "initial_unloaded_image",
+      "noise_note": "Temporal SD is diagnostic; frames are not assumed independent."
+    }
+  },
+  "force_pairing": {
+    "180N": {
+      "run": 3,
+      "setting_N": 180,
+      "stage_first": 259,
+      "stage_last": 273,
+      "single_stage": 266,
+      "dic_time_s": 53.2,
+      "machine_time_s_estimated": 47.58122106134363,
+      "mean_corrected_force_N": 119.77617870327234,
+      "force_increment_from_80N_reference_N": 99.96348986081858,
+      "mean_signal_std_um": 0.6418496744097165,
+      "linear_drift_um": 0.9076774050000558,
+      "full_force_coverage": true
+    },
+    "280N": {
+      "run": 3,
+      "setting_N": 280,
+      "stage_first": 436,
+      "stage_last": 450,
+      "single_stage": 443,
+      "dic_time_s": 88.6,
+      "machine_time_s_estimated": 82.98122106134363,
+      "mean_corrected_force_N": 219.7354506515086,
+      "force_increment_from_80N_reference_N": 199.92276180905483,
+      "mean_signal_std_um": 0.5866338372098291,
+      "linear_drift_um": 0.671383730000173,
+      "full_force_coverage": true
+    }
+  },
+  "coordinates_verified": false,
+  "source_analysis": "post_tensile_test/1016/sample_2/analysis_results/dic_timing_20261018/selected_dic_windows.csv"
+}

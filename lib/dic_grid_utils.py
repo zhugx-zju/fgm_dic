@@ -5,6 +5,8 @@ from dataclasses import dataclass
 import numpy as np
 import pandas as pd
 
+from .io_utils import remove_duplicate_grid_points
+
 
 @dataclass(frozen=True)
 class StructuredGrid:
@@ -22,6 +24,7 @@ def reconstruct_structured_grid(
         raise ValueError(f"Cannot reconstruct structured grid. Missing columns: {missing}")
 
     clean_df = df.dropna(subset=["grid_row", "grid_col"]).copy()
+    clean_df = remove_duplicate_grid_points(clean_df)
     clean_df["grid_row"] = clean_df["grid_row"].astype(int)
     clean_df["grid_col"] = clean_df["grid_col"].astype(int)
 

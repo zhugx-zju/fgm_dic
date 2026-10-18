@@ -76,7 +76,8 @@ class HuberTGV:
 
 def tgv_inverse_solver(mesh_info, bc_info, U_measured, E_init=None, gamma=1e-6,
                        E_min=0.001, max_iter=2000, ftol=1e-12, gtol=1e-8,
-                       nu=0.3, tgv_options=None, max_fun=15000):
+                       nu=0.3, tgv_options=None, max_fun=15000,
+                       observation_cases=None, modulus_scale=1.0):
     """Minimize data cost + gamma/2 * R(E,v) in [log E,v] with L-BFGS-B.
 
     E positivity follows from the log parametrization; regularization is on E,
@@ -88,7 +89,9 @@ def tgv_inverse_solver(mesh_info, bc_info, U_measured, E_init=None, gamma=1e-6,
 
     if mesh_info.M is None:
         mesh_info.assemble_mass_matrix()
-    tgv = HuberTGV(mesh_info, **(tgv_options or {}))
+    options = dict(tgv_options or {})
+    options.setdefault('modulus_scale', modulus_scale)
+    tgv = HuberTGV(mesh_info, **options)
     initial = (np.full(mesh_info.n_nod, E_min + 0.5) if E_init is None
                else np.asarray(E_init, dtype=float))
     if initial.shape != (mesh_info.n_nod,) or not np.all(np.isfinite(initial) & (initial > 0)):
@@ -107,7 +110,8 @@ def tgv_inverse_solver(mesh_info, bc_info, U_measured, E_init=None, gamma=1e-6,
         evaluations += 1
         modulus = np.exp(vector[:n])
         state = _evaluate_inverse_state(mesh_info, bc_info, U_measured, material,
-                                        0.0, modulus, evaluations)
+                                        0.0, modulus, evaluations,
+                                        observation_cases=observation_cases)
         value, grad_e, grad_v = tgv.value_gradient(modulus, vector[n:])
         state['cost_reg'] = 0.5 * gamma * value
         state['objective'] = state['cost_tar'] + state['cost_reg']
@@ -147,4 +151,6 @@ def tgv_inverse_solver(mesh_info, bc_info, U_measured, E_init=None, gamma=1e-6,
                 regularization_norm=float(np.sqrt(state['reg_value'])),
                 regularization_mode='tgv', final_gradient=state['grad_m'],
                 final_grad_tar=state['grad_tar_m'], final_grad_reg=state['grad_reg_m'],
-                joint_gradient=state['joint_gradient'])
+                joint_gradient=state['joint_gradient'],
+                case_states=state['case_states'],
+                data_mode='observation_cases' if observation_cases is not None else 'nodal_mass')

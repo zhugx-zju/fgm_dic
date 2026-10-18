@@ -250,6 +250,8 @@ def build_observation_operator(
     y_meas = np.asarray(y_meas, dtype=float).ravel()
     if x_meas.shape != y_meas.shape:
         raise ValueError("x_meas and y_meas must have the same shape.")
+    if not np.all(np.isfinite(x_meas)) or not np.all(np.isfinite(y_meas)):
+        raise ValueError('Measurement coordinates must be finite')
 
     tol = 1e-9 * max(mesh_info.geo_l, mesh_info.geo_h, 1.0) + 1e-12
     if np.any(x_meas < -tol) or np.any(x_meas > mesh_info.geo_l + tol):
@@ -267,8 +269,8 @@ def build_observation_operator(
 
     xi = (x_use - ex * mesh_info.el) / mesh_info.el
     eta = (y_use - ey * mesh_info.eh) / mesh_info.eh
-    xi[np.isclose(x_use, mesh_info.geo_l)] = 1.0
-    eta[np.isclose(y_use, mesh_info.geo_h)] = 1.0
+    xi[np.abs(x_use - mesh_info.geo_l) <= tol] = 1.0
+    eta[np.abs(y_use - mesh_info.geo_h) <= tol] = 1.0
     xi = np.clip(xi, 0.0, 1.0)
     eta = np.clip(eta, 0.0, 1.0)
 
