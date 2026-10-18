@@ -91,6 +91,22 @@ class ResearchWorkflowTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, 'unverified'):
                 run_experiment(cfg, Path(folder) / 'unverified', mode='forward')
 
+    def test_inspect_saves_registered_vectors_and_region_counts(self):
+        with tempfile.TemporaryDirectory() as folder:
+            cfg = self._inputs(folder)
+            output = Path(folder) / 'inspect'
+            with patch('lib.research_workflows.plot_dic_registration'):
+                summary = run_experiment(cfg, output, mode='inspect')
+            report = summary['dic_registration']['180N']
+            self.assertEqual(report['status'], 'verified')
+            self.assertEqual(report['points_inside_roi'], 24)
+            self.assertEqual(sum(report['points_per_region']), 24)
+            with np.load(output / 'fields.npz') as fields:
+                source = fields['180N_displacement_mean']
+                np.testing.assert_allclose(fields['180N_fem_displacement_mm'], source[:, ::-1])
+                np.testing.assert_allclose(np.ptp(fields['180N_fem_coordinates_mm'], axis=0),
+                                           [70., 20.])
+
     def test_unconverged_run_preserves_results_with_explicit_failure_status(self):
         with tempfile.TemporaryDirectory() as folder:
             cfg = self._inputs(folder)

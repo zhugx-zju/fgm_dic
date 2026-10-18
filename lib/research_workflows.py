@@ -11,11 +11,12 @@ from fgm_asm.research import (
     compare_displacement, make_observation_case, partition_modulus, solve_forward,
 )
 from .experiment_data import (
-    file_sha256, load_calibration, load_dic_platform, load_platform_force,
-    transform_dic_platform,
+    check_platform_reference, dic_registration_report, dic_roi_mask, file_sha256, load_calibration,
+    load_dic_platform, load_platform_force, transform_dic_platform,
 )
 from .research_reporting import (
-    plot_displacement_comparison, plot_modulus_comparison, save_run, save_x_profile,
+    plot_dic_registration, plot_displacement_comparison, plot_modulus_comparison,
+    save_run, save_x_profile,
 )
 
 
@@ -117,7 +118,10 @@ def prepare_experiment(cfg, load_fields=True):
     platforms, records = {}, {}
     for name, setting in cfg.PLATFORMS.items():
         if load_fields:
-            platforms[name] = load_dic_platform(setting['folder'], *setting['stages'])
+            platforms[name] = load_dic_platform(
+                setting['folder'], *setting['stages'],
+                coordinate_state=getattr(cfg, 'DIC_COORDINATE_STATE', 'deformed'),
+            )
         _, records[name] = load_platform_force(cfg.FORCE_PAIRING_CSV, setting['setting_N'])
         if (records[name]['stage_first'], records[name]['stage_last']) != setting['stages']:
             raise ValueError(f'{name}: force window does not match selected DIC frames')
@@ -138,6 +142,13 @@ def prepare_experiment(cfg, load_fields=True):
                                'infill_percent': list(cfg.REGION_INFILL_PERCENT),
                                'boundaries_x_mm': list(cfg.REGION_BOUNDARIES_X),
                                'region_lengths_mm': np.diff(np.r_[0., boundaries, cfg.GEO_L]).tolist()}
+    summary['dic_registration'] = {
+        name: dic_registration_report(platform, cfg.DIC_TO_FEM_MATRIX, cfg.DIC_TO_FEM_OFFSET,
+                                       cfg.GEO_L, cfg.GEO_H, cfg.REGION_BOUNDARIES_X,
+                                       verified=cfg.DIC_COORDINATES_VERIFIED)
+        for name, platform in platforms.items()
+    }
+    summary['shared_dic_reference'] = check_platform_reference(platforms)
     return platforms, calibration, records, summary
 
 
@@ -148,8 +159,7 @@ def _experiment_cases(cfg, mesh, platforms, records):
             platform, cfg.DIC_TO_FEM_MATRIX, cfg.DIC_TO_FEM_OFFSET,
             verified=cfg.DIC_COORDINATES_VERIFIED,
         )
-        valid = ((xy[:, 0] >= 0) & (xy[:, 0] <= cfg.GEO_L) &
-                 (xy[:, 1] >= 0) & (xy[:, 1] <= cfg.GEO_H))
+        valid = dic_roi_mask(xy, cfg.GEO_L, cfg.GEO_H)
         if valid.sum() < 4 or np.any(np.ptp(xy[valid], axis=0) == 0):
             raise ValueError(f'{name}: fewer than four spatially separated points in physical ROI')
         if not np.isfinite(cfg.NOISE_FLOOR_MM) or cfg.NOISE_FLOOR_MM <= 0:
@@ -222,7 +232,19 @@ def run_experiment(cfg, output, mode='inspect'):
             arrays[f'{name}_coordinates'] = platform.coordinates
             arrays[f'{name}_displacement_mean'] = platform.displacement
             arrays[f'{name}_temporal_std'] = platform.temporal_std
+            if cfg.DIC_COORDINATES_VERIFIED:
+                xy, uv, std = transform_dic_platform(
+                    platform, cfg.DIC_TO_FEM_MATRIX, cfg.DIC_TO_FEM_OFFSET, verified=True,
+                )
+                arrays[f'{name}_fem_coordinates_mm'] = xy
+                arrays[f'{name}_fem_displacement_mm'] = uv
+                arrays[f'{name}_fem_scalar_std_mm'] = std
         save_run(output, cfg, summary, arrays)
+        for name, platform in platforms.items():
+            plot_dic_registration(output, name, platform.coordinates,
+                                  arrays.get(f'{name}_fem_coordinates_mm'),
+                                  cfg.GEO_L, cfg.GEO_H, cfg.REGION_BOUNDARIES_X,
+                                  cfg.REGION_INFILL_PERCENT)
         return summary
 
     mesh = _mesh(cfg, forward=(mode == 'forward'))

@@ -105,6 +105,38 @@ def plot_modulus_comparison(output, mesh, reference, reconstructed):
     plt.close(fig)
 
 
+def plot_dic_registration(output, name, reference_xy, fem_xy, length, width,
+                          boundaries, infill_percent):
+    """Show coordinate conventions and physical partitions before any fitting."""
+    fig, axes = plt.subplots(1, 2, figsize=(10, 5), constrained_layout=True)
+    # Show all points: fixed-stride thinning can create artificial diagonal
+    # bands on a structured grid. Rasterization keeps vector exports compact.
+    selected = np.arange(len(reference_xy))
+    colors = selected / max(len(reference_xy)-1, 1)
+    axes[0].scatter(*reference_xy[selected].T, c=colors, cmap='viridis', s=1, rasterized=True)
+    axes[0].set(title='DIC reference coordinates', xlabel='X_ref (export units)',
+                ylabel='Y_ref (export units)', aspect='equal')
+    axes[1].plot([0, length, length, 0, 0], [0, 0, width, width, 0], color='black', lw=1)
+    edges = np.r_[0., boundaries, length]
+    for index, infill in enumerate(infill_percent):
+        axes[1].text((edges[index]+edges[index+1])/2, width*1.12, f'{infill}%',
+                     ha='center', va='bottom', fontsize=9)
+    for boundary in boundaries:
+        axes[1].axvline(boundary, color='0.5', linestyle='--', lw=.7)
+    if fem_xy is not None:
+        axes[1].scatter(*fem_xy[selected].T, c=colors, cmap='viridis', s=1, rasterized=True)
+        title = 'FEM placement: verified transform'
+    else:
+        axes[1].text(length/2, width/2, 'DIC registration pending', ha='center', va='center')
+        title = 'Physical FEM ROI (no DIC overlay)'
+    axes[1].set(title=title, xlabel=f'x: {infill_percent[0]}% to {infill_percent[-1]}% (mm)',
+                ylabel='y: width (mm)', aspect='equal')
+    axes[1].set_ylim(-.15*width, 1.35*width)
+    fig.savefig(Path(output) / f'{name}_registration.png', dpi=300)
+    fig.savefig(Path(output) / f'{name}_registration.svg')
+    plt.close(fig)
+
+
 def save_x_profile(output, mesh, reconstructed, reference):
     """Summarize a free 2D inverse without imposing equality between y rows.
 

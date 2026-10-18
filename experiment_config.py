@@ -31,8 +31,10 @@ REGION_BOUNDARIES_X = (11., 27., 43., 59.)
 # ROI is known, but export coordinates still need checking; never rescale axes
 # independently just to force the numerical span to 70 x 20 mm.
 DIC_COORDINATES_VERIFIED = False
+DIC_COORDINATE_STATE = 'deformed'  # X_ref=X-DX; use 'reference' only if X/Y already refer to the initial image
 DIC_TO_FEM_MATRIX = None
 DIC_TO_FEM_OFFSET = None
+DIC_REGISTRATION_NOTE = 'Export units and Y-positive infill order still require confirmation.'
 NOISE_FLOOR_MM = 0.001  # Explicit provisional floor; not a measured uncertainty
 FIT_CASES = ('180N',)
 PREDICT_CASES = ('280N',)

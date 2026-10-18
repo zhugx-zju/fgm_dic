@@ -31,8 +31,11 @@ def file_sha256(path: Path) -> str:
     return digest.hexdigest()
 
 
-def load_dic_platform(folder: Path, first_stage: int, last_stage: int) -> DICPlatform:
+def load_dic_platform(folder: Path, first_stage: int, last_stage: int, *,
+                      coordinate_state: str = 'deformed') -> DICPlatform:
     """Average matched grid IDs; retain temporal SD without sqrt(frame count)."""
+    if coordinate_state not in {'deformed', 'reference'}:
+        raise ValueError("DIC coordinate_state must be 'deformed' or 'reference'")
     paths = sorted(Path(folder).glob('stage_*.comdat_comdata.csv'))
     selected = {}
     for path in paths:
@@ -53,7 +56,12 @@ def load_dic_platform(folder: Path, first_stage: int, last_stage: int) -> DICPla
                            np.round(finite[['grid_row', 'grid_col']]), rtol=0, atol=0):
             raise ValueError(f'{path}: noninteger DIC grid IDs')
         unique = remove_duplicate_grid_points(finite)
-        frame = restore_reference_coordinates(unique).set_index(['grid_row', 'grid_col'])
+        if coordinate_state == 'deformed':
+            # This requires X/Y and DX/DY to share the export length unit.
+            frame = restore_reference_coordinates(unique)
+        else:
+            frame = unique.assign(X_ref=unique['X'], Y_ref=unique['Y'])
+        frame = frame.set_index(['grid_row', 'grid_col'])
         frames.append(frame)
         sources.append({'path': str(path), 'stage': stage, 'sha256': file_sha256(path),
                         'raw_rows': len(raw), 'valid_rows': len(finite),
@@ -76,6 +84,9 @@ def load_dic_platform(folder: Path, first_stage: int, last_stage: int) -> DICPla
         'reference_bounds': np.stack([coordinates.min(axis=0), coordinates.max(axis=0)]).tolist(),
         'reference_span': np.ptp(coordinates, axis=0).tolist(),
         'displacement_reference': 'initial_unloaded_image',
+        'csv_coordinate_state': coordinate_state,
+        'reference_coordinate_rule': ('[X-DX,Y-DY]' if coordinate_state == 'deformed'
+                                       else '[X,Y]'),
         'noise_note': 'Temporal SD is diagnostic; frames are not assumed independent.',
     }
     return DICPlatform(coordinates, displacement.mean(axis=0),
@@ -98,6 +109,28 @@ def load_calibration(path: Path, method: str = 'independent',
     if not np.all(np.isfinite(table['mean_E_MPa']) & (table['mean_E_MPa'] > 0)):
         raise ValueError('Calibration modulus must be finite and positive (MPa)')
     return table[['infill_percent', 'batch', 'n', 'mean_E_MPa', 'sd_E_MPa', 'fit_method']]
+
+
+def check_platform_reference(platforms: dict[str, DICPlatform]) -> dict:
+    """Check shared grid IDs against one initial reference, before registration."""
+    frames = {name: pd.DataFrame(platform.coordinates,
+                                index=pd.MultiIndex.from_arrays(platform.grid_ids.T))
+              for name, platform in platforms.items()}
+    if not frames:
+        return {}
+    first_name = next(iter(frames))
+    first = frames[first_name]
+    report = {}
+    for name, frame in frames.items():
+        common = first.index.intersection(frame.index)
+        difference = (frame.loc[common].to_numpy() - first.loc[common].to_numpy())
+        max_error = float(np.max(np.abs(difference))) if len(common) else None
+        if max_error is not None and max_error > 1e-5:
+            raise ValueError(f'{name}: shared reference grid differs from {first_name}; '
+                             'check coordinate_state and initial reference image')
+        report[name] = {'reference_platform': first_name, 'common_grid_points': len(common),
+                        'max_coordinate_difference_export_units': max_error}
+    return report
 
 
 def load_platform_force(path: Path, setting_N: int) -> tuple[float, dict]:
@@ -126,11 +159,44 @@ def transform_dic_platform(platform, matrix, offset, *, verified=False):
             np.all(np.isfinite(matrix)) and np.all(np.isfinite(offset))):
         raise ValueError('Expected finite DIC matrix (2,2) and offset (2,)')
     metric = matrix @ matrix.T
-    if metric[0, 0] <= 0 or not np.allclose(metric, metric[0, 0] * np.eye(2)):
+    # Normalize before comparison: absolute tolerances on A A^T would admit
+    # anisotropic scaling when converting very small export units to mm.
+    scale_squared = float(np.trace(metric) / 2)
+    if not np.isfinite(scale_squared) or scale_squared <= 0 or not np.allclose(
+            metric / scale_squared, np.eye(2), rtol=1e-7, atol=1e-10):
         raise ValueError('DIC transform must be a rotation/reflection with one uniform unit scale')
     xy = platform.coordinates @ matrix.T + offset
     uv = platform.displacement @ matrix.T
     # The admitted matrix can rotate component covariance. Without measured
     # covariance use a conservative scalar SD; never invent independent axes.
-    std = np.linalg.norm(platform.temporal_std, axis=1) * np.sqrt(metric[0, 0])
+    std = np.linalg.norm(platform.temporal_std, axis=1) * np.sqrt(scale_squared)
     return xy, uv, std
+
+
+def dic_roi_mask(coordinates: np.ndarray, length: float, width: float) -> np.ndarray:
+    """Admit boundary roundoff using the Q4 observation operator's tolerance."""
+    tol = 1e-9 * max(length, width, 1.) + 1e-12
+    return ((coordinates[:, 0] >= -tol) & (coordinates[:, 0] <= length + tol) &
+            (coordinates[:, 1] >= -tol) & (coordinates[:, 1] <= width + tol))
+
+
+def dic_registration_report(platform: DICPlatform, matrix, offset, length: float,
+                            width: float, boundaries, *, verified=False) -> dict:
+    """Audit physical placement without inferring orientation from data extrema."""
+    report = {'status': 'verified' if verified else 'pending_physical_registration',
+              'fem_domain_mm': [[0., 0.], [length, width]],
+              'fem_x_region_boundaries_mm': list(boundaries),
+              'raw_reference_bounds': platform.metadata['reference_bounds'],
+              'raw_reference_span': platform.metadata['reference_span'],
+              'coordinate_rule': platform.metadata['reference_coordinate_rule'],
+              'unit_contract': 'X,Y,DX,DY must share one checked export length unit',
+              'placement_rule': 'One physical registration for all platforms; no min-shift or span fitting'}
+    if verified:
+        xy, _, _ = transform_dic_platform(platform, matrix, offset, verified=True)
+        valid = dic_roi_mask(xy, length, width)
+        regions = np.searchsorted(boundaries, xy[valid, 0], side='right')
+        report.update(matrix=np.asarray(matrix).tolist(), offset_mm=np.asarray(offset).tolist(),
+                      transformed_bounds_mm=[xy.min(axis=0).tolist(), xy.max(axis=0).tolist()],
+                      points_inside_roi=int(valid.sum()), points_outside_roi=int((~valid).sum()),
+                      points_per_region=np.bincount(regions, minlength=len(boundaries)+1).tolist())
+    return report
