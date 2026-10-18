@@ -280,6 +280,26 @@ For an apples-to-apples field comparison of saved runs, use
 the comparison PNG and PDF are saved beside the candidate result with shared
 modulus and error color scales.
 
+### Huber TGV2 comparison
+
+The inverse solver also accepts `regularization_mode='tgv'`. This jointly
+optimizes all nodal moduli and a two-component local slope field. Positivity
+uses log E, while the regularizer acts on E. Optional `tgv_options` set
+`length_scale` (mm), `modulus_scale` (MPa), `ratio`, and `delta`.
+The existing default remains `affine_detrended`.
+
+```bash
+python -m script.benchmark_tgv_regularization --output-dir results/tgv_comparison_20261015
+```
+
+This compares gradient Tikhonov, affine detrending, and TGV on linear,
+exponential, and seven-zone rectangular fields. Independent repeat
+displacements select gamma; three separate noise seeds score the modulus
+reconstruction. Raw arrays, convergence records, and shared-scale field
+plots are saved. Use `--phase plot` with the same arguments to replot saved
+runs. See [the mathematical model and experiment protocol](docs/tgv_comparison.md)
+for normalization, limitations, and results.
+
 ## Plotting
 
 `script/plot_inverse_results.py` now generates:

@@ -1,0 +1,321 @@
+% !TeX program = xelatex
+\documentclass[11pt,a4paper]{ctexart}
+\usepackage{amsmath,amssymb}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{tikz}
+% Resolve the schematic when compiling from either the project root or plan/.
+\graphicspath{{plan/}{./}}
+\geometry{margin=2.4cm}
+\setlength{\parindent}{2em}
+\setlength{\parskip}{0.25em}
+\pagestyle{plain}
+
+\title{基于哑铃形试样平行段等效模型的 DIC--伴随反演实验方案}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+
+\section{实验目的与共用试样几何}
+本实验利用增材制造构造可控的空间非均匀等效刚度，通过拉伸试验同步获取载荷与数字图像相关（DIC）位移场，并采用伴随方法识别平行段内的等效杨氏模量分布。填充率是制造控制量，待识别的 $E_{\mathrm{eq}}$ 是给定打印工艺和加载方向下的有效参数；不将标称填充率直接等同于材料模量。
+
+两种方案共用带平滑肩部的哑铃形外轮廓：总长 $220\,\mathrm{mm}$，夹持端宽 $40\,\mathrm{mm}$，厚度 $t=3.2\,\mathrm{mm}$；平行段长 $150\,\mathrm{mm}$、宽 $w=20\,\mathrm{mm}$。设 $x$ 为拉伸方向，$y$ 为宽度方向，试样中心为坐标原点。切片时仅改变各区填充率，材料、铺丝方向、墙层、顶底层及其他打印工艺参数保持一致。
+
+\section{方案 A：沿拉伸方向分区的 $E_{\mathrm{eq}}(x)$}
+当前已生成的试样模型沿 $x$ 划分七个横贯平行段全宽的填充率区域，形成阶梯式 $E_{\mathrm{eq}}(x)$；各区定义见表~\ref{tab:infill} 和图~\ref{fig:specimen}。
+
+\begin{table}[htbp]
+\centering
+\caption{平行段内七个填充率分区；坐标与长度单位均为 $\mathrm{mm}$。}
+\label{tab:infill}
+\begin{tabular}{cccccccc}
+\toprule
+分区 & X1 & X2 & X3 & X4 & X5 & X6 & X7 \\
+\midrule
+$x$ 范围 & $[-75,-40]$ & $[-40,-24]$ & $[-24,-8]$ & $[-8,8]$ & $[8,24]$ & $[24,40]$ & $[40,75]$ \\
+长度 & 35 & 16 & 16 & 16 & 16 & 16 & 35 \\
+填充率（\%） & 40 & 50 & 60 & 70 & 80 & 90 & 100 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+X1 和 X7 的填充率分别延续至左、右肩部及夹持端，避免平行段与肩部交界处额外改变打印设置。图~\ref{fig:specimen} 中的虚线标示平行段及反演域边界；该图对应沿拉伸方向分区的主方案。
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\linewidth]{dogbone_220mm_region_schematic.pdf}
+\caption{哑铃形试样的七区填充率布置与中央矩形反演域。}
+\label{fig:specimen}
+\end{figure}
+
+\section{方案 B：沿宽度方向分区的 $E_{\mathrm{eq}}(y)$}
+备选试样在平行段沿 $y$ 划分七条与拉伸方向平行的区域。令
+\begin{equation}
+ y_i=-\frac{w}{2}+\frac{iw}{7},\qquad
+ \Omega_i^{(y)}=\{(x,y):-75<x<75,\;y_{i-1}<y<y_i\},
+ \quad i=1,\ldots,7.
+\end{equation}
+由下至上，Y1--Y7 依次赋予 $40\%$、$50\%$、$60\%$、$70\%$、$80\%$、$90\%$、$100\%$ 填充率；每条宽 $w/7\approx2.86\,\mathrm{mm}$，并沿整个平行段延伸。为保持分区在肩部和夹持端的连续性，可按局部半宽 $b(x)$ 将边界定义为 $y/b(x)=-1+2i/7$。这一横向分区是待制作方案，需在切片预览中确认窄条内的实际填充路径和界面位置。
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[x=1cm,y=1cm]
+  \foreach \i/\rho/\shade in {0/40/10,1/50/18,2/60/26,3/70/34,4/80/42,5/90/50,6/100/58}{
+    \pgfmathsetmacro{\ylo}{0.38*\i}
+    \pgfmathsetmacro{\yhi}{0.38*(\i+1)}
+    \pgfmathsetmacro{\ymid}{0.38*(\i+0.5)}
+    \pgfmathtruncatemacro{\zone}{\i+1}
+    \fill[blue!\shade] (0,\ylo) rectangle (11,\yhi);
+    \node[font=\scriptsize] at (5.5,\ymid) {Y\zone\quad \rho\%};
+  }
+  \draw[thick] (0,0) rectangle (11,2.66);
+  \draw[->,thick] (0,1.33)--(-0.8,1.33);
+  \draw[->,thick] (11,1.33)--(11.8,1.33);
+  \node[below] at (5.5,0) {$x$：拉伸方向};
+  \node[rotate=90,above] at (0,1.33) {$y$：宽度方向};
+\end{tikzpicture}
+\caption{$E_{\mathrm{eq}}(y)$ 备选方案的平行段示意；两端箭头表示轴向拉伸，非已生成的 STL。}
+\label{fig:transverse}
+\end{figure}
+
+\section{平行段的截取与力学等效}
+在平行段内选取矩形观测域
+\begin{equation}
+ \Omega=(-L/2,L/2)\times(-w/2,w/2),\qquad L=110\,\mathrm{mm},
+\end{equation}
+使其两端分别距肩部约 $20\,\mathrm{mm}$。在该域内，X1 和 X7 各保留 $15\,\mathrm{mm}$，其余五区各为 $16\,\mathrm{mm}$。DIC 记录该域内表面位移；平面应力近似下，反演模型满足
+\begin{equation}
+ \nabla\!\cdot\boldsymbol\sigma=\boldsymbol 0,\qquad
+ \boldsymbol\sigma=\mathsf C\bigl(E_{\mathrm{eq}}(x,y),\nu\bigr):
+ \boldsymbol\varepsilon(\boldsymbol u),\qquad
+ \boldsymbol\varepsilon(\boldsymbol u)=\tfrac12
+ \bigl(\nabla\boldsymbol u+\nabla\boldsymbol u^{\mathsf T}\bigr).
+\end{equation}
+其中 $\nu$ 作为独立标定或灵敏度分析参数，侧边界取自由表面条件。
+
+对任一截面，试验机测得的轴向合力满足
+\begin{equation}
+ F=\int_{-w/2}^{w/2}\sigma_{xx}(x,y)\,t\,\mathrm dy.
+\end{equation}
+以此为基础，将截取域两端的真实截面牵引近似为静力等效的均布牵引：
+\begin{equation}
+ \boldsymbol\sigma\boldsymbol n=\pm q\boldsymbol e_x
+ \quad\text{于}\quad x=\pm L/2,
+ \qquad q=\frac{F}{wt}.
+\end{equation}
+该条件是平行段反演所采用的\emph{边界近似}，不是由合力测量单独推出的局部应力分布。肩部与夹持引起的局部扰动可依据圣维南原理随截面远离其作用区而衰减。方案 A 的截取面位于横向填充设置一致的 X1、X7 区内，均布牵引近似较有力学依据，但仍受肩部和分区界面影响。方案 B 的截取面横跨七种填充设置；即使远离肩部，沿宽度方向的载荷分担也可能持续存在，故不能仅由圣维南原理保证该截面的牵引均布。
+
+例如，在方案 B 的近似等轴向应变极限，$\varepsilon_{xx}\simeq\varepsilon_0$，第 $i$ 条带可有 $\sigma_{xx,i}\simeq E_i\varepsilon_0$，而试验机仅测得 $F\simeq t\varepsilon_0\sum_i E_i(w/7)$。因此，$E(y)$ 在理想均布牵引矩形模型中可以产生可用于反演的非均匀位移响应，但实际试样能否满足该边界条件以及七个参数的可辨识性，必须分别检验。
+
+\section{DIC 观测与伴随反演}
+在小变形、线弹性载荷范围内同步采集载荷 $F_k$ 和平行段位移场 $\boldsymbol u_k^{\mathrm{DIC}}$。将 DIC 坐标映射至 $\Omega$，剔除刚体平移与转动，并仅使用有效测点。对任一方案，记 $\Omega_i$ 为第 $i$ 个填充率分区，以其等效模量的对数 $m_i$ 为未知量，求解
+\begin{equation}
+ \min_{\boldsymbol m}\;J(\boldsymbol m)
+ =\frac12\sum_k
+ \left\|\mathsf W_k\left[
+ \mathsf P\boldsymbol u(\boldsymbol m;F_k)
+ -\boldsymbol u_k^{\mathrm{DIC}}\right]\right\|_2^2
+ +\lambda\mathcal R(\boldsymbol m),
+ \qquad E_{\mathrm{eq}}|_{\Omega_i}=\exp(m_i)>0.
+\end{equation}
+其中 $\mathsf P$ 为有限元场到 DIC 测点的映射，$\mathsf W_k$ 表示测量权重，$\mathcal R$ 为必要的正则项；目标函数梯度由伴随方程计算。纯牵引问题中的刚体自由度通过最小约束及位移场配准处理，不引入额外的夹持位移边界。上式描述的是\emph{拟开展的七区参数反演}；下文已完成的合成数据诊断则对矩形域每个节点独立赋予 $E(x,y)$，两者的未知量维数和可辨识性不能混为一谈。
+
+\section{合成数据先导：全场正则项的形式与边界偏差}
+当前代码在 $55\times10$ 个双线性四边形单元上使用 $616$ 个独立节点模量，令 $m_i=\log E_i$。对两端等大反向的均布牵引及完整节点位移合成观测，实际求解的单载荷目标为
+\begin{equation}\label{eq:synthetic_objective}
+ J_\gamma(\boldsymbol m)
+ =\frac12(\boldsymbol u^{\rm obs}-\boldsymbol u(e^{\boldsymbol m}))^{\mathsf T}
+ \mathsf M(\boldsymbol u^{\rm obs}-\boldsymbol u(e^{\boldsymbol m}))
+ +\frac{\gamma}{2}\mathcal R(E),\qquad \gamma=10^{-6},
+\end{equation}
+其中 $\mathsf M$ 为位移的有限元质量矩阵，正问题满足 $\mathsf K(E)\boldsymbol u=\boldsymbol f$ 及三个消除刚体运动的约束。该合成目标尚未包含真实 DIC 测点映射、相关噪声协方差或完整试样肩部的边界误差，不能直接等同于上一节的实验目标。
+
+原始的一阶梯度型 Tikhonov 正则项及本分支新增的\emph{仿射去趋势梯度正则项}分别为
+\begin{align}
+ \mathcal R_{\rm H1}(E)&=\int_\Omega |\nabla E|^2\,\mathrm dA,
+ \\
+ \mathcal R_{\rm cgrad}(E)&=\int_\Omega
+ \left[(E_x-\overline{E_x})^2+(E_y-\overline{E_y})^2\right]\,\mathrm dA,
+ \qquad
+ \overline{E_\alpha}=\frac{1}{|\Omega|}\int_\Omega E_\alpha\,\mathrm dA.
+\end{align}
+这里取的是\emph{全场空间梯度的面积平均}，不是 $E$ 的平均值，也不是事先指定 $E$ 只随 $x$ 变化。将均值展开可得
+\begin{equation}\label{eq:regularizer_projection}
+ \mathcal R_{\rm cgrad}(E)=\mathcal R_{\rm H1}(E)
+ -|\Omega|\left(\overline{E_x}^{\,2}+\overline{E_y}^{\,2}\right).
+\end{equation}
+这等价于从梯度中正交投影掉全局常斜率分量，仍惩罚其局部变化。任意仿射场 $E=a+bx+cy$ 满足 $\mathcal R_{\rm cgrad}=0$，但反演仍为二维节点场；不应把零惩罚解释成预先指定了实际试样的模量分布。相较之下，$\mathcal R_{\rm H1}$ 也惩罚真实的非零斜率，其单独变分的自然边界条件倾向于零法向斜率，因此可能在截取域端部产生偏置。
+
+离散实现中令 $L_{ij}=\int_\Omega\nabla N_i\!\cdot\!\nabla N_j\,\mathrm dA$、$(g_\alpha)_i=\int_\Omega\partial_\alpha N_i\,\mathrm dA$、$A=|\Omega|$。新增项对节点模量的梯度为
+\begin{equation}
+ \nabla_{\boldsymbol E}\mathcal R_{\rm cgrad}
+ =2\left[L\boldsymbol E-
+ \frac{(\boldsymbol g_x^{\mathsf T}\boldsymbol E)\boldsymbol g_x+
+       (\boldsymbol g_y^{\mathsf T}\boldsymbol E)\boldsymbol g_y}{A}\right].
+\end{equation}
+目标函数中的正则项梯度为 $\gamma\nabla_{\boldsymbol E}\mathcal R_{\rm cgrad}/2$；对优化变量 $m_i$ 再乘链式因子 $E_i$，与位移失配项的伴随梯度相加。数值检查包括仿射场零惩罚、正则项有限差分梯度和完整伴随目标对 $\boldsymbol m$ 的有限差分梯度，均已通过。
+
+\subsection{同条件比较与适用边界}
+表~\ref{tab:regularization_comparison} 汇总现有合成数据比较。此处代码坐标取 $x\in[0,110]\,\mathrm{mm}$，与前文中心坐标相差 $55\,\mathrm{mm}$；表中真值表达式的模量单位均为 MPa。相同真值和噪声水平的两种正则项使用同一网格、两端各 $0.01\,\mathrm N$ 的拉力、$t=3.2\,\mathrm{mm}$、初值 $E_i=0.501\,\mathrm{MPa}$、$\gamma=10^{-6}$ 及相同位移观测。左端统计 $x=0\sim10\,\mathrm{mm}$，右端统计 $x=100\sim110\,\mathrm{mm}$；表中指标为节点绝对相对误差的均值（\%）。两种反演均保留 $616$ 个二维节点未知量，表中指数场的真值也只随 $x$ 变化。$1\%$ 噪声行仅是一组随机种子 $42$ 的相同位移噪声样本，不代表跨种子稳定性。
+
+\begin{table}[htbp]
+\centering
+\small
+\caption{原梯度正则项与仿射去趋势正则项的合成数据对比；所有数值单位为绝对相对误差的百分数。}
+\label{tab:regularization_comparison}
+\begin{tabular}{lllrrr}
+\toprule
+真值 $E(x)$ & 位移噪声 & 正则项 & 全场 MAE & 左端 MAE & 右端 MAE \\
+\midrule
+$1+x/110$ & $0$ & $\mathcal R_{\rm H1}$ & 0.2123 & 0.6493 & 0.9571 \\
+             &     & $\mathcal R_{\rm cgrad}$ & $8.53\!\times\!10^{-6}$ & $1.67\!\times\!10^{-5}$ & $7.67\!\times\!10^{-6}$ \\
+$1+x/110$ & $1\%$ & $\mathcal R_{\rm H1}$ & 1.2050 & 0.6588 & 3.0070 \\
+             &        & $\mathcal R_{\rm cgrad}$ & 1.0975 & 0.2550 & 2.3648 \\
+$\exp[(\ln2)x/110]$ & $0$ & $\mathcal R_{\rm H1}$ & 0.2256 & 0.4539 & 1.2699 \\
+             &     & $\mathcal R_{\rm cgrad}$ & 0.0709 & 0.1846 & 0.3426 \\
+$\exp[(\ln2)x/110]$ & $1\%$ & $\mathcal R_{\rm H1}$ & 1.2886 & 0.5118 & 3.3571 \\
+             &        & $\mathcal R_{\rm cgrad}$ & 1.2123 & 0.3855 & 2.7145 \\
+$\exp[(\ln8)x/110]$ & $0$ & $\mathcal R_{\rm H1}$ & 4.4167 & 1.4291 & 23.7202 \\
+             &     & $\mathcal R_{\rm cgrad}$ & 2.7853 & 2.1444 & 14.3102 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+线性无噪声真值恰好位于 $\mathcal R_{\rm cgrad}$ 的零空间，再加上合成观测与反演使用同一有限元模型，故接近零误差主要证明消除了\emph{该算例的正则化偏置}，不是一般识别精度。原正则项在两端的误差还可通过减小 $\gamma$ 缓和；但先导扫描中 $\gamma=0$ 的二维反演在 $2000$ 次迭代内未收敛，并出现大幅场误差，说明仍需稳定化。新正则项对缓变指数场改善明显，但加入 $1\%$ 噪声后全场收益仅约 $0.076$ 个百分点。对于较陡的 $1\to8\,\mathrm{MPa}$ 指数场，它虽降低全场和右端误差，却使左端误差从 $1.43\%$ 增至 $2.14\%$，且右端仍有 $14.31\%$ 误差。探索性地将该算例的 $\gamma$ 调至 $10^{-8}$ 时，新正则项全场与右端 MAE 分别降至 $0.483\%$ 和 $2.898\%$；该数值是在已知合成真值后查看的，\emph{不能}作为真实实验已验证的选参结果。零噪声小网格上的新正则项 L 曲线各点曾重合、无可辨识拐点，不能机械采用曲率最大规则。
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\linewidth]{regularization_linear_field_comparison.pdf}
+\caption{线性 $E(x)$、零噪声合成场：上排为两种正则项的二维重建，下排为绝对相对误差；同一行共用色标。新方法接近零误差的前提是线性真值落在其零空间。}
+\label{fig:regularization_linear}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\linewidth]{regularization_exponential_2_field_comparison.pdf}
+\caption{缓变指数 $E(x)=\exp[(\ln2)x/110]$、零噪声合成场的同色标比较；新正则项减小两端偏差，但指数曲率仍受到惩罚。}
+\label{fig:regularization_exp2}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\linewidth]{regularization_exponential_8_field_comparison.pdf}
+\caption{较陡指数 $E(x)=\exp[(\ln8)x/110]$、零噪声合成场；右端残留的大误差表明，缓变指数算例的改善不能直接外推到高对比度材料。}
+\label{fig:regularization_exp8}
+\end{figure}
+
+\section{未知真实分布时的正则化策略与初步验证}
+真实试样的 $E_{\rm eq}$ 空间形状未知。前述仿射去趋势项来源于已观察到的端部偏差和合成线性真值，它应作为\emph{受控基线}而非默认物理规律。现阶段不宣称存在适用于平滑、指数、七区突变和打印缺陷的单一最优正则项。
+
+\paragraph{低维对照：利用已知制造分区，而不预设模量数值。}
+对于方案 A 或 B，七区界面位置和填充率顺序来自切片设计，是反演前已知信息；可与全场二维反演并行求七个正模量 $E_i=e^{m_i}$，并用独立均匀试样标定构造带不确定度的参考约束。例如
+\begin{equation}
+ \mathcal R_{\rm cal}(\boldsymbol m)
+ =\sum_{i=1}^7\frac{(m_i-m_i^{\rm cal})^2}{(s_i^{\rm cal})^2}.
+\end{equation}
+若标定数据与实际分区存在工艺差异，应增大 $s_i^{\rm cal}$ 并做敏感性分析；真实界面跳变不能被默认的一阶平滑项强行抹平。七参数模型维数较低且可解释，但它不能表示区内缺陷、界面扩散或未建模的二维变化，因而是诊断二维反演的对照，不能取代全场结果；须同时检验留出 DIC 测点的位移残差和局部误差图。
+
+\paragraph{需要自由二维场时的候选：二阶总广义变差。}
+可测试离散的 Huber 平滑二阶总广义变差（TGV$^2$）型先验\cite{bredies2010tgv}。令 $E_{\rm ref}$ 为独立给定的尺度，并\emph{预先}指定两种候选表示 $z=E/E_{\rm ref}$ 或 $z=\log(E/E_{\rm ref})$，而非观察真实反演结果后再选表示：
+\begin{equation}\label{eq:tgv_candidate}
+ \mathcal R_{\rm TGV}(z)=\min_{\boldsymbol v}
+ \left\{\alpha_1\!\int_\Omega\rho_\delta(|\nabla z-\boldsymbol v|)\,\mathrm dA
+ +\alpha_0\!\int_\Omega\rho_\delta(|\operatorname{sym}\nabla\boldsymbol v|)\,\mathrm dA\right\},
+\end{equation}
+其中 $\rho_\delta(s)=s^2/(2\delta)$（$s\leq\delta$），$\rho_\delta(s)=s-\delta/2$（$s>\delta$）。辅助场 $\boldsymbol v$ 可在平滑区域跟随局部斜率，并允许斜率或模量在少量位置显著改变；它不要求输入线性、指数或七区真值曲线。但两种表示都不是中性的：$z=E/E_{\rm ref}$ 偏好分段仿射模量，$z=\log(E/E_{\rm ref})$ 偏好分段对数仿射模量，后者对应分段指数；两者均可能平滑窄区、移动界面。$\alpha_0,\alpha_1,\delta$ 的选择和带辅助变量的优化均比现有二次项复杂。下文已实现并初步测试 $z=E/E_{\rm ref}$ 的有限元 Huber TGV 型形式；对数表示及真实 DIC 场尚未测试。
+
+若沿用式~\eqref{eq:synthetic_objective} 的位移数据项，拟议的完整优化问题是
+\begin{equation}\label{eq:tgv_objective}
+ \min_{\boldsymbol m,\boldsymbol v}\;
+ \frac12\bigl\|\boldsymbol u^{\rm obs}-\boldsymbol u(e^{\boldsymbol m})\bigr\|_{\mathsf M}^{2}
+ +\lambda\!\left[\alpha_1\!\int_\Omega\rho_\delta(|\nabla z(\boldsymbol m)-\boldsymbol v|)\,\mathrm dA
+ +\alpha_0\!\int_\Omega\rho_\delta(|\operatorname{sym}\nabla\boldsymbol v|)\,\mathrm dA\right],
+\end{equation}
+其中 $\|\boldsymbol r\|_{\mathsf M}^2=\boldsymbol r^{\mathsf T}\mathsf M\boldsymbol r$，$\operatorname{sym}\nabla\boldsymbol v=(\nabla\boldsymbol v+\nabla\boldsymbol v^{\mathsf T})/2$。在实测 DIC 上还须将数据项改为有效测点映射与噪声加权形式；此处的 $\lambda$ 控制总强度，$\alpha_0/\alpha_1$ 控制两种变化的相对代价。
+
+\paragraph{与当前一阶梯度型 Tikhonov 的物理解释和数学区别。}
+Tikhonov 指 $\|\mathsf Lz\|_2^2$ 一类\emph{二次惩罚}，不是仅能处理光滑场的特定公式；当前代码选择 $\mathsf L=\nabla$，所以 $\mathcal R_{\rm H1}$ 偏好全域常值模量。仿射去趋势项仍是二次梯度惩罚，只是从梯度中移除了\emph{一个全域平均斜率}，偏好全域仿射模量。TGV 型项则用空间变化的 $\boldsymbol v$ 表示\emph{局部}斜率：第一项检查实际梯度是否偏离局部斜率，第二项检查局部斜率变化是否集中在少量位置。其近似线性的大变化代价可允许界面附近出现较陡变化，同时在区内保留平滑斜率；但这仍是统计/结构先验，\emph{不是}额外的弹性本构定律，也不会自动辨认真实填充界面。
+
+一维例子说明差异。对于 $z(x)=a+bx$，一阶梯度平方项为 $b^2L>0$（$b\ne0$）；在式~\eqref{eq:tgv_candidate} 中取 $v=b$，两项均为零。若某一网格宽度 $h$ 内发生幅值 $\Delta z$ 的陡变，一阶梯度平方惩罚约为 $(\Delta z)^2/h$，而 TGV 型第一项在 $|\Delta z|/h\gg\delta$ 时约按 $|\Delta z|$ 增长；因此前者强烈压低和摊宽跳变，后者允许跳变但仍付出代价。对于弯曲的指数场，$z=E/E_{\rm ref}$ 的局部斜率连续改变，TGV 仍有非零惩罚；若选 $z=\log(E/E_{\rm ref})$，纯指数场才是零惩罚。离散网格、Huber 阈值和测量噪声均会影响界面的实际宽度与位置，不能把上述倾向当作反演成功的保证。
+
+\paragraph{避免按已知答案挑选正则项的验证流程。}
+先由重复静态 DIC 图像估计测量噪声、空间相关性和有效测点掩膜，在位移数据项中采用相应权重；再用预先固定的线性、缓变/陡变平滑场、七区跳变、混合缺陷及完整试样到截取域的边界失配场景比较 $\mathcal R_{\rm H1}$、$\mathcal R_{\rm cgrad}$、七参数标定约束和式~\eqref{eq:tgv_candidate} 的两种表示。各方法使用相同训练位移、网格、初值规则和计算预算，在独立噪声种子、超过 DIC 噪声相关尺度的留出空间块或重复试样上检查预测位移、端部/界面误差、模量不确定度及收敛失败率；合成真值仅用于\emph{最后}的误差评估，不用于挑选该测试样本的 $\gamma$。留出位移预测正确也不保证模量唯一，仍需独立模量标定和参数灵敏度检查。载荷级在线弹性区内基本按比例缩放，可改善信噪比，但不能单独增加新的空间灵敏度。只有跨场景、跨噪声和边界扰动仍有收益时，才将更复杂的先验用于实测数据；正则化不能代替对牵引边界误差的检验。
+
+\subsection{二维 Huber TGV 型正则项的实现与受控测试}
+实际实现先按几何和模量尺度无量纲化：$\boldsymbol\xi=(x,y)/\ell$、$\ell=20\,\mathrm{mm}$、$z=E/(1\,\mathrm{MPa})$，并固定 $r=2$、$\delta=0.02$。本次求解的正则项及总目标为
+\begin{align}
+ \mathcal R_{\rm TGV,h}(E,\boldsymbol v)
+ &=\int_{\Omega/\ell}\left[\rho_\delta(|\nabla_{\boldsymbol\xi}z-\boldsymbol v|)
+ +r\rho_\delta(|\operatorname{sym}\nabla_{\boldsymbol\xi}\boldsymbol v|_{\rm F})\right]\,\mathrm d\boldsymbol\xi,
+ \\
+ \min_{\boldsymbol m,\boldsymbol v}\ J_\gamma
+ &=\tfrac12\|\boldsymbol u^{\rm obs}-\boldsymbol u(e^{\boldsymbol m})\|_{\mathsf M}^2
+ +\tfrac\gamma2\mathcal R_{\rm TGV,h}(e^{\boldsymbol m},\boldsymbol v).
+\end{align}
+积分换元包含 $\mathrm d\boldsymbol\xi=\mathrm dA/\ell^2$，微分换元为 $\nabla_{\boldsymbol\xi}=\ell\nabla_{x,y}$。模量和辅助向量场均用连续双线性有限元插值、$2\times2$ Gauss 积分；张量采用 Frobenius 范数，包含两个对称剪切分量的贡献。仍保留 $616$ 个独立二维节点模量，并额外优化 $1232$ 个局部斜率自由度。优化变量使用 $m=\log E$ 保证正值，但正则项作用于 $E$。连续节点模量只能用至少一个单元宽度表示陡变，因此这是有限维、Huber 平滑的 TGV 型近似。完整目标对全部模量和辅助变量的有限差分梯度检查，以及任意二维仿射场的零惩罚检查均已通过。
+
+\paragraph{固定协议与不依赖模量真值的选参。}
+采用相同的 $55\times10$ 网格、双端载荷和 $E_i=0.501\,\mathrm{MPa}$ 初值，分别测试线性 $1+x/110$、指数 $\exp[(\ln2)x/110]$，以及等宽七段模量 $[1,1.4,1.2,1.8,1.5,2,1.7]\,\mathrm{MPa}$。七段算例仍在矩形域上，不代表已测试实际狗骨七区几何。所有位移使用现有逐分量、相对幅度 $1\%$ 的独立 Gaussian 噪声模型。先用种子 $40$ 的位移拟合，在 $\gamma\in\{10^{-7},10^{-6},10^{-5}\}$ 中，按另一份独立重复观测（种子 $1040$）的质量矩阵加权位移误差为每种方法选参。随后固定参数，以测试种子 $42,43,44$ 从相同初值重新反演，最后才用模量真值评分。每次均最多 $2000$ 次迭代、约 $2400$ 次目标计算；Huber 阈值与两项相对权重未按最终误差调节。
+
+\begin{table}[htbp]
+\centering
+\small
+\caption{独立重复位移选参后，三个测试噪声种子的平均结果。误差单位为 \%；耗时为当前机器单次反演的平均秒数，不含选参扫描。}
+\label{tab:tgv_results}
+\begin{tabular}{llrrrr}
+\toprule
+真值 & 正则项 & 所选 $\gamma$ & 全场 MAE & 右端 MAE & 耗时（s） \\
+\midrule
+线性 & 梯度 Tikhonov & $10^{-6}$ & 1.2208 & 2.5304 & 5.70 \\
+ & 仿射去趋势 & $10^{-5}$ & 0.4727 & 0.8372 & 3.33 \\
+ & Huber TGV & $10^{-5}$ & 0.2812 & 0.7673 & 12.47 \\
+指数 & 梯度 Tikhonov & $10^{-6}$ & 1.3119 & 2.8249 & 6.12 \\
+ & 仿射去趋势 & $10^{-5}$ & 0.5707 & 1.2914 & 3.32 \\
+ & Huber TGV & $10^{-5}$ & 0.6590 & 2.4324 & 13.26 \\
+七段 & 梯度 Tikhonov & $10^{-7}$ & 5.1683 & 6.1890 & 11.47 \\
+ & 仿射去趋势 & $10^{-7}$ & 5.1727 & 6.1453 & 11.61 \\
+ & Huber TGV & $10^{-6}$ & 3.3053 & 3.5779 & 34.12 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\paragraph{收益、反例与计算代价。}
+七段场中，TGV 相对原梯度项的平均全场误差下降约 $36.0\%$，三个测试种子均改善；区内平台更平坦，但部分幅值仍有收缩，最大节点误差仍为 $17.1\%\sim23.9\%$，并未精确恢复界面。线性场的 TGV 全场误差范围为 $0.234\%\sim0.372\%$，低于本次仿射去趋势的 $0.362\%\sim0.581\%$。指数场则构成反例：TGV 的平均全场及右端误差均高于仿射去趋势，左端也由 $0.479\%$ 增至 $0.946\%$；TGV 三种子的全场范围为 $0.420\%\sim0.874\%$。局部斜率变化的惩罚可能压制真实曲率，与端部误差相符，但尚未通过独立消融定量分解原因。最终 $27$ 次测试均取得 SciPy 成功状态；TGV 七段场耗费 $1999,1839,1833$ 次迭代，明显多于二次项约 $600$ 次。校准阶段 $\gamma=10^{-7}$ 的三个 TGV 候选均耗尽预算，且均未被选中，失败日志保留。
+
+\paragraph{结论的范围。}
+这只是\emph{预设参数范围内}的初步比较，不能把上表当作各方法最优性能：部分方法选择到扫描边界，而且指数场 TGV 在 $10^{-6}$ 与 $10^{-5}$ 时的验证位移代价仅相差约 $0.081\%$，一次重复观测不足以稳定区分。位移预测较好不保证模量误差较小，故没有按测试模量误差重新选参。当前证据支持保留 TGV 作为分区材料候选，\emph{不支持全面替换}仿射去趋势默认项；后续若扩大参数范围或改变表示，应使用新的预先固定测试数据。相关噪声、完整试样边界失配、真实七区几何和 $\log E$ 表示均未在本次验证。可复现脚本为 \texttt{script/benchmark\_tgv\_regularization.py}，原始数组、参数记录、收敛日志和全部二维场图保存在独立的 \texttt{results/tgv\_comparison\_20261015/} 目录。
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\linewidth]{tgv_20261015_linear_fields.pdf}
+\caption{线性真值、$1\%$ 位移噪声、预先指定的测试种子 $42$：真值与三种方法的二维模量及误差场，同一行共用色标。图中为单个种子，表~\ref{tab:tgv_results} 为三种子平均。}
+\end{figure}
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\linewidth]{tgv_20261015_exponential_fields.pdf}
+\caption{指数真值的相同协议比较。TGV 减少区内噪声，但本次两端精度不及仿射去趋势；这限制了由线性场推断其一般优势的结论。}
+\end{figure}
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\linewidth]{tgv_20261015_layered_fields.pdf}
+\caption{七段升降跳变真值的相同协议比较。TGV 改善平台并降低平均误差，界面仍有明显局部误差；本图是矩形合成场，未引入真实狗骨肩部与分区界面误差。}
+\end{figure}
+
+\newpage
+\section{等效模型的验证与结果判据}
+先用同一打印参数制备各填充率均匀试样，独立获得等效模量参考值。随后对分区试样进行重复拉伸试验，比较反演模量、独立标定值以及由标定值正向预测的 DIC 位移场。报告分区误差、重复性、位移残差与载荷级敏感性；不同载荷级应保持在线弹性范围内。
+
+在解释实验结果前，对两种分区分别进行完整试样与截取矩形模型的配对计算：在完整模型中施加实际夹持条件，提取 $\Omega$ 端部的法向、切向牵引及域内位移，再检验均布牵引矩形模型造成的位移和模量偏差。方案 B 还应依据 DIC 噪声水平检查各 $E_i$ 的位移灵敏度及参数相关性。只有当边界近似偏差和反演误差均低于预设容许值时，才使用均布牵引矩形模型解释相应实验；否则应调整加载与边界建模，或保留完整试样模型。
+
+\begin{thebibliography}{9}
+\bibitem{bredies2010tgv}
+K.~Bredies, K.~Kunisch, and T.~Pock,
+``Total generalized variation,''
+\emph{SIAM Journal on Imaging Sciences}, vol.~3, no.~3, pp.~492--526, 2010.
+doi:10.1137/090769521.
+\end{thebibliography}
+
+\end{document}

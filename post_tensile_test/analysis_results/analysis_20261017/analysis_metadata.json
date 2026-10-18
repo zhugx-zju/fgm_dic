@@ -1,0 +1,1285 @@
+{
+  "run_id": "analysis_20261017",
+  "settings": {
+    "search_start_fraction": 0.05,
+    "search_end_fraction": 0.8,
+    "grid_step_fraction": 0.025,
+    "minimum_width_fraction": 0.15,
+    "minimum_points": 60,
+    "minimum_r2": 0.995,
+    "maximum_half_slope_difference": 0.05,
+    "minimum_positive_strain_steps": 0.9
+  },
+  "new_geometry": {
+    "batch": "1016",
+    "source": "User supplied in this conversation on 2026-10-17",
+    "scope": "All 16 uniform-infill dogbone specimens in the 60, 70, 80 and 90 folders",
+    "width_mm": 9.89,
+    "thickness_mm": 3.26,
+    "gauge_mm": 50.0,
+    "note": "One user-supplied geometry applies to the new batch; individual specimen dimensions were not supplied. sample_2 and sample_3 are separate nonuniform/DIC experiments."
+  },
+  "design": {
+    "bridges": [
+      60,
+      90
+    ],
+    "new_primary_infill_levels": [
+      70,
+      80
+    ],
+    "suspect_old_levels": [
+      70,
+      80
+    ],
+    "excluded_nonuniform_folders": [
+      "sample_2",
+      "sample_3"
+    ],
+    "pooling": "No anonymous pooled dataset created. Retain batch identity. Bridge agreement alone cannot prove identical manufacturing populations."
+  },
+  "independent_fit_audits_1016": [
+    {
+      "infill_percent": 60,
+      "common_stress_interval_mpa": [
+        6.458367502651872,
+        11.155362050035052
+      ],
+      "common_interval_accepted": 3,
+      "specimen_count": 3,
+      "exceptions": [],
+      "window_sensitivity_percent": {
+        "left_10pct_width": {
+          "60-1": 0.782,
+          "60-2": 0.886,
+          "60-3": 1.013
+        },
+        "right_10pct_width": {
+          "60-1": -0.84,
+          "60-2": -0.899,
+          "60-3": -0.985
+        },
+        "trim_15pct_each_end": {
+          "60-1": -0.038,
+          "60-2": 0.047,
+          "60-3": 0.027
+        }
+      }
+    },
+    {
+      "infill_percent": 70,
+      "common_stress_interval_mpa": [
+        7.8782424693096464,
+        12.120373029707151
+      ],
+      "common_interval_accepted": 5,
+      "specimen_count": 5,
+      "exceptions": [],
+      "window_sensitivity_percent": {
+        "left_10pct_width": {
+          "70-1": 0.76,
+          "70-2": 0.793,
+          "70-3": 0.827,
+          "70-4": 0.616,
+          "70-5": 0.918
+        },
+        "right_10pct_width": {
+          "70-1": -0.757,
+          "70-2": -0.828,
+          "70-3": -0.751,
+          "70-4": -0.721,
+          "70-5": -0.903
+        },
+        "trim_15pct_each_end": {
+          "70-1": 0.01,
+          "70-2": 0.162,
+          "70-3": -0.014,
+          "70-4": -0.015,
+          "70-5": -0.016
+        }
+      }
+    },
+    {
+      "infill_percent": 80,
+      "common_stress_interval_mpa": [
+        6.923701118747949,
+        11.959120114201001
+      ],
+      "common_interval_accepted": 5,
+      "specimen_count": 5,
+      "exceptions": [],
+      "window_sensitivity_percent": {
+        "left_10pct_width": {
+          "80-1": 0.96,
+          "80-2": 0.697,
+          "80-3": 4.908,
+          "80-4": 0.721,
+          "80-5": 0.777
+        },
+        "right_10pct_width": {
+          "80-1": -0.988,
+          "80-2": -0.959,
+          "80-3": -0.907,
+          "80-4": -0.717,
+          "80-5": -0.642
+        },
+        "trim_15pct_each_end": {
+          "80-1": 0.167,
+          "80-2": -0.071,
+          "80-3": 0.026,
+          "80-4": 0.061,
+          "80-5": -0.136
+        }
+      }
+    },
+    {
+      "infill_percent": 90,
+      "common_stress_interval_mpa": [
+        7.50104306884937,
+        12.95634711892164
+      ],
+      "common_interval_accepted": 3,
+      "specimen_count": 3,
+      "exceptions": [],
+      "window_sensitivity_percent": {
+        "left_10pct_width": {
+          "90-1": 0.91,
+          "90-2": 0.851,
+          "90-3": 0.905
+        },
+        "right_10pct_width": {
+          "90-1": -0.911,
+          "90-2": -0.924,
+          "90-3": -0.966
+        },
+        "trim_15pct_each_end": {
+          "90-1": 0.107,
+          "90-2": -0.086,
+          "90-3": -0.054
+        }
+      }
+    }
+  ],
+  "matched_fit_audits": [
+    {
+      "infill_percent": 60,
+      "common_stress_interval_mpa": [
+        7.277985639754755,
+        10.00723025466279
+      ],
+      "common_interval_accepted": 8,
+      "specimen_count": 8,
+      "exceptions": [],
+      "all_specimen_accepted_window_count": 8,
+      "all_accepted_window_difference_percent_min": 11.178071223919407,
+      "all_accepted_window_difference_percent_max": 14.685202514997385,
+      "comparison_includes_only_exact_common_window": true
+    },
+    {
+      "infill_percent": 70,
+      "common_stress_interval_mpa": [
+        5.390514095416556,
+        8.984190159027595
+      ],
+      "common_interval_accepted": 10,
+      "specimen_count": 10,
+      "exceptions": [],
+      "all_specimen_accepted_window_count": 12,
+      "all_accepted_window_difference_percent_min": 22.04376026690593,
+      "all_accepted_window_difference_percent_max": 26.518929020730297,
+      "comparison_includes_only_exact_common_window": true
+    },
+    {
+      "infill_percent": 80,
+      "common_stress_interval_mpa": [
+        10.23831284775853,
+        13.163545089975255
+      ],
+      "common_interval_accepted": 9,
+      "specimen_count": 9,
+      "exceptions": [],
+      "all_specimen_accepted_window_count": 2,
+      "all_accepted_window_difference_percent_min": 21.09545519894671,
+      "all_accepted_window_difference_percent_max": 21.71060843090813,
+      "comparison_includes_only_exact_common_window": true
+    },
+    {
+      "infill_percent": 90,
+      "common_stress_interval_mpa": [
+        8.854839017082137,
+        12.649770024403056
+      ],
+      "common_interval_accepted": 7,
+      "specimen_count": 7,
+      "exceptions": [],
+      "all_specimen_accepted_window_count": 4,
+      "all_accepted_window_difference_percent_min": -3.1156048247288903,
+      "all_accepted_window_difference_percent_max": -2.184836945212021,
+      "comparison_includes_only_exact_common_window": true
+    }
+  ],
+  "individual_optimal_fit_audits": [
+    {
+      "batch": "1013",
+      "specimen_id": "40-1",
+      "infill_percent": 40,
+      "common_stress_interval_mpa": [
+        2.1654500114759285,
+        5.413625028689823
+      ],
+      "common_interval_accepted": 1,
+      "specimen_count": 1,
+      "exceptions": []
+    },
+    {
+      "batch": "1013",
+      "specimen_id": "40-2",
+      "infill_percent": 40,
+      "common_stress_interval_mpa": [
+        2.4987862619402854,
+        6.068480921854979
+      ],
+      "common_interval_accepted": 1,
+      "specimen_count": 1,
+      "exceptions": []
+    },
+    {
+      "batch": "1013",
+      "specimen_id": "40-3",
+      "infill_percent": 40,
+      "common_stress_interval_mpa": [
+        1.5744704032487715,
+        6.69149921380728
+      ],
+      "common_interval_accepted": 1,
+      "specimen_count": 1,
+      "exceptions": []
+    },
+    {
+      "batch": "1013",
+      "specimen_id": "40-4",
+      "infill_percent": 40,
+      "common_stress_interval_mpa": [
+        1.102551234879976,
+        5.512756174399881
+      ],
+      "common_interval_accepted": 1,
+      "specimen_count": 1,
+      "exceptions": []
+    },
+    {
+      "batch": "1013",
+      "specimen_id": "40-5",
+      "infill_percent": 40,
+      "common_stress_interval_mpa": [
+        1.074932206727996,
+        5.37466103363998
+      ],
+      "common_interval_accepted": 1,
+      "specimen_count": 1,
+      "exceptions": []
+    },
+    {
+      "batch": "1013",
+      "specimen_id": "50-1",
+      "infill_percent": 50,
+      "common_stress_interval_mpa": [
+        6.348129095981727,
+        9.975631436542717
+      ],
+      "common_interval_accepted": 1,
+      "specimen_count": 1,
+      "exceptions": []
+    },
+    {
+      "batch": "1013",
+      "specimen_id": "50-2",
+      "infill_percent": 50,
+      "common_stress_interval_mpa": [
+        8.474333286713287,
+        12.711499930069932
+      ],
+      "common_interval_accepted": 1,
+      "specimen_count": 1,
+      "exceptions": []
+    },
+    {
+      "batch": "1013",
+      "specimen_id": "50-3",
+      "infill_percent": 50,
+      "common_stress_interval_mpa": [
+        2.3815516506140404,
+        6.668344621719314
+      ],
+      "common_interval_accepted": 1,
+      "specimen_count": 1,
+      "exceptions": []
+    },
+    {
+      "batch": "1013",
+      "specimen_id": "50-4",
+      "infill_percent": 50,
+      "common_stress_interval_mpa": [
+        1.4133121155414208,
+        6.124352500679491
+      ],
+      "common_interval_accepted": 1,
+      "specimen_count": 1,
+      "exceptions": []
+    },
+    {
+      "batch": "1013",
+      "specimen_id": "50-5",
+      "infill_percent": 50,
+      "common_stress_interval_mpa": [
+        5.312727132444169,
+        9.176528683312657
+      ],
+      "common_interval_accepted": 1,
+      "specimen_count": 1,
+      "exceptions": []
+    },
+    {
+      "batch": "1013",
+      "specimen_id": "60-1",
+      "infill_percent": 60,
+      "common_stress_interval_mpa": [
+        1.5416740568269314,
+        6.680587579583369
+      ],
+      "common_interval_accepted": 1,
+      "specimen_count": 1,
+      "exceptions": []
+    },
+    {
+      "batch": "1013",
+      "specimen_id": "60-2",
+      "infill_percent": 60,
+      "common_stress_interval_mpa": [
+        3.029682467508447,
+        7.574206168771119
+      ],
+      "common_interval_accepted": 1,
+      "specimen_count": 1,
+      "exceptions": []
+    },
+    {
+      "batch": "1013",
+      "specimen_id": "60-3",
+      "infill_percent": 60,
+      "common_stress_interval_mpa": [
+        1.482661890141977,
+        6.424868190615234
+      ],
+      "common_interval_accepted": 1,
+      "specimen_count": 1,
+      "exceptions": []
+    },
+    {
+      "batch": "1013",
+      "specimen_id": "60-4",
+      "infill_percent": 60,
+      "common_stress_interval_mpa": [
+        2.8146914264597194,
+        7.0367285661493
+      ],
+      "common_interval_accepted": 1,
+      "specimen_count": 1,
+      "exceptions": []
+    },
+    {
+      "batch": "1013",
+      "specimen_id": "60-5",
+      "infill_percent": 60,
+      "common_stress_interval_mpa": [
+        0.9097482049693442,
+        6.8231115372700835
+      ],
+      "common_interval_accepted": 1,
+      "specimen_count": 1,
+      "exceptions": []
+    },
+    {
+      "batch": "1013",
+      "specimen_id": "70-1",
+      "infill_percent": 70,
+      "common_stress_interval_mpa": [
+        5.597874484867699,
+        9.329790808112833
+      ],
+      "common_interval_accepted": 1,
+      "specimen_count": 1,
+      "exceptions": []
+    },
+    {
+      "batch": "1013",
+      "specimen_id": "70-2",
+      "infill_percent": 70,
+      "common_stress_interval_mpa": [
+        3.6412158090335565,
+        7.802605305071907
+      ],
+      "common_interval_accepted": 1,
+      "specimen_count": 1,
+      "exceptions": []
+    },
+    {
+      "batch": "1013",
+      "specimen_id": "70-3",
+      "infill_percent": 70,
+      "common_stress_interval_mpa": [
+        0.9470513473941733,
+        9.470513473941736
+      ],
+      "common_interval_accepted": 1,
+      "specimen_count": 1,
+      "exceptions": []
+    },
+    {
+      "batch": "1013",
+      "specimen_id": "70-4",
+      "infill_percent": 70,
+      "common_stress_interval_mpa": [
+        0.8984190159027592,
+        7.187352127222074
+      ],
+      "common_interval_accepted": 1,
+      "specimen_count": 1,
+      "exceptions": []
+    },
+    {
+      "batch": "1013",
+      "specimen_id": "70-5",
+      "infill_percent": 70,
+      "common_stress_interval_mpa": [
+        0.9370996143322314,
+        6.0911474931595055
+      ],
+      "common_interval_accepted": 1,
+      "specimen_count": 1,
+      "exceptions": []
+    },
+    {
+      "batch": "1013",
+      "specimen_id": "80-1",
+      "infill_percent": 80,
+      "common_stress_interval_mpa": [
+        1.634255155984859,
+        6.537020623939437
+      ],
+      "common_interval_accepted": 1,
+      "specimen_count": 1,
+      "exceptions": []
+    },
+    {
+      "batch": "1013",
+      "specimen_id": "80-2",
+      "infill_percent": 80,
+      "common_stress_interval_mpa": [
+        2.0151420811607914,
+        9.57192488551376
+      ],
+      "common_interval_accepted": 1,
+      "specimen_count": 1,
+      "exceptions": []
+    },
+    {
+      "batch": "1013",
+      "specimen_id": "80-3",
+      "infill_percent": 80,
+      "common_stress_interval_mpa": [
+        9.26323543368629,
+        12.676006382939136
+      ],
+      "common_interval_accepted": 1,
+      "specimen_count": 1,
+      "exceptions": []
+    },
+    {
+      "batch": "1013",
+      "specimen_id": "80-5",
+      "infill_percent": 80,
+      "common_stress_interval_mpa": [
+        11.138197498421428,
+        14.320539640827553
+      ],
+      "common_interval_accepted": 1,
+      "specimen_count": 1,
+      "exceptions": []
+    },
+    {
+      "batch": "1013",
+      "specimen_id": "90-2",
+      "infill_percent": 90,
+      "common_stress_interval_mpa": [
+        5.716245687806516,
+        12.067629785369315
+      ],
+      "common_interval_accepted": 1,
+      "specimen_count": 1,
+      "exceptions": []
+    },
+    {
+      "batch": "1013",
+      "specimen_id": "90-3",
+      "infill_percent": 90,
+      "common_stress_interval_mpa": [
+        1.919887393477167,
+        8.319512038401058
+      ],
+      "common_interval_accepted": 1,
+      "specimen_count": 1,
+      "exceptions": []
+    },
+    {
+      "batch": "1013",
+      "specimen_id": "90-4",
+      "infill_percent": 90,
+      "common_stress_interval_mpa": [
+        8.278769979011948,
+        12.736569198479922
+      ],
+      "common_interval_accepted": 1,
+      "specimen_count": 1,
+      "exceptions": []
+    },
+    {
+      "batch": "1013",
+      "specimen_id": "90-5",
+      "infill_percent": 90,
+      "common_stress_interval_mpa": [
+        10.119816019522442,
+        13.914747026843362
+      ],
+      "common_interval_accepted": 1,
+      "specimen_count": 1,
+      "exceptions": []
+    },
+    {
+      "batch": "1013",
+      "specimen_id": "100-1",
+      "infill_percent": 100,
+      "common_stress_interval_mpa": [
+        3.5058237294168046,
+        10.517471188250415
+      ],
+      "common_interval_accepted": 1,
+      "specimen_count": 1,
+      "exceptions": []
+    },
+    {
+      "batch": "1013",
+      "specimen_id": "100-2",
+      "infill_percent": 100,
+      "common_stress_interval_mpa": [
+        4.296929778970545,
+        11.458479410588122
+      ],
+      "common_interval_accepted": 1,
+      "specimen_count": 1,
+      "exceptions": []
+    },
+    {
+      "batch": "1013",
+      "specimen_id": "100-3",
+      "infill_percent": 100,
+      "common_stress_interval_mpa": [
+        1.3872208894108484,
+        9.710546225875941
+      ],
+      "common_interval_accepted": 1,
+      "specimen_count": 1,
+      "exceptions": []
+    },
+    {
+      "batch": "1013",
+      "specimen_id": "100-4",
+      "infill_percent": 100,
+      "common_stress_interval_mpa": [
+        2.7397332337960565,
+        10.273999626735213
+      ],
+      "common_interval_accepted": 1,
+      "specimen_count": 1,
+      "exceptions": []
+    },
+    {
+      "batch": "1013",
+      "specimen_id": "100-5",
+      "infill_percent": 100,
+      "common_stress_interval_mpa": [
+        4.16129158258232,
+        9.709680359358746
+      ],
+      "common_interval_accepted": 1,
+      "specimen_count": 1,
+      "exceptions": []
+    },
+    {
+      "batch": "1016",
+      "specimen_id": "60-1",
+      "infill_percent": 60,
+      "common_stress_interval_mpa": [
+        6.477899928352988,
+        11.777999869732708
+      ],
+      "common_interval_accepted": 1,
+      "specimen_count": 1,
+      "exceptions": []
+    },
+    {
+      "batch": "1016",
+      "specimen_id": "60-2",
+      "infill_percent": 60,
+      "common_stress_interval_mpa": [
+        1.1742486368457947,
+        8.219740457920565
+      ],
+      "common_interval_accepted": 1,
+      "specimen_count": 1,
+      "exceptions": []
+    },
+    {
+      "batch": "1016",
+      "specimen_id": "60-3",
+      "infill_percent": 60,
+      "common_stress_interval_mpa": [
+        1.1795176698282333,
+        8.846382523711751
+      ],
+      "common_interval_accepted": 1,
+      "specimen_count": 1,
+      "exceptions": []
+    },
+    {
+      "batch": "1016",
+      "specimen_id": "70-1",
+      "infill_percent": 70,
+      "common_stress_interval_mpa": [
+        1.2120373029707148,
+        12.726391681192506
+      ],
+      "common_interval_accepted": 1,
+      "specimen_count": 1,
+      "exceptions": []
+    },
+    {
+      "batch": "1016",
+      "specimen_id": "70-2",
+      "infill_percent": 70,
+      "common_stress_interval_mpa": [
+        3.047111865489713,
+        10.360180342665023
+      ],
+      "common_interval_accepted": 1,
+      "specimen_count": 1,
+      "exceptions": []
+    },
+    {
+      "batch": "1016",
+      "specimen_id": "70-3",
+      "infill_percent": 70,
+      "common_stress_interval_mpa": [
+        1.2326654549740397,
+        9.861323639792317
+      ],
+      "common_interval_accepted": 1,
+      "specimen_count": 1,
+      "exceptions": []
+    },
+    {
+      "batch": "1016",
+      "specimen_id": "70-4",
+      "infill_percent": 70,
+      "common_stress_interval_mpa": [
+        6.23217369593132,
+        12.464347391862642
+      ],
+      "common_interval_accepted": 1,
+      "specimen_count": 1,
+      "exceptions": []
+    },
+    {
+      "batch": "1016",
+      "specimen_id": "70-5",
+      "infill_percent": 70,
+      "common_stress_interval_mpa": [
+        9.370075430967642,
+        13.742777298752545
+      ],
+      "common_interval_accepted": 1,
+      "specimen_count": 1,
+      "exceptions": []
+    },
+    {
+      "batch": "1016",
+      "specimen_id": "80-1",
+      "infill_percent": 80,
+      "common_stress_interval_mpa": [
+        10.315532203936556,
+        15.473298305904835
+      ],
+      "common_interval_accepted": 1,
+      "specimen_count": 1,
+      "exceptions": []
+    },
+    {
+      "batch": "1016",
+      "specimen_id": "80-2",
+      "infill_percent": 80,
+      "common_stress_interval_mpa": [
+        5.830532273722606,
+        12.308901466747727
+      ],
+      "common_interval_accepted": 1,
+      "specimen_count": 1,
+      "exceptions": []
+    },
+    {
+      "batch": "1016",
+      "specimen_id": "80-3",
+      "infill_percent": 80,
+      "common_stress_interval_mpa": [
+        8.938620639922586,
+        14.046403862735497
+      ],
+      "common_interval_accepted": 1,
+      "specimen_count": 1,
+      "exceptions": []
+    },
+    {
+      "batch": "1016",
+      "specimen_id": "80-4",
+      "infill_percent": 80,
+      "common_stress_interval_mpa": [
+        1.2865632230610335,
+        10.935787396018787
+      ],
+      "common_interval_accepted": 1,
+      "specimen_count": 1,
+      "exceptions": []
+    },
+    {
+      "batch": "1016",
+      "specimen_id": "80-5",
+      "infill_percent": 80,
+      "common_stress_interval_mpa": [
+        6.923701118747949,
+        15.10625698635916
+      ],
+      "common_interval_accepted": 1,
+      "specimen_count": 1,
+      "exceptions": []
+    },
+    {
+      "batch": "1016",
+      "specimen_id": "90-1",
+      "infill_percent": 90,
+      "common_stress_interval_mpa": [
+        1.3652440805920338,
+        8.191464483552204
+      ],
+      "common_interval_accepted": 1,
+      "specimen_count": 1,
+      "exceptions": []
+    },
+    {
+      "batch": "1016",
+      "specimen_id": "90-2",
+      "infill_percent": 90,
+      "common_stress_interval_mpa": [
+        6.1498705236125,
+        12.299741047225
+      ],
+      "common_interval_accepted": 1,
+      "specimen_count": 1,
+      "exceptions": []
+    },
+    {
+      "batch": "1016",
+      "specimen_id": "90-3",
+      "infill_percent": 90,
+      "common_stress_interval_mpa": [
+        1.363826012518067,
+        7.50104306884937
+      ],
+      "common_interval_accepted": 1,
+      "specimen_count": 1,
+      "exceptions": []
+    }
+  ],
+  "individual_optimal_definition": "Run unchanged select_group_fits on each singleton specimen. Among accepted candidates maximize width, then R2 and curvature. No between-batch agreement criterion.",
+  "relative_deviation_definition": "100 * (group_mean_E - specimen_E) / specimen_E; absolute value reported as error magnitude; group means computed within batch and fit method.",
+  "source_blocks": {
+    "1013": [
+      {
+        "specimen": "40-1",
+        "source": "40\\40_1.xlsb",
+        "block_peak_load_excursions_n": [
+          465.44759999999997
+        ],
+        "selected_block": 1
+      },
+      {
+        "specimen": "40-2",
+        "source": "40\\40_2.xlsb",
+        "block_peak_load_excursions_n": [
+          461.29879
+        ],
+        "selected_block": 1
+      },
+      {
+        "specimen": "40-3",
+        "source": "40\\40_3.xlsb",
+        "block_peak_load_excursions_n": [
+          508.6736
+        ],
+        "selected_block": 1
+      },
+      {
+        "specimen": "40-4",
+        "source": "40\\40_4.xlsb",
+        "block_peak_load_excursions_n": [
+          471.06281
+        ],
+        "selected_block": 1
+      },
+      {
+        "specimen": "40-5",
+        "source": "40\\40_5.xlsb",
+        "block_peak_load_excursions_n": [
+          462.09759
+        ],
+        "selected_block": 1
+      },
+      {
+        "specimen": "50-1",
+        "source": "50\\50_1.xlsb",
+        "block_peak_load_excursions_n": [
+          581.19117
+        ],
+        "selected_block": 1
+      },
+      {
+        "specimen": "50-2",
+        "source": "50\\50_2.xlsb",
+        "block_peak_load_excursions_n": [
+          605.9148299999999
+        ],
+        "selected_block": 1
+      },
+      {
+        "specimen": "50-3",
+        "source": "50\\50_3.xlsb",
+        "block_peak_load_excursions_n": [
+          609.8544099999999
+        ],
+        "selected_block": 1
+      },
+      {
+        "specimen": "50-4",
+        "source": "50\\50_4.xlsb",
+        "block_peak_load_excursions_n": [
+          603.18842
+        ],
+        "selected_block": 1
+      },
+      {
+        "specimen": "50-5",
+        "source": "50\\50_5.xlsb",
+        "block_peak_load_excursions_n": [
+          622.8448099999999
+        ],
+        "selected_block": 1
+      },
+      {
+        "specimen": "60-1",
+        "source": "60\\60_1.xlsb",
+        "block_peak_load_excursions_n": [
+          664.77602
+        ],
+        "selected_block": 1
+      },
+      {
+        "specimen": "60-2",
+        "source": "60\\60_2.xlsb",
+        "block_peak_load_excursions_n": [
+          655.20317
+        ],
+        "selected_block": 1
+      },
+      {
+        "specimen": "60-3",
+        "source": "60\\60_3.xlsb",
+        "block_peak_load_excursions_n": [
+          644.5408
+        ],
+        "selected_block": 1
+      },
+      {
+        "specimen": "60-4",
+        "source": "60\\60_4.xlsb",
+        "block_peak_load_excursions_n": [
+          609.3244
+        ],
+        "selected_block": 1
+      },
+      {
+        "specimen": "60-5",
+        "source": "60\\60_5.xlsb",
+        "block_peak_load_excursions_n": [
+          593.22679
+        ],
+        "selected_block": 1
+      },
+      {
+        "specimen": "70-1",
+        "source": "70\\70_1.xlsb",
+        "block_peak_load_excursions_n": [
+          600.3944299999999
+        ],
+        "selected_block": 1
+      },
+      {
+        "specimen": "70-2",
+        "source": "70\\70_2.xlsb",
+        "block_peak_load_excursions_n": [
+          670.1668099999999
+        ],
+        "selected_block": 1
+      },
+      {
+        "specimen": "70-3",
+        "source": "70\\70_3.xlsb",
+        "block_peak_load_excursions_n": [
+          613.1892300000001
+        ],
+        "selected_block": 1
+      },
+      {
+        "specimen": "70-4",
+        "source": "70\\70_4.xlsb",
+        "block_peak_load_excursions_n": [
+          581.10281
+        ],
+        "selected_block": 1
+      },
+      {
+        "specimen": "70-5",
+        "source": "70\\70_5.xlsb",
+        "block_peak_load_excursions_n": [
+          605.50879
+        ],
+        "selected_block": 1
+      },
+      {
+        "specimen": "80-1",
+        "source": "80\\80_1.xlsb",
+        "block_peak_load_excursions_n": [
+          701.12161
+        ],
+        "selected_block": 1
+      },
+      {
+        "specimen": "80-2",
+        "source": "80\\80_2.xlsb",
+        "block_peak_load_excursions_n": [
+          647.73921
+        ],
+        "selected_block": 1
+      },
+      {
+        "specimen": "80-3",
+        "source": "80\\80_3.xlsb",
+        "block_peak_load_excursions_n": [
+          40.306,
+          628.77282
+        ],
+        "selected_block": 2
+      },
+      {
+        "specimen": "80-5",
+        "source": "80\\80_5.xlsb",
+        "block_peak_load_excursions_n": [
+          685.4255800000001
+        ],
+        "selected_block": 1
+      },
+      {
+        "specimen": "90-2",
+        "source": "90\\90_2.xlsb",
+        "block_peak_load_excursions_n": [
+          817.45362
+        ],
+        "selected_block": 1
+      },
+      {
+        "specimen": "90-3",
+        "source": "90\\90_3.xlsb",
+        "block_peak_load_excursions_n": [
+          823.66241
+        ],
+        "selected_block": 1
+      },
+      {
+        "specimen": "90-4",
+        "source": "90\\90_4.xlsb",
+        "block_peak_load_excursions_n": [
+          820.45922
+        ],
+        "selected_block": 1
+      },
+      {
+        "specimen": "90-5",
+        "source": "90\\90_5.xlsb",
+        "block_peak_load_excursions_n": [
+          819.02201
+        ],
+        "selected_block": 1
+      },
+      {
+        "specimen": "100-1",
+        "source": "100\\100_1.xlsb",
+        "block_peak_load_excursions_n": [
+          890.45679
+        ],
+        "selected_block": 1
+      },
+      {
+        "specimen": "100-2",
+        "source": "100\\100_2.xlsb",
+        "block_peak_load_excursions_n": [
+          909.428
+        ],
+        "selected_block": 1
+      },
+      {
+        "specimen": "100-3",
+        "source": "100\\100_3.xlsb",
+        "block_peak_load_excursions_n": [
+          883.54318
+        ],
+        "selected_block": 1
+      },
+      {
+        "specimen": "100-4",
+        "source": "100\\100_4.xlsb",
+        "block_peak_load_excursions_n": [
+          869.7803700000001
+        ],
+        "selected_block": 1
+      },
+      {
+        "specimen": "100-5",
+        "source": "100\\100_5.xlsb",
+        "block_peak_load_excursions_n": [
+          885.31201
+        ],
+        "selected_block": 1
+      }
+    ],
+    "1016": [
+      {
+        "specimen": "60-1",
+        "source": "60\\60_1.xlsb",
+        "block_peak_load_excursions_n": [
+          759.4784099999999
+        ],
+        "selected_block": 1
+      },
+      {
+        "specimen": "60-2",
+        "source": "60\\60_2.xlsb",
+        "block_peak_load_excursions_n": [
+          757.1884
+        ],
+        "selected_block": 1
+      },
+      {
+        "specimen": "60-3",
+        "source": "60\\60_3.xlsb",
+        "block_peak_load_excursions_n": [
+          760.58602
+        ],
+        "selected_block": 1
+      },
+      {
+        "specimen": "70-1",
+        "source": "70\\70_1.xlsb",
+        "block_peak_load_excursions_n": [
+          781.5555899999999
+        ],
+        "selected_block": 1
+      },
+      {
+        "specimen": "70-2",
+        "source": "70\\70_2.xlsb",
+        "block_peak_load_excursions_n": [
+          785.94522
+        ],
+        "selected_block": 1
+      },
+      {
+        "specimen": "70-3",
+        "source": "70\\70_3.xlsb",
+        "block_peak_load_excursions_n": [
+          794.8571999999999
+        ],
+        "selected_block": 1
+      },
+      {
+        "specimen": "70-4",
+        "source": "70\\70_4.xlsb",
+        "block_peak_load_excursions_n": [
+          803.7360199999999
+        ],
+        "selected_block": 1
+      },
+      {
+        "specimen": "70-5",
+        "source": "70\\70_5.xlsb",
+        "block_peak_load_excursions_n": [
+          805.6116000000001
+        ],
+        "selected_block": 1
+      },
+      {
+        "specimen": "80-1",
+        "source": "80\\80_1.xlsb",
+        "block_peak_load_excursions_n": [
+          831.468
+        ],
+        "selected_block": 1
+      },
+      {
+        "specimen": "80-2",
+        "source": "80\\80_2.xlsb",
+        "block_peak_load_excursions_n": [
+          835.4867700000001
+        ],
+        "selected_block": 1
+      },
+      {
+        "specimen": "80-3",
+        "source": "80\\80_3.xlsb",
+        "block_peak_load_excursions_n": [
+          823.41041
+        ],
+        "selected_block": 1
+      },
+      {
+        "specimen": "80-4",
+        "source": "80\\80_4.xlsb",
+        "block_peak_load_excursions_n": [
+          829.61199
+        ],
+        "selected_block": 1
+      },
+      {
+        "specimen": "80-5",
+        "source": "80\\80_5.xlsb",
+        "block_peak_load_excursions_n": [
+          811.7447900000001
+        ],
+        "selected_block": 1
+      },
+      {
+        "specimen": "90-1",
+        "source": "90\\90_1.xlsb",
+        "block_peak_load_excursions_n": [
+          880.3476099999999
+        ],
+        "selected_block": 1
+      },
+      {
+        "specimen": "90-2",
+        "source": "90\\90_2.xlsb",
+        "block_peak_load_excursions_n": [
+          881.24638
+        ],
+        "selected_block": 1
+      },
+      {
+        "specimen": "90-3",
+        "source": "90\\90_3.xlsb",
+        "block_peak_load_excursions_n": [
+          879.4331999999999
+        ],
+        "selected_block": 1
+      }
+    ]
+  },
+  "source_sha256": {
+    "1013/40\\40_1.xlsb": "94885d08c04aeb83c314324cc291f75820374f402ea94b268cdecd5632132924",
+    "1013/40\\40_2.xlsb": "8e52b4c906adbc1074ecee3440e6c8bc8b3119c65d50e033775b8b7ac88f38df",
+    "1013/40\\40_3.xlsb": "52cbb8c7a9e4f3339d0d2636be9f27b38e1b32c1ef2de529e950577bf0ffe0a2",
+    "1013/40\\40_4.xlsb": "e30cc5f73797f3a5787d1b613d340af266dc0603f74396b22b3219d82dcd1fbd",
+    "1013/40\\40_5.xlsb": "6f3b8be6adb21c16e5801aeb654df038f30c0281de8264588a5f2d3bf1c7bb0e",
+    "1013/50\\50_1.xlsb": "4c93f8eb4d98bf00b234cc7245482ed08bb53c601c3b4eaaee5be39de9243135",
+    "1013/50\\50_2.xlsb": "799f76f82c94e314ea99b4b0e72f0dc8affe73938be5a368c4ca65c162d75bee",
+    "1013/50\\50_3.xlsb": "5ff6a223cbfc41fc1e2c7d120459407a3e56ed1fd53dd45f5c2d6fde371f8d70",
+    "1013/50\\50_4.xlsb": "9a10e1d747c5553d3a5e0f1fb12ed2b2a7a356c6b8be1210f8f8427babf80fb3",
+    "1013/50\\50_5.xlsb": "2e93d2ede38166a51c896f856ad6107773f6b6ace487207bf96dbc414e890a21",
+    "1013/60\\60_1.xlsb": "36684cb03b5fd6d045f624100ee3c4b60003f7d351f4dc2bcd0558c7a00ffd77",
+    "1013/60\\60_2.xlsb": "ac24ecf900f78f8191b41a07bd6eac94824b4bea0b3261adad50dbf58e293e8d",
+    "1013/60\\60_3.xlsb": "4afede230248381cb7e577853cdb1ac83c9eb8e6f1e6016a488db50bc2db78bb",
+    "1013/60\\60_4.xlsb": "f2bab6ca3f4d6d7219ed313afab7aa583ea7f11f08a8f6919653e4919b48bb45",
+    "1013/60\\60_5.xlsb": "12a465a1035e17c0b093a1d5684ee5e5372abc2749a82c8e046725ea4cf8437b",
+    "1013/70\\70_1.xlsb": "82db5bb3744ffc53f3a60e276d1789891fa351b515a92199139d20a13a50b3dd",
+    "1013/70\\70_2.xlsb": "b0e77bbcfc436e4d3bf1d296136b05d0342013797434bb82819ffe2319514a61",
+    "1013/70\\70_3.xlsb": "bad10ba2140e8e659378f8343e3e3781b79ad921e8d8a741d94d11f40812fd69",
+    "1013/70\\70_4.xlsb": "09ac488d3a7f45303379b898749391d9aaf088f8ec908806d5e1b0fe064087a8",
+    "1013/70\\70_5.xlsb": "c40ffc12ec01ee75dda82387b860daec9930249bb679007d402d011eb3d38ff6",
+    "1013/80\\80_1.xlsb": "158126d3cddfbe64703aceb31a45ea6c51becc99ed9ad30b1ed3760a1d1ef404",
+    "1013/80\\80_2.xlsb": "50fb608b3ee242908e4edd4df2d5bd96f8765d0369ccd7907c19ca4925342a52",
+    "1013/80\\80_3.xlsb": "9e08058f3899e0c8d75e528c78ff62153e1368428d78a1abb82f550193a85b6e",
+    "1013/80\\80_5.xlsb": "1dd5605476ae78b0f6627f1fbd4c5e10e6c451928aac75db9bc9405011f94579",
+    "1013/90\\90_2.xlsb": "c8868b01ad0c125b9752f61d218c93e1a053a898549e3993525ab8fa39f78c17",
+    "1013/90\\90_3.xlsb": "85da9928a6539ba6af09cf770c8a94a53a2115b8a491d1e2a90f6ddebbc2f0dd",
+    "1013/90\\90_4.xlsb": "118a042a36a14dcffd6b723f45ec0174a3127f67f3ff6b47bc6f5bcbbb7a7959",
+    "1013/90\\90_5.xlsb": "8bead4f14bd82900bb90a59adbcda83d68d5064a3860594342b43e66e40e6ce4",
+    "1013/100\\100_1.xlsb": "f105fa1b517346f3cf2e343cc65e56ff70a9f4444004f1068b74306cca1accb0",
+    "1013/100\\100_2.xlsb": "e0efa4ac588edd208b535c50cb42c26244c1c60db0ddec2846ecc2b6111ba91b",
+    "1013/100\\100_3.xlsb": "be48d80aebb40da7069f27ae1377f4bb3eb30b339fb30221cde193f9000d3562",
+    "1013/100\\100_4.xlsb": "714e9103f2bf5a9f004a15041818dbc062e13b109763d98c79ea11721dbfda62",
+    "1013/100\\100_5.xlsb": "3437b4d16e6c4ef9e9c0f02112173d4ce2f7a3318a08fc82940b6a47bd32f951",
+    "1016/60\\60_1.xlsb": "0fe924e45ba30d31eb25e3936f40b69bd66667ac03f7274d62a8766479ce61c8",
+    "1016/60\\60_2.xlsb": "c66796d662b9d633e12637a77cb42e576a25a6a8c690a773f321f924baa4d64e",
+    "1016/60\\60_3.xlsb": "d512bd10b4c55e7091995619243958e9009cd6757be4ea47fae29c0c365258ba",
+    "1016/70\\70_1.xlsb": "61cd1cb2cdb2afc7d5be2423cd5a78b43af6be48cb8319fa40e732070047ddaf",
+    "1016/70\\70_2.xlsb": "144c8bf235345f8c824f280269617650cfba88828366828d2624061ec0fcdb1a",
+    "1016/70\\70_3.xlsb": "fe723fd84bc7cc4548e9044316e4eb9af5a2ae53e7305cd9f49daf19364c9953",
+    "1016/70\\70_4.xlsb": "5142713b58a3e5f4ee9a2d5292f6057d9e95b3eb70a49beb05520637d53961a3",
+    "1016/70\\70_5.xlsb": "eae286d1da40c13687d39951be768f579423cd25bb17d6da7952015addf5d939",
+    "1016/80\\80_1.xlsb": "ff0063166287a1fe58c7d0c4c0cbf70d24cbabf9c834902a1ba67a5fc905013c",
+    "1016/80\\80_2.xlsb": "0ae85ab44f3391888c04252fae6e035e16ffbc0deb825f9dbc50a0979f0f1f24",
+    "1016/80\\80_3.xlsb": "05bca0db4343083e76db473a51c1189efdf0e9362099c1719969b1d26ed95a42",
+    "1016/80\\80_4.xlsb": "c58e341bc3c7cc93e8c1c34f2dd5411b700ce0a714971eaea761b5cd913287ee",
+    "1016/80\\80_5.xlsb": "0c211ed347bdffe7766ce0df8beaf6428aa26f279ca3a50ffe3c62079f872739",
+    "1016/90\\90_1.xlsb": "6eca6d7f4033421c3c3caf9cc36ce88a6e085d11f09cc2899a9b1e25960f59a6",
+    "1016/90\\90_2.xlsb": "46d4852a4b6192bcb58d943dd581b97ce436d023092abd0e36e0b988a089f528",
+    "1016/90\\90_3.xlsb": "c2fc53c572dbf9ddee46bd02a6bb2f88fa23f5771e0391d16d51bed5f2c7c699",
+    "1013/35个狗棒试样实验记录表.xlsx": "ea79c150835161c73a1b76024958ed09d4a040fe24f3dd859e845f787062bbb8",
+    "1016/geometry.json": "da44dae8276665216bbb2664050c5af4b9d1e025c9c61eea9011989afb6c94e7"
+  },
+  "script_sha256": {
+    "driver": "d6b7f647e77442dcf170492bc05c177ab92e9be0f7cec2b838bfb687e364e342",
+    "legacy_core": "a24d6a696cf023af2111b617b187d7837c5e641bf30820c83af21bedfd401444"
+  },
+  "verification": {
+    "archived_means_and_SD_reproduced": true,
+    "archived_source_hashes_unchanged": true,
+    "legacy_script_matches_archived_sha256": true,
+    "independent_scipy_and_units_slope_checks_count": 83,
+    "no_cross_batch_identical_raw_files": true
+  },
+  "uncertainty": "95% Welch t interval on log(E) for ratio of geometric means; sampling uncertainty only; no application-specific pooling tolerance supplied. 5/10/15% are sensitivity reference bands, not established equivalence margins.",
+  "versions": {
+    "python": "3.12.11",
+    "numpy": "2.3.0",
+    "pandas": "2.3.3",
+    "scipy": "1.15.3",
+    "matplotlib": "3.10.3"
+  },
+  "command": "& \"C:\\Users\\zhu_g\\.conda\\envs\\abqinter\\python.exe\" -X utf8 -B \"D:\\MyProject\\post_tensile_test\\analyze_tensile_batches.py\" --root \"D:\\MyProject\\post_tensile_test\" --run-id \"analysis_20261017\""
+}

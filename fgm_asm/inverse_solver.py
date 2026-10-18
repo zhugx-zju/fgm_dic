@@ -136,7 +136,8 @@ def _evaluate_inverse_state(mesh_info, bc_info, U_measured, material_info, gamma
 def lbfgs_inverse_solver_scipy(mesh_info, bc_info, U_measured, E_init=None,
                                gamma=1e-6, E_min=0.001, E_max=1000.0,
                                max_iter=2000, ftol=1e-12, gtol=1e-8, nu=0.3,
-                               regularization_mode='gradient'):
+                               regularization_mode='gradient', tgv_options=None,
+                               max_fun=15000):
     """
     Solve the inverse problem using SciPy's L-BFGS-B optimizer in m = ln(E) space.
 
@@ -152,13 +153,23 @@ def lbfgs_inverse_solver_scipy(mesh_info, bc_info, U_measured, E_init=None,
         ftol: Function tolerance
         gtol: Gradient tolerance in m space
         nu: Poisson's ratio
-        regularization_mode: 'gradient' or 'affine_detrended'
+        regularization_mode: 'gradient', 'affine_detrended' or 'tgv'
+        tgv_options: Optional HuberTGV scale, ratio and smoothing settings
+        max_fun: Common objective evaluation budget
 
     Returns:
         results: Dictionary containing optimization results and cached final state
     """
     del E_max
     from .material import MaterialInfo
+
+    if regularization_mode == 'tgv':
+        from .tgv import tgv_inverse_solver
+        return tgv_inverse_solver(
+            mesh_info, bc_info, U_measured, E_init=E_init, gamma=gamma,
+            E_min=E_min, max_iter=max_iter, ftol=ftol, gtol=gtol, nu=nu,
+            tgv_options=tgv_options, max_fun=max_fun,
+        )
 
     if regularization_mode not in {'gradient', 'affine_detrended'}:
         raise ValueError(f"Unknown regularization mode: {regularization_mode!r}")
@@ -247,6 +258,7 @@ def lbfgs_inverse_solver_scipy(mesh_info, bc_info, U_measured, E_init=None,
         jac=True,
         options={
             'maxiter': max_iter,
+            'maxfun': max_fun,
             'ftol': ftol,
             'gtol': gtol,
             'disp': False,
@@ -285,6 +297,7 @@ def lbfgs_inverse_solver_scipy(mesh_info, bc_info, U_measured, E_init=None,
         'gradient_norms': np.array(gradient_norms),
         'cond_H_history': np.ones(len(gradient_norms)),
         'n_iterations': int(result.nit),
+        'n_evaluations': int(evaluation_counter[0] + 1),
         'converged': bool(result.success),
         'message': str(result.message),
         'final_cost': final_state['objective'],

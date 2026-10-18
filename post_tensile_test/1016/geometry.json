@@ -1,0 +1,9 @@
+{
+  "batch": "1016",
+  "source": "User supplied in this conversation on 2026-10-17",
+  "scope": "All 16 uniform-infill dogbone specimens in the 60, 70, 80 and 90 folders",
+  "width_mm": 9.89,
+  "thickness_mm": 3.26,
+  "gauge_mm": 50.0,
+  "note": "One user-supplied geometry applies to the new batch; individual specimen dimensions were not supplied. sample_2 and sample_3 are separate nonuniform/DIC experiments."
+}

@@ -1,0 +1,164 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+\begin{document}
+
+\section*{Tikhonov正则化项对变换变量m的导数推导}
+
+\subsection*{问题设定}
+
+为了保证杨氏模量 $E > 0$，我们使用变量变换：
+\begin{equation}
+E(x) = E_{\min} + e^{m(x)}, \quad E_{\min} > 0
+\end{equation}
+
+其中 $m(x)$ 是优化变量，$E(x)$ 恒为正。
+
+\subsection*{Tikhonov正则化项}
+
+正则化项定义为：
+\begin{equation}
+J_{\text{reg}} = \frac{1}{2} \alpha \int_0^L \left( \frac{dE}{dx} \right)^2 dx
+\end{equation}
+
+\subsection*{第一步：计算 $\frac{dE}{dx}$}
+
+由链式法则：
+\begin{align}
+\frac{dE}{dx} &= \frac{d}{dx}\left( E_{\min} + e^{m(x)} \right) \\
+&= 0 + e^{m(x)} \cdot \frac{dm}{dx} \\
+&= e^{m(x)} \frac{dm}{dx}
+\end{align}
+
+\subsection*{第二步：代入正则化项}
+
+\begin{align}
+J_{\text{reg}} &= \frac{1}{2} \alpha \int_0^L \left( e^{m(x)} \frac{dm}{dx} \right)^2 dx \\
+&= \frac{1}{2} \alpha \int_0^L e^{2m(x)} \left( \frac{dm}{dx} \right)^2 dx
+\end{align}
+
+\subsection*{第三步：变分法求导数}
+
+设 $m(x)$ 有一个小扰动 $\delta m(x)$，计算 $J_{\text{reg}}$ 的变分：
+
+\begin{align}
+\delta J_{\text{reg}} &= \frac{1}{2} \alpha \int_0^L \frac{\partial}{\partial \epsilon}\bigg|_{\epsilon=0} \left[ e^{2(m+\epsilon \delta m)} \left( \frac{d(m+\epsilon \delta m)}{dx} \right)^2 \right] dx
+\end{align}
+
+展开：
+\begin{align}
+&= \frac{1}{2} \alpha \int_0^L \left[ 2e^{2m} \delta m \left(\frac{dm}{dx}\right)^2 + 2e^{2m} \frac{dm}{dx} \frac{d(\delta m)}{dx} \right] dx \\
+&= \alpha \int_0^L e^{2m} \left[ \delta m \left(\frac{dm}{dx}\right)^2 + \frac{dm}{dx} \frac{d(\delta m)}{dx} \right] dx
+\end{align}
+
+\subsection*{第四步：分部积分}
+
+对第二项使用分部积分：
+\begin{align}
+\int_0^L e^{2m} \frac{dm}{dx} \frac{d(\delta m)}{dx} dx &= \left[ e^{2m} \frac{dm}{dx} \delta m \right]_0^L - \int_0^L \delta m \frac{d}{dx}\left( e^{2m} \frac{dm}{dx} \right) dx
+\end{align}
+
+假设边界项为零（自然边界条件或 $\delta m|_{\text{boundary}} = 0$），则：
+\begin{align}
+\delta J_{\text{reg}} &= \alpha \int_0^L \delta m \left[ e^{2m} \left(\frac{dm}{dx}\right)^2 - \frac{d}{dx}\left( e^{2m} \frac{dm}{dx} \right) \right] dx
+\end{align}
+
+\subsection*{第五步：展开导数项}
+
+\begin{align}
+\frac{d}{dx}\left( e^{2m} \frac{dm}{dx} \right) &= 2e^{2m} \frac{dm}{dx} \cdot \frac{dm}{dx} + e^{2m} \frac{d^2m}{dx^2} \\
+&= 2e^{2m} \left(\frac{dm}{dx}\right)^2 + e^{2m} \frac{d^2m}{dx^2}
+\end{align}
+
+代入：
+\begin{align}
+\delta J_{\text{reg}} &= \alpha \int_0^L \delta m \left[ e^{2m} \left(\frac{dm}{dx}\right)^2 - 2e^{2m} \left(\frac{dm}{dx}\right)^2 - e^{2m} \frac{d^2m}{dx^2} \right] dx \\
+&= \alpha \int_0^L \delta m \left[ -e^{2m} \left(\frac{dm}{dx}\right)^2 - e^{2m} \frac{d^2m}{dx^2} \right] dx \\
+&= -\alpha \int_0^L \delta m \cdot e^{2m} \left[ \left(\frac{dm}{dx}\right)^2 + \frac{d^2m}{dx^2} \right] dx
+\end{align}
+
+\subsection*{结论：Fréchet导数（强形式）}
+
+\begin{equation}
+\boxed{
+\frac{\delta J_{\text{reg}}}{\delta m(x)} = -\alpha e^{2m(x)} \left[ \left(\frac{dm}{dx}\right)^2 + \frac{d^2m}{dx^2} \right]
+}
+\end{equation}
+
+\subsection*{有限元离散形式}
+
+在有限元中，使用形函数插值 $m(x) = \sum_i m_i N_i(x)$，则：
+\begin{equation}
+\frac{dm}{dx} = \sum_i m_i \frac{dN_i}{dx}
+\end{equation}
+
+正则化项的梯度（对节点值 $m_i$ 的导数）：
+
+\textbf{方法1：弱形式（避免二阶导）}
+
+从变分形式出发：
+\begin{align}
+\delta J_{\text{reg}} &= \alpha \int_0^L e^{2m} \left[ \delta m \left(\frac{dm}{dx}\right)^2 + \frac{dm}{dx} \frac{d(\delta m)}{dx} \right] dx
+\end{align}
+
+对于节点 $i$，取 $\delta m = N_i(x)$：
+\begin{align}
+\frac{\partial J_{\text{reg}}}{\partial m_i} &= \alpha \int_0^L e^{2m} \left[ N_i \left(\frac{dm}{dx}\right)^2 + \frac{dm}{dx} \frac{dN_i}{dx} \right] dx
+\end{align}
+
+使用高斯积分：
+\begin{equation}
+\boxed{
+\frac{\partial J_{\text{reg}}}{\partial m_i} = \alpha \sum_{e} \sum_{g} w_g \left[ e^{2m(\xi_g)} N_i(\xi_g) \left(\frac{dm}{dx}\big|_{\xi_g}\right)^2 + e^{2m(\xi_g)} \frac{dm}{dx}\big|_{\xi_g} \frac{dN_i}{dx} \right] |J_e|
+}
+\end{equation}
+
+其中：
+\begin{itemize}
+\item $\xi_g$ 是高斯积分点
+\item $w_g$ 是高斯权重
+\item $|J_e| = L_e$ 是单元雅可比
+\item $m(\xi_g) = \sum_j m_j^e N_j(\xi_g)$（单元内插值）
+\item $\frac{dm}{dx}\big|_{\xi_g} = \sum_j m_j^e \frac{dN_j}{dx}$
+\end{itemize}
+
+\subsection*{与你当前实现的对比}
+
+\textbf{你当前的代码（错误）：}
+\begin{verbatim}
+# 计算 dE/dx
+dE_dx = np.dot(B, E_elem)
+# 梯度
+grad_elem[node_local] += alpha * w[i] * dE_dx * B[node_local] * Le
+# 然后乘以 exp(m)
+grad[i] += grad_elem[i] * exp(m[i])
+\end{verbatim}
+
+这相当于：
+\begin{equation}
+\frac{\partial J_{\text{reg}}}{\partial m_i} = \alpha \int e^{m} \frac{dE}{dx} \frac{dN_i}{dx} dx
+\end{equation}
+
+\textbf{正确应该是：}
+\begin{verbatim}
+# 计算 dm/dx
+dm_dx = np.dot(B, m_elem)
+# 计算 exp(2m) at Gauss point
+exp_2m = np.exp(2 * np.dot(N, m_elem))
+# 梯度（两项）
+grad_elem[node_local] += alpha * w[i] * Le * (
+    exp_2m * N[node_local] * dm_dx**2 +   # 第一项
+    exp_2m * dm_dx * B[node_local]        # 第二项
+)
+\end{verbatim}
+
+\subsection*{关键差异}
+
+\begin{enumerate}
+\item 应该使用 $\frac{dm}{dx}$ 而不是 $\frac{dE}{dx}$
+\item 应该乘以 $e^{2m}$ 而不是 $e^{m}$
+\item 有两项贡献，不是一项
+\end{enumerate}
+
+\end{document}
