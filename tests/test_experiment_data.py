@@ -3,12 +3,27 @@ import unittest
 from pathlib import Path
 
 import numpy as np
+import pandas as pd
 
-from lib.experiment_data import load_dic_platform, transform_dic_platform
+from lib.experiment_data import load_calibration, load_dic_platform, transform_dic_platform
 from lib.io_utils import read_dic_csv
 
 
 class ExperimentDataTests(unittest.TestCase):
+    def test_calibration_selects_observed_five_regions_in_physical_order(self):
+        with tempfile.TemporaryDirectory() as folder:
+            path = Path(folder) / 'calibration.csv'
+            pd.DataFrame({'infill_percent': [100, 90, 80, 70, 60, 50, 40],
+                          'batch': [1016]*7, 'n': [5]*7,
+                          'mean_E_MPa': [2400, 2120, 1840, 1710, 1640, 1400, 1230],
+                          'sd_E_MPa': [30.]*7,
+                          'fit_method': ['independent']*7}).to_csv(path, index=False)
+            selected = load_calibration(path, infill_percent=(50, 60, 70, 80, 90))
+            self.assertEqual(selected['infill_percent'].tolist(), [50, 60, 70, 80, 90])
+            np.testing.assert_allclose(selected['mean_E_MPa'], [1400, 1640, 1710, 1840, 2120])
+            with self.assertRaises(ValueError):
+                load_calibration(path, infill_percent=(50, 55))
+
     def _write(self, folder, stage, conflict=False):
         path = Path(folder) / f'stage_{stage:05d}.comdat_comdata.csv'
         rows = ['Type:,X,Y,DX,DY,D,EXX,EYY,EXY,']

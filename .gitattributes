@@ -1,0 +1,4 @@
+# Preserve original experimental/manufacturing bytes and DIC manifest hashes.
+post_tensile_test/**/*.csv -text
+*.stl -text
+*.3mf -text

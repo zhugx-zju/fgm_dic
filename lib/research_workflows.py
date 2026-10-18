@@ -14,7 +14,9 @@ from .experiment_data import (
     file_sha256, load_calibration, load_dic_platform, load_platform_force,
     transform_dic_platform,
 )
-from .research_reporting import plot_displacement_comparison, plot_modulus_comparison, save_run
+from .research_reporting import (
+    plot_displacement_comparison, plot_modulus_comparison, save_run, save_x_profile,
+)
 
 
 def _mesh(cfg, forward=False):
@@ -49,12 +51,12 @@ def run_synthetic(cfg, output):
     mesh, fine = _mesh(cfg), _mesh(cfg, forward=True)
     if cfg.TRUTH == 'uniform':
         truth = lambda x, y: np.full_like(x, cfg.E_REF)
-    elif cfg.TRUTH == 'smooth_2d':
-        truth = lambda x, y: cfg.E_REF * (
-            1 + 0.5 * x / cfg.GEO_L + 0.05 * np.sin(np.pi * x / cfg.GEO_L) *
-            np.cos(2 * np.pi * y / cfg.GEO_H))
-    elif cfg.TRUTH == 'seven_regions':
-        truth = partition_modulus(cfg.E_REF * np.array([1., 1.2, 1.1, 1.6, 1.5, 1.8, 2.]))
+    elif cfg.TRUTH == 'linear_1d':
+        truth = lambda x, y: cfg.E_REF * (1 + 0.5 * x / cfg.GEO_L)
+    elif cfg.TRUTH == 'exponential_1d':
+        truth = lambda x, y: cfg.E_REF * np.exp(np.log(2.) * x / cfg.GEO_L)
+    elif cfg.TRUTH == 'partitioned_1d':
+        truth = partition_modulus(cfg.REGION_MODULI_MPA, cfg.REGION_BOUNDARIES_X)
     else:
         raise ValueError(f'Unknown synthetic TRUTH: {cfg.TRUTH}')
     if len(cfg.FORCES_N) < 2:
@@ -81,10 +83,19 @@ def run_synthetic(cfg, output):
     result = _inverse(cfg, mesh, cases[:1])
     states = compare_displacement(mesh, result['E_final'], cases, cfg.NU)
     reference = truth(mesh.X, mesh.Y)
+    reconstructed = result['E_final'].reshape(mesh.nods_y, mesh.nods_x)
+    y_weights = np.ones(mesh.nods_y)
+    y_weights[[0, -1]] = .5
+    x_mean = np.average(reconstructed, axis=0, weights=y_weights)
+    transverse = np.sqrt(np.average((reconstructed - x_mean)**2, axis=0, weights=y_weights))
     summary = {'workflow': 'synthetic', 'solver': _solver_summary(result),
                'fit_cases': [cases[0].name], 'predict_cases': [c.name for c in cases[1:]],
                'modulus_mae_percent': float(100 * np.mean(np.abs(result['E_final'] / reference - 1))),
                'comparison': _comparison_summary(states),
+               'inverse_parameter_count': mesh.n_nod,
+               'truth_dimension': 'E(x), constant across y',
+               'inverse_dimension': 'independent nodal E(x,y)',
+               'transverse_rms_MPa': float(np.sqrt(np.mean(transverse**2))),
                'scope': 'Synthetic consistency check; no experimental feasibility claim.'}
     arrays = {'coordinates': mesh.coord, 'E_reference': reference,
               'E_inverse': result['E_final'], 'observation_coordinates': xy,
@@ -98,6 +109,7 @@ def run_synthetic(cfg, output):
         plot_displacement_comparison(output, case.name, xy,
                                      case.observation.u_measured.reshape(-1, 2), state)
     plot_modulus_comparison(output, mesh, reference, result['E_final'])
+    save_x_profile(output, mesh, result['E_final'], truth)
     return summary
 
 
@@ -109,7 +121,12 @@ def prepare_experiment(cfg, load_fields=True):
         _, records[name] = load_platform_force(cfg.FORCE_PAIRING_CSV, setting['setting_N'])
         if (records[name]['stage_first'], records[name]['stage_last']) != setting['stages']:
             raise ValueError(f'{name}: force window does not match selected DIC frames')
-    calibration = load_calibration(cfg.CALIBRATION_CSV, cfg.CALIBRATION_METHOD)
+    calibration = load_calibration(cfg.CALIBRATION_CSV, cfg.CALIBRATION_METHOD,
+                                   cfg.REGION_INFILL_PERCENT)
+    boundaries = np.asarray(cfg.REGION_BOUNDARIES_X)
+    if (len(boundaries) != len(calibration) - 1 or
+            np.any(np.diff(np.r_[0., boundaries, cfg.GEO_L]) <= 0)):
+        raise ValueError('Region boundaries and calibration groups must cover the configured ROI')
     summary = {'workflow': 'experiment', 'platforms': {k: v.metadata for k, v in platforms.items()},
                'force_pairing': records, 'calibration': calibration.to_dict(orient='records'),
                'calibration_source': {'path': str(cfg.CALIBRATION_CSV),
@@ -117,6 +134,10 @@ def prepare_experiment(cfg, load_fields=True):
                'force_source': {'path': str(cfg.FORCE_PAIRING_CSV),
                                 'sha256': file_sha256(cfg.FORCE_PAIRING_CSV)},
                'coordinates_verified': cfg.DIC_COORDINATES_VERIFIED}
+    summary['physical_roi'] = {'length_mm': cfg.GEO_L, 'width_mm': cfg.GEO_H,
+                               'infill_percent': list(cfg.REGION_INFILL_PERCENT),
+                               'boundaries_x_mm': list(cfg.REGION_BOUNDARIES_X),
+                               'region_lengths_mm': np.diff(np.r_[0., boundaries, cfg.GEO_L]).tolist()}
     return platforms, calibration, records, summary
 
 
@@ -164,7 +185,7 @@ def _regional_comparison(mesh, field, calibration, boundaries):
     for index, record in enumerate(calibration.to_dict(orient='records')):
         mask = groups == index
         if not mask.any():
-            raise ValueError('Inversion mesh does not resolve all seven calibration regions')
+            raise ValueError('Inversion mesh does not resolve every selected calibration region')
         average = float(np.average(values[mask], weights=weights[mask]))
         spread = float(np.sqrt(np.average((values[mask] - average)**2, weights=weights[mask])))
         rows.append(dict(record, inverse_mean_E_MPa=average, inverse_spatial_sd_MPa=spread,
@@ -223,6 +244,8 @@ def run_experiment(cfg, output, mode='inspect'):
         result = _inverse(cfg, mesh, [cases[k] for k in cfg.FIT_CASES])
         states = compare_displacement(mesh, result['E_final'], list(cases.values()), cfg.NU)
         summary['solver'] = _solver_summary(result)
+        summary['inverse_parameter_count'] = mesh.n_nod
+        summary['inverse_dimension'] = 'independent nodal E(x,y)'
         summary['inverse_comparison'] = _comparison_summary(states)
         summary['fit_cases'], summary['predict_cases'] = cfg.FIT_CASES, cfg.PREDICT_CASES
         arrays.update(E_inverse=result['E_final'], cost_history=result['cost_history'])
@@ -253,4 +276,5 @@ def run_experiment(cfg, output, mode='inspect'):
             Path(output) / 'regional_modulus_comparison.csv', index=False, encoding='utf-8-sig',
         )
         plot_modulus_comparison(output, mesh, arrays['E_calibrated'], result['E_final'])
+        save_x_profile(output, mesh, result['E_final'], reference)
     return summary

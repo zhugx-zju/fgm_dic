@@ -13,19 +13,23 @@ CALIBRATION_CSV = (PROJECT_ROOT / 'post_tensile_test' / 'analysis_results' /
                    'mixed_infill_20261017' / 'group_summary_and_residuals.csv')
 CALIBRATION_METHOD = 'independent'
 
-GEO_L = 110.0
+GEO_L = 70.0  # Marks are 75 mm from either physical end of the 220 mm specimen
 GEO_H = 20.0
 THICKNESS = 3.2
 NU = 0.3  # Assumption, to be checked by independent measurement/sensitivity analysis
-NEL_X = 55
+NEL_X = 35
 NEL_Y = 10
-FORWARD_NEL_X = 110  # 1 mm cells align the independent seven-region boundaries
+FORWARD_NEL_X = 70  # 1 mm cells align the five-region boundaries
 FORWARD_NEL_Y = 20
-REGION_BOUNDARIES_X = (15., 31., 47., 63., 79., 95.)
+SPECIMEN_ROI_X = (-35.0, 35.0)
+REGION_INFILL_PERCENT = (50, 60, 70, 80, 90)
+REGION_BOUNDARIES_X = (11., 27., 43., 59.)
 
 # x_FEM = A @ [X_ref,Y_ref] + b; u_FEM = A @ [DX,DY].
 # DIC Y is the loading direction. Supply the checked sign, uniform unit scale
-# and offset using a known physical mark/ROI; do not normalize data spans to fit.
+# and offset using both measured marks and a checked width scale. The physical
+# ROI is known, but export coordinates still need checking; never rescale axes
+# independently just to force the numerical span to 70 x 20 mm.
 DIC_COORDINATES_VERIFIED = False
 DIC_TO_FEM_MATRIX = None
 DIC_TO_FEM_OFFSET = None

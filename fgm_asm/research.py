@@ -9,8 +9,8 @@ from .mesh import setup_boundary_conditions
 from .observation import build_observation_package
 
 
-def partition_modulus(moduli, boundaries=(15., 31., 47., 63., 79., 95.)):
-    """Piecewise E(x) on FEM [0,110]; seven boundaries follow the specimen.
+def partition_modulus(moduli, boundaries):
+    """Piecewise E(x) with explicitly configured physical partition boundaries.
 
     Sharp group values are evaluated at Gauss points in independent forward
     calculations. Nodal field inversion retains its continuous Q4 representation.

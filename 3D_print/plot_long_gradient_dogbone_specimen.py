@@ -8,7 +8,6 @@ import matplotlib.pyplot as plt
 from matplotlib.patches import Polygon, Rectangle
 
 from gen_long_gradient_dogbone_specimen import (
-    INVERSE_END_BUFFER_MM,
     OUTPUT_DIR,
     REGION_DENSITIES_PERCENT,
     REGION_PARALLEL_LENGTHS_MM,
@@ -18,11 +17,15 @@ from stl_builders import build_smooth_dogbone_polygon
 
 
 OUTPUT_PATH = OUTPUT_DIR / "dogbone_220mm_region_schematic.png"
+# Actual experiment markers, measured from each outer end (not the shoulder).
+MARKER_DISTANCE_FROM_OUTER_END_MM = 75.0
+
+
 def main() -> None:
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     outline = build_smooth_dogbone_polygon(SPECIMEN_CFG)
     parallel_left = -SPECIMEN_CFG.parallel_length / 2
-    roi_half_length = SPECIMEN_CFG.parallel_length / 2 - INVERSE_END_BUFFER_MM
+    roi_half_length = SPECIMEN_CFG.total_length / 2 - MARKER_DISTANCE_FROM_OUTER_END_MM
 
     fig, ax = plt.subplots(figsize=(12, 3.5), dpi=250)
     specimen_patch = Polygon(outline, closed=True, facecolor="#f1f1f1", edgecolor="none")
@@ -53,10 +56,6 @@ def main() -> None:
         patch.set_clip_path(specimen_patch)
         ax.add_patch(patch)
         label_x = (parallel_left + parallel_right) / 2
-        if index == 0:
-            label_x = (-roi_half_length + parallel_right) / 2
-        elif index == len(REGION_DENSITIES_PERCENT) - 1:
-            label_x = (parallel_left + roi_half_length) / 2
         ax.text(
             label_x,
             0,
@@ -82,7 +81,7 @@ def main() -> None:
     ax.grid(False)
     ax.set_title("220 mm dogbone: longer edge regions and seven full-width infill levels")
     fig.tight_layout()
-    fig.savefig(OUTPUT_PATH, dpi=250)
+    fig.savefig(OUTPUT_PATH, dpi=300)
     fig.savefig(OUTPUT_PATH.with_suffix(".pdf"))
     plt.close(fig)
 

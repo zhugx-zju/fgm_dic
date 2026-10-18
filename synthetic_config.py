@@ -1,15 +1,18 @@
 """Unified synthetic workflow, using the project's existing Python config style."""
 
-GEO_L = 110.0
+GEO_L = 70.0
 GEO_H = 20.0
 THICKNESS = 3.2
 NU = 0.3
-NEL_X = 22
-NEL_Y = 4
-FORWARD_NEL_X = 44
-FORWARD_NEL_Y = 8
+NEL_X = 35
+NEL_Y = 10
+FORWARD_NEL_X = 70
+FORWARD_NEL_Y = 20
 E_REF = 1500.0  # MPa; independent numerical scale, also the uniform initial guess
-TRUTH = 'smooth_2d'  # 'uniform', 'smooth_2d', 'seven_regions'
+TRUTH = 'partitioned_1d'  # 'uniform', 'linear_1d', 'exponential_1d', 'partitioned_1d'
+REGION_BOUNDARIES_X = (11., 27., 43., 59.)
+REGION_MODULI_MPA = (1400., 1640., 1710., 1840., 2120.)
+# Only the synthetic truth is 1D. All nodal E(x,y) values remain independent.
 FORCES_N = (119.77617870327234, 219.7354506515086)
 N_POINTS = 400
 NOISE_STD_MM = 0.0005

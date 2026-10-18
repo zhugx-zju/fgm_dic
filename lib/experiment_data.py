@@ -83,12 +83,18 @@ def load_dic_platform(folder: Path, first_stage: int, last_stage: int) -> DICPla
                        else np.zeros_like(coordinates), np.array(common.tolist()), metadata)
 
 
-def load_calibration(path: Path, method: str = 'independent') -> pd.DataFrame:
+def load_calibration(path: Path, method: str = 'independent',
+                     infill_percent=(40, 50, 60, 70, 80, 90, 100)) -> pd.DataFrame:
     """Retain group SD, count and batch; do not replace groups by a fitted line."""
     table = pd.read_csv(path)
     table = table.loc[table['fit_method'] == method].sort_values('infill_percent').copy()
-    if table['infill_percent'].tolist() != [40, 50, 60, 70, 80, 90, 100]:
-        raise ValueError('Calibration must contain exactly one group per 40:10:100% infill')
+    selected = list(infill_percent)
+    if not selected or len(set(selected)) != len(selected):
+        raise ValueError('Requested infill groups must be nonempty and distinct')
+    table = table[table['infill_percent'].isin(selected)]
+    if table['infill_percent'].duplicated().any() or set(table['infill_percent']) != set(selected):
+        raise ValueError(f'Calibration must contain exactly one group per requested infill: {selected}')
+    table = table.set_index('infill_percent').loc[selected].reset_index()
     if not np.all(np.isfinite(table['mean_E_MPa']) & (table['mean_E_MPa'] > 0)):
         raise ValueError('Calibration modulus must be finite and positive (MPa)')
     return table[['infill_percent', 'batch', 'n', 'mean_E_MPa', 'sd_E_MPa', 'fit_method']]

@@ -22,9 +22,9 @@
 \section{实验目的与共用试样几何}
 本实验利用增材制造构造可控的空间非均匀等效刚度，通过拉伸试验同步获取载荷与数字图像相关（DIC）位移场，并采用伴随方法识别平行段内的等效杨氏模量分布。填充率是制造控制量，待识别的 $E_{\mathrm{eq}}$ 是给定打印工艺和加载方向下的有效参数；不将标称填充率直接等同于材料模量。
 
-两种方案共用带平滑肩部的哑铃形外轮廓：总长 $220\,\mathrm{mm}$，夹持端宽 $40\,\mathrm{mm}$，厚度 $t=3.2\,\mathrm{mm}$；平行段长 $150\,\mathrm{mm}$、宽 $w=20\,\mathrm{mm}$。设 $x$ 为拉伸方向，$y$ 为宽度方向，试样中心为坐标原点。切片时仅改变各区填充率，材料、铺丝方向、墙层、顶底层及其他打印工艺参数保持一致。
+已打印试样采用带平滑肩部的哑铃形外轮廓：总长 $220\,\mathrm{mm}$，夹持端宽 $40\,\mathrm{mm}$，厚度 $t=3.2\,\mathrm{mm}$；平行段长 $150\,\mathrm{mm}$、宽 $w=20\,\mathrm{mm}$。设 $x$ 为拉伸方向，$y$ 为宽度方向，试样中心为坐标原点。切片时仅改变各区填充率，材料、铺丝方向、墙层、顶底层及其他打印工艺参数保持一致。
 
-\section{方案 A：沿拉伸方向分区的 $E_{\mathrm{eq}}(x)$}
+\section{制造分区与实际观测区域}
 当前已生成的试样模型沿 $x$ 划分七个横贯平行段全宽的填充率区域，形成阶梯式 $E_{\mathrm{eq}}(x)$；各区定义见表~\ref{tab:infill} 和图~\ref{fig:specimen}。
 
 \begin{table}[htbp]
@@ -42,51 +42,37 @@ $x$ 范围 & $[-75,-40]$ & $[-40,-24]$ & $[-24,-8]$ & $[-8,8]$ & $[8,24]$ & $[24
 \end{tabular}
 \end{table}
 
-X1 和 X7 的填充率分别延续至左、右肩部及夹持端，避免平行段与肩部交界处额外改变打印设置。图~\ref{fig:specimen} 中的虚线标示平行段及反演域边界；该图对应沿拉伸方向分区的主方案。
+X1 和 X7 的填充率分别延续至左、右肩部及夹持端，避免平行段与肩部交界处额外改变打印设置。本次两条标线各距试样最外端 75 mm，实际 DIC 域为中央 70 mm，即 $x\in[-35,35]$；见图~\ref{fig:specimen}。
 
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=\linewidth]{dogbone_220mm_region_schematic.pdf}
-\caption{哑铃形试样的七区填充率布置与中央矩形反演域。}
+\caption{七区制造示意及中央 70 mm 实际观测域，区域长度见表~\ref{tab:roi}。}
 \label{fig:specimen}
 \end{figure}
 
-\section{方案 B：沿宽度方向分区的 $E_{\mathrm{eq}}(y)$}
-备选试样在平行段沿 $y$ 划分七条与拉伸方向平行的区域。令
-\begin{equation}
- y_i=-\frac{w}{2}+\frac{iw}{7},\qquad
- \Omega_i^{(y)}=\{(x,y):-75<x<75,\;y_{i-1}<y<y_i\},
- \quad i=1,\ldots,7.
-\end{equation}
-由下至上，Y1--Y7 依次赋予 $40\%$、$50\%$、$60\%$、$70\%$、$80\%$、$90\%$、$100\%$ 填充率；每条宽 $w/7\approx2.86\,\mathrm{mm}$，并沿整个平行段延伸。为保持分区在肩部和夹持端的连续性，可按局部半宽 $b(x)$ 将边界定义为 $y/b(x)=-1+2i/7$。这一横向分区是待制作方案，需在切片预览中确认窄条内的实际填充路径和界面位置。
-
-\begin{figure}[htbp]
+\begin{table}[htbp]
 \centering
-\begin{tikzpicture}[x=1cm,y=1cm]
-  \foreach \i/\rho/\shade in {0/40/10,1/50/18,2/60/26,3/70/34,4/80/42,5/90/50,6/100/58}{
-    \pgfmathsetmacro{\ylo}{0.38*\i}
-    \pgfmathsetmacro{\yhi}{0.38*(\i+1)}
-    \pgfmathsetmacro{\ymid}{0.38*(\i+0.5)}
-    \pgfmathtruncatemacro{\zone}{\i+1}
-    \fill[blue!\shade] (0,\ylo) rectangle (11,\yhi);
-    \node[font=\scriptsize] at (5.5,\ymid) {Y\zone\quad \rho\%};
-  }
-  \draw[thick] (0,0) rectangle (11,2.66);
-  \draw[->,thick] (0,1.33)--(-0.8,1.33);
-  \draw[->,thick] (11,1.33)--(11.8,1.33);
-  \node[below] at (5.5,0) {$x$：拉伸方向};
-  \node[rotate=90,above] at (0,1.33) {$y$：宽度方向};
-\end{tikzpicture}
-\caption{$E_{\mathrm{eq}}(y)$ 备选方案的平行段示意；两端箭头表示轴向拉伸，非已生成的 STL。}
-\label{fig:transverse}
-\end{figure}
+\caption{本次 70 mm 观测域内五区；物理坐标原点仍位于试样中心。}
+\label{tab:roi}
+\begin{tabular}{cccccc}
+\toprule
+制造分区 & X2 & X3 & X4 & X5 & X6 \\
+\midrule
+填充率（\%） & 50 & 60 & 70 & 80 & 90 \\
+物理 $x$（mm） & $[-35,-24]$ & $[-24,-8]$ & $[-8,8]$ & $[8,24]$ & $[24,35]$ \\
+长度（mm） & 11 & 16 & 16 & 16 & 11 \\
+\bottomrule
+\end{tabular}
+\end{table}
+实际反演使用 $x_{\mathrm{FEM}}=x+35$、$y_{\mathrm{FEM}}=y+10$，域为 $[0,70]\times[0,20]$，五区界面为 $11,27,43,59$ mm。制造仍为七区，不能把裁剪观测域误解为修改打印试样。
 
 \section{平行段的截取与力学等效}
 在平行段内选取矩形观测域
 \begin{equation}
- \Omega=(-L/2,L/2)\times(-w/2,w/2),\qquad L=110\,\mathrm{mm},
+ \Omega=(-L/2,L/2)\times(-w/2,w/2),\qquad L=70\,\mathrm{mm},
 \end{equation}
-使其两端分别距肩部约 $20\,\mathrm{mm}$。在该域内，X1 和 X7 各保留 $15\,\mathrm{mm}$，其余五区各为 $16\,\mathrm{mm}$。DIC 记录该域内表面位移；平面应力近似下，反演模型满足
+使其两端分别距肩部约 $40\,\mathrm{mm}$。在该域内，X2 和 X6 各保留 $11\,\mathrm{mm}$，X3、X4、X5 各为 $16\,\mathrm{mm}$。DIC 记录该域内表面位移；平面应力近似下，反演模型满足
 \begin{equation}
  \nabla\!\cdot\boldsymbol\sigma=\boldsymbol 0,\qquad
  \boldsymbol\sigma=\mathsf C\bigl(E_{\mathrm{eq}}(x,y),\nu\bigr):
@@ -106,25 +92,27 @@ X1 和 X7 的填充率分别延续至左、右肩部及夹持端，避免平行�
  \quad\text{于}\quad x=\pm L/2,
  \qquad q=\frac{F}{wt}.
 \end{equation}
-该条件是平行段反演所采用的\emph{边界近似}，不是由合力测量单独推出的局部应力分布。肩部与夹持引起的局部扰动可依据圣维南原理随截面远离其作用区而衰减。方案 A 的截取面位于横向填充设置一致的 X1、X7 区内，均布牵引近似较有力学依据，但仍受肩部和分区界面影响。方案 B 的截取面横跨七种填充设置；即使远离肩部，沿宽度方向的载荷分担也可能持续存在，故不能仅由圣维南原理保证该截面的牵引均布。
+该条件是\emph{边界近似}，不能由合力测量单独推出。截取面位于 X2 和 X6，距肩部 40 mm，距相邻分区界面 11 mm。肩部和界面扰动均可能影响截面牵引，需用完整狗骨与矩形模型的配对计算核验，不能由同一矩形模型的合成自洽性代替。
 
-例如，在方案 B 的近似等轴向应变极限，$\varepsilon_{xx}\simeq\varepsilon_0$，第 $i$ 条带可有 $\sigma_{xx,i}\simeq E_i\varepsilon_0$，而试验机仅测得 $F\simeq t\varepsilon_0\sum_i E_i(w/7)$。因此，$E(y)$ 在理想均布牵引矩形模型中可以产生可用于反演的非均匀位移响应，但实际试样能否满足该边界条件以及七个参数的可辨识性，必须分别检验。
+\section{DIC 观测与二维伴随反演}
+主目标是采用二维方法恢复实际一维分布，而非预先限制模量只随 $x$ 变化。令每个节点具有独立未知量 $m_a=\log E_a$，有限元模量为
+\begin{align}
+ E_h(x,y)&=\sum_{a=1}^{n_{\rm nod}}N_a(x,y)\exp(m_a),\\
+ \min_{\boldsymbol m}\;&\frac12\sum_k\min_{\boldsymbol c_k}
+ \|\mathsf W_k^{1/2}(\mathsf H_k\boldsymbol u(\boldsymbol m;F_k)
+       +\mathsf R_k\boldsymbol c_k-\boldsymbol d_k)\|_2^2
+       +\frac\gamma2\mathcal R(E_h/E_{\rm ref}).
+\end{align}
+$\mathsf H_k$ 为 Q4 测点观测算子，$\mathsf W_k$ 为面积与噪声权重，$\mathsf R_k$ 只包含两平移和一微小转动。纯牵引正演只去除三个刚体自由度；不将一端夹紧，也不通过一般仿射配准删除真实应变。梯度由配准残差的伴随方程计算。
 
-\section{DIC 观测与伴随反演}
-在小变形、线弹性载荷范围内同步采集载荷 $F_k$ 和平行段位移场 $\boldsymbol u_k^{\mathrm{DIC}}$。将 DIC 坐标映射至 $\Omega$，剔除刚体平移与转动，并仅使用有效测点。对任一方案，记 $\Omega_i$ 为第 $i$ 个填充率分区，以其等效模量的对数 $m_i$ 为未知量，求解
-\begin{equation}
- \min_{\boldsymbol m}\;J(\boldsymbol m)
- =\frac12\sum_k
- \left\|\mathsf W_k\left[
- \mathsf P\boldsymbol u(\boldsymbol m;F_k)
- -\boldsymbol u_k^{\mathrm{DIC}}\right]\right\|_2^2
- +\lambda\mathcal R(\boldsymbol m),
- \qquad E_{\mathrm{eq}}|_{\Omega_i}=\exp(m_i)>0.
-\end{equation}
-其中 $\mathsf P$ 为有限元场到 DIC 测点的映射，$\mathsf W_k$ 表示测量权重，$\mathcal R$ 为必要的正则项；目标函数梯度由伴随方程计算。纯牵引问题中的刚体自由度通过最小约束及位移场配准处理，不引入额外的夹持位移边界。上式描述的是\emph{拟开展的七区参数反演}；下文已完成的合成数据诊断则对矩形域每个节点独立赋予 $E(x,y)$，两者的未知量维数和可辨识性不能混为一谈。
+当前 70 mm 流程默认 $35\times10$ 单元、396 个独立模量节点。五区独立标定用于正向位移预测和反演后统计，不约束主反演未知量。报告完整二维场、沿宽度平均的 $E(x)$、横向空间离散程度及分区统计；横向标准差不是参数置信区间。
+
+第 3 次实验的 180N、280N 平台分别选帧 259--273、436--450，实际拉力约 119.77618 N、219.73545 N，已扣除夹具自重初始读数。DIC 相对最初未加载图；默认用前者反演、后者预测。成比例载荷可检验重复性和预测，不自动增加空间可辨识性。平台帧的标准差不直接除以帧数平方根。
+
+物理 ROI 已确认，但导出坐标跨度约 $37.07\times122.79$，尚需核验毫米标定与导出定义。坐标和位移使用同一个尺度/轴向变换；禁止独立缩放两轴强行匹配。核验前只进行输入检查和独立标定正演，不输出正式实验反演结论。
 
 \section{合成数据先导：全场正则项的形式与边界偏差}
-当前代码在 $55\times10$ 个双线性四边形单元上使用 $616$ 个独立节点模量，令 $m_i=\log E_i$。对两端等大反向的均布牵引及完整节点位移合成观测，实际求解的单载荷目标为
+以下保留历史 110 mm 合成研究条件及结果，尚未作为本次 70 mm 实验验证。该研究在 $55\times10$ 个双线性四边形单元上使用 $616$ 个独立节点模量，令 $m_i=\log E_i$。对两端等大反向的均布牵引及完整节点位移合成观测，实际求解的单载荷目标为
 \begin{equation}\label{eq:synthetic_objective}
  J_\gamma(\boldsymbol m)
  =\frac12(\boldsymbol u^{\rm obs}-\boldsymbol u(e^{\boldsymbol m}))^{\mathsf T}
@@ -159,7 +147,7 @@ X1 和 X7 的填充率分别延续至左、右肩部及夹持端，避免平行�
 目标函数中的正则项梯度为 $\gamma\nabla_{\boldsymbol E}\mathcal R_{\rm cgrad}/2$；对优化变量 $m_i$ 再乘链式因子 $E_i$，与位移失配项的伴随梯度相加。数值检查包括仿射场零惩罚、正则项有限差分梯度和完整伴随目标对 $\boldsymbol m$ 的有限差分梯度，均已通过。
 
 \subsection{同条件比较与适用边界}
-表~\ref{tab:regularization_comparison} 汇总现有合成数据比较。此处代码坐标取 $x\in[0,110]\,\mathrm{mm}$，与前文中心坐标相差 $55\,\mathrm{mm}$；表中真值表达式的模量单位均为 MPa。相同真值和噪声水平的两种正则项使用同一网格、两端各 $0.01\,\mathrm N$ 的拉力、$t=3.2\,\mathrm{mm}$、初值 $E_i=0.501\,\mathrm{MPa}$、$\gamma=10^{-6}$ 及相同位移观测。左端统计 $x=0\sim10\,\mathrm{mm}$，右端统计 $x=100\sim110\,\mathrm{mm}$；表中指标为节点绝对相对误差的均值（\%）。两种反演均保留 $616$ 个二维节点未知量，表中指数场的真值也只随 $x$ 变化。$1\%$ 噪声行仅是一组随机种子 $42$ 的相同位移噪声样本，不代表跨种子稳定性。
+表~\ref{tab:regularization_comparison} 汇总现有合成数据比较。此处代码坐标取 $x\in[0,110]\,\mathrm{mm}$，属于原 110 mm 算例，不能与当前 70 mm 实验域混用；表中真值表达式的模量单位均为 MPa。相同真值和噪声水平的两种正则项使用同一网格、两端各 $0.01\,\mathrm N$ 的拉力、$t=3.2\,\mathrm{mm}$、初值 $E_i=0.501\,\mathrm{MPa}$、$\gamma=10^{-6}$ 及相同位移观测。左端统计 $x=0\sim10\,\mathrm{mm}$，右端统计 $x=100\sim110\,\mathrm{mm}$；表中指标为节点绝对相对误差的均值（\%）。两种反演均保留 $616$ 个二维节点未知量，表中指数场的真值也只随 $x$ 变化。$1\%$ 噪声行仅是一组随机种子 $42$ 的相同位移噪声样本，不代表跨种子稳定性。
 
 \begin{table}[htbp]
 \centering
@@ -211,12 +199,12 @@ $\exp[(\ln8)x/110]$ & $0$ & $\mathcal R_{\rm H1}$ & 4.4167 & 1.4291 & 23.7202 \\
 真实试样的 $E_{\rm eq}$ 空间形状未知。前述仿射去趋势项来源于已观察到的端部偏差和合成线性真值，它应作为\emph{受控基线}而非默认物理规律。现阶段不宣称存在适用于平滑、指数、七区突变和打印缺陷的单一最优正则项。
 
 \paragraph{低维对照：利用已知制造分区，而不预设模量数值。}
-对于方案 A 或 B，七区界面位置和填充率顺序来自切片设计，是反演前已知信息；可与全场二维反演并行求七个正模量 $E_i=e^{m_i}$，并用独立均匀试样标定构造带不确定度的参考约束。例如
+观测域内五区界面位置和填充率顺序来自制造设计；后续可单独构造五参数诊断对照，但当前主流程不采用此参数约束。若在独立对照中使用标定先验，例如
 \begin{equation}
  \mathcal R_{\rm cal}(\boldsymbol m)
- =\sum_{i=1}^7\frac{(m_i-m_i^{\rm cal})^2}{(s_i^{\rm cal})^2}.
+ =\sum_{i=1}^5\frac{(m_i-m_i^{\rm cal})^2}{(s_i^{\rm cal})^2},
 \end{equation}
-若标定数据与实际分区存在工艺差异，应增大 $s_i^{\rm cal}$ 并做敏感性分析；真实界面跳变不能被默认的一阶平滑项强行抹平。七参数模型维数较低且可解释，但它不能表示区内缺陷、界面扩散或未建模的二维变化，因而是诊断二维反演的对照，不能取代全场结果；须同时检验留出 DIC 测点的位移残差和局部误差图。
+则不能再把同一标定记录称为该对照的独立验证。标定与分区可能存在工艺差异，应对其不确定度做敏感性分析；五参数对照不能表示区内缺陷、界面扩散或二维变化，也不能取代主二维反演。
 
 \paragraph{需要自由二维场时的候选：二阶总广义变差。}
 可测试离散的 Huber 平滑二阶总广义变差（TGV$^2$）型先验\cite{bredies2010tgv}。令 $E_{\rm ref}$ 为独立给定的尺度，并\emph{预先}指定两种候选表示 $z=E/E_{\rm ref}$ 或 $z=\log(E/E_{\rm ref})$，而非观察真实反演结果后再选表示：

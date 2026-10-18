@@ -1,5 +1,5 @@
 {
-  "purpose": "Manifest for local DIC exports omitted from ordinary Git",
+  "purpose": "Tracked DIC exports used by the unified 2D inversion workflow",
   "displacement_reference": "initial_unloaded_image",
   "platforms": {
     "180N": {
@@ -352,5 +352,35 @@
     }
   },
   "coordinates_verified": false,
-  "source_analysis": "post_tensile_test/1016/sample_2/analysis_results/dic_timing_20261018/selected_dic_windows.csv"
+  "source_analysis": "post_tensile_test/1016/sample_2/analysis_results/dic_timing_20261018/selected_dic_windows.csv",
+  "physical_roi": {
+    "length_mm": 70,
+    "width_mm": 20,
+    "thickness_mm": 3.2,
+    "specimen_x_mm": [
+      -35,
+      35
+    ],
+    "infill_percent": [
+      50,
+      60,
+      70,
+      80,
+      90
+    ],
+    "fem_boundaries_x_mm": [
+      11,
+      27,
+      43,
+      59
+    ],
+    "region_lengths_mm": [
+      11,
+      16,
+      16,
+      16,
+      11
+    ],
+    "coordinates_verified": false
+  }
 }

@@ -16,7 +16,7 @@ from lib.research_workflows import run_experiment
 class ResearchWorkflowTests(unittest.TestCase):
     def _inputs(self, folder):
         folder = Path(folder)
-        mesh = MeshInfo(110., 20., 11, 2)
+        mesh = MeshInfo(70., 20., 7, 2)
         settings = {}
         for name, force, setting, stages in (('180N', 100., 180, (1, 2)),
                                               ('280N', 200., 280, (3, 4))):
@@ -46,11 +46,12 @@ class ResearchWorkflowTests(unittest.TestCase):
                       'full_force_coverage': [True, True]}).to_csv(forces, index=False)
         return SimpleNamespace(
             PLATFORMS=settings, FORCE_PAIRING_CSV=forces, CALIBRATION_CSV=calibration,
-            CALIBRATION_METHOD='independent', GEO_L=110., GEO_H=20., THICKNESS=3.2, NU=.3,
-            NEL_X=11, NEL_Y=2, FORWARD_NEL_X=22, FORWARD_NEL_Y=4,
+            CALIBRATION_METHOD='independent', GEO_L=70., GEO_H=20., THICKNESS=3.2, NU=.3,
+            NEL_X=7, NEL_Y=2, FORWARD_NEL_X=70, FORWARD_NEL_Y=4,
             DIC_COORDINATES_VERIFIED=True, DIC_TO_FEM_MATRIX=[[0., 1.], [1., 0.]],
             DIC_TO_FEM_OFFSET=[0., 0.], NOISE_FLOOR_MM=.001,
-            REGION_BOUNDARIES_X=(15., 31., 47., 63., 79., 95.),
+            REGION_INFILL_PERCENT=(50, 60, 70, 80, 90),
+            REGION_BOUNDARIES_X=(11., 27., 43., 59.),
             # Strong affine regularization is appropriate for this exact uniform
             # limiting case, whose true regularization value is zero. This is
             # an integration check, not an experimental gamma-selection rule.
@@ -68,12 +69,16 @@ class ResearchWorkflowTests(unittest.TestCase):
             output = Path(folder) / 'inverse'
             result = run_experiment(cfg, output, mode='inverse')
             self.assertTrue(result['solver']['converged'])
+            self.assertEqual(result['inverse_parameter_count'], 8*3)
+            self.assertEqual(result['physical_roi']['region_lengths_mm'], [11., 16., 16., 16., 11.])
             self.assertEqual(result['fit_cases'], ('180N',))
             self.assertLess(result['inverse_comparison'][1]['weighted_rms'], 1e-7)
             table = pd.read_csv(output / 'regional_modulus_comparison.csv')
+            self.assertEqual(table['infill_percent'].tolist(), [50, 60, 70, 80, 90])
             np.testing.assert_allclose(table['inverse_mean_E_MPa'], 1700., rtol=1e-4)
             self.assertTrue((output / '180N_calibrated_displacement.svg').exists())
             self.assertTrue((output / '280N_inverse_displacement.png').exists())
+            self.assertTrue((output / 'x_profile.csv').exists())
             saved = json.loads((output / 'run_metadata.json').read_text(encoding='utf-8'))
             self.assertIn('source_sha256', saved)
             with self.assertRaises(FileExistsError):

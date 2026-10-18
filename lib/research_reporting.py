@@ -8,6 +8,7 @@ import sys
 
 import matplotlib.pyplot as plt
 import numpy as np
+import pandas as pd
 import scipy
 
 from .experiment_data import file_sha256
@@ -101,4 +102,39 @@ def plot_modulus_comparison(output, mesh, reference, reconstructed):
         fig.colorbar(image, ax=axes[index], shrink=0.8)
     fig.savefig(Path(output) / 'modulus_comparison.png', dpi=300)
     fig.savefig(Path(output) / 'modulus_comparison.svg')
+    plt.close(fig)
+
+
+def save_x_profile(output, mesh, reconstructed, reference):
+    """Summarize a free 2D inverse without imposing equality between y rows.
+
+    Width statistics use trapezoidal weights for the Q4 nodal field. Spatial
+    spread is not an uncertainty/confidence interval for the material modulus.
+    """
+    field = np.asarray(reconstructed).reshape(mesh.nods_y, mesh.nods_x)
+    weights = np.ones(mesh.nods_y)
+    weights[[0, -1]] = .5
+    mean = np.average(field, axis=0, weights=weights)
+    spread = np.sqrt(np.average((field - mean)**2, axis=0, weights=weights))
+    x = mesh.plot_x[0]
+    expected = reference(x, np.zeros_like(x))
+    table = pd.DataFrame({'x_mm': x, 'reference_E_MPa': expected,
+                          'inverse_width_mean_E_MPa': mean,
+                          'inverse_transverse_sd_MPa': spread,
+                          'inverse_width_min_E_MPa': field.min(axis=0),
+                          'inverse_width_max_E_MPa': field.max(axis=0)})
+    table.to_csv(Path(output) / 'x_profile.csv', index=False, encoding='utf-8-sig')
+    fig, axes = plt.subplots(2, 1, figsize=(7., 5.), sharex=True, constrained_layout=True)
+    dense_x = np.linspace(0., mesh.geo_l, 1401)
+    axes[0].plot(dense_x, reference(dense_x, np.zeros_like(dense_x)), color='black',
+                 linestyle='--', label='1D reference')
+    axes[0].plot(x, mean, color='#0072B2', label='2D inverse: width mean')
+    axes[0].fill_between(x, mean-spread, mean+spread, color='#0072B2', alpha=.18,
+                         label='Transverse spatial SD')
+    axes[0].set_ylabel('E (MPa)')
+    axes[0].legend(frameon=False)
+    axes[1].plot(x, spread, color='#D55E00')
+    axes[1].set(xlabel='x (mm)', ylabel='Transverse SD (MPa)', xlim=(0., mesh.geo_l))
+    fig.savefig(Path(output) / 'x_profile.png', dpi=300)
+    fig.savefig(Path(output) / 'x_profile.svg')
     plt.close(fig)

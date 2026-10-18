@@ -31,22 +31,11 @@ joint_inversion_research_plan
 nonlinear_case_inverse_derivation
 
 # Local experimental images and bulk DIC exports (retain on disk)
-post_DIC/data/
-post_DIC/tmp/
-post_DIC/output/
-post_DIC/results_case/
-post_tensile_test/analysis_archive/
-post_tensile_test/1016/sample_2/3/*/stage_*.csv
 *.npy
 *.npz
 *.zip
-*.gcode.3mf
 *.aux
 *.fdb_latexmk
 *.fls
 *.synctex.gz
 *.xdv
-
-# Historical solver output remains in its original directory
-ASM-Python/Geo_*/
-ASM-Python/results/
