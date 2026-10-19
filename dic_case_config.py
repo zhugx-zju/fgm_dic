@@ -38,8 +38,10 @@ REGISTRATION = {
 }
 OUTSIDE_POINT_POLICY = 'reject'
 FIT_CASES, PREDICT_CASES = ('180N',), ('280N',)
+# Experiment-specific admissible range: 0.24 <= nu <= 0.33. The values below
+# retain the frozen workflow's historical comparison points, not measured nu.
 NU_VALUES = (.24, .26, .28)
-PRIMARY_NU = .26  # Prespecified middle of the user-provided range; not selected on 280N.
+PRIMARY_NU = .26  # Historical baseline; joint E/nu diagnosis is saved separately.
 # Original area-weighted displacement mismatch + gamma/2 * integral(|grad E|^2).
 # No reference modulus, noise normalization, or calibration-based initial field.
 REGULARIZATION_MODE = 'gradient'

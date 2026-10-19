@@ -94,7 +94,7 @@ python -m script.step4_compare_results --config dic_case_sample3
 - `DOMAIN_SOURCE`：默认 `dic_reference_bounds`，第一步从识别平台初始坐标解析 `GEO_L/GEO_H` 并冻结；预测平台不重新决定域。`THICKNESS/LOAD_SECTION_WIDTH` 来自试样定义，不能用内部 DIC 宽度替代真实承载宽度。`REGION_BOUNDARIES_CENTERED_X` 保留制造界面相对中心的位置，仅平移到新原点。旧配置缺少 `DOMAIN_SOURCE` 时仍按显式 `GEO_L/GEO_H` 处理。
 - `REGISTRATION`：同一坐标变换用于全部平台，坐标和位移同步变换；平移只作用于坐标，不独立缩放坐标轴。
 - `NEL_X/NEL_Y`：同一有限元网格用于独立正演、反演和回代；DIC 保持自己的真实测点和采样间距。
-- `NU_VALUES/PRIMARY_NU`：当前按实测范围比较 0.24/0.26/0.28，主值预先定为中点 0.26，不能看过留出误差后更换主值。
+- `NU_VALUES/PRIMARY_NU`：本组允许范围为 0.24—0.33，具体ν尚未独立确定；当前四步冻结的 0.24/0.26/0.28 是历史比较点，0.26 是历史参考值，不是实测中点或已测定材料值。新的 [E—ν联合诊断](joint_modulus_poisson_diagnosis_20261019.md) 在完整允许范围内仅用180N选参，不将本轮结果混入既有冻结正反演。
 
 ## 物理域与坐标配准
 

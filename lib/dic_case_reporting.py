@@ -83,7 +83,15 @@ def publish_stage(case_root, stage, output, summary, project_root=None):
         else:
             parts.append('<p>尚未运行。</p>')
         parts.append('</section>')
-    parts.append('</div></html>')
+    parts.append('</div>')
+    diagnostics = sorted(case_root.rglob('诊断报告.html'))
+    if diagnostics:
+        parts.append('<h2>辅助诊断</h2><ul>')
+        for page in diagnostics:
+            label = page.parent.relative_to(case_root).as_posix()
+            parts.append(f'<li><a href="{_link(page, case_root)}">{html.escape(label)}</a></li>')
+        parts.append('</ul>')
+    parts.append('</html>')
     overview = case_root/'结果总览.html'
     overview.write_text('\n'.join(parts), encoding='utf-8')
     results = project_root/'results'
