@@ -1,0 +1,797 @@
+{
+  "date": "2026-10-19",
+  "primary_revision": "_3",
+  "raw_files_modified": false,
+  "registration_verified": false,
+  "source_metadata_sha256": "2008ce8a6754c25fc59cfd41a4e9bd4443f79214a2c4cb968b34fce4a7de0361",
+  "calibration_source": {
+    "path": "D:\\MyProject\\uniform_pressure_experiment\\post_tensile_test\\analysis_results\\mixed_infill_20261017\\group_summary_and_residuals.csv",
+    "sha256": "dce84b8e873af2adcaf3dbbbfe4aad4693cba8e5b467b4f3e955e356b45bff0f"
+  },
+  "force_pairing_source": {
+    "path": "D:\\MyProject\\uniform_pressure_experiment\\post_tensile_test\\1016\\sample_2\\analysis_results\\dic_timing_20261018\\selected_dic_windows.csv",
+    "sha256": "0bfae0a64afcc69084fe34fc7754749c43add19f6fd9b3118d2ebbd2924f4787"
+  },
+  "calibration_groups": [
+    {
+      "infill_percent": 50,
+      "batch": 1013,
+      "n": 5,
+      "mean_E_MPa": 1396.4107925415587,
+      "sd_E_MPa": 76.58266428520218,
+      "fit_method": "independent"
+    },
+    {
+      "infill_percent": 60,
+      "batch": 1013,
+      "n": 5,
+      "mean_E_MPa": 1638.661938579892,
+      "sd_E_MPa": 137.95538881325984,
+      "fit_method": "independent"
+    },
+    {
+      "infill_percent": 70,
+      "batch": 1016,
+      "n": 5,
+      "mean_E_MPa": 1708.3381341110266,
+      "sd_E_MPa": 26.726979564091817,
+      "fit_method": "independent"
+    },
+    {
+      "infill_percent": 80,
+      "batch": 1016,
+      "n": 5,
+      "mean_E_MPa": 1842.0790060073489,
+      "sd_E_MPa": 46.50500622544038,
+      "fit_method": "independent"
+    },
+    {
+      "infill_percent": 90,
+      "batch": 1013,
+      "n": 4,
+      "mean_E_MPa": 2120.05686119206,
+      "sd_E_MPa": 34.48691066602953,
+      "fit_method": "independent"
+    }
+  ],
+  "inputs": {
+    "original": {
+      "180N": [
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment\\post_tensile_test\\1016\\sample_2\\3\\180N\\stage_00259.comdat_comdata.csv",
+          "stage": 259,
+          "sha256": "89fba0c7f11f3f0a7f8010d844de3b00f6bc1904c43b17b963689def843d65b4",
+          "raw_rows": 14058,
+          "valid_rows": 14058,
+          "duplicates_removed": 213
+        },
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment\\post_tensile_test\\1016\\sample_2\\3\\180N\\stage_00260.comdat_comdata.csv",
+          "stage": 260,
+          "sha256": "13064e3b92b550ba673bccd7f99450428679ce2f36f800677c003d9cf7e71b30",
+          "raw_rows": 14058,
+          "valid_rows": 14058,
+          "duplicates_removed": 213
+        },
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment\\post_tensile_test\\1016\\sample_2\\3\\180N\\stage_00261.comdat_comdata.csv",
+          "stage": 261,
+          "sha256": "9c369d81fbd87ce3518ec1f594239b0d4299290330528c57ade12f2a7e50076c",
+          "raw_rows": 14058,
+          "valid_rows": 14058,
+          "duplicates_removed": 213
+        },
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment\\post_tensile_test\\1016\\sample_2\\3\\180N\\stage_00262.comdat_comdata.csv",
+          "stage": 262,
+          "sha256": "49cad3f741a68f7b8f2ca06b925008ce310b1b737287d647c973cfc68661935e",
+          "raw_rows": 14058,
+          "valid_rows": 14058,
+          "duplicates_removed": 213
+        },
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment\\post_tensile_test\\1016\\sample_2\\3\\180N\\stage_00263.comdat_comdata.csv",
+          "stage": 263,
+          "sha256": "0512149794b690043ee07644d19126ac10751569040a485a8adbdf1942c7c57b",
+          "raw_rows": 14058,
+          "valid_rows": 14058,
+          "duplicates_removed": 213
+        },
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment\\post_tensile_test\\1016\\sample_2\\3\\180N\\stage_00264.comdat_comdata.csv",
+          "stage": 264,
+          "sha256": "6b8512fda84d673f62c83ab8e6cd771f64937101ac5ddf441cb3f1b586822e63",
+          "raw_rows": 14058,
+          "valid_rows": 14058,
+          "duplicates_removed": 213
+        },
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment\\post_tensile_test\\1016\\sample_2\\3\\180N\\stage_00265.comdat_comdata.csv",
+          "stage": 265,
+          "sha256": "cad6603ae15bfb825012930ab9948dcdbfdb614ef31f70a0025858ed28501b99",
+          "raw_rows": 14058,
+          "valid_rows": 14058,
+          "duplicates_removed": 213
+        },
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment\\post_tensile_test\\1016\\sample_2\\3\\180N\\stage_00266.comdat_comdata.csv",
+          "stage": 266,
+          "sha256": "1a12f218909bf9587a2532ff3e8dcf060c1c12281af53bbbf2633f43b10639d9",
+          "raw_rows": 14058,
+          "valid_rows": 14058,
+          "duplicates_removed": 213
+        },
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment\\post_tensile_test\\1016\\sample_2\\3\\180N\\stage_00267.comdat_comdata.csv",
+          "stage": 267,
+          "sha256": "c1d2469e87fab757dc1b620988aceb02eb1a96f96f39aa6d606af3628d50e437",
+          "raw_rows": 14058,
+          "valid_rows": 14058,
+          "duplicates_removed": 213
+        },
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment\\post_tensile_test\\1016\\sample_2\\3\\180N\\stage_00268.comdat_comdata.csv",
+          "stage": 268,
+          "sha256": "fb3d39172936eee220a8618b1217c7859048eb12f0b492f5bd04030f32953ea9",
+          "raw_rows": 14058,
+          "valid_rows": 14058,
+          "duplicates_removed": 213
+        },
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment\\post_tensile_test\\1016\\sample_2\\3\\180N\\stage_00269.comdat_comdata.csv",
+          "stage": 269,
+          "sha256": "921d49eacc09245ab9336d6c3dcae05d3b0579d4cb1a87f08002659467d36580",
+          "raw_rows": 14058,
+          "valid_rows": 14058,
+          "duplicates_removed": 213
+        },
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment\\post_tensile_test\\1016\\sample_2\\3\\180N\\stage_00270.comdat_comdata.csv",
+          "stage": 270,
+          "sha256": "797a8822596f8dc367462e23b25b7d8b1288ab228fd1c93cb8933b56b1a9f3c0",
+          "raw_rows": 14058,
+          "valid_rows": 14058,
+          "duplicates_removed": 213
+        },
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment\\post_tensile_test\\1016\\sample_2\\3\\180N\\stage_00271.comdat_comdata.csv",
+          "stage": 271,
+          "sha256": "ff30ac2fd9e03cf4e25be61d04f96e08e9febab38f20628a38bc16d87322fc78",
+          "raw_rows": 14058,
+          "valid_rows": 14058,
+          "duplicates_removed": 213
+        },
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment\\post_tensile_test\\1016\\sample_2\\3\\180N\\stage_00272.comdat_comdata.csv",
+          "stage": 272,
+          "sha256": "7be371bfd8262cdf718e9be56b91690574527751283c03dcfd11bbe416c4d0c1",
+          "raw_rows": 14058,
+          "valid_rows": 14058,
+          "duplicates_removed": 213
+        },
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment\\post_tensile_test\\1016\\sample_2\\3\\180N\\stage_00273.comdat_comdata.csv",
+          "stage": 273,
+          "sha256": "2d2b2f21c237b1ffee890a5e5beaf1ff4945817373bf1c6fbb768b60e3cce81f",
+          "raw_rows": 14058,
+          "valid_rows": 14058,
+          "duplicates_removed": 213
+        }
+      ],
+      "280N": [
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment\\post_tensile_test\\1016\\sample_2\\3\\280N\\stage_00436.comdat_comdata.csv",
+          "stage": 436,
+          "sha256": "e6a5a75fd8bc4062296b7b32b2184d1cad28e527024fa3b9abe21643c4167aef",
+          "raw_rows": 14058,
+          "valid_rows": 14058,
+          "duplicates_removed": 213
+        },
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment\\post_tensile_test\\1016\\sample_2\\3\\280N\\stage_00437.comdat_comdata.csv",
+          "stage": 437,
+          "sha256": "f4aa6267bd771d1dd19be6a5657d63b3b5f2874b1b1281bbb0642cb9b1e0b4f1",
+          "raw_rows": 14058,
+          "valid_rows": 14058,
+          "duplicates_removed": 213
+        },
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment\\post_tensile_test\\1016\\sample_2\\3\\280N\\stage_00438.comdat_comdata.csv",
+          "stage": 438,
+          "sha256": "1283d6ff3c3db74fc393d9c63f6578db30520f0c9e942b2f20a18e89c33ce4fc",
+          "raw_rows": 14058,
+          "valid_rows": 14058,
+          "duplicates_removed": 213
+        },
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment\\post_tensile_test\\1016\\sample_2\\3\\280N\\stage_00439.comdat_comdata.csv",
+          "stage": 439,
+          "sha256": "4fefea0d36e3def6b1090c43d2ee16fd39d9e971bffa904dec654db9807cd123",
+          "raw_rows": 14058,
+          "valid_rows": 14058,
+          "duplicates_removed": 213
+        },
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment\\post_tensile_test\\1016\\sample_2\\3\\280N\\stage_00440.comdat_comdata.csv",
+          "stage": 440,
+          "sha256": "dfb7343142ba500671e2ea99d9fdecbe76098f1f0016d40ded9693463fe1bda7",
+          "raw_rows": 14058,
+          "valid_rows": 14058,
+          "duplicates_removed": 213
+        },
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment\\post_tensile_test\\1016\\sample_2\\3\\280N\\stage_00441.comdat_comdata.csv",
+          "stage": 441,
+          "sha256": "7b0bd377a3cfd817f067ecc8d4ecdd0519619d21b4036dbe57c191d35303adb9",
+          "raw_rows": 14058,
+          "valid_rows": 14058,
+          "duplicates_removed": 213
+        },
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment\\post_tensile_test\\1016\\sample_2\\3\\280N\\stage_00442.comdat_comdata.csv",
+          "stage": 442,
+          "sha256": "17d94d5a533ee6701421f46aeb73e773ad87a948e7f90dcca9657de204839cc3",
+          "raw_rows": 14058,
+          "valid_rows": 14058,
+          "duplicates_removed": 213
+        },
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment\\post_tensile_test\\1016\\sample_2\\3\\280N\\stage_00443.comdat_comdata.csv",
+          "stage": 443,
+          "sha256": "f65380951522ddf677291f3eea9481b5ab484662f0dcce4de0653f1ee36d0d58",
+          "raw_rows": 14058,
+          "valid_rows": 14058,
+          "duplicates_removed": 213
+        },
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment\\post_tensile_test\\1016\\sample_2\\3\\280N\\stage_00444.comdat_comdata.csv",
+          "stage": 444,
+          "sha256": "81a9cd3c78764c93285dd57774747221be3fafe088e1c142d2cddf1b0ac4432a",
+          "raw_rows": 14058,
+          "valid_rows": 14058,
+          "duplicates_removed": 213
+        },
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment\\post_tensile_test\\1016\\sample_2\\3\\280N\\stage_00445.comdat_comdata.csv",
+          "stage": 445,
+          "sha256": "dc239058fc5daa2ee291adf76fec370ab34592c68c15a5e12aa0defce1b125ed",
+          "raw_rows": 14058,
+          "valid_rows": 14058,
+          "duplicates_removed": 213
+        },
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment\\post_tensile_test\\1016\\sample_2\\3\\280N\\stage_00446.comdat_comdata.csv",
+          "stage": 446,
+          "sha256": "bf0ed750f38f5a976b478adf6a8461c3923bbdc1092c02799e3784745478fca0",
+          "raw_rows": 14058,
+          "valid_rows": 14058,
+          "duplicates_removed": 213
+        },
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment\\post_tensile_test\\1016\\sample_2\\3\\280N\\stage_00447.comdat_comdata.csv",
+          "stage": 447,
+          "sha256": "b981ce3b400af7bd8c26ff987b989e90ae5c31fcd857cc7fb58a62682836d4db",
+          "raw_rows": 14058,
+          "valid_rows": 14058,
+          "duplicates_removed": 213
+        },
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment\\post_tensile_test\\1016\\sample_2\\3\\280N\\stage_00448.comdat_comdata.csv",
+          "stage": 448,
+          "sha256": "76b1698649ec1d56d7bcafe050e80bfcc8027a8799b2dfecadee4f02770dbf93",
+          "raw_rows": 14058,
+          "valid_rows": 14058,
+          "duplicates_removed": 213
+        },
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment\\post_tensile_test\\1016\\sample_2\\3\\280N\\stage_00449.comdat_comdata.csv",
+          "stage": 449,
+          "sha256": "97a4ebc551e2095cb2667e93bc1dfa095a0ca4a398ebf50e2d983791165be654",
+          "raw_rows": 14058,
+          "valid_rows": 14058,
+          "duplicates_removed": 213
+        },
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment\\post_tensile_test\\1016\\sample_2\\3\\280N\\stage_00450.comdat_comdata.csv",
+          "stage": 450,
+          "sha256": "a65beaf5241b1a41be631c3ca4b784ecfab3279b401eb475bccbbf358da975f3",
+          "raw_rows": 14058,
+          "valid_rows": 14058,
+          "duplicates_removed": 213
+        }
+      ]
+    },
+    "_2": {
+      "180N": [
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment\\post_tensile_test\\1016\\sample_2\\3\\180N_2\\stage_00259.comdat_comdata.csv",
+          "stage": 259,
+          "sha256": "0c0afbdb9be6df54e9948102a3c5eea6588f28b4961dc6ee872920a11cfd8fb1",
+          "raw_rows": 14484,
+          "valid_rows": 14484,
+          "duplicates_removed": 0
+        },
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment\\post_tensile_test\\1016\\sample_2\\3\\180N_2\\stage_00260.comdat_comdata.csv",
+          "stage": 260,
+          "sha256": "15596a830eda27f519060e858077699aaccce35868b7b08aa7d020c827df3960",
+          "raw_rows": 14484,
+          "valid_rows": 14484,
+          "duplicates_removed": 0
+        },
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment\\post_tensile_test\\1016\\sample_2\\3\\180N_2\\stage_00261.comdat_comdata.csv",
+          "stage": 261,
+          "sha256": "a49548d87ceaa1a5e4efc026fe918591671f79b7b67a1fae464a6d166e4320f8",
+          "raw_rows": 14484,
+          "valid_rows": 14484,
+          "duplicates_removed": 0
+        },
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment\\post_tensile_test\\1016\\sample_2\\3\\180N_2\\stage_00262.comdat_comdata.csv",
+          "stage": 262,
+          "sha256": "c513152c8fe0c7df46bdd86e3a0a4b4ad5fd5d1ce5956008edee648ccf74065c",
+          "raw_rows": 14484,
+          "valid_rows": 14484,
+          "duplicates_removed": 0
+        },
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment\\post_tensile_test\\1016\\sample_2\\3\\180N_2\\stage_00263.comdat_comdata.csv",
+          "stage": 263,
+          "sha256": "12a5ad21733495c33e471bf98d60422f19def7e46402c3f487cc9ff6c3657312",
+          "raw_rows": 14484,
+          "valid_rows": 14484,
+          "duplicates_removed": 0
+        },
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment\\post_tensile_test\\1016\\sample_2\\3\\180N_2\\stage_00264.comdat_comdata.csv",
+          "stage": 264,
+          "sha256": "4fd11fb89db1e5e7d819adec90dc726609b1333ae53822526f550f4bbfff35a1",
+          "raw_rows": 14484,
+          "valid_rows": 14484,
+          "duplicates_removed": 0
+        },
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment\\post_tensile_test\\1016\\sample_2\\3\\180N_2\\stage_00265.comdat_comdata.csv",
+          "stage": 265,
+          "sha256": "793655d19cd8dc4d89792ae100dbdf2d427d267846a437a71c8d137ab2078e56",
+          "raw_rows": 14484,
+          "valid_rows": 14484,
+          "duplicates_removed": 0
+        },
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment\\post_tensile_test\\1016\\sample_2\\3\\180N_2\\stage_00266.comdat_comdata.csv",
+          "stage": 266,
+          "sha256": "69b5e1831c823128305e8da12a18e3750322a64251f7fccd2ade0643fc42c914",
+          "raw_rows": 14484,
+          "valid_rows": 14484,
+          "duplicates_removed": 0
+        },
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment\\post_tensile_test\\1016\\sample_2\\3\\180N_2\\stage_00267.comdat_comdata.csv",
+          "stage": 267,
+          "sha256": "d8b4ea542ba9fa8ae8503f090013fc99b824526886db02b0a90050ab5b6ea920",
+          "raw_rows": 14484,
+          "valid_rows": 14484,
+          "duplicates_removed": 0
+        },
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment\\post_tensile_test\\1016\\sample_2\\3\\180N_2\\stage_00268.comdat_comdata.csv",
+          "stage": 268,
+          "sha256": "fe8521c8f7225e5a0cd6f0620957c286765b8acc18369d25f1cc58b1544f28c9",
+          "raw_rows": 14484,
+          "valid_rows": 14484,
+          "duplicates_removed": 0
+        },
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment\\post_tensile_test\\1016\\sample_2\\3\\180N_2\\stage_00269.comdat_comdata.csv",
+          "stage": 269,
+          "sha256": "f6352a2b65f4f0e351cbb677c3debd93b10aa61dee2727a1628fa65215fa3e42",
+          "raw_rows": 14484,
+          "valid_rows": 14484,
+          "duplicates_removed": 0
+        },
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment\\post_tensile_test\\1016\\sample_2\\3\\180N_2\\stage_00270.comdat_comdata.csv",
+          "stage": 270,
+          "sha256": "48f803234f1de7aaad825077830e45df56dbadefa60d223a520ebb637ac53aaa",
+          "raw_rows": 14484,
+          "valid_rows": 14484,
+          "duplicates_removed": 0
+        },
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment\\post_tensile_test\\1016\\sample_2\\3\\180N_2\\stage_00271.comdat_comdata.csv",
+          "stage": 271,
+          "sha256": "2cb0d4fba04dc3c2818645b59a548d18194e937761c7ddac5388a6aaf4815f2d",
+          "raw_rows": 14484,
+          "valid_rows": 14484,
+          "duplicates_removed": 0
+        },
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment\\post_tensile_test\\1016\\sample_2\\3\\180N_2\\stage_00272.comdat_comdata.csv",
+          "stage": 272,
+          "sha256": "237c6aaf03e56f5eb981a3d4ecd98a2728cad175d5968704d82859b97f8b67e0",
+          "raw_rows": 14484,
+          "valid_rows": 14484,
+          "duplicates_removed": 0
+        },
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment\\post_tensile_test\\1016\\sample_2\\3\\180N_2\\stage_00273.comdat_comdata.csv",
+          "stage": 273,
+          "sha256": "f2218cd926c785471ce39a80a5186713a831684ee61df0daf467342b5ddce6a5",
+          "raw_rows": 14484,
+          "valid_rows": 14484,
+          "duplicates_removed": 0
+        }
+      ],
+      "280N": [
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment\\post_tensile_test\\1016\\sample_2\\3\\280N_2\\stage_00436.comdat_comdata.csv",
+          "stage": 436,
+          "sha256": "c646ea6bf71a3b93076c7aa0bc33e0c98eb6f64f349b4440184310b31c03af2a",
+          "raw_rows": 14484,
+          "valid_rows": 14484,
+          "duplicates_removed": 0
+        },
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment\\post_tensile_test\\1016\\sample_2\\3\\280N_2\\stage_00437.comdat_comdata.csv",
+          "stage": 437,
+          "sha256": "f9f4b64cc6f5fc70b87a54a83206a38ebbdfc77e2bcbe907e2318e4117cd7ac6",
+          "raw_rows": 14484,
+          "valid_rows": 14484,
+          "duplicates_removed": 0
+        },
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment\\post_tensile_test\\1016\\sample_2\\3\\280N_2\\stage_00438.comdat_comdata.csv",
+          "stage": 438,
+          "sha256": "47c63e6a041ae8bac9550faefba8db1241174ac46835762a1c2c1323da39f1a0",
+          "raw_rows": 14484,
+          "valid_rows": 14484,
+          "duplicates_removed": 0
+        },
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment\\post_tensile_test\\1016\\sample_2\\3\\280N_2\\stage_00439.comdat_comdata.csv",
+          "stage": 439,
+          "sha256": "410414052266a391f58e9db401a464777b8f135ce5bad4fda53edd384d0b191b",
+          "raw_rows": 14484,
+          "valid_rows": 14484,
+          "duplicates_removed": 0
+        },
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment\\post_tensile_test\\1016\\sample_2\\3\\280N_2\\stage_00440.comdat_comdata.csv",
+          "stage": 440,
+          "sha256": "89389fd6dcbb7526dd2268842ffdcfebcbda74bece21c5bf7dd1bac6c235bda2",
+          "raw_rows": 14484,
+          "valid_rows": 14484,
+          "duplicates_removed": 0
+        },
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment\\post_tensile_test\\1016\\sample_2\\3\\280N_2\\stage_00441.comdat_comdata.csv",
+          "stage": 441,
+          "sha256": "17046c625c23f01bccfd542f1247596e58b34045726cf6ced219c5d2eb54cc65",
+          "raw_rows": 14484,
+          "valid_rows": 14484,
+          "duplicates_removed": 0
+        },
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment\\post_tensile_test\\1016\\sample_2\\3\\280N_2\\stage_00442.comdat_comdata.csv",
+          "stage": 442,
+          "sha256": "4200778fc2be9846ea8687e7bf596382809c82eac3850283914ac9fd194b5fd6",
+          "raw_rows": 14484,
+          "valid_rows": 14484,
+          "duplicates_removed": 0
+        },
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment\\post_tensile_test\\1016\\sample_2\\3\\280N_2\\stage_00443.comdat_comdata.csv",
+          "stage": 443,
+          "sha256": "e5abbee0255778ab2fddaaab909f6ef0bdc319526635df680a87992117c5ed6e",
+          "raw_rows": 14484,
+          "valid_rows": 14484,
+          "duplicates_removed": 0
+        },
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment\\post_tensile_test\\1016\\sample_2\\3\\280N_2\\stage_00444.comdat_comdata.csv",
+          "stage": 444,
+          "sha256": "af3dd14aa9453d39dad72d17ce76f08d56a18b2d0e9be834b980b091283a084a",
+          "raw_rows": 14484,
+          "valid_rows": 14484,
+          "duplicates_removed": 0
+        },
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment\\post_tensile_test\\1016\\sample_2\\3\\280N_2\\stage_00445.comdat_comdata.csv",
+          "stage": 445,
+          "sha256": "f0243101dfbba24d9e77873a6409f861889787c8040b3e671a7f70cffc9c85db",
+          "raw_rows": 14484,
+          "valid_rows": 14484,
+          "duplicates_removed": 0
+        },
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment\\post_tensile_test\\1016\\sample_2\\3\\280N_2\\stage_00446.comdat_comdata.csv",
+          "stage": 446,
+          "sha256": "75c4f42a675a22e4a6a60bf50420a91fbcab21ef51a62a9974fb7ee7ff655c0d",
+          "raw_rows": 14484,
+          "valid_rows": 14484,
+          "duplicates_removed": 0
+        },
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment\\post_tensile_test\\1016\\sample_2\\3\\280N_2\\stage_00447.comdat_comdata.csv",
+          "stage": 447,
+          "sha256": "ce01684e972fb46acd3f978cdd40231737b71d8932ec98d27dfc19811bcdd091",
+          "raw_rows": 14484,
+          "valid_rows": 14484,
+          "duplicates_removed": 0
+        },
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment\\post_tensile_test\\1016\\sample_2\\3\\280N_2\\stage_00448.comdat_comdata.csv",
+          "stage": 448,
+          "sha256": "6a346bd7679d7c9d1f6ee3690387eda1ce97d83d385673b75c735cc1258100ed",
+          "raw_rows": 14484,
+          "valid_rows": 14484,
+          "duplicates_removed": 0
+        },
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment\\post_tensile_test\\1016\\sample_2\\3\\280N_2\\stage_00449.comdat_comdata.csv",
+          "stage": 449,
+          "sha256": "6c8710f9021afec4e0774cb730c503a6f8a43147b2b4b98c26da48d808412ffe",
+          "raw_rows": 14484,
+          "valid_rows": 14484,
+          "duplicates_removed": 0
+        },
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment\\post_tensile_test\\1016\\sample_2\\3\\280N_2\\stage_00450.comdat_comdata.csv",
+          "stage": 450,
+          "sha256": "9fec10a693692cfdac59b24b03df3546b7e7fa4e6d04036fa630130aa80cc63d",
+          "raw_rows": 14484,
+          "valid_rows": 14484,
+          "duplicates_removed": 0
+        }
+      ]
+    },
+    "_3": {
+      "180N": [
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment\\post_tensile_test\\1016\\sample_2\\3\\180N_3\\stage_00259.comdat_comdata.csv",
+          "stage": 259,
+          "sha256": "550848524245ba06447c004901484e4319ed03568bc5521f0a0927f4f8cd5106",
+          "raw_rows": 14058,
+          "valid_rows": 14058,
+          "duplicates_removed": 213
+        },
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment\\post_tensile_test\\1016\\sample_2\\3\\180N_3\\stage_00260.comdat_comdata.csv",
+          "stage": 260,
+          "sha256": "7eb952a1bfd97e4380246b2e5bd1330e04d047406b93f4726cfd8818374a9f57",
+          "raw_rows": 14058,
+          "valid_rows": 14058,
+          "duplicates_removed": 213
+        },
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment\\post_tensile_test\\1016\\sample_2\\3\\180N_3\\stage_00261.comdat_comdata.csv",
+          "stage": 261,
+          "sha256": "66e12754ad63440154e540957a914ad3652ab83aaf7b8946969c09620967e756",
+          "raw_rows": 14058,
+          "valid_rows": 14058,
+          "duplicates_removed": 213
+        },
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment\\post_tensile_test\\1016\\sample_2\\3\\180N_3\\stage_00262.comdat_comdata.csv",
+          "stage": 262,
+          "sha256": "547b5b2a3d9507e8a47b784d38b59d21afcf3776b2df218860fcecc6cc81966c",
+          "raw_rows": 14058,
+          "valid_rows": 14058,
+          "duplicates_removed": 213
+        },
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment\\post_tensile_test\\1016\\sample_2\\3\\180N_3\\stage_00263.comdat_comdata.csv",
+          "stage": 263,
+          "sha256": "6956799851d660aea646750032c8b4cd075631ed0ce7cd3b2e2ea8ac228047af",
+          "raw_rows": 14058,
+          "valid_rows": 14058,
+          "duplicates_removed": 213
+        },
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment\\post_tensile_test\\1016\\sample_2\\3\\180N_3\\stage_00264.comdat_comdata.csv",
+          "stage": 264,
+          "sha256": "177748df3aed81858b489a3c85924b21fc5642d25fba9a4c51c7c6fc8b59ed4a",
+          "raw_rows": 14058,
+          "valid_rows": 14058,
+          "duplicates_removed": 213
+        },
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment\\post_tensile_test\\1016\\sample_2\\3\\180N_3\\stage_00265.comdat_comdata.csv",
+          "stage": 265,
+          "sha256": "26266953b1a216f80ee12bcf864553b3df1a293c1681ad01489ce8a5d122d546",
+          "raw_rows": 14058,
+          "valid_rows": 14058,
+          "duplicates_removed": 213
+        },
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment\\post_tensile_test\\1016\\sample_2\\3\\180N_3\\stage_00266.comdat_comdata.csv",
+          "stage": 266,
+          "sha256": "193ae24147979924527ee16f53bcecac7cd6ac54c3843973b45521e6d5e4a00b",
+          "raw_rows": 14058,
+          "valid_rows": 14058,
+          "duplicates_removed": 213
+        },
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment\\post_tensile_test\\1016\\sample_2\\3\\180N_3\\stage_00267.comdat_comdata.csv",
+          "stage": 267,
+          "sha256": "595b5ec627338346704986cf7b91e7c8f2701176630286a668bb047bc04a73d9",
+          "raw_rows": 14058,
+          "valid_rows": 14058,
+          "duplicates_removed": 213
+        },
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment\\post_tensile_test\\1016\\sample_2\\3\\180N_3\\stage_00268.comdat_comdata.csv",
+          "stage": 268,
+          "sha256": "c0643ef939f3c1eff7b70bf882f1bd3e4804c0a7150de15f382ce417fcdb88db",
+          "raw_rows": 14058,
+          "valid_rows": 14058,
+          "duplicates_removed": 213
+        },
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment\\post_tensile_test\\1016\\sample_2\\3\\180N_3\\stage_00269.comdat_comdata.csv",
+          "stage": 269,
+          "sha256": "2c269270e41622d41b861c7c6376740e4420df227d08d18fb522df98ab9f6969",
+          "raw_rows": 14058,
+          "valid_rows": 14058,
+          "duplicates_removed": 213
+        },
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment\\post_tensile_test\\1016\\sample_2\\3\\180N_3\\stage_00270.comdat_comdata.csv",
+          "stage": 270,
+          "sha256": "c474250515c39008d028af292d5e51975e7cebc18dbafd10f75f286bcf0cec2b",
+          "raw_rows": 14058,
+          "valid_rows": 14058,
+          "duplicates_removed": 213
+        },
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment\\post_tensile_test\\1016\\sample_2\\3\\180N_3\\stage_00271.comdat_comdata.csv",
+          "stage": 271,
+          "sha256": "5bdd11c3ead5ef771eea3a579793ddbfa6e3079145dc6508fd65ee3a4f065cf3",
+          "raw_rows": 14058,
+          "valid_rows": 14058,
+          "duplicates_removed": 213
+        },
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment\\post_tensile_test\\1016\\sample_2\\3\\180N_3\\stage_00272.comdat_comdata.csv",
+          "stage": 272,
+          "sha256": "25d0b5db488f245bf50f265ae581efa858c4227b10c8ef4a502ebce9069e252d",
+          "raw_rows": 14058,
+          "valid_rows": 14058,
+          "duplicates_removed": 213
+        },
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment\\post_tensile_test\\1016\\sample_2\\3\\180N_3\\stage_00273.comdat_comdata.csv",
+          "stage": 273,
+          "sha256": "6c06636f90074a0e8611bd5661d996526beca4d644dfc7cec5a613717e9c9912",
+          "raw_rows": 14058,
+          "valid_rows": 14058,
+          "duplicates_removed": 213
+        }
+      ],
+      "280N": [
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment\\post_tensile_test\\1016\\sample_2\\3\\280N_3\\stage_00436.comdat_comdata.csv",
+          "stage": 436,
+          "sha256": "b65c3581ea632148bed853c83fc180057e699fc81e936f28e8dfb344dfa0df50",
+          "raw_rows": 14058,
+          "valid_rows": 14058,
+          "duplicates_removed": 213
+        },
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment\\post_tensile_test\\1016\\sample_2\\3\\280N_3\\stage_00437.comdat_comdata.csv",
+          "stage": 437,
+          "sha256": "1a527739d35182f8ce50d305e779af4b56ac92b31b11cdf7db5a2d67bf400f4a",
+          "raw_rows": 14058,
+          "valid_rows": 14058,
+          "duplicates_removed": 213
+        },
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment\\post_tensile_test\\1016\\sample_2\\3\\280N_3\\stage_00438.comdat_comdata.csv",
+          "stage": 438,
+          "sha256": "3c0cd1616ddaf0d3d78d5117d62e51591da4be248aabd9305baf1f6acb193922",
+          "raw_rows": 14058,
+          "valid_rows": 14058,
+          "duplicates_removed": 213
+        },
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment\\post_tensile_test\\1016\\sample_2\\3\\280N_3\\stage_00439.comdat_comdata.csv",
+          "stage": 439,
+          "sha256": "6469e74f4b3ffea8b1ae424bbda006aeb0ca75cbb0c04de37cdedf2c919d513c",
+          "raw_rows": 14058,
+          "valid_rows": 14058,
+          "duplicates_removed": 213
+        },
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment\\post_tensile_test\\1016\\sample_2\\3\\280N_3\\stage_00440.comdat_comdata.csv",
+          "stage": 440,
+          "sha256": "16151e84d10c1fb80f79dd8c706f5e095cb30620aaa0a19326ecf137b758a469",
+          "raw_rows": 14058,
+          "valid_rows": 14058,
+          "duplicates_removed": 213
+        },
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment\\post_tensile_test\\1016\\sample_2\\3\\280N_3\\stage_00441.comdat_comdata.csv",
+          "stage": 441,
+          "sha256": "be92e5bf60f14967afaeedc6620dfa49bbe1a559ebb4cb62089072325bba2f07",
+          "raw_rows": 14058,
+          "valid_rows": 14058,
+          "duplicates_removed": 213
+        },
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment\\post_tensile_test\\1016\\sample_2\\3\\280N_3\\stage_00442.comdat_comdata.csv",
+          "stage": 442,
+          "sha256": "e10acbd147bd5c7248c4efe40a9d12856f95f60616367652a006554566dff6a9",
+          "raw_rows": 14058,
+          "valid_rows": 14058,
+          "duplicates_removed": 213
+        },
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment\\post_tensile_test\\1016\\sample_2\\3\\280N_3\\stage_00443.comdat_comdata.csv",
+          "stage": 443,
+          "sha256": "40a20a522cd46197667ec4babf38db0f3c41460f0776bcb6b4ad06726c48f6f4",
+          "raw_rows": 14058,
+          "valid_rows": 14058,
+          "duplicates_removed": 213
+        },
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment\\post_tensile_test\\1016\\sample_2\\3\\280N_3\\stage_00444.comdat_comdata.csv",
+          "stage": 444,
+          "sha256": "2a61dd652d4d72ff1f31b731f8931eba127b86c167736c1c72904c39558c02a0",
+          "raw_rows": 14058,
+          "valid_rows": 14058,
+          "duplicates_removed": 213
+        },
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment\\post_tensile_test\\1016\\sample_2\\3\\280N_3\\stage_00445.comdat_comdata.csv",
+          "stage": 445,
+          "sha256": "5764dbce8d2f433f6d4efc9b9ee7b16c050ee16fdf2a71f5509bb4d93ee1b008",
+          "raw_rows": 14058,
+          "valid_rows": 14058,
+          "duplicates_removed": 213
+        },
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment\\post_tensile_test\\1016\\sample_2\\3\\280N_3\\stage_00446.comdat_comdata.csv",
+          "stage": 446,
+          "sha256": "39d9b3a642b78446caf94c96f870d114ef13fd26e3222de66064c31366d39f3c",
+          "raw_rows": 14058,
+          "valid_rows": 14058,
+          "duplicates_removed": 213
+        },
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment\\post_tensile_test\\1016\\sample_2\\3\\280N_3\\stage_00447.comdat_comdata.csv",
+          "stage": 447,
+          "sha256": "3b20e92e87ad083ded34573b776cd2a24d8eb658b033ff05314e0259906eb396",
+          "raw_rows": 14058,
+          "valid_rows": 14058,
+          "duplicates_removed": 213
+        },
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment\\post_tensile_test\\1016\\sample_2\\3\\280N_3\\stage_00448.comdat_comdata.csv",
+          "stage": 448,
+          "sha256": "8c2e41ce2b4064fd3366e611be3115ad235821979b5d7293f7427a4531473db3",
+          "raw_rows": 14058,
+          "valid_rows": 14058,
+          "duplicates_removed": 213
+        },
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment\\post_tensile_test\\1016\\sample_2\\3\\280N_3\\stage_00449.comdat_comdata.csv",
+          "stage": 449,
+          "sha256": "0091441076bb6683b2f91b280f539c6d0165da2c98bd8a1bd1958d268c1c86a7",
+          "raw_rows": 14058,
+          "valid_rows": 14058,
+          "duplicates_removed": 213
+        },
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment\\post_tensile_test\\1016\\sample_2\\3\\280N_3\\stage_00450.comdat_comdata.csv",
+          "stage": 450,
+          "sha256": "d82bfaec52884788135e3985d3b5043a384796de964d543319a8561f3e88de2e",
+          "raw_rows": 14058,
+          "valid_rows": 14058,
+          "duplicates_removed": 213
+        }
+      ]
+    }
+  }
+}
