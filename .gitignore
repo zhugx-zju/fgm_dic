@@ -39,3 +39,7 @@ nonlinear_case_inverse_derivation
 *.fls
 *.synctex.gz
 *.xdv
+
+# Preserved local work from before workflow consolidation; never publish it.
+archive/legacy_workflows/local_snapshot/
+archive/legacy_workflows/local_work/

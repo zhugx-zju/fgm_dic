@@ -1,6 +1,6 @@
 """Fair synthetic comparison: independent repeat displacement selects gamma.
 
-Run from the repository root: python -m script.benchmark_tgv_regularization ...
+Run from the repository root: python -m archive.legacy_workflows.script.benchmark_tgv_regularization ...
 True E is used only for final scoring/plots, never for selecting parameters.
 Existing raw runs are resumed only if the complete protocol matches exactly.
 """
@@ -20,7 +20,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import scipy
 
-import config
+from archive.legacy_workflows import config
 from fgm_asm.fem_forward import fem_assemble, forward_solver
 from fgm_asm.inverse_solver import lbfgs_inverse_solver_scipy
 from fgm_asm.material import MaterialInfo

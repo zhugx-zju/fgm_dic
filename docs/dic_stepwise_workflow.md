@@ -17,26 +17,47 @@
 
 在项目根目录、安装 `requirements.txt` 的 Python 环境中，依次运行：
 
-下列目录已保存本次执行结果。重新计算前应将配置的 `CASE_OUTPUT` 改为新目录，并相应修改后面三条命令的 `--input`，避免覆盖已有结果。
+当前实验已保存结果。重新计算前只需将配置的 `CASE_OUTPUT` 改为新目录，四条命令不需要填写长结果路径。
 
 ```powershell
 python -m script.step1_prepare_dic --config dic_case_config
-python -m script.step2_forward_calibrated --input results/dic_case_commonmesh_20261019_01/01_prepared
-python -m script.step3_inverse_dic --input results/dic_case_commonmesh_20261019_01/01_prepared
-python -m script.step4_compare_results --input results/dic_case_commonmesh_20261019_01/01_prepared
+python -m script.step2_forward_calibrated
+python -m script.step3_inverse_dic
+python -m script.step4_compare_results
 ```
 
-打开 `results/dic_case_commonmesh_20261019_01/04_comparison/打开查看结果.html` 查看主线结果。需要重新出图时，第 4 步用 `--output <新目录>`，不重跑前面求解。每一步均拒绝覆盖已有输出。
+**查看结果：双击项目根目录的 [打开结果.html](../打开结果.html)。** 每一步结束时都会打印本步绝对保存路径和实验总览路径，并更新这个固定入口。第 2—4 步的默认 `--config dic_case_config` 仅用于定位 `CASE_OUTPUT/01_prepared`；求解参数和数据仍来自第一步冻结文件。也可用 `--input <01_prepared目录>` 明确指定输入。
+
+全部结果集中在配置的 `CASE_OUTPUT` 下：
+
+```text
+结果总览.html                 四步保存位置、文件链接及最终图表入口
+01_prepared/                 DIC 坐标、位移、网格 ID、载荷、核查和配置
+02_forward/                  comparison.csv；nu_*/fields.npz 正演数值场
+03_inverse/                  selection.csv、regional_comparison.csv；nu_*/fields.npz
+04_comparison/               打开查看结果.html、误差与模量 CSV
+  nu_0.26/                   主泊松比结果（另有 0.24、0.28）
+    180N/、280N/             DIC、正演、反演及残差各分量 PNG/SVG，逐测点 CSV
+    modulus_comparison.*     二维模量对照
+    x_profile.*              宽度平均 E(x) 与标定对照
+```
+
+需要重新出图时，第 4 步用 `--output <新目录>`；总览会指向新的图表目录，旧图仍保留。本次按 post_DIC 风格重新出图的目录是 `04_comparison_postdic/`。第 4 步不重跑前面求解，每一步均拒绝覆盖已有数值结果。
+
+DIC 图复用原 `post_DIC` 的 `lib/dic_preprocessing.py::plot_grid_fields`：7×6 英寸、规则网格 `pcolormesh`、`jet`、等比例坐标、独立单图。DIC/独立正演/反演采用共用色标，两幅残差采用共用对称色标；HTML 并排排列原图。新输入冻结网格 ID，缺失点留空，不插值补测量。旧版冻结结果仅在可核验的轴对齐规则坐标上恢复网格顺序。绘图不改变配准、观测、载荷或反演结果。
 
 ## 换一组 DIC 数据
 
-将根目录的 `dic_case_config.py` 复制为另一个配置文件，例如 `dic_case_sample3.py`，修改该组实验的输入与物理定义，然后将第一条命令改为：
+直接修改 `dic_case_config.py` 中的新数据目录、物理定义和新的 `CASE_OUTPUT`，然后运行上述四条命令。若需要保留多组配置，可复制为 `dic_case_sample3.py`，四步均指定它：
 
 ```powershell
 python -m script.step1_prepare_dic --config dic_case_sample3
+python -m script.step2_forward_calibrated --config dic_case_sample3
+python -m script.step3_inverse_dic --config dic_case_sample3
+python -m script.step4_compare_results --config dic_case_sample3
 ```
 
-也可用 `--config <配置文件.py>` 指定路径。后续三个脚本把 `--input` 指向新结果目录的 `01_prepared/`；它们读取第一步冻结的配置和数组，不再重新读取可能已改变的原始 CSV 或当前 Python 配置。
+也可用 `--config <配置文件.py>` 指定路径。后续三个脚本读取第一步冻结的配置和数组，不再重新读取可能已改变的原始 CSV。
 
 必须逐组明确的参数：
 
@@ -78,3 +99,5 @@ gamma 仅在 `FIT_CASES` 的带缓冲空间验证点上选择。当前预设 ν=
 阶段间核对冻结输入的元数据/数组哈希，拒绝混用不同实验的正反演结果；有限元内核变化后需重新准备。所有步骤调用现有正演、观测和伴随内核，没有另写有限元或梯度实现。
 
 本流程交付独立正演与 DIC、二维模量与独立标定、回代及预测三条比较证据。物理配准未完成、完整狗骨与矩形截取域边界等效未验证、误差预算不完整时，不自动宣告实验物理验证通过。早期探索脚本及其输出保留用于复现，当前分步入口以本说明为准。
+
+2026-10-19 的流程检查：当前工作区 56 项测试通过，四步 CLI 在受控小算例上依次执行通过；15 个当前/历史入口通过导入及帮助检查。新版真实数据报告与旧报告的位移误差、分区模量表一致，逐测点导出与冻结观测一致，66 组 PNG/SVG 已生成并抽查渲染。浏览入口及报告的本地文件链接逐项核验；检查记录位于本次图表目录 `presentation_verification.json`。这些检查验证流程与呈现，不增加实验物理验证证据。

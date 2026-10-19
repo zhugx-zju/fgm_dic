@@ -44,7 +44,7 @@
 ## 复现与检查
 
 ```powershell
-python -m script.analyze_dic_noise --frame-rate 5 --output results/dic_noise_replication_01
+python -m archive.legacy_workflows.script.analyze_dic_noise --frame-rate 5 --output results/dic_noise_replication_01
 python -m unittest discover -s tests
 ```
 

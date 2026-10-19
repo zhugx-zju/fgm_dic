@@ -1,6 +1,6 @@
 """rot90 working convention and frame-level checks; landmarks still pending."""
 
-from dic_revision_config import (
+from archive.legacy_workflows.dic_revision_config import (
     PROJECT_ROOT, DATA_ROOT, FORCE_PAIRING_CSV, CALIBRATION_CSV,
     CALIBRATION_METHOD, REGION_INFILL_PERCENT, REGION_BOUNDARIES_X,
     GEO_L, GEO_H, THICKNESS, NU, NEL_X, NEL_Y, FORWARD_NEL_X, FORWARD_NEL_Y,

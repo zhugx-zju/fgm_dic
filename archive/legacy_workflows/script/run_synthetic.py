@@ -1,4 +1,4 @@
-"""Run the unified synthetic test: python -m script.run_synthetic."""
+"""Run the unified synthetic test: python -m archive.legacy_workflows.script.run_synthetic."""
 
 import argparse
 from datetime import datetime

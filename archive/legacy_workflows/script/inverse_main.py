@@ -9,7 +9,7 @@ regularization.
 import time
 import numpy as np
 
-from script import REPO_ROOT
+from archive.legacy_workflows.script import REPO_ROOT
 from fgm_asm import lbfgs_inverse_solver_scipy
 from fgm_asm.results_io import get_noise_output_dir, save_inverse_results, write_python_config_snapshot
 from fgm_asm.utils import (
@@ -17,7 +17,7 @@ from fgm_asm.utils import (
 )
 from fgm_asm.visualization import plot_x_profile_reconstruction, visualize_inverse_results
 from fgm_asm.workflows import load_latest_forward_problem, resolve_results_dir
-import config as cfg
+from archive.legacy_workflows import config as cfg
 
 
 print("=" * 70)

@@ -67,7 +67,7 @@ uy =  DX
 当前工作区 52 项测试通过，涵盖既有解析解、伴随有限差分及本次新增的联合旋转、逐帧配力、残差能量分解和投影与共用观测内核的一致性检查。原始数据与前次输出未覆盖。
 
 ```powershell
-python -m script.analyze_rot90_dic --source results/dic_revision_20261019_02 --output results/dic_rot90_replication_01
+python -m archive.legacy_workflows.script.analyze_rot90_dic --source results/dic_revision_20261019_02 --output results/dic_rot90_replication_01
 ```
 
-该入口检查前次有限元源码哈希、输入 DIC 哈希、几何参数和变换后的保存预测，再复用反演场。若没有前次结果，先按照 `docs/revised_dic_20261019.md` 复现原识别，再指定相应 source。所有输出必须使用新目录。模型、载荷、输入与代码版本记录在结果元数据中；未收敛状态不能作为实验通过结论。
+该入口检查前次有限元源码哈希、输入 DIC 哈希、几何参数和变换后的保存预测，再复用反演场。若没有前次结果，先按照 `archive/legacy_workflows/docs/revised_dic_20261019.md` 复现原识别，再指定相应 source。所有输出必须使用新目录。模型、载荷、输入与代码版本记录在结果元数据中；未收敛状态不能作为实验通过结论。

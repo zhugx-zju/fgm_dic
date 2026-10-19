@@ -6,7 +6,7 @@ from scipy.spatial import cKDTree
 
 from fgm_asm import MeshInfo
 from fgm_asm.research import compare_displacement, solve_forward
-from lib.dic_revision_study import assumed_registration, block_split, make_cases
+from archive.legacy_workflows.lib.dic_revision_study import assumed_registration, block_split, make_cases
 from lib.experiment_data import DICPlatform
 
 

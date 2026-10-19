@@ -8,7 +8,7 @@ This script reads the saved L-curve data file and creates two figures:
 
 import matplotlib.pyplot as plt
 
-from script import REPO_ROOT
+from archive.legacy_workflows.script import REPO_ROOT
 from fgm_asm import plot_lcurve_results
 from fgm_asm.results_io import find_lcurve_data_path, load_lcurve_data
 

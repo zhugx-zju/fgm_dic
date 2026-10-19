@@ -1,108 +1,46 @@
-# 非均匀试样的 DIC–伴随模量反演
+# DIC 位移与二维模量反演
 
-本项目用**二维自由节点模量场 E(x,y)** 识别实际沿拉伸方向变化的 **一维 E(x)**。合成数据检验算法，独立分区模量用于正演预测，真实 DIC 检验实验可行性。三条流程共用双端均布牵引的二维有限元、测点观测算子与伴随反演。科学方案见 [实验与反演方案](plan/dogbone_parallel_section_adjoint_plan.tex)。
+**查看当前结果：双击根目录 [打开结果.html](打开结果.html)。** 页面直接进入当前实验，列出四步保存位置、云图、位移误差、模量对照及数值文件。每个步骤结束时也会打印绝对路径。
 
-## 研究主线
+本项目的主线是：**独立材料标定 → 分区正演与 DIC 对照；DIC → 自由二维 E(x,y) 反演 → 与独立标定对照；识别场回代及留出载荷预测。** 反演不绑定不同 y 行，也不以五区模量作为强先验。默认 180N 识别、280N 留出预测，不用留出平台调参。
 
-1. **独立标定与正演验证**：从均匀填充试样取得各区实测模量，按分区几何和实测载荷正演，与分区试样 DIC 位移比较。
-2. **DIC 与二维模量识别**：用真实 DIC 反演自由二维节点 E(x,y)，将二维场、宽度平均 E(x) 和五区统计与独立标定比较，不预先绑定不同 y 行或施加五区模量强先验。
-3. **回代与预测检验**：并列比较 **DIC、独立标定正演、反演回代** 三个位移场及分量残差；默认用 180N 识别、280N 留出预测，区分拟合、模量一致性与预测能力。
+## 四个独立步骤
 
-主要交付是位移场对照、模量与独立标定对照，以及带验证状态和限制的结论。坐标、噪声、正则及模型敏感性分析用于解释主线中的具体差异；优化收敛和代码测试通过不单独构成实验验证通过。
-
-实验流程和完成条件见 [验证方案](plan/validation_plan.md)，材料标定及批次口径见 [拉伸数据说明](post_tensile_test/README.md)，协作约定见 [AGENTS.md](AGENTS.md)。
-
-## 实际几何与反演维度
-
-打印试样总长 220 mm，平行段 150 × 20 mm，厚 3.2 mm，制造分区仍是七区。实际两条标线各距试样最外端 75 mm，因此 DIC 覆盖中央 **70 × 20 mm**：
-
-| 物理坐标 x (mm) | FEM x (mm) | 填充率 | 观测长度 (mm) |
-| --- | --- | --- | --- |
-| −35 至 −24 | 0 至 11 | 50% | 11 |
-| −24 至 −8 | 11 至 27 | 60% | 16 |
-| −8 至 8 | 27 至 43 | 70% | 16 |
-| 8 至 24 | 43 至 59 | 80% | 16 |
-| 24 至 35 | 59 至 70 | 90% | 11 |
-
-五区定义合成真值、独立标定正演和后处理统计。当前分步流程的正反问题共用 **70 × 20 个 1×1 mm 单元**，反演包含 **1491 个独立节点模量**，不绑定横向节点；原 35×10 单元、396 参数设置保留用于历史结果复现。输出完整二维场、宽度平均 E(x)、横向空间标准差和五区统计；空间标准差不是统计置信区间。
-
-## 目录
-
-项目结构：
-
-```text
-fgm_asm/             网格、材料、正演、观测算子、伴随反演与正则
-lib/                 DIC/标定数据处理、研究流程、结果保存和比较图
-script/              统一运行入口及原有算法验证脚本
-tests/               解析解、梯度、数据导入及端到端测试
-config.py            原 110 mm 合成研究配置，供历史研究复现
-synthetic_config.py  当前 70 mm 域的一维真值、二维反演验证
-experiment_config.py 第 3 次实验、五区独立标定及 DIC 配置
-results/             每次计算的独立输出，运行时生成，不入 Git
-docs/                算法、坐标配准、验证方法与结果
-plan/                实验方案与整体架构说明
-post_tensile_test/   原始试验、分区模量、时间配对及选定 DIC 场
-3D_print/            试样 STL、生成脚本与切片设置
-```
-
-## 环境与运行
-
-当前真实 DIC 主流程采用四个独立步骤，配置为 `dic_case_config.py`：
+安装 `requirements.txt`，在项目根目录依次执行：
 
 ```powershell
-python -m script.step1_prepare_dic --config dic_case_config
-python -m script.step2_forward_calibrated --input results/dic_case_commonmesh_20261019_01/01_prepared
-python -m script.step3_inverse_dic --input results/dic_case_commonmesh_20261019_01/01_prepared
-python -m script.step4_compare_results --input results/dic_case_commonmesh_20261019_01/01_prepared
+python -m script.step1_prepare_dic
+python -m script.step2_forward_calibrated
+python -m script.step3_inverse_dic
+python -m script.step4_compare_results
 ```
 
-各步保存中间结果；第 4 步只读取结果并比较出图。换数据时复制并修改单组配置，第 2—4 步读取新生成的 `01_prepared/`。正反问题共用 1×1 mm 网格，并在 ν=0.24/0.26/0.28 下按相同条件比较。坐标配准、物理域与有效 DIC 覆盖、参数说明及换数据方法见 [分步骤流程](docs/dic_stepwise_workflow.md)。以下入口保留用于原研究及专项验证。
+换一批数据时，修改 [dic_case_config.py](dic_case_config.py) 中的输入、载荷配对、坐标与物理定义，并将 `CASE_OUTPUT` 改为新目录。四个脚本各自执行一步，不自动串行调度；后续计算读取第一步冻结的数据。已有输出拒绝覆盖。参数、输入约定与逐项文件说明见 [分步骤流程](docs/dic_stepwise_workflow.md)。
 
-在项目根目录安装 `requirements.txt` 后运行：
+| 步骤 | 保存目录（均在 CASE_OUTPUT 下） | 主要文件 |
+| --- | --- | --- |
+| DIC 准备 | `01_prepared/` | `input_audit.csv`、`fields.npz`、配置与输入记录 |
+| 独立正演 | `02_forward/` | `comparison.csv`、各 ν 的 `fields.npz` |
+| DIC 反演 | `03_inverse/` | `selection.csv`、`regional_comparison.csv`、各 ν 的模量及位移 |
+| 比较出图 | `04_comparison/` | `打开查看结果.html`、CSV、各 ν/平台的 PNG/SVG |
 
-```powershell
-python -m unittest discover -s tests
-python -m script.run_synthetic
-python -m script.run_experiment --mode inspect
-python -m script.run_experiment --mode model
-python -m script.analyze_dic_noise --frame-rate 5
-```
+当前实验目录为 `results/dic_case_commonmesh_20261019_01/`；按原 post_DIC 风格重出的图表位于其中 `04_comparison_postdic/`。实验根目录的 `结果总览.html` 指向当前图表版本。重新出图只运行第 4 步并指定 `--output <新目录>`，不需要重算正反问题。
 
-- `run_synthetic`：在独立细网格生成一维分区真值的位移，加入测点采样、噪声和刚体扰动，识别二维模量，预测留出载荷。`TRUTH` 还支持 `uniform`、`linear_1d`、`exponential_1d`。
-- `inspect`：读取 180N/280N 各 15 帧，恢复参考坐标，检查重复点和共同有效测点，保存平台均值、时间标准差、哈希、力配对及独立标定。
-- `model`：采用实测 50%—90% 五组模量和实际拉力，在 70 × 20 × 3.2 mm 模型上独立正演。
-- `analyze_dic_noise`：逐帧保留两平台观测，在原始导出单位下分离刚体变化、线性趋势和残余波动，检查时空相关及窗口敏感性。首轮结果见 [保载段波动分析](docs/dic_noise_assessment.md)。
+## 模型与当前结论范围
 
-核验 DIC 坐标尺度、轴方向和标线定位后，在 `experiment_config.py` 填写 `DIC_TO_FEM_MATRIX`、`DIC_TO_FEM_OFFSET`，设置 `DIC_COORDINATES_VERIFIED=True`，运行：
+制造试样总长 220 mm、平行段 150×20 mm、厚 3.2 mm，制造七区。当前截取域为中央 70×20 mm，覆盖 50/60/70/80/90% 五区，长度 11/16/16/16/11 mm；物理域不由 DIC 有效点云跨度定义。
 
-```powershell
-python -m script.run_experiment --mode forward
-python -m script.run_experiment --mode inverse
-```
+当前新版 DIC 点距约 0.2894643 mm，有效覆盖约 61.3664×18.5257 mm；坐标和位移均为 mm，不缩放跨度。坐标及位移共用 rot90 变换，点云居中和材料区位置仍是显式假设。独立标定沿用 `independent` 口径，保留跨批来源、样本数和标准差。
 
-`forward` 在真实 DIC 测点比较独立标定正演位移，输出两个分量的预测、观测与残差图。`inverse` 默认用 180N 识别二维场，以 280N 检验预测，再与独立标定比较。独立标定不作为主反演强先验。
+正反问题共用 70×20 个 1×1 mm Q4 单元、1491 个独立节点模量。单位 mm/N/MPa，平面应力；两端均布牵引，三个约束仅固定有限元刚体规范。模型与 DIC 在测点空间统一处理两平移和一微小转动。实际力约 119.77618/219.73545 N，已扣夹具初始偏置，位移参考初始未加载图。主 ν 预设 0.26，并比较 0.24/0.28。
 
-用 `--config <Python模块名>` 选择配置，`--output <新目录>` 指定输出；已有输出拒绝覆盖。每次保存配置快照、`run_metadata.json`、`fields.npz`，记录输入/代码哈希、版本、种子、Git 状态与命令。图保存为 PNG/SVG；模量比较另存 `x_profile.csv`。优化未收敛仍保留诊断，CLI 返回退出码 2。
+**现有结果属于条件性比较。** 优化收敛与位移拟合改善不代表物理验证完成；材料区定位、完整狗骨与矩形域边界等效、跨批标定转移及误差预算仍需独立核验。数值比较见 [当前结果记录](docs/dic_shared_mesh_nu_comparison_20261019.md)。
 
-## 力学与数据约定
+## 资料与代码位置
 
-- 单位 mm、N、MPa。两端等大反向均布牵引 ±F/(w·t)，侧边自由，只约束三个刚体自由度。配准仅允许平移和微小转动。
-- 合成与实验共用 `ObservationCase` 及面积/噪声加权测点残差。历史完整节点质量矩阵目标仍供原有研究使用。
-- 节点未知量 `m=log(E)`；保留 H1、仿射去趋势和 Huber TGV 正则。实验 `GAMMA` 与噪声下限尚未独立选定。
-- 机台初始约 60.1 N 为夹具自重偏置。DIC 相对最初未加载图，180N/280N 实际拉力约为 119.77618/219.73545 N，来自既有时间配对表。机台位移和变形通道不参与分析。
-- 平台帧标准差作为诊断，不自动除以 √15；当前权重未包含空间相关协方差。
-- 分区标定来自 `mixed_infill_20261017` 的 `independent` 方法，保留批次、样本数和标准差。七组原始标定保留，当前 ROI 选用其中五组。
+- [实验方案](plan/dogbone_parallel_section_adjoint_plan.tex)、[验证方案](plan/validation_plan.md)、[拉伸数据与标定](post_tensile_test/README.md)。
+- `fgm_asm/`：共用有限元、观测与伴随内核；`lib/`：数据处理、四步流程及绘图；`script/`：四个入口；`tests/`：解析、梯度和端到端验证。
+- [架构与接口](docs/architecture.md)、[坐标说明](docs/dic_coordinate_registration.md)、[验证记录](docs/validation.md)。
+- [历史研究与辅助验证](archive/legacy_workflows/README.md)：原合成、正则比较、早期 DIC 试算入口及报告。历史结果和原始试验数据仍保留在各自目录。
 
-实际 ROI 长度已确认，但导出坐标跨度约 37.07 × 122.79 与 20 × 70 mm 尚未建立可核验的坐标关系。不能独立缩放两轴强行匹配。当前可做输入质检和独立正演，正式 DIC 比较及反演仍需核验导出尺度。
-
-原始数据的参考构形、轴向、位移分量、单位、标线定位和检查步骤见 [DIC 坐标配准](docs/dic_coordinate_registration.md)。`inspect` 会检查各平台共同参考坐标，并保存坐标配准图；方向和尺度未核验时不自动猜测变换。
-
-同一线弹性工况下成比例载荷可检验预测和重复性，不会自动增加空间可辨识性。完整狗骨与矩形域边界近似、泊松比及跨批标定转移仍需独立验证。
-
-## 验证与复现
-
-验证分为坐标与参考态核验、平台噪声诊断、独立标定正演比较、二维反演及预测检验。误差判据结合重复帧波动、材料标定和模型敏感性确定，详见 [验证方案](plan/validation_plan.md)。
-
-[架构说明](docs/architecture.md) 定义各模块及数据接口；[验证记录](docs/validation.md) 区分已执行检查、数值结果与尚未完成的实验验证。
-
-实验输入包括两平台共 30 个 DIC CSV、试验机记录、分区标定和打印几何。DIC 文件哈希见 `post_tensile_test/1016/sample_2/3/dic_input_manifest.json`。计算输出存入独立 `results/<case>/`，每次记录输入、配置、代码版本、运行环境和命令。
+验证代码：`python -m unittest discover -s tests`。通过代码测试不等于实验物理模型成立。

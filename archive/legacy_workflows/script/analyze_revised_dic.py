@@ -4,12 +4,12 @@ import argparse
 import importlib
 from pathlib import Path
 
-from lib.dic_revision_study import run_study
+from archive.legacy_workflows.lib.dic_revision_study import run_study
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--config', default='dic_revision_config')
+    parser.add_argument('--config', default='archive.legacy_workflows.dic_revision_config')
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--smoke', action='store_true')
     args = parser.parse_args()

@@ -14,12 +14,29 @@ import pandas as pd
 from fgm_asm import MeshInfo, lbfgs_inverse_solver_scipy
 from fgm_asm.load_case import evaluate_observation
 from fgm_asm.research import make_observation_case, partition_modulus, solve_forward
-from .dic_revision_reporting import save_conditional_comparison
-from .dic_revision_study import block_split
+from .dic_preprocessing import save_dic_comparison
 from .experiment_data import (check_platform_reference, dic_roi_mask, file_sha256,
                               load_calibration, load_dic_platform)
 from .research_reporting import plot_modulus_comparison, save_run, save_x_profile
 from .research_workflows import _regional_comparison, _solver_summary
+
+
+def block_split(xy, block_mm=6., buffer_mm=1.):
+    """Buffered spatial validation using coordinates, never held-out responses."""
+    from scipy.spatial import cKDTree
+
+    xy = np.asarray(xy, dtype=float)
+    if block_mm <= 0 or buffer_mm < 0:
+        raise ValueError('Positive blocks and a nonnegative buffer are required')
+    tiles = np.floor(xy / block_mm).astype(int)
+    validation = (tiles[:, 0] + 2 * tiles[:, 1]) % 4 == 1
+    if not validation.any() or validation.all():
+        raise ValueError('Spatial split needs both training and validation points')
+    distance = cKDTree(xy[validation]).query(xy)[0]
+    train = (~validation) & (distance > buffer_mm)
+    if train.sum() < 4:
+        raise ValueError('Too few training points after spatial buffering')
+    return train, validation
 
 
 def registration_transform(reference_xy, specification):
@@ -208,6 +225,7 @@ def prepare_dic(cfg, output):
                'points': len(platform.coordinates), 'frame_count': platform.metadata['frame_count']}
         arrays[f'{name}_raw_reference_coordinates'] = platform.coordinates
         arrays[f'{name}_raw_mean_displacement'] = platform.displacement
+        arrays[f'{name}_raw_grid_ids'] = platform.grid_ids
         if matrix is not None:
             xy, uv = platform.coordinates @ matrix.T+offset, platform.displacement @ matrix.T
             inside = dic_roi_mask(xy, cfg.GEO_L, cfg.GEO_H)
@@ -221,6 +239,7 @@ def prepare_dic(cfg, output):
             arrays[f'{name}_coordinates'] = xy[inside]
             arrays[f'{name}_observed'] = uv[inside]
             arrays[f'{name}_point_area_mm2'] = np.full(inside.sum(), np.prod(spacing))
+            arrays[f'{name}_grid_ids'] = platform.grid_ids[inside]
         rows.append(row)
     summary['coverage'] = rows
     if matrix is None:
@@ -391,6 +410,7 @@ def compare_dic_results(prepared, forward, inverse, output, plots=True):
         sources.append(record)
     summary = _stage_summary(metadata, provenance, 'dic_case_comparison')
     summary.update(status=sources[1]['status'], selected_gamma=sources[1]['selected_gamma'],
+                   prepared_directory=str(Path(prepared).resolve()),
                    gamma_at_scan_boundary=sources[1]['gamma_at_scan_boundary'], solvers=sources[1]['solvers'],
                    upstream_sources={str(p): file_sha256(p/'run_metadata.json') for p in (forward, inverse)})
     metrics = pd.concat([pd.read_csv(forward/'comparison.csv'), pd.read_csv(inverse/'comparison.csv')], ignore_index=True)
@@ -398,6 +418,9 @@ def compare_dic_results(prepared, forward, inverse, output, plots=True):
     selection = pd.read_csv(inverse/'selection.csv')
     save_run(output, cfg, summary)
     reference = partition_modulus(pd.DataFrame(metadata['calibration']).mean_E_MPa, cfg.REGION_BOUNDARIES_X)
+    with np.load(Path(prepared)/'fields.npz') as fields:
+        grid_ids = {case.name: fields[f'{case.name}_grid_ids'].copy() for case in cases
+                    if f'{case.name}_grid_ids' in fields}
     for nu in cfg.NU_VALUES:
         destination = output/f'nu_{nu:.2f}'
         with np.load(forward/f'nu_{nu:.2f}'/'fields.npz') as base, np.load(inverse/f'nu_{nu:.2f}'/'fields.npz') as reconstructed:
@@ -416,7 +439,7 @@ def compare_dic_results(prepared, forward, inverse, output, plots=True):
             field = reconstructed['E_inverse'].copy()
         save_run(destination, cfg, dict(summary, nu=nu), {'coordinates': mesh.coord, 'E_inverse': field})
         if plots:
-            save_conditional_comparison(destination, cases, states[0], states[1], cfg.FIT_CASES)
+            save_dic_comparison(destination, cases, states[0], states[1], cfg.FIT_CASES, grid_ids)
             plot_modulus_comparison(destination, mesh, reference(mesh.X, mesh.Y), field)
             save_x_profile(destination, mesh, field, reference)
     metrics.to_csv(output/'comparison.csv', index=False)

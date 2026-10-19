@@ -2,7 +2,7 @@ import unittest
 
 import numpy as np
 
-from lib.dic_rot90_followup import (existing_orientation_registration, map_frame_forces,
+from archive.legacy_workflows.lib.dic_rot90_followup import (existing_orientation_registration, map_frame_forces,
                                     residual_energy, rigid_projection)
 from lib.experiment_data import DICPlatform
 from fgm_asm import MeshInfo

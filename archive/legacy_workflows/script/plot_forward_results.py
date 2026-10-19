@@ -10,7 +10,7 @@ and creates four separate figures:
 """
 
 import matplotlib.pyplot as plt
-from script import REPO_ROOT
+from archive.legacy_workflows.script import REPO_ROOT
 from fgm_asm.visualization import (
     plot_displacement_fields,
     plot_modulus_distribution,

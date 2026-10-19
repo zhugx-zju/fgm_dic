@@ -11,14 +11,14 @@ from pyxlsb import open_workbook
 from scipy.spatial import cKDTree
 
 from fgm_asm.research import compare_displacement, make_observation_case, partition_modulus
-from .dic_grid_orientation import orient_grid_field
-from .dic_grid_utils import reconstruct_structured_grid
+from lib.dic_grid_orientation import orient_grid_field
+from lib.dic_grid_utils import reconstruct_structured_grid
 from .dic_revision_reporting import save_conditional_comparison
 from .dic_revision_study import grid_cell_area, make_cases, state_metrics
-from .experiment_data import (DICPlatform, check_platform_reference, file_sha256,
+from lib.experiment_data import (DICPlatform, check_platform_reference, file_sha256,
                               load_calibration, load_dic_frame_series, load_platform_force)
-from .research_reporting import plot_modulus_comparison, save_run, save_x_profile
-from .research_workflows import _inverse, _mesh, _regional_comparison, _solver_summary
+from lib.research_reporting import plot_modulus_comparison, save_run, save_x_profile
+from lib.research_workflows import _inverse, _mesh, _regional_comparison, _solver_summary
 
 
 def rigid_projection(xy: np.ndarray, values: np.ndarray) -> np.ndarray:

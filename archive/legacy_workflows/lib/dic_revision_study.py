@@ -4,6 +4,8 @@ This module never enables formal DIC_COORDINATES_VERIFIED. Missing landmarks
 are represented by explicit alternative registrations, without scale fitting.
 """
 
+from lib.dic_case_workflow import block_split
+
 from pathlib import Path
 from types import SimpleNamespace
 
@@ -11,13 +13,13 @@ import numpy as np
 import pandas as pd
 
 from fgm_asm.research import compare_displacement, make_observation_case, partition_modulus
-from .dic_noise import analyze_dic_series
-from .experiment_data import (check_platform_reference, dic_roi_mask, load_calibration,
+from lib.dic_noise import analyze_dic_series
+from lib.experiment_data import (check_platform_reference, dic_roi_mask, load_calibration,
                               load_dic_frame_series, load_dic_platform, load_platform_force)
-from .research_reporting import (plot_displacement_comparison, plot_modulus_comparison,
+from lib.research_reporting import (plot_displacement_comparison, plot_modulus_comparison,
                                  save_run, save_x_profile)
 from .dic_revision_reporting import save_conditional_comparison
-from .research_workflows import _inverse, _mesh, _regional_comparison, _solver_summary
+from lib.research_workflows import _inverse, _mesh, _regional_comparison, _solver_summary
 
 
 def assumed_registration(reference_xy, length, width, direction=1, shift_x=0.):
@@ -36,29 +38,6 @@ def assumed_registration(reference_xy, length, width, direction=1, shift_x=0.):
     center = (reference_xy.min(axis=0) + reference_xy.max(axis=0)) / 2
     offset = np.array([length / 2 + shift_x, width / 2]) - matrix @ center
     return matrix, offset
-
-
-def block_split(xy, block_mm=6., buffer_mm=1.):
-    """Spatial validation tiles with a guard band in the training observations.
-
-    Uses coordinates only, never modulus truth or the held-out 280N response.
-    Validation is every fourth diagonal tile; Euclidean distance to the entire
-    validation set excludes nearby training points to reduce spatial leakage.
-    """
-    from scipy.spatial import cKDTree
-
-    xy = np.asarray(xy, dtype=float)
-    if block_mm <= 0 or buffer_mm < 0:
-        raise ValueError('Positive blocks and a nonnegative buffer are required')
-    tiles = np.floor(xy / block_mm).astype(int)
-    validation = (tiles[:, 0] + 2 * tiles[:, 1]) % 4 == 1
-    if not validation.any() or validation.all():
-        raise ValueError('Spatial split needs both training and validation points')
-    distance = cKDTree(xy[validation]).query(xy)[0]
-    train = (~validation) & (distance > buffer_mm)
-    if train.sum() < 4:
-        raise ValueError('Too few training points after spatial buffering')
-    return train, validation
 
 
 def grid_cell_area(platform):

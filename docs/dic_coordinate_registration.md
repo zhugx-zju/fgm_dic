@@ -44,7 +44,7 @@
 在 `experiment_config.py` 记录 `DIC_COORDINATE_STATE`、`DIC_TO_FEM_MATRIX`、`DIC_TO_FEM_OFFSET` 和配准依据 `DIC_REGISTRATION_NOTE`；完成以上核验后才设置 `DIC_COORDINATES_VERIFIED=True`。
 
 ```powershell
-python -m script.run_experiment --mode inspect
+python -m archive.legacy_workflows.script.run_experiment --mode inspect
 ```
 
 输出包括：

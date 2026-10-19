@@ -7,12 +7,12 @@ Results are saved for later use in inverse problem.
 """
 
 from pathlib import Path
-from script import REPO_ROOT
+from archive.legacy_workflows.script import REPO_ROOT
 from fgm_asm import MeshInfo, fem_assemble, forward_solver, generate_fgm_modulus
 from fgm_asm.mesh import setup_boundary_conditions
 from fgm_asm.results_io import save_forward_data
 from fgm_asm.visualization import visualize_forward_results
-import config as cfg
+from archive.legacy_workflows import config as cfg
 
 
 # ============================================================

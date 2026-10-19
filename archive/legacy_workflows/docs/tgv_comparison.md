@@ -68,8 +68,8 @@ TGV 的结构先验是允许局部斜率变化，并对大变化施加近似线�
 
 ```powershell
 python -m unittest discover -s tests -v
-python -m script.benchmark_tgv_regularization --phase calibrate --output-dir results/tgv_comparison_20261015
-python -m script.benchmark_tgv_regularization --phase evaluate --output-dir results/tgv_comparison_20261015
+python -m archive.legacy_workflows.script.benchmark_tgv_regularization --phase calibrate --output-dir results/tgv_comparison_20261015
+python -m archive.legacy_workflows.script.benchmark_tgv_regularization --phase evaluate --output-dir results/tgv_comparison_20261015
 ```
 
 `--phase plot` 只读取保存结果重画，不重跑反演。已有运行在完整协议一致时自动复用；

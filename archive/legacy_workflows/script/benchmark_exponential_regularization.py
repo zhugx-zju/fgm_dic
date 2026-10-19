@@ -8,7 +8,7 @@ from pathlib import Path
 import matplotlib.pyplot as plt
 import numpy as np
 
-import config
+from archive.legacy_workflows import config
 from fgm_asm.fem_forward import fem_assemble, forward_solver
 from fgm_asm.inverse_solver import lbfgs_inverse_solver_scipy
 from fgm_asm.material import MaterialInfo

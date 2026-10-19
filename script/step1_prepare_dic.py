@@ -1,27 +1,23 @@
 """Step 1: prepare one experiment's DIC, registration, force and geometry."""
 
 import argparse
-import importlib
-import importlib.util
 from pathlib import Path
 
+from lib.config_utils import load_python_configuration
 from lib.dic_case_workflow import prepare_dic
+from lib.dic_case_reporting import publish_stage
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--config', default='dic_case_config', help='Python module or .py path')
-    parser.add_argument('--output', type=Path)
+    parser.add_argument('--output', type=Path, help='Override 01_prepared directory; later stages then need --input')
     args = parser.parse_args()
-    if args.config.endswith('.py'):
-        spec = importlib.util.spec_from_file_location('dic_case_user_config', Path(args.config).resolve())
-        cfg = importlib.util.module_from_spec(spec)
-        spec.loader.exec_module(cfg)
-    else:
-        cfg = importlib.import_module(args.config)
+    cfg = load_python_configuration(args.config)
     output = args.output or Path(cfg.CASE_OUTPUT)/'01_prepared'
     result = prepare_dic(cfg, output)
     print('Preparation:', result['status'], output.resolve())
+    publish_stage(output.parent, '01_prepared', output, result)
     if result['status'] == 'needs_registration':
         raise SystemExit(3)
 

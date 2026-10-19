@@ -80,9 +80,9 @@
 $env:TMP = (Resolve-Path results/test_temp).Path
 $env:TEMP = $env:TMP
 & C:/Users/zhu_g/.conda/envs/abqinter/python.exe -m unittest discover -s tests
-& C:/Users/zhu_g/.conda/envs/abqinter/python.exe -m script.analyze_revised_dic --output results/dic_revision_replication_01
-& C:/Users/zhu_g/.conda/envs/abqinter/python.exe -m script.check_revised_dic_sensitivity --source results/dic_revision_replication_01 --output results/dic_revision_sensitivity_replication_01
-& C:/Users/zhu_g/.conda/envs/abqinter/python.exe -m script.report_revised_dic --source results/dic_revision_replication_01 --sensitivity results/dic_revision_sensitivity_replication_01 --output results/dic_revision_report_replication_01
+& C:/Users/zhu_g/.conda/envs/abqinter/python.exe -m archive.legacy_workflows.script.analyze_revised_dic --output results/dic_revision_replication_01
+& C:/Users/zhu_g/.conda/envs/abqinter/python.exe -m archive.legacy_workflows.script.check_revised_dic_sensitivity --source results/dic_revision_replication_01 --output results/dic_revision_sensitivity_replication_01
+& C:/Users/zhu_g/.conda/envs/abqinter/python.exe -m archive.legacy_workflows.script.report_revised_dic --source results/dic_revision_replication_01 --sensitivity results/dic_revision_sensitivity_replication_01 --output results/dic_revision_report_replication_01
 ```
 
 Python 可替换为安装项目依赖的解释器；临时目录应事先创建。各计算输出必须是新目录。所有反演共用现有有限元与伴随内核，没有另写力学或梯度实现。

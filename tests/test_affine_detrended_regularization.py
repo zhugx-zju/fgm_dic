@@ -4,7 +4,7 @@ from contextlib import redirect_stdout
 from unittest.mock import patch
 
 import numpy as np
-import config
+from archive.legacy_workflows import config
 
 from fgm_asm.fem_forward import fem_assemble, forward_solver
 from fgm_asm.inverse_solver import _evaluate_inverse_state

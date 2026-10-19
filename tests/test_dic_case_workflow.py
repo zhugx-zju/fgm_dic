@@ -16,9 +16,64 @@ from fgm_asm.mesh import setup_boundary_conditions
 from fgm_asm.research import make_observation_case, solve_forward
 from lib.dic_case_workflow import (compare_dic_results, forward_calibrated, inverse_dic,
                                     prepare_dic, registration_transform)
+from lib.dic_preprocessing import grid_fields_from_points, save_dic_comparison
+from lib.dic_case_reporting import publish_stage
 
 
 class DICCaseWorkflowTests(unittest.TestCase):
+    def test_plot_lattice_preserves_order_missing_cells_and_rotated_coordinates(self):
+        row, col = np.indices((3, 4))
+        ids = np.column_stack([row.ravel(), col.ravel()])
+        xy = np.column_stack([2.+col.ravel()*.3-row.ravel()*.1,
+                              1.+col.ravel()*.1+row.ravel()*.3])
+        keep = np.arange(len(xy)) != 5
+        order = np.flatnonzero(keep)[::-1]
+        x, y, fields = grid_fields_from_points(xy[order], {'test': order.astype(float)}, ids[order])
+        self.assertTrue(np.isnan(fields['test'][1, 1]))
+        np.testing.assert_allclose(x, xy[:, 0].reshape(3, 4))
+        np.testing.assert_allclose(y, xy[:, 1].reshape(3, 4))
+        np.testing.assert_array_equal(fields['test'][0], np.arange(4))
+        # Old frozen axis-aligned clouds need no original CSV or grid-ID files.
+        axis_xy = np.column_stack([col.ravel()*.3, row.ravel()*.3])
+        _, _, legacy = grid_fields_from_points(axis_xy[order], {'test': order.astype(float)})
+        np.testing.assert_allclose(legacy['test'], fields['test'], equal_nan=True)
+
+    def test_postdic_comparison_uses_shared_limits_and_exports_original_values(self):
+        mesh = MeshInfo(2., 1., 2, 1)
+        xy = mesh.coord
+        observed = np.column_stack([xy[:, 0]+.1, -.2*xy[:, 1]+.05])
+        case = make_observation_case(mesh, 'fit', 100., 3.2, xy, observed)
+        forward = {'prediction': (observed+[.01, -.02]).ravel(), 'weighted_rms': .01}
+        inverse = {'prediction': (observed+[-.03, .01]).ravel(), 'weighted_rms': .02}
+        with tempfile.TemporaryDirectory() as folder:
+            def capture(output, name, x, y, fields, cmap, **options):
+                output.mkdir(parents=True)
+                self.assertEqual(cmap, 'jet')
+                for component in ('ux', 'uy'):
+                    self.assertEqual(options['limits'][f'dic_{component}'], options['limits'][f'forward_{component}'])
+                    self.assertEqual(options['limits'][f'dic_{component}'], options['limits'][f'inverse_{component}'])
+                    self.assertEqual(options['limits'][f'forward_error_{component}'], options['limits'][f'inverse_error_{component}'])
+            with patch('lib.dic_preprocessing.plot_grid_fields', side_effect=capture):
+                save_dic_comparison(folder, [case], [forward], [inverse], ['fit'])
+            table = pd.read_csv(Path(folder)/'fit/point_fields.csv')
+            np.testing.assert_allclose(table.dic_ux_mm, observed[:, 0])
+            np.testing.assert_allclose(table.forward_error_uy_mm, -.02)
+
+    def test_fixed_result_entry_tracks_custom_replot_without_overwriting_results(self):
+        with tempfile.TemporaryDirectory() as folder:
+            root = Path(folder)
+            case = root/'results/case'
+            output = case/'04_replot'
+            output.mkdir(parents=True)
+            (output/'打开查看结果.html').write_text('saved plot report', encoding='utf-8')
+            summary = {'case_id': 'case', 'coordinates_verified': False, 'status': 'computed'}
+            publish_stage(case, '04_comparison', output, summary, project_root=root)
+            index = json.loads((case/'结果目录.json').read_text(encoding='utf-8'))
+            self.assertEqual(index['stages']['04_comparison']['path'], str(output.resolve()))
+            self.assertIn('04_replot/', (case/'结果总览.html').read_text(encoding='utf-8'))
+            self.assertIn('case/', (root/'results/index.html').read_text(encoding='utf-8'))
+            self.assertEqual((output/'打开查看结果.html').read_text(encoding='utf-8'), 'saved plot report')
+
     def test_landmarks_preserve_geometry_and_reject_span_fitting(self):
         raw = np.array([[0., 0.], [0., -70.], [20., 0.], [10., -35.]])
         matrix = np.array([[0., -1.], [1., 0.]])

@@ -2,7 +2,7 @@ import unittest
 
 import numpy as np
 
-import config
+from archive.legacy_workflows import config
 from fgm_asm.material import generate_fgm_modulus
 from fgm_asm.mesh import MeshInfo
 from fgm_asm.utils import summarize_x_only_reconstruction

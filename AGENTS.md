@@ -19,6 +19,7 @@
 ## 工作约定
 
 - 实验计算采用准备 DIC、独立标定正演、DIC 反演、结果比较四个可独立执行的步骤脚本，各步保存并传递中间结果；换数据时修改单组实验配置并依次运行，不以自动串行的 batch 总入口代替。当前入口及参数见 `docs/dic_stepwise_workflow.md`。
+- `script/` 只放当前四个步骤入口；辅助及历史入口放在 `archive/legacy_workflows/`。当前结果由根目录 `打开结果.html` 进入，各步骤更新同组实验的 `结果总览.html` 并打印绝对保存位置。DIC 云图复用 `lib/dic_preprocessing.py` 中原 post_DIC 规则网格绘图风格。
 - 默认中文说明，Python 代码、函数与变量使用已有英文命名。
 - 项目根目录是唯一 Git 工作区；不要重新创建 ASM-Python 或 post_DIC 子仓库。
 - 模块划分为 `fgm_asm/`（算法）、`lib/`（数据处理和流程）、`script/`（入口）、`tests/`、`docs/`、`plan/`，参数采用 Python 配置。避免重复有限元或反演实现。

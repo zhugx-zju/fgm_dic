@@ -48,6 +48,10 @@ def save_run(output, config, summary, arrays=None):
                                'git_dirty': dirty, 'command': sys.argv}
     sources = [*root.glob('*config.py'), *root.glob('fgm_asm/*.py'),
                *root.glob('lib/*.py'), *root.glob('script/*.py')]
+    legacy = root / 'archive' / 'legacy_workflows'
+    entry_files = (sys.argv[0], getattr(config, '__file__', None))
+    if any(path and legacy in Path(path).resolve().parents for path in entry_files):
+        sources.extend([*legacy.glob('*.py'), *legacy.glob('lib/*.py'), *legacy.glob('script/*.py')])
     metadata['source_sha256'] = {str(p.relative_to(root)): file_sha256(p) for p in sources}
     config_file = getattr(config, '__file__', None)
     if config_file is not None:

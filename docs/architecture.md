@@ -14,10 +14,12 @@
 | `lib/experiment_data.py` | CSV、参考坐标、平台统计、载荷和分区标定 |
 | `lib/dic_noise.py` | 逐帧刚体/趋势分解、时空相关、窗口敏感性及投影统计基线 |
 | `lib/dic_case_workflow.py` | 当前实验分步流程：冻结输入、独立正演、DIC 反演、保存结果比较 |
-| `lib/dic_case_reporting.py` | 同组实验的位移、模量与 ν 对照报告 |
+| `lib/dic_case_reporting.py` | 同组实验对照报告、四步结果目录和固定浏览入口 |
+| `lib/dic_preprocessing.py` | 原 post_DIC 预处理及规则网格云图；主流程复用同一绘图函数 |
 | `lib/research_workflows.py` | 合成验证及原实验 inspect/model/forward/inverse 入口 |
 | `lib/research_reporting.py` | 配置与来源记录、数组、位移图、模量图及剖面 |
-| `script/` | 命令行入口与算法验证实验 |
+| `script/` | 当前实验的四个独立步骤入口 |
+| `archive/legacy_workflows/` | 历史入口、探索配置、报告及辅助分析；不参与当前主流程 |
 
 ## 力学和参数
 

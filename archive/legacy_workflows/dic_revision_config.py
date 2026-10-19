@@ -2,7 +2,7 @@
 
 from pathlib import Path
 
-PROJECT_ROOT = Path(__file__).resolve().parent
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
 DATA_ROOT = PROJECT_ROOT / 'post_tensile_test' / '1016' / 'sample_2' / '3'
 FORCE_PAIRING_CSV = DATA_ROOT.parent / 'analysis_results' / 'dic_timing_20261018' / 'selected_dic_windows.csv'
 CALIBRATION_CSV = (PROJECT_ROOT / 'post_tensile_test' / 'analysis_results' /

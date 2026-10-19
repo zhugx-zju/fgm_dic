@@ -4,12 +4,12 @@ import argparse
 import importlib
 from pathlib import Path
 
-from lib.dic_rot90_followup import run_rot90_followup
+from archive.legacy_workflows.lib.dic_rot90_followup import run_rot90_followup
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--config', default='dic_rot90_config')
+    parser.add_argument('--config', default='archive.legacy_workflows.dic_rot90_config')
     parser.add_argument('--source', type=Path, required=True)
     parser.add_argument('--output', type=Path, required=True)
     args = parser.parse_args()

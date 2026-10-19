@@ -11,7 +11,7 @@ import pandas as pd
 
 from fgm_asm.research import compare_displacement, partition_modulus
 from lib.dic_noise import _decompose
-from lib.dic_revision_study import (assumed_registration, audit_inputs, make_cases, state_metrics)
+from archive.legacy_workflows.lib.dic_revision_study import (assumed_registration, audit_inputs, make_cases, state_metrics)
 from lib.experiment_data import file_sha256, load_calibration
 from lib.research_reporting import (plot_displacement_comparison, save_run, save_x_profile)
 from lib.research_workflows import _mesh, _regional_comparison, _solver_summary
@@ -19,7 +19,7 @@ from lib.research_workflows import _mesh, _regional_comparison, _solver_summary
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--config', default='dic_revision_config')
+    parser.add_argument('--config', default='archive.legacy_workflows.dic_revision_config')
     parser.add_argument('--source', type=Path, required=True)
     parser.add_argument('--output', type=Path, required=True)
     args = parser.parse_args()

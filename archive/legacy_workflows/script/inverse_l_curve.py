@@ -10,7 +10,7 @@ import time
 import numpy as np
 import matplotlib.pyplot as plt
 
-from script import REPO_ROOT
+from archive.legacy_workflows.script import REPO_ROOT
 from fgm_asm import find_optimal_gamma_lcurve, plot_lcurve_results, lbfgs_inverse_solver_scipy
 from fgm_asm.visualization import (
     plot_gradient_field,
@@ -29,7 +29,7 @@ from fgm_asm.utils import (
     add_noise_to_displacement, compute_errors, summarize_x_only_reconstruction,
 )
 from fgm_asm.workflows import load_latest_forward_problem, resolve_results_dir
-import config as cfg
+from archive.legacy_workflows import config as cfg
 
 
 lcurve_config = cfg.get_lcurve_config()

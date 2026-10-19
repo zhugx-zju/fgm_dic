@@ -1,7 +1,7 @@
 """Compare two saved inverse fields with matched color scales.
 
 Example:
-    python -m script.compare_regularization OLD/inverse_results.pkl NEW/inverse_results.pkl
+    python -m archive.legacy_workflows.script.compare_regularization OLD/inverse_results.pkl NEW/inverse_results.pkl
 """
 
 import argparse
