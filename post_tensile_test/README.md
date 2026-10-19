@@ -15,10 +15,10 @@
 
 相对偏差定义：`100 × |组均值 − 该试样模量| / 该试样模量`，反映组均值代表这些试样的偏差，并非相对于真实材料模量的测量误差。
 
-原始工作簿、尺寸记录和sample_2/3保持不变。旧试运行结果与重复复现结果从活动目录清理，先存入 `analysis_archive/obsolete_analysis_20261017.zip`；清理清单和逐文件校验值位于同目录。
+原始工作簿和尺寸记录是分析输入，`1016/sample_2/` 包含梯度试样加载记录及 DIC 数据。
 
-复现使用abqinter环境，必须指定未使用过的运行编号：
+从项目根目录复现，需安装相应 Python 依赖并指定未使用过的运行编号：
 
 ```powershell
-& 'C:\Users\zhu_g\.conda\envs\abqinter\python.exe' -X utf8 -B 'D:\MyProject\post_tensile_test\analyze_tensile_batches.py' --root 'D:\MyProject\post_tensile_test' --run-id '新的运行编号'
+python -X utf8 -B post_tensile_test/analyze_tensile_batches.py --root post_tensile_test --run-id replication_01
 ```

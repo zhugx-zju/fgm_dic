@@ -1,4 +1,4 @@
-"""Unified synthetic workflow, using the project's existing Python config style."""
+"""One-dimensional modulus benchmarks with free two-dimensional field inversion."""
 
 GEO_L = 70.0
 GEO_H = 20.0

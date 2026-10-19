@@ -18,7 +18,7 @@
 
 ## 目录
 
-沿用原项目的分类和 Python 配置方式：
+项目结构：
 
 ```text
 fgm_asm/             网格、材料、正演、观测算子、伴随反演与正则
@@ -29,7 +29,7 @@ config.py            原 110 mm 合成研究配置，供历史研究复现
 synthetic_config.py  当前 70 mm 域的一维真值、二维反演验证
 experiment_config.py 第 3 次实验、五区独立标定及 DIC 配置
 results/             每次计算的独立输出，运行时生成，不入 Git
-docs/                算法说明、迁移和验证记录
+docs/                算法、坐标配准、验证方法与结果
 plan/                实验方案与整体架构说明
 post_tensile_test/   原始试验、分区模量、时间配对及选定 DIC 场
 3D_print/            试样 STL、生成脚本与切片设置
@@ -76,10 +76,10 @@ python -m script.run_experiment --mode inverse
 
 同一线弹性工况下成比例载荷可检验预测和重复性，不会自动增加空间可辨识性。完整狗骨与矩形域边界近似、泊松比及跨批标定转移仍需独立验证。
 
-## Git 与历史
+## 验证与复现
 
-整个目录由根 `.git` 管理，提交身份为 `zhugx <zhugx@zju.edu.cn>`，目标仓库为 [fgm_dic](https://github.com/zhugx-zju/fgm_dic)。原 ASM 历史保留，旧远端名为 `asm-history`。
+验证分为坐标与参考态核验、平台噪声诊断、独立标定正演比较、二维反演及预测检验。误差判据结合重复帧波动、材料标定和模型敏感性确定，详见 [验证方案](plan/validation_plan.md)。
 
-本次使用的 30 个 DIC CSV、原始试验及 3D 打印文件纳入项目；DIC 哈希见 `post_tensile_test/1016/sample_2/3/dic_input_manifest.json`。缓存和新计算输出不入 Git。
+[架构说明](docs/architecture.md) 定义各模块及数据接口；[验证记录](docs/validation.md) 区分已执行检查、数值结果与尚未完成的实验验证。
 
-重复/无关的一维方法目录、旧 ASM-Python/post_DIC 目录及旧计算输出已移出工作目录，迁移前代码可从 `696959c` 恢复。清理清单、外部归档与验证记录见 [迁移记录](docs/project_unification.md)，架构交接见 [整体方案](plan/project_unification_plan.md)。
+实验输入包括两平台共 30 个 DIC CSV、试验机记录、分区标定和打印几何。DIC 文件哈希见 `post_tensile_test/1016/sample_2/3/dic_input_manifest.json`。计算输出存入独立 `results/<case>/`，每次记录输入、配置、代码版本、运行环境和命令。
