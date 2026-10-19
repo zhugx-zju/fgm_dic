@@ -44,11 +44,13 @@ python -m unittest discover -s tests
 python -m script.run_synthetic
 python -m script.run_experiment --mode inspect
 python -m script.run_experiment --mode model
+python -m script.analyze_dic_noise --frame-rate 5
 ```
 
 - `run_synthetic`：在独立细网格生成一维分区真值的位移，加入测点采样、噪声和刚体扰动，识别二维模量，预测留出载荷。`TRUTH` 还支持 `uniform`、`linear_1d`、`exponential_1d`。
 - `inspect`：读取 180N/280N 各 15 帧，恢复参考坐标，检查重复点和共同有效测点，保存平台均值、时间标准差、哈希、力配对及独立标定。
 - `model`：采用实测 50%—90% 五组模量和实际拉力，在 70 × 20 × 3.2 mm 模型上独立正演。
+- `analyze_dic_noise`：逐帧保留两平台观测，在原始导出单位下分离刚体变化、线性趋势和残余波动，检查时空相关及窗口敏感性。首轮结果见 [保载段波动分析](docs/dic_noise_assessment.md)。
 
 核验 DIC 坐标尺度、轴方向和标线定位后，在 `experiment_config.py` 填写 `DIC_TO_FEM_MATRIX`、`DIC_TO_FEM_OFFSET`，设置 `DIC_COORDINATES_VERIFIED=True`，运行：
 

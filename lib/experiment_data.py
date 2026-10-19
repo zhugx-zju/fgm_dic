@@ -23,6 +23,16 @@ class DICPlatform:
     metadata: dict
 
 
+@dataclass(frozen=True)
+class DICFrameSeries:
+    """Matched reference points and displacements with shape (frames, points, 2)."""
+
+    coordinates: np.ndarray
+    frame_displacements: np.ndarray
+    grid_ids: np.ndarray
+    metadata: dict
+
+
 def file_sha256(path: Path) -> str:
     digest = hashlib.sha256()
     with Path(path).open('rb') as stream:
@@ -31,9 +41,9 @@ def file_sha256(path: Path) -> str:
     return digest.hexdigest()
 
 
-def load_dic_platform(folder: Path, first_stage: int, last_stage: int, *,
-                      coordinate_state: str = 'deformed') -> DICPlatform:
-    """Average matched grid IDs; retain temporal SD without sqrt(frame count)."""
+def load_dic_frame_series(folder: Path, first_stage: int, last_stage: int, *,
+                          coordinate_state: str = 'deformed') -> DICFrameSeries:
+    """Read matched frames once, retaining all temporal samples for diagnostics."""
     if coordinate_state not in {'deformed', 'reference'}:
         raise ValueError("DIC coordinate_state must be 'deformed' or 'reference'")
     paths = sorted(Path(folder).glob('stage_*.comdat_comdata.csv'))
@@ -89,9 +99,18 @@ def load_dic_platform(folder: Path, first_stage: int, last_stage: int, *,
                                        else '[X,Y]'),
         'noise_note': 'Temporal SD is diagnostic; frames are not assumed independent.',
     }
-    return DICPlatform(coordinates, displacement.mean(axis=0),
-                       displacement.std(axis=0, ddof=1) if len(frames) > 1
-                       else np.zeros_like(coordinates), np.array(common.tolist()), metadata)
+    return DICFrameSeries(coordinates, displacement, np.array(common.tolist()), metadata)
+
+
+def load_dic_platform(folder: Path, first_stage: int, last_stage: int, *,
+                      coordinate_state: str = 'deformed') -> DICPlatform:
+    """Average matched grid IDs; retain temporal SD without sqrt(frame count)."""
+    series = load_dic_frame_series(folder, first_stage, last_stage,
+                                   coordinate_state=coordinate_state)
+    displacement = series.frame_displacements
+    return DICPlatform(series.coordinates, displacement.mean(axis=0),
+                       displacement.std(axis=0, ddof=1) if len(displacement) > 1
+                       else np.zeros_like(series.coordinates), series.grid_ids, series.metadata)
 
 
 def load_calibration(path: Path, method: str = 'independent',

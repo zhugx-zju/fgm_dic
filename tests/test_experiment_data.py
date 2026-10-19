@@ -7,7 +7,8 @@ import numpy as np
 import pandas as pd
 
 from lib.experiment_data import (
-    check_platform_reference, dic_registration_report, dic_roi_mask, load_calibration, load_dic_platform,
+    check_platform_reference, dic_registration_report, dic_roi_mask, load_calibration,
+    load_dic_frame_series, load_dic_platform,
     transform_dic_platform,
 )
 from lib.io_utils import read_dic_csv
@@ -48,7 +49,10 @@ class ExperimentDataTests(unittest.TestCase):
             self._write(folder, 1)
             self._write(folder, 2)
             data = load_dic_platform(Path(folder), 1, 2)
+            series = load_dic_frame_series(Path(folder), 1, 2)
         self.assertEqual(data.coordinates.shape, (4, 2))
+        self.assertEqual(series.frame_displacements.shape, (2, 4, 2))
+        np.testing.assert_allclose(series.frame_displacements.mean(axis=0), data.displacement)
         np.testing.assert_allclose(np.ptp(data.coordinates, axis=0), [1., 1.])
         np.testing.assert_allclose(data.displacement, np.tile([.15, .3], (4, 1)))
         np.testing.assert_allclose(data.temporal_std, np.tile([.1, .2], (4, 1))/np.sqrt(2))

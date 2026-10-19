@@ -12,6 +12,7 @@
 | `fgm_asm/inverse_solver.py` | 自由节点 log(E) 优化及正则 |
 | `fgm_asm/research.py` | 共用正演、分区材料、观测构造及位移比较 |
 | `lib/experiment_data.py` | CSV、参考坐标、平台统计、载荷和分区标定 |
+| `lib/dic_noise.py` | 逐帧刚体/趋势分解、时空相关、窗口敏感性及投影统计基线 |
 | `lib/research_workflows.py` | 合成验证及实验 inspect/model/forward/inverse 流程 |
 | `lib/research_reporting.py` | 配置与来源记录、数组、位移图、模量图及剖面 |
 | `script/` | 命令行入口与算法验证实验 |
