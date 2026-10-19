@@ -41,8 +41,8 @@ python -m script.step4_compare_results
 ## 资料与代码位置
 
 - [实验方案](plan/dogbone_parallel_section_adjoint_plan.tex)、[验证方案](plan/validation_plan.md)、[拉伸数据与标定](post_tensile_test/README.md)。
-- `fgm_asm/`：共用有限元、观测与伴随内核；`lib/`：数据处理、四步流程及绘图；`script/`：四个入口；`tests/`：解析、梯度和端到端验证。
-- [架构与接口](docs/architecture.md)、[坐标说明](docs/dic_coordinate_registration.md)、[验证记录](docs/validation.md)。
-- [历史研究与辅助验证](archive/legacy_workflows/README.md)：原合成、正则比较、早期 DIC 试算入口及报告。历史结果和原始试验数据仍保留在各自目录。
+- `fgm_asm/`：共用有限元、观测与伴随内核；`lib/`：数据处理、四步流程及绘图；`script/`：四个入口。
+- [架构与接口](docs/architecture.md)、[坐标说明](docs/dic_coordinate_registration.md)。
+- `3D_print/`：制造几何；`post_tensile_test/`：原始实验与独立标定；`results/`：各组计算结果。
 
-验证代码：`python -m unittest discover -s tests`。通过代码测试不等于实验物理模型成立。
+实现核验采用临时解析算例、梯度差分和四步试跑，不保留独立测试源码。通过实现核验不等于实验物理模型成立。

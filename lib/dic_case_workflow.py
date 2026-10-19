@@ -18,7 +18,35 @@ from .dic_preprocessing import save_dic_comparison
 from .experiment_data import (check_platform_reference, dic_roi_mask, file_sha256,
                               load_calibration, load_dic_platform)
 from .research_reporting import plot_modulus_comparison, save_run, save_x_profile
-from .research_workflows import _regional_comparison, _solver_summary
+
+
+# Source files affecting equilibrium, observations and inversion. Package
+# exports and old plotting/file wrappers do not affect numerical compatibility.
+MECHANICS_SOURCE_FILES = (
+    'mesh.py', 'material.py', 'grf.py', 'fem_forward.py', 'observation.py',
+    'load_case.py', 'regularization.py', 'inverse_solver.py', 'tgv.py', 'research.py',
+)
+
+
+def _solver_summary(result):
+    return {key: result[key] for key in ('converged', 'message', 'n_iterations',
+                                        'n_evaluations', 'final_cost', 'regularization_mode')}
+
+def _regional_comparison(mesh, field, calibration, boundaries):
+    values = (field[mesh.ele_nods_id - 1] @ mesh.gauss_N.T).T
+    x = np.einsum('en,gn->ge', mesh.x_ele, mesh.gauss_N)
+    weights = mesh.gauss_abs_det_j * mesh.gauss_w[:, None]
+    groups = np.searchsorted(boundaries, x, side='right')
+    rows = []
+    for index, record in enumerate(calibration.to_dict(orient='records')):
+        mask = groups == index
+        if not mask.any():
+            raise ValueError('Inversion mesh does not resolve every selected calibration region')
+        average = float(np.average(values[mask], weights=weights[mask]))
+        spread = float(np.sqrt(np.average((values[mask] - average)**2, weights=weights[mask])))
+        rows.append(dict(record, inverse_mean_E_MPa=average, inverse_spatial_sd_MPa=spread,
+                         difference_percent=100 * (average / record['mean_E_MPa'] - 1)))
+    return pd.DataFrame(rows)
 
 
 def block_split(xy, block_mm=6., buffer_mm=1.):
@@ -258,10 +286,11 @@ def load_prepared(source):
     if metadata['status'] == 'needs_registration':
         raise ValueError('Preparation records pending registration; supply physical landmarks or an explicit conditional placement')
     root = Path(__file__).resolve().parents[1]
-    for path, digest in metadata['source_sha256'].items():
-        if path.replace('\\', '/').startswith('fgm_asm/'):
-            if file_sha256(root / path) != digest:
-                raise ValueError('FE kernel changed since preparation; prepare a new case')
+    recorded = {path.replace('\\', '/'): digest for path, digest in metadata['source_sha256'].items()}
+    for name in MECHANICS_SOURCE_FILES:
+        path = f'fgm_asm/{name}'
+        if path not in recorded or file_sha256(root / path) != recorded[path]:
+            raise ValueError('FE kernel changed since preparation; prepare a new case')
     cfg = SimpleNamespace(**metadata['configuration'], __file__=str(source/'configuration_snapshot.py')
                           if (source/'configuration_snapshot.py').exists() else None)
     mesh = MeshInfo(cfg.GEO_L, cfg.GEO_H, cfg.NEL_X, cfg.NEL_Y)

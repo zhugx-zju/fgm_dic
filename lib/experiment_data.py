@@ -1,4 +1,4 @@
-"""Strict platform import and independent tensile-calibration data adapters."""
+"""Strict DIC platform import and independent tensile-calibration adapters."""
 
 from dataclasses import dataclass
 import hashlib
@@ -8,7 +8,6 @@ import re
 import numpy as np
 import pandas as pd
 
-from .dic_fields import restore_reference_coordinates
 from .io_utils import read_dic_csv, remove_duplicate_grid_points
 
 
@@ -68,7 +67,7 @@ def load_dic_frame_series(folder: Path, first_stage: int, last_stage: int, *,
         unique = remove_duplicate_grid_points(finite)
         if coordinate_state == 'deformed':
             # This requires X/Y and DX/DY to share the export length unit.
-            frame = restore_reference_coordinates(unique)
+            frame = unique.assign(X_ref=unique['X']-unique['DX'], Y_ref=unique['Y']-unique['DY'])
         else:
             frame = unique.assign(X_ref=unique['X'], Y_ref=unique['Y'])
         frame = frame.set_index(['grid_row', 'grid_col'])
@@ -152,70 +151,8 @@ def check_platform_reference(platforms: dict[str, DICPlatform]) -> dict:
     return report
 
 
-def load_platform_force(path: Path, setting_N: int) -> tuple[float, dict]:
-    table = pd.read_csv(path)
-    row = table[(table['run'] == 3) & (table['setting_N'] == setting_N)]
-    if len(row) != 1:
-        raise ValueError(f'Expected one run 3 force pairing for {setting_N} N')
-    record = row.iloc[0].to_dict()
-    force = float(record['mean_corrected_force_N'])
-    if not np.isfinite(force) or force <= 0 or not record['full_force_coverage']:
-        raise ValueError('Platform does not have a valid measured force pairing')
-    return force, record
-
-
-def transform_dic_platform(platform, matrix, offset, *, verified=False):
-    """Map both vectors and coordinates using an explicitly verified similarity.
-
-    x_FEM = A x_DIC + b and u_FEM = A u_DIC. Registration b locates the
-    physical ROI and zone boundaries; it must not be inferred from data extrema.
-    """
-    if not verified or matrix is None or offset is None:
-        raise ValueError('DIC coordinate scale and physical ROI registration are unverified; '
-                         'set verified matrix and offset in experiment_config.py first')
-    matrix, offset = np.asarray(matrix, dtype=float), np.asarray(offset, dtype=float)
-    if matrix.shape != (2, 2) or offset.shape != (2,) or not (
-            np.all(np.isfinite(matrix)) and np.all(np.isfinite(offset))):
-        raise ValueError('Expected finite DIC matrix (2,2) and offset (2,)')
-    metric = matrix @ matrix.T
-    # Normalize before comparison: absolute tolerances on A A^T would admit
-    # anisotropic scaling when converting very small export units to mm.
-    scale_squared = float(np.trace(metric) / 2)
-    if not np.isfinite(scale_squared) or scale_squared <= 0 or not np.allclose(
-            metric / scale_squared, np.eye(2), rtol=1e-7, atol=1e-10):
-        raise ValueError('DIC transform must be a rotation/reflection with one uniform unit scale')
-    xy = platform.coordinates @ matrix.T + offset
-    uv = platform.displacement @ matrix.T
-    # The admitted matrix can rotate component covariance. Without measured
-    # covariance use a conservative scalar SD; never invent independent axes.
-    std = np.linalg.norm(platform.temporal_std, axis=1) * np.sqrt(scale_squared)
-    return xy, uv, std
-
-
 def dic_roi_mask(coordinates: np.ndarray, length: float, width: float) -> np.ndarray:
     """Admit boundary roundoff using the Q4 observation operator's tolerance."""
     tol = 1e-9 * max(length, width, 1.) + 1e-12
     return ((coordinates[:, 0] >= -tol) & (coordinates[:, 0] <= length + tol) &
             (coordinates[:, 1] >= -tol) & (coordinates[:, 1] <= width + tol))
-
-
-def dic_registration_report(platform: DICPlatform, matrix, offset, length: float,
-                            width: float, boundaries, *, verified=False) -> dict:
-    """Audit physical placement without inferring orientation from data extrema."""
-    report = {'status': 'verified' if verified else 'pending_physical_registration',
-              'fem_domain_mm': [[0., 0.], [length, width]],
-              'fem_x_region_boundaries_mm': list(boundaries),
-              'raw_reference_bounds': platform.metadata['reference_bounds'],
-              'raw_reference_span': platform.metadata['reference_span'],
-              'coordinate_rule': platform.metadata['reference_coordinate_rule'],
-              'unit_contract': 'X,Y,DX,DY must share one checked export length unit',
-              'placement_rule': 'One physical registration for all platforms; no min-shift or span fitting'}
-    if verified:
-        xy, _, _ = transform_dic_platform(platform, matrix, offset, verified=True)
-        valid = dic_roi_mask(xy, length, width)
-        regions = np.searchsorted(boundaries, xy[valid, 0], side='right')
-        report.update(matrix=np.asarray(matrix).tolist(), offset_mm=np.asarray(offset).tolist(),
-                      transformed_bounds_mm=[xy.min(axis=0).tolist(), xy.max(axis=0).tolist()],
-                      points_inside_roi=int(valid.sum()), points_outside_roi=int((~valid).sum()),
-                      points_per_region=np.bincount(regions, minlength=len(boundaries)+1).tolist())
-    return report

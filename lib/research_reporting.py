@@ -1,4 +1,4 @@
-"""Save reproducible arrays and comparable field plots without rerunning FEM."""
+"""Save mainline results, provenance, modulus maps and width profiles."""
 
 import json
 from pathlib import Path
@@ -27,7 +27,6 @@ def _json_value(value):
         return [_json_value(v) for v in value]
     return value
 
-
 def save_run(output, config, summary, arrays=None):
     """Write into a new case directory; never overwrite an established run."""
     output = Path(output)
@@ -48,10 +47,6 @@ def save_run(output, config, summary, arrays=None):
                                'git_dirty': dirty, 'command': sys.argv}
     sources = [*root.glob('*config.py'), *root.glob('fgm_asm/*.py'),
                *root.glob('lib/*.py'), *root.glob('script/*.py')]
-    legacy = root / 'archive' / 'legacy_workflows'
-    entry_files = (sys.argv[0], getattr(config, '__file__', None))
-    if any(path and legacy in Path(path).resolve().parents for path in entry_files):
-        sources.extend([*legacy.glob('*.py'), *legacy.glob('lib/*.py'), *legacy.glob('script/*.py')])
     metadata['source_sha256'] = {str(p.relative_to(root)): file_sha256(p) for p in sources}
     config_file = getattr(config, '__file__', None)
     if config_file is not None:
@@ -62,32 +57,6 @@ def save_run(output, config, summary, arrays=None):
     )
     if arrays:
         np.savez_compressed(output / 'fields.npz', **arrays)
-
-
-def plot_displacement_comparison(output, name, xy, measured, state):
-    """Compare each component at identical physical points and shared limits."""
-    prediction = state['prediction'].reshape(-1, 2)
-    residual = prediction - measured
-    fig, axes = plt.subplots(2, 3, figsize=(12, 5.5), constrained_layout=True)
-    for component, label in enumerate(('ux', 'uy')):
-        lo = min(measured[:, component].min(), prediction[:, component].min())
-        hi = max(measured[:, component].max(), prediction[:, component].max())
-        error_limit = max(np.max(np.abs(residual[:, component])), 1e-12)
-        for column, (field, title) in enumerate(((measured, 'Observed'),
-                                                (prediction, 'Predicted + rigid fit'),
-                                                (residual, 'Prediction - observation'))):
-            ax = axes[component, column]
-            artist = ax.scatter(xy[:, 0], xy[:, 1], c=field[:, component], s=6,
-                                cmap='coolwarm' if column == 2 else 'viridis',
-                                vmin=-error_limit if column == 2 else lo,
-                                vmax=error_limit if column == 2 else hi,
-                                rasterized=True)
-            ax.set(title=f'{title}: {label} (mm)', xlabel='x (mm)', ylabel='y (mm)', aspect='equal')
-            fig.colorbar(artist, ax=ax, shrink=0.75)
-    fig.savefig(Path(output) / f'{name}_displacement.png', dpi=300)
-    fig.savefig(Path(output) / f'{name}_displacement.svg')
-    plt.close(fig)
-
 
 def plot_modulus_comparison(output, mesh, reference, reconstructed):
     fig, axes = plt.subplots(1, 3, figsize=(12, 3.4), constrained_layout=True)
@@ -107,39 +76,6 @@ def plot_modulus_comparison(output, mesh, reference, reconstructed):
     fig.savefig(Path(output) / 'modulus_comparison.png', dpi=300)
     fig.savefig(Path(output) / 'modulus_comparison.svg')
     plt.close(fig)
-
-
-def plot_dic_registration(output, name, reference_xy, fem_xy, length, width,
-                          boundaries, infill_percent):
-    """Show coordinate conventions and physical partitions before any fitting."""
-    fig, axes = plt.subplots(1, 2, figsize=(10, 5), constrained_layout=True)
-    # Show all points: fixed-stride thinning can create artificial diagonal
-    # bands on a structured grid. Rasterization keeps vector exports compact.
-    selected = np.arange(len(reference_xy))
-    colors = selected / max(len(reference_xy)-1, 1)
-    axes[0].scatter(*reference_xy[selected].T, c=colors, cmap='viridis', s=1, rasterized=True)
-    axes[0].set(title='DIC reference coordinates', xlabel='X_ref (export units)',
-                ylabel='Y_ref (export units)', aspect='equal')
-    axes[1].plot([0, length, length, 0, 0], [0, 0, width, width, 0], color='black', lw=1)
-    edges = np.r_[0., boundaries, length]
-    for index, infill in enumerate(infill_percent):
-        axes[1].text((edges[index]+edges[index+1])/2, width*1.12, f'{infill}%',
-                     ha='center', va='bottom', fontsize=9)
-    for boundary in boundaries:
-        axes[1].axvline(boundary, color='0.5', linestyle='--', lw=.7)
-    if fem_xy is not None:
-        axes[1].scatter(*fem_xy[selected].T, c=colors, cmap='viridis', s=1, rasterized=True)
-        title = 'FEM placement: verified transform'
-    else:
-        axes[1].text(length/2, width/2, 'DIC registration pending', ha='center', va='center')
-        title = 'Physical FEM ROI (no DIC overlay)'
-    axes[1].set(title=title, xlabel=f'x: {infill_percent[0]}% to {infill_percent[-1]}% (mm)',
-                ylabel='y: width (mm)', aspect='equal')
-    axes[1].set_ylim(-.15*width, 1.35*width)
-    fig.savefig(Path(output) / f'{name}_registration.png', dpi=300)
-    fig.savefig(Path(output) / f'{name}_registration.svg')
-    plt.close(fig)
-
 
 def save_x_profile(output, mesh, reconstructed, reference):
     """Summarize a free 2D inverse without imposing equality between y rows.
