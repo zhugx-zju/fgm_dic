@@ -21,7 +21,7 @@ def main():
     record_path = output/'run_metadata.json' if args.plot_only else source/'run_metadata.json'
     saved = json.loads(record_path.read_text(encoding='utf-8'))['configuration']
     print(f"Saved solver settings: FTOL={saved['FTOL']:g}, GTOL={saved['GTOL']:g}; "
-          'gamma selection=buffered spatial validation; L-curve=disabled')
+          'objective=original gradient Tikhonov; gamma selection=L-curve')
     result = plot_saved_stage(output, source) if args.plot_only else inverse_dic(source, output)
     print('Inverse:', result['status'], output.resolve())
     publish_stage(source.parent, '03_inverse', output, result)

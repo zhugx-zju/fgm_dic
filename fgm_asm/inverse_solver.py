@@ -72,7 +72,7 @@ def get_stiffness_gradient(fem_info, lambda_vec, forw_U):
 
 def _evaluate_inverse_state(mesh_info, bc_info, U_measured, material_info, gamma,
                             E_vec, iteration, regularization_mode='gradient',
-                            observation_cases=None, modulus_scale=1.0):
+                            observation_cases=None):
     """
     Evaluate the inverse objective, gradient, and reusable solver state.
 
@@ -124,8 +124,6 @@ def _evaluate_inverse_state(mesh_info, bc_info, U_measured, material_info, gamma
         reg_gradient = get_affine_detrended_gradient(mesh_info, material_info)
     else:
         raise ValueError(f"Unknown regularization mode: {regularization_mode!r}")
-    reg_value /= modulus_scale**2
-    reg_gradient = reg_gradient / modulus_scale**2
     cost_reg = 0.5 * gamma * reg_value
     grad_reg_E = 0.5 * gamma * reg_gradient
 
@@ -158,8 +156,7 @@ def lbfgs_inverse_solver_scipy(mesh_info, bc_info=None, U_measured=None, E_init=
                                gamma=1e-6, E_min=0.001, E_max=1000.0,
                                max_iter=2000, ftol=1e-12, gtol=1e-8, nu=0.3,
                                regularization_mode='gradient', tgv_options=None,
-                               max_fun=15000, observation_cases=None,
-                               modulus_scale=1.0):
+                               max_fun=15000, observation_cases=None):
     """
     Solve the inverse problem using SciPy's L-BFGS-B optimizer in m = ln(E) space.
 
@@ -185,8 +182,6 @@ def lbfgs_inverse_solver_scipy(mesh_info, bc_info=None, U_measured=None, E_init=
     del E_max
     from .material import MaterialInfo
 
-    if not np.isfinite(modulus_scale) or modulus_scale <= 0:
-        raise ValueError('modulus_scale must be positive and finite (MPa)')
     if not np.isfinite(gamma) or gamma < 0:
         raise ValueError('gamma must be nonnegative and finite')
     if observation_cases is not None:
@@ -206,7 +201,7 @@ def lbfgs_inverse_solver_scipy(mesh_info, bc_info=None, U_measured=None, E_init=
             mesh_info, bc_info, U_measured, E_init=E_init, gamma=gamma,
             E_min=E_min, max_iter=max_iter, ftol=ftol, gtol=gtol, nu=nu,
             tgv_options=tgv_options, max_fun=max_fun,
-            observation_cases=observation_cases, modulus_scale=modulus_scale,
+            observation_cases=observation_cases,
         )
 
     if regularization_mode not in {'gradient', 'affine_detrended'}:
@@ -237,7 +232,7 @@ def lbfgs_inverse_solver_scipy(mesh_info, bc_info=None, U_measured=None, E_init=
     initial_state = _evaluate_inverse_state(
         mesh_info, bc_info, U_measured, material_info, gamma, E_vec0,
         iteration=1, regularization_mode=regularization_mode,
-        observation_cases=observation_cases, modulus_scale=modulus_scale,
+        observation_cases=observation_cases,
     )
     state_cache['state'] = initial_state
 
@@ -259,7 +254,7 @@ def lbfgs_inverse_solver_scipy(mesh_info, bc_info=None, U_measured=None, E_init=
             E_vec,
             iteration=evaluation_counter[0] + 1,
             regularization_mode=regularization_mode,
-            observation_cases=observation_cases, modulus_scale=modulus_scale,
+            observation_cases=observation_cases,
         )
         state_cache['m'] = np.array(m_vec_use, copy=True)
         state_cache['state'] = state
@@ -279,7 +274,7 @@ def lbfgs_inverse_solver_scipy(mesh_info, bc_info=None, U_measured=None, E_init=
                 np.exp(m_current),
                 iteration=evaluation_counter[0] + 1,
                 regularization_mode=regularization_mode,
-                observation_cases=observation_cases, modulus_scale=modulus_scale,
+                observation_cases=observation_cases,
             )
             state_cache['m'] = np.array(m_current, copy=True)
             state_cache['state'] = state
@@ -324,7 +319,7 @@ def lbfgs_inverse_solver_scipy(mesh_info, bc_info=None, U_measured=None, E_init=
             np.exp(result.x),
             iteration=evaluation_counter[0] + 1,
             regularization_mode=regularization_mode,
-            observation_cases=observation_cases, modulus_scale=modulus_scale,
+            observation_cases=observation_cases,
         )
 
     E_final = final_state['E_vec']

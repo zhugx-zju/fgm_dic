@@ -3,8 +3,8 @@
 from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).resolve().parent
-CASE_ID = 'sample2_run3_revision3_commonmesh'
-CASE_OUTPUT = PROJECT_ROOT / 'results' / 'dic_case_commonmesh_20261019_01'
+CASE_ID = 'sample2_run3_tikhonov_lcurve'
+CASE_OUTPUT = PROJECT_ROOT / 'results' / 'dic_case_tikhonov_lcurve_20261019'
 SAMPLE_ROOT = PROJECT_ROOT / 'post_tensile_test' / '1016' / 'sample_2'
 PLATFORMS = {
     '180N': {'folder': SAMPLE_ROOT / '3' / '180N_3', 'stages': (259, 273), 'run': 3, 'setting_N': 180},
@@ -33,11 +33,9 @@ OUTSIDE_POINT_POLICY = 'reject'
 FIT_CASES, PREDICT_CASES = ('180N',), ('280N',)
 NU_VALUES = (.24, .26, .28)
 PRIMARY_NU = .26  # Prespecified middle of the user-provided range; not selected on 280N.
-E_REF = 1700.
-NOISE_SCALE_MM = .0003  # Working objective scale; not absolute measurement uncertainty.
-REGULARIZATION_MODE = 'affine_detrended'
-TGV_OPTIONS = {}
-GAMMA_CANDIDATES = (1000., 10000., 100000.)
-VALIDATION_BLOCK_MM, VALIDATION_BUFFER_MM = 6., 1.
+# Original area-weighted displacement mismatch + gamma/2 * integral(|grad E|^2).
+# No reference modulus, noise normalization, or calibration-based initial field.
+REGULARIZATION_MODE = 'gradient'
+GAMMA_CANDIDATES = tuple(10.**(-12 + .5*i) for i in range(17))
 MAX_ITER, MAX_FUN = 1500, 12000
-FTOL, GTOL = 1e-11, 1e-7
+FTOL, GTOL = 1e-30, 1e-12

@@ -10,7 +10,7 @@
 | --- | --- | --- | --- |
 | 1. 准备数据 | `script/step1_prepare_dic.py` | 实验配置、DIC CSV、载荷配对、独立标定 | `01_prepared/`：冻结输入、核查表、DIC 两分量云图和 `云图.html` |
 | 2. 独立正演 | `script/step2_forward_calibrated.py` | `01_prepared/` | `02_forward/`：分区标定模量、各 ν 的 DIC／正演／相对误差对照、数组与 `云图.html` |
-| 3. DIC 反演 | `script/step3_inverse_dic.py` | `01_prepared/` | `03_inverse/`：选参、各 ν 的二维模量、DIC／回代／相对误差对照、E(x)、数组与 `云图.html` |
+| 3. DIC 反演 | `script/step3_inverse_dic.py` | `01_prepared/` | `03_inverse/`：L-curve 与曲率、各 ν 的二维模量、DIC／回代／相对误差对照、E(x)、数组与 `云图.html` |
 | 4. 比较出图 | `script/step4_compare_results.py` | 同一 `01_prepared/` 对应的正反演结果 | `04_comparison/`：DIC/独立正演/反演回代对照、二维模量、E(x)、五区统计、误差表和 HTML 报告 |
 
 第 2、3 步分别求解正问题和反问题；第 3 步不需要第 2 步的位移来识别模量，第 4 步才汇合两条证据链。第 4 步不重新运行有限元或优化器。
@@ -19,13 +19,13 @@
 
 在项目根目录、安装 `requirements.txt` 的 Python 环境中，依次运行：
 
-当前实验已有数值结果，直接运行以下四条命令重新生成云图：
+默认配置为原始 Tikhonov + L-curve，输出到 `results/dic_case_tikhonov_lcurve_20261019/`，尚未进行实际 DIC 计算。首次计算使用：
 
 ```powershell
-python -m script.step1_prepare_dic --plot-only
-python -m script.step2_forward_calibrated --plot-only
-python -m script.step3_inverse_dic --plot-only
-python -m script.step4_compare_results --plot-only
+python -m script.step1_prepare_dic
+python -m script.step2_forward_calibrated
+python -m script.step3_inverse_dic
+python -m script.step4_compare_results
 ```
 
 **查看结果：双击项目根目录的 [打开结果.html](../打开结果.html)。** 每一步结束时都会打印本步绝对保存路径和实验总览路径，并更新这个固定入口。第 2—4 步的默认 `--config dic_case_config` 仅用于定位 `CASE_OUTPUT/01_prepared`；求解参数和数据仍来自第一步冻结文件。也可用 `--input <01_prepared目录>` 明确指定输入。
@@ -37,7 +37,9 @@ python -m script.step4_compare_results --plot-only
 01_prepared/                 云图.html；180N/、280N/ 的 DIC 位移 PNG/SVG
   reference_audit/           已执行的坐标、刚体及显示一致性核验记录
 02_forward/                  云图.html、标定模量；nu_*/平台/ DIC、正演和相对误差 PNG/SVG
-03_inverse/                  云图.html；nu_*/ 中的模量、E(x)、平台 DIC、回代和相对误差 PNG/SVG
+03_inverse/                  云图.html；selection.csv、l_curve.*、l_curve_curvature.*
+  l_curve/gamma_*/           每个 gamma 的模量、目标分解、梯度及停止信息
+  nu_*/                     模量、E(x)、平台 DIC、回代和相对误差 PNG/SVG
 04_comparison/               打开查看结果.html、误差与模量 CSV
   nu_0.26/                   主泊松比结果（另有 0.24、0.28）
     180N/、280N/             DIC、正演、反演及相对误差各分量 PNG/SVG，逐测点 CSV
@@ -46,7 +48,7 @@ python -m script.step4_compare_results --plot-only
     x_profile.*              宽度平均 E(x) 与标定对照
 ```
 
-四步默认在完成数值计算后自动出图。`--plot-only` 只刷新已保存场的云图、展示页和派生剖面，不重读原始 DIC、不运行正演或优化器，也不覆盖冻结数组、配置或求解记录。图文件可按相同文件名刷新，避免每次重新出图新增一套结果目录。当前比较结果统一位于 `04_comparison/`。
+四步默认在完成数值计算后自动出图。已有与当前数值内核一致的结果时，给相应命令加 `--plot-only`，仅刷新已保存场、L-curve、展示页及派生剖面，不重读原始 DIC、不运行正演或优化器，也不覆盖冻结数组、配置或求解记录。图文件按相同文件名刷新，比较结果统一位于 `04_comparison/`。旧 `dic_case_commonmesh_20261019_01` 浏览文件仍保留，但其目标函数与当前方案不同，不能绕过内核核对直接混用或继续计算。
 
 DIC 图复用原 `post_DIC` 的 `lib/dic_preprocessing.py::plot_grid_fields`：7×6 英寸、规则网格 `pcolormesh`、`jet`、等比例坐标、独立单图。第 2、3 步直接按分量并排显示 DIC、模型及相对误差；第 4 步中 DIC/独立正演/反演共用位移色标，两幅相对误差共用对称百分比色标。新输入冻结网格 ID，缺失点留空，不插值补测量。旧版冻结结果仅在可核验的轴对齐规则坐标上恢复网格顺序。绘图不改变配准、观测、载荷或反演结果。
 
@@ -115,20 +117,32 @@ python -m script.step4_compare_results --config dic_case_sample3
 
 当前共用 70×20 个 Q4 单元、1×1 mm，正反问题均为 1491 个节点；反演所有节点模量独立，不绑定不同 y 行。该尺寸与五区界面对齐，但不等同于已经证明网格收敛。DIC 的点距约 0.2895 mm，不需要等于有限元单元尺寸；Q4 观测算子在真实 DIC 位置求值。
 
-gamma 仅在 `FIT_CASES` 的带缓冲空间验证点上选择。当前预设 ν=0.26 完成选参后，冻结 gamma，以相同初值、网格、预算分别运行三个 ν；`PREDICT_CASES` 不参与选择。**当前四步流程未启用 L-curve，也没有 L-curve 开关**；扫描三个 gamma 并按空间验证误差择优不是 L-curve 曲率选参。扫描边界最小值、优化成功状态、物理配准状态和实验验证结论分别报告。
+### 原始目标与 L-curve 选参
+
+目标为 `J(E)=0.5*r.T@W_area@r + 0.5*gamma*integral(|grad E|^2)`。只保留真实 DIC 测点面积权重；不设参考模量，不除以模量或人为噪声尺度，不采用仿射去趋势正则。每个节点的 `m=ln(E)` 独立优化，正则作用于 E，不作用于 log(E)。五区标定只用于独立正演和后处理，不进入反演目标、初值或选参。
+
+仅在 `FIT_CASES`、预设主 ν=0.26 下计算 L-curve：横轴 `rho=sqrt(r.T@W_area@r)`（mm²），纵轴 `eta=sqrt(integral(|grad E|^2))`（MPa），两轴取对数；eta 不乘 gamma。默认 gamma 从 10⁻¹² 到 10⁻⁴，共 17 个半数量级点。取消空间验证分割，不按拟合/留出误差或材料标定择优。
+
+扫描由大 gamma 到小 gamma 延续：首点使用原求解器默认均匀初值 0.501 MPa，后续只继承此前的收敛解。扫描方法和每点的初始化来源均保存。根据递增 gamma 顺序计算有符号三点 Menger 曲率，取最大正曲率内部点；要求至少五个有效点，峰值两侧各有两个有效扫描点。未收敛点、非正范数、近重合点、非单调局部分支及近乎直线的三点不用于选参。数值阈值为 log 范数单调容许波动 10⁻⁵、最小三点边长 10⁻⁴、最小可分辨正曲率 10⁻⁶；近重合点的微小优化波动可能产生虚假大曲率，故先检查边长。这些阈值用于排除数值退化，不是实验一致性判据。
+
+`selection.csv` 保存原始范数、目标分解、曲率、有效/选中标记、最终梯度 ∞ 范数及停止信息；`l_curve/gamma_*/` 保存逐点数组和配置。无拐点、端部支撑不足或有效收敛点不足时，第 3 步保存诊断图与状态并返回退出码 2，不回退至固定 gamma，也不生成最终反演结论。检查扫描范围或收敛性后，应另存新配置计算。
+
+有可用拐点后，冻结 gamma，所有 ν 从同一个所选场出发，以相同网格和预算重新求解；`PREDICT_CASES` 不参与选参。第 3 步的云图页直接显示 L-curve 和曲率，第 4 步链接该证据。L-curve 是选参启发式，不能单凭曲率峰值认定模量正确或唯一。定义与限制参考 [Hansen 的 L-curve 说明](https://www.imm.dtu.dk/documents/ftp/tr99/tr15_99.pdf)。
 
 ### 容差的生效范围
 
 优化器使用 L-BFGS-B，在 `m=ln(E)` 上优化；`FTOL` 是目标函数下降停止条件，`GTOL` 是优化变量梯度停止条件，满足任一条件即可停止，还可能因预算或线搜索而结束。减小 `FTOL` 不代表已满足 `GTOL`，应查看保存的停止信息。
 
-当前已有结果 `dic_case_commonmesh_20261019_01` 的配置快照为 `FTOL=1e-11、GTOL=1e-7`；源配置现为 `1e-30、1e-12`。主 ν=0.26 的已有反演迭代 198 次，由函数下降条件停止；γ=10⁴ 来自 180N 空间验证。重新出图不更新这些数值。
+新默认配置保留 `FTOL=1e-30、GTOL=1e-12`。已有结果 `dic_case_commonmesh_20261019_01` 仍保存旧目标、`FTOL=1e-11、GTOL=1e-7` 及空间验证所选 γ=10⁴；它们不是 L-curve 结果。当前只完成实现和临时验证，未重算实际 DIC。
 
 要让修改后的容差生效，应先选用新的 `CASE_OUTPUT` 并重新运行第 1 步以冻结新配置，再运行后续步骤。只修改源配置，或给第 3 步指定新的 `--output` 但继续读取旧 `01_prepared`，均不会更新求解设置。结果页显示的是实际保存计算的容差与停止原因。
 
 ## 可复核性与完成范围
 
-阶段间核对冻结输入的元数据/数组哈希，拒绝混用不同实验的正反演结果。数值兼容性核对平衡、材料、观测、正则和反演所依赖的十个算法文件哈希，缺少记录或数值内核变化均需重新准备；包导出及历史绘图、文件包装不参与力学兼容性判定。所有步骤调用同一正演、观测和伴随内核。
+阶段间核对冻结输入的元数据/数组哈希，拒绝混用不同实验的正反演结果。数值兼容性核对平衡、材料、观测、正则、反演及 L-curve 所依赖的十一个算法文件哈希，缺少记录或数值内核变化均需重新准备；包导出及历史绘图、文件包装不参与力学兼容性判定。所有步骤调用同一正演、观测和伴随内核。
 
 本流程交付独立正演与 DIC、二维模量与独立标定、回代及预测三条比较证据。物理配准未完成、完整狗骨与矩形截取域边界等效未验证、误差预算不完整时，不自动宣告实验物理验证通过。
 
-实现与流程核验采用临时解析算例、梯度差分及四步 CLI 试跑。真实数据出图前后须核对位移误差、分区模量和逐测点导出一致性。这些检查验证实现与呈现，不增加实验物理验证证据。
+实现核验使用临时解析牵引算例、原始 H1 正则的积分/矩阵等价性及常数零空间、伴随方向导数差分；最后一项的最小相对偏差约 3.0×10⁻⁹。独立的线性 Tikhonov 闭式解用于检查 L-curve 拐点、顺序不变性和退化曲线拒绝。
+
+临时 18 节点二维算例贯通合成 CSV 导入、独立正演、21 个 gamma 的实际非线性求解与 L-curve、结果比较及重新出图，同时检查选参不使用预测平台、目标分解与文件链接。该小算例使用 FTOL=10⁻¹⁵、GTOL=10⁻¹¹、最多 500 次迭代，仅验证实现；默认严格容差及扫描范围在真实 DIC 上的收敛性、拐点存在性尚未计算。真实数据出图前后仍须核对位移误差、分区模量和逐测点导出一致性。上述检查不增加实验物理验证证据。

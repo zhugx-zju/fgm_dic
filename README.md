@@ -8,13 +8,13 @@
 
 ## 四个独立步骤
 
-安装 `requirements.txt`，在项目根目录依次执行以下命令，从当前已保存的结果生成各步云图：
+安装 `requirements.txt`。默认配置现指向原始 Tikhonov + L-curve 方案，结果目录为 `results/dic_case_tikhonov_lcurve_20261019/`；该方案尚未进行实际 DIC 计算。在项目根目录依次执行：
 
 ```powershell
-python -m script.step1_prepare_dic --plot-only
-python -m script.step2_forward_calibrated --plot-only
-python -m script.step3_inverse_dic --plot-only
-python -m script.step4_compare_results --plot-only
+python -m script.step1_prepare_dic
+python -m script.step2_forward_calibrated
+python -m script.step3_inverse_dic
+python -m script.step4_compare_results
 ```
 
 换一批数据时，修改 [dic_case_config.py](dic_case_config.py) 中的输入、载荷配对、坐标与物理定义，将 `CASE_OUTPUT` 改为新目录，然后去掉 `--plot-only` 依次运行四个脚本。每一步计算后自动生成对应云图；后续计算读取第一步冻结的数据。已有数值输出拒绝覆盖。参数及逐项文件说明见 [分步骤流程](docs/dic_stepwise_workflow.md)。
@@ -26,11 +26,11 @@ python -m script.step4_compare_results --plot-only
 | DIC 反演 | `03_inverse/` | `云图.html`、二维模量、E(x)、DIC／回代／相对误差对照、识别与预测记录 |
 | 比较出图 | `04_comparison/` | `打开查看结果.html`、CSV、各 ν/平台的 PNG/SVG |
 
-当前实验集中在 `results/dic_case_commonmesh_20261019_01/`，其中只有四步结果目录；坐标核验记录保存在 `01_prepared/reference_audit/`。实验根目录 `结果总览.html` 的四个卡片直接链接各步云图。`--plot-only` 可重复刷新图表，不新增重复结果目录，也不重算正反问题。
+浏览入口目前保留已有的 `results/dic_case_commonmesh_20261019_01/` 结果，该组采用旧目标和空间验证选参，不代表新方案的计算结果。新方案执行后，每步自动更新同组 `结果总览.html` 的四个卡片。数值结果与当前内核一致时，`--plot-only` 可重复刷新图表，不重算正反问题；内核变化后需重新准备，不能将旧配置与新结果混用。
 
 误差云图统一采用百分比：位移误差以对应平台 DIC 去除三个刚体分量后的分量 RMS 归一化，避免逐点除以过零位移；原始残差仍以 mm 保存。第 2 步直接展示正演与 DIC 的并排对照，无需等到第 4 步。
 
-当前 gamma 采用识别平台的带缓冲空间验证选择，未启用 L-curve。求解容差来自第 1 步冻结配置，结果页显示实际容差与停止信息；源配置修改后，需在新的结果目录重新准备输入才能生效。
+反演目标为 `0.5*r.T@W_area@r + 0.5*gamma*integral(|grad E|^2)`，不设置参考模量，不作模量或人为噪声尺度归一化。gamma 仅用识别平台的 L-curve 拐点选择，扫描范数、曲率、停止信息和 PNG/SVG 保存于第 3 步；无可辨识拐点时停止并保留诊断。求解容差来自第 1 步冻结配置，源配置修改后，需重新准备输入才能生效。
 
 ## 模型与当前结论范围
 

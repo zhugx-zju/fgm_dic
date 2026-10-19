@@ -16,9 +16,14 @@ def get_tikhonov_regularization(mesh_info, material_info):
     Returns:
         tik_reg: Tikhonov regularization value
     """
-    L_reg = mesh_info.get_regularization_matrix()
     E_vec = material_info.get_current_modulus()
-    return float(E_vec @ (L_reg @ E_vec))
+    # Equivalent to E.T @ L @ E, but nonnegative even near the constant-field
+    # nullspace, where cancellation would corrupt the L-curve penalty norm.
+    E_ele = E_vec[mesh_info.ele_nods_id - 1]
+    weights = mesh_info.gauss_abs_det_j * mesh_info.gauss_w[:, None]
+    grad_x = np.einsum('gea,ea->ge', mesh_info.gauss_dNdx, E_ele)
+    grad_y = np.einsum('gea,ea->ge', mesh_info.gauss_dNdy, E_ele)
+    return float(np.sum(weights*(grad_x**2 + grad_y**2)))
 
 
 def get_tikhonov_gradient(mesh_info, material_info):

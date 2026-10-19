@@ -117,9 +117,16 @@ def write_stage_gallery(output, summary, title):
         parts.append(f'<p>{RELATIVE_ERROR_DESCRIPTION} 位移图单位为 mm，误差图单位为 %。</p>')
     if summary['workflow'] == 'dic_case_inverse':
         config = summary['configuration']
+        gamma = summary.get('selected_gamma')
+        selected = f'{gamma:g}' if gamma is not None else '尚未选定'
         parts.append(f'<p>本次保存计算：FTOL={config["FTOL"]:g}，GTOL={config["GTOL"]:g}。'
-                     f'γ={summary["selected_gamma"]:g}，由识别平台的带缓冲空间验证选择；L-curve 未启用。'
+                     f'γ={selected}，由识别平台的 L-curve 正曲率拐点选择。'
                      '修改源配置或重新出图均不会更新已保存的反演。</p>')
+        parts.append('<p>目标函数：0.5 rᵀW_A r + 0.5 γ ∫|∇E|² dA。'
+                     'W_A 仅为测点面积权重；不设置参考模量，不做模量或噪声尺度归一化。</p>')
+        parts.append(f'<p>L-curve 状态：{html.escape(summary.get("l_curve_status", "running"))}；'
+                     f'{html.escape(summary.get("l_curve_message", ""))}。'
+                     '<a href="selection.csv">扫描范数、曲率、收敛与选参记录</a></p>')
     primary = f"nu_{summary['primary_nu_prespecified']:.2f}"
     pictures = sorted(output.rglob('*.png'), key=lambda p: (
         0 if p.parent == output else 1 if primary in p.parts else 2,
@@ -195,15 +202,18 @@ def write_case_report(output, summary, metrics, regions, selection):
             lines.append(f"| {r['nu']:.2f} | {r['infill_percent']}% | {r['mean_E_MPa']:.1f}±{r['sd_E_MPa']:.1f} | {r['inverse_mean_E_MPa']:.1f} | {r['difference_percent']:+.2f}% |")
         lines += ['', '组内 SD 和反演场空间 SD 的含义不同，均不作为参数置信区间；分区统计包含未观测边带的模型延拓。', '',
                   f"主泊松比预先指定为 {summary['primary_nu_prespecified']}；其他 ν 为同条件敏感性比较，不根据留出平台误差更换主值。", '',
-                  f"gamma={summary['selected_gamma']:g}，只按识别平台的带缓冲空间验证选择；是否处于扫描边界：{summary['gamma_at_scan_boundary']}。扫描边界最小值不代表全局最优。"]
+                  f"gamma={summary['selected_gamma']:g}，只按识别平台的 L-curve 最大正曲率拐点选择；状态：{summary['l_curve_status']}。不按预测平台误差或独立材料标定调参。"]
         settings = summary['inverse_settings']
         lines += ['', '## 反演选参与实际停止设置', '',
-                  f"当前未启用 L-curve。gamma 候选值为 {settings['GAMMA_CANDIDATES']}；只使用识别平台的带缓冲空间验证选择，预测平台不参与选参。", '',
+                  '目标函数为 `0.5*r.T@W_area@r + 0.5*gamma*integral(|grad(E)|^2)`。W_area 仅保留真实测点面积权重，不设参考模量，不作模量或噪声尺度归一化。', '',
+                  f"已启用 L-curve。gamma 候选值为 {settings['GAMMA_CANDIDATES']}；在预设主 ν 下，仅使用识别平台，计算原始残差范数 ρ 与正则范数 η（不含 gamma）。", '',
+                  '在 log(ρ)、log(η) 上用有符号三点曲率识别拐点，排除未收敛、重合、非单调及端部缺少支撑的候选；不能识别拐点时保留诊断并停止，不回退至空间验证或固定 gamma。', '',
+                  '扫描从大 gamma 到小 gamma 延续，首点使用原求解器默认初值 0.501 MPa，后续使用上个收敛解；全部 ν 最后从同一个所选场出发重新求解。独立标定不进入反演目标或初值。', '',
                   f"已保存计算实际使用 FTOL={settings['FTOL']:g}、GTOL={settings['GTOL']:g}，最多 {settings['MAX_ITER']} 次迭代、{settings['MAX_FUN']} 次函数计算。配置取自上游反演记录，修改源配置和重新出图不会更新已有计算。", '',
                   '函数容差和梯度容差是不同的停止条件；任一满足即可停止，不要求二者同时满足。', '',
-                  '| ν | 迭代数 | 停止信息 |', '| --- | ---: | --- |']
+                  '| ν | 迭代数 | 最终梯度 ∞ 范数 | 满足 GTOL | 停止信息 |', '| --- | ---: | ---: | --- | --- |']
         for solver in summary['solvers']:
-            lines.append(f"| {solver['nu']:.2f} | {solver['n_iterations']} | {solver['message']} |")
+            lines.append(f"| {solver['nu']:.2f} | {solver['n_iterations']} | {solver['final_gradient_inf']:.6g} | {solver['gradient_tolerance_satisfied']} | {solver['message']} |")
     else:
         lines += ['本阶段仅完成输入核查；未生成正反演结论。']
     lines += ['', '## 结论范围与复现', '',
@@ -222,8 +232,10 @@ def write_case_report(output, summary, metrics, regions, selection):
     if not metric_table.empty:
         settings = summary['inverse_settings']
         parts.append(f'<p>本次反演实际使用 FTOL={settings["FTOL"]:g}、GTOL={settings["GTOL"]:g}；'
-                     f'γ={summary["selected_gamma"]:g}，按识别平台的带缓冲空间验证选择，L-curve 未启用。'
+                     f'γ={summary["selected_gamma"]:g}，由识别平台的 L-curve 选定。'
                      '完整停止信息见页末报告。</p>')
+        inverse = Path(summary['inverse_directory'])
+        parts.append(f'<p><a href="{_link(inverse/"云图.html", output)}">查看 L-curve、曲率图与反演场</a></p>')
         parts += ['<h2>位移定量对照</h2>', metric_table.to_html(index=False, border=0, float_format=lambda x: f'{x:.7g}'),
                   '<h2>模量与独立标定对照</h2>', region_table.to_html(index=False, border=0, float_format=lambda x: f'{x:.6g}')]
         for solver in sorted(summary['solvers'], key=lambda s: (s['nu'] != summary['primary_nu_prespecified'], s['nu'])):

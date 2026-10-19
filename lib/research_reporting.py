@@ -58,6 +58,60 @@ def save_run(output, config, summary, arrays=None):
     if arrays:
         np.savez_compressed(output / 'fields.npz', **arrays)
 
+
+def plot_l_curve(output, selection):
+    """Replot saved scan norms and signed log-log curvature; never solve again."""
+    output = Path(output)
+    data = pd.DataFrame(selection).sort_values('gamma')
+    valid = (data.converged.astype(bool) & np.isfinite(data.residual_norm) &
+             (data.residual_norm > 0) & np.isfinite(data.regularization_norm) &
+             (data.regularization_norm > 0))
+    selected = data.get('selected', pd.Series(False, index=data.index)).astype(bool)
+    fig, ax = plt.subplots(figsize=(7, 5))
+    ax.loglog(data.residual_norm.where(valid), data.regularization_norm.where(valid),
+              'o-', color='#1764a0', markersize=4, label='Converged scan')
+    failed = ~data.converged.astype(bool) & (data.residual_norm > 0) & (data.regularization_norm > 0)
+    if failed.any():
+        ax.loglog(data.residual_norm[failed], data.regularization_norm[failed],
+                  'x', color='gray', label='Unconverged (excluded)')
+    if selected.any():
+        row = data[selected].iloc[0]
+        ax.loglog(row.residual_norm, row.regularization_norm, '*', color='#c0392b',
+                  markersize=13, label=f'Selected gamma={row.gamma:.3g}')
+    ax.set(xlabel=r'Area-weighted residual norm $\rho$ (mm$^2$)',
+           ylabel=r'Tikhonov gradient norm $\eta$ (MPa)',
+           title='L-curve' if selected.any() else 'L-curve: selection unresolved')
+    ax.legend(fontsize=9)
+    fig.tight_layout()
+    fig.canvas.draw()
+    # Near-coincident tail points must not produce overlapping gamma labels.
+    labelled = [ax.transData.transform((row.residual_norm, row.regularization_norm))
+                for row in data[selected].itertuples()]
+    for index in np.unique(np.linspace(0, len(data)-1, min(6, len(data)), dtype=int)):
+        row = data.iloc[index]
+        point = ax.transData.transform((row.residual_norm, row.regularization_norm)) if valid.iloc[index] else None
+        if point is not None and all(np.linalg.norm(point-previous) > 50 for previous in labelled):
+            ax.annotate(f'{row.gamma:.1e}', (row.residual_norm, row.regularization_norm),
+                        xytext=(4, 5), textcoords='offset points', fontsize=8)
+            labelled.append(point)
+    for extension in ('png', 'svg'):
+        fig.savefig(output/f'l_curve.{extension}', dpi=300, bbox_inches='tight')
+    plt.close(fig)
+    fig, ax = plt.subplots(figsize=(7, 4))
+    curvature = data.get('curvature', pd.Series(np.nan, index=data.index))
+    ax.semilogx(data.gamma, curvature, 'o-', color='#1764a0', markersize=4)
+    ax.axhline(0, color='gray', linewidth=.7)
+    if selected.any():
+        row = data[selected].iloc[0]
+        ax.plot(row.gamma, row.curvature, '*', color='#c0392b', markersize=13)
+    ax.set(xlabel=r'Regularization parameter $\gamma$', ylabel='Signed log-log curvature',
+           title='Discrete L-curve curvature')
+    fig.tight_layout()
+    for extension in ('png', 'svg'):
+        fig.savefig(output/f'l_curve_curvature.{extension}', dpi=300, bbox_inches='tight')
+    plt.close(fig)
+
+
 def plot_modulus_comparison(output, mesh, reference, reconstructed):
     fig, axes = plt.subplots(1, 3, figsize=(12, 3.4), constrained_layout=True)
     lo, hi = min(reference.min(), reconstructed.min()), max(reference.max(), reconstructed.max())

@@ -13,24 +13,28 @@ import pandas as pd
 
 from fgm_asm import MeshInfo, lbfgs_inverse_solver_scipy
 from fgm_asm.load_case import evaluate_observation
+from fgm_asm.l_curve import select_l_curve_corner
 from fgm_asm.research import make_observation_case, partition_modulus, solve_forward
 from .dic_preprocessing import plot_displacement_clouds, plot_grid_fields, save_dic_comparison
 from .experiment_data import (check_platform_reference, dic_roi_mask, file_sha256,
                               load_calibration, load_dic_platform)
-from .research_reporting import plot_modulus_comparison, save_run, save_x_profile
+from .research_reporting import plot_l_curve, plot_modulus_comparison, save_run, save_x_profile
 
 
 # Source files affecting equilibrium, observations and inversion. Package
 # exports and old plotting/file wrappers do not affect numerical compatibility.
 MECHANICS_SOURCE_FILES = (
     'mesh.py', 'material.py', 'grf.py', 'fem_forward.py', 'observation.py',
-    'load_case.py', 'regularization.py', 'inverse_solver.py', 'tgv.py', 'research.py',
+    'load_case.py', 'regularization.py', 'inverse_solver.py', 'tgv.py', 'research.py', 'l_curve.py',
 )
 
 
 def _solver_summary(result):
-    return {key: result[key] for key in ('converged', 'message', 'n_iterations',
-                                        'n_evaluations', 'final_cost', 'regularization_mode')}
+    summary = {key: result[key] for key in ('converged', 'message', 'n_iterations',
+                                          'n_evaluations', 'final_cost', 'regularization_mode',
+                                          'residual_norm', 'regularization_norm')}
+    summary['final_gradient_inf'] = float(np.max(np.abs(result['final_gradient'])))
+    return summary
 
 def _regional_comparison(mesh, field, calibration, boundaries):
     values = (field[mesh.ele_nods_id - 1] @ mesh.gauss_N.T).T
@@ -47,24 +51,6 @@ def _regional_comparison(mesh, field, calibration, boundaries):
         rows.append(dict(record, inverse_mean_E_MPa=average, inverse_spatial_sd_MPa=spread,
                          difference_percent=100 * (average / record['mean_E_MPa'] - 1)))
     return pd.DataFrame(rows)
-
-
-def block_split(xy, block_mm=6., buffer_mm=1.):
-    """Buffered spatial validation using coordinates, never held-out responses."""
-    from scipy.spatial import cKDTree
-
-    xy = np.asarray(xy, dtype=float)
-    if block_mm <= 0 or buffer_mm < 0:
-        raise ValueError('Positive blocks and a nonnegative buffer are required')
-    tiles = np.floor(xy / block_mm).astype(int)
-    validation = (tiles[:, 0] + 2 * tiles[:, 1]) % 4 == 1
-    if not validation.any() or validation.all():
-        raise ValueError('Spatial split needs both training and validation points')
-    distance = cKDTree(xy[validation]).query(xy)[0]
-    train = (~validation) & (distance > buffer_mm)
-    if train.sum() < 4:
-        raise ValueError('Too few training points after spatial buffering')
-    return train, validation
 
 
 def registration_transform(reference_xy, specification):
@@ -161,7 +147,7 @@ def _validate(cfg):
     if (cfg.DISPLACEMENT_REFERENCE != 'initial_unloaded_image' or
             cfg.FORCE_REFERENCE != 'corrected_force_from_unloaded_state'):
         raise ValueError('These steps require unloaded-reference displacement and matched actual force')
-    for key in ('GEO_L', 'GEO_H', 'THICKNESS', 'E_REF', 'NOISE_SCALE_MM'):
+    for key in ('GEO_L', 'GEO_H', 'THICKNESS'):
         if not np.isfinite(getattr(cfg, key)) or getattr(cfg, key) <= 0:
             raise ValueError(f'{key} must be positive and finite')
     for key in ('NEL_X', 'NEL_Y', 'MAX_ITER', 'MAX_FUN'):
@@ -177,32 +163,24 @@ def _validate(cfg):
         raise ValueError('Every platform must be assigned to fit or prediction')
     if cfg.OUTSIDE_POINT_POLICY not in ('reject', 'crop_to_physical_roi'):
         raise ValueError('Choose reject or crop_to_physical_roi for points outside the model')
-    if not cfg.GAMMA_CANDIDATES or any(g < 0 or not np.isfinite(g) for g in cfg.GAMMA_CANDIDATES):
-        raise ValueError('Supply finite nonnegative gamma candidates')
+    if (len(cfg.GAMMA_CANDIDATES) < 5 or len(set(cfg.GAMMA_CANDIDATES)) != len(cfg.GAMMA_CANDIDATES) or
+            any(g <= 0 or not np.isfinite(g) for g in cfg.GAMMA_CANDIDATES)):
+        raise ValueError('L-curve requires at least five distinct positive finite gamma candidates')
+    if cfg.REGULARIZATION_MODE != 'gradient':
+        raise ValueError('This workflow uses the original gradient Tikhonov penalty on E')
+    if any(not np.isfinite(getattr(cfg, key)) or getattr(cfg, key) < 0 for key in ('FTOL', 'GTOL')):
+        raise ValueError('FTOL and GTOL must be finite and nonnegative')
     edges = np.r_[0., cfg.REGION_BOUNDARIES_X, cfg.GEO_L]
     if len(edges) != len(cfg.REGION_INFILL_PERCENT)+1 or np.any(np.diff(edges) <= 0):
         raise ValueError('Material regions must partition the physical model length')
 
 
-def _subset_case(case, mask):
-    """Preserve the model, weights and rigid policy while changing only observed points."""
-    from dataclasses import replace
-
-    obs = case.observation
-    dofs = np.column_stack([2*np.flatnonzero(mask), 2*np.flatnonzero(mask)+1]).ravel()
-    subset = replace(obs, x_meas=obs.x_meas[mask], y_meas=obs.y_meas[mask],
-                     ux_meas=obs.ux_meas[mask], uy_meas=obs.uy_meas[mask],
-                     u_measured=obs.u_measured[dofs], point_weights=obs.point_weights[mask],
-                     weight_vector=obs.weight_vector[dofs], H=obs.H[dofs], W=obs.W[dofs][:, dofs])
-    return replace(case, observation=subset)
-
-
-def _optimize(cfg, mesh, cases, gamma, nu):
+def _optimize(cfg, mesh, cases, gamma, nu, initial=None):
     return lbfgs_inverse_solver_scipy(
-        mesh, observation_cases=cases, E_init=np.full(mesh.n_nod, cfg.E_REF),
-        gamma=gamma, modulus_scale=cfg.E_REF, max_iter=cfg.MAX_ITER, max_fun=cfg.MAX_FUN,
+        mesh, observation_cases=cases, E_init=initial,
+        gamma=gamma, max_iter=cfg.MAX_ITER, max_fun=cfg.MAX_FUN,
         ftol=cfg.FTOL, gtol=cfg.GTOL, nu=nu,
-        regularization_mode=cfg.REGULARIZATION_MODE, tgv_options=cfg.TGV_OPTIONS)
+        regularization_mode='gradient')
 
 
 def _metrics(state):
@@ -242,6 +220,7 @@ def prepare_dic(cfg, output):
                'calibration_source_sha256': file_sha256(Path(cfg.CALIBRATION_CSV)),
                'rigid_policy': 'FE has three gauge constraints; observed residual fits the same two translations and infinitesimal rotation',
                'primary_nu_prespecified': cfg.PRIMARY_NU,
+               'objective_definition': '0.5*r.T@W_area@r + 0.5*gamma*integral(|grad(E)|^2); no modulus or noise normalization',
                'physical_validation_status': 'not_established; geometry registration and boundary-equivalence evidence are distinct',
                'scope': 'registered comparison' if verified else 'conditional comparison under explicit registration assumptions'}
     if hasattr(cfg, 'FORCE_PAIRING_CSV') and any('force_N' not in i for i in cfg.PLATFORMS.values()):
@@ -302,7 +281,7 @@ def load_prepared(source):
         cases.append(make_observation_case(
             mesh, name, metadata['force_pairing'][name]['mean_corrected_force_N'], cfg.THICKNESS,
             arrays[f'{name}_coordinates'], arrays[f'{name}_observed'],
-            arrays[f'{name}_point_area_mm2'], cfg.NOISE_SCALE_MM,
+            point_weights=arrays[f'{name}_point_area_mm2'],
             metadata={'coordinates_verified': metadata['coordinates_verified'],
                       'registration': cfg.REGISTRATION, 'displacement_reference': cfg.DISPLACEMENT_REFERENCE}))
     provenance = {'prepared_metadata_sha256': file_sha256(source/'run_metadata.json'),
@@ -313,7 +292,8 @@ def load_prepared(source):
 def _stage_summary(prepared, provenance, stage):
     summary = {key: prepared[key] for key in ('case_id', 'coordinates_verified', 'registration',
                                               'matrix', 'offset_mm', 'physical_model_mm', 'shared_mesh',
-                                              'coverage', 'force_pairing', 'scope', 'primary_nu_prespecified')}
+                                              'coverage', 'force_pairing', 'scope', 'primary_nu_prespecified',
+                                              'objective_definition')}
     summary.update(provenance, workflow=stage, status='running')
     return summary
 
@@ -347,55 +327,70 @@ def forward_calibrated(prepared, output):
 
 
 def inverse_dic(prepared, output):
-    """Stage 3: fit DIC, select gamma within training, predict held-out loads."""
+    """Stage 3: original Tikhonov objective, fit-only L-curve, held-out prediction."""
     if Path(output).exists():
         raise FileExistsError('Choose a new inverse output')
     cfg, mesh, cases, metadata, provenance = load_prepared(prepared)
     calibration = pd.DataFrame(metadata['calibration'])
     summary = _stage_summary(metadata, provenance, 'dic_case_inverse')
+    summary.update(gamma_selection_method='l_curve', l_curve_enabled=True, selected_gamma=None,
+                   gamma_at_scan_boundary=None,
+                   scan_initialization='solver default (0.501 MPa), then decreasing-gamma continuation',
+                   final_initialization='selected L-curve field, identical for all nu')
     save_run(output, cfg, summary)
     output = Path(output)
     fit = [c for c in cases if c.name in cfg.FIT_CASES]
-    training, validation = [], []
-    split_arrays = {}
-    for case in fit:
-        xy = np.column_stack([case.observation.x_meas, case.observation.y_meas])
-        train, valid = block_split(xy, cfg.VALIDATION_BLOCK_MM, cfg.VALIDATION_BUFFER_MM)
-        training.append(_subset_case(case, train))
-        validation.append(_subset_case(case, valid))
-        split_arrays[f'{case.name}_train'] = train
-        split_arrays[f'{case.name}_validation'] = valid
     selection = []
-    for gamma in cfg.GAMMA_CANDIDATES:
-        result = _optimize(cfg, mesh, training, gamma, cfg.PRIMARY_NU)
-        scores = []
-        for case in validation:
-            u, _ = solve_forward(mesh, case.bc_info['tensile_end_force'], cfg.THICKNESS,
-                                  cfg.PRIMARY_NU, result['E_final'])
-            state = evaluate_observation(case, u)
-            scores.append((2*state['cost_tar'], case.observation.weight_vector.sum()))
-        score = np.sqrt(sum(s[0] for s in scores)/sum(s[1] for s in scores))
+    initial, initial_source = None, 'solver_default'
+    for gamma in sorted(cfg.GAMMA_CANDIDATES, reverse=True):
+        result = _optimize(cfg, mesh, fit, gamma, cfg.PRIMARY_NU, initial)
+        solver = _solver_summary(result)
         record = {'gamma': gamma, 'nu': cfg.PRIMARY_NU, 'converged': result['converged'],
-                  'validation_rms_mm': score, 'iterations': result['n_iterations']}
+                  'residual_norm': result['residual_norm'],
+                  'regularization_norm': result['regularization_norm'],
+                  'data_cost': .5*result['residual_norm']**2,
+                  'regularization_cost': .5*gamma*result['regularization_norm']**2,
+                  'iterations': result['n_iterations'], 'evaluations': result['n_evaluations'],
+                  'final_gradient_inf': solver['final_gradient_inf'],
+                  'gradient_tolerance_satisfied': solver['final_gradient_inf'] <= cfg.GTOL,
+                  'stop_message': result['message'], 'initial_source': initial_source}
         selection.append(record)
-        save_run(output / f'selection_gamma_{gamma:g}', cfg,
-                 {'solver': _solver_summary(result), 'selection': record, 'uses_prediction_cases': False},
-                 dict(split_arrays, E_inverse=result['E_final'], cost_history=result['cost_history']))
+        save_run(output/'l_curve'/f'gamma_{gamma:g}', cfg,
+                 {'solver': solver, 'selection': record, 'fit_cases': cfg.FIT_CASES,
+                  'uses_prediction_cases': False, 'objective_definition': summary['objective_definition']},
+                 {'E_inverse': result['E_final'], 'cost_history': result['cost_history'],
+                  'cost_tar_history': result['cost_tar_history'], 'cost_reg_history': result['cost_reg_history'],
+                  'gradient_norms': result['gradient_norms'], 'final_gradient': result['final_gradient']})
         pd.DataFrame(selection).to_csv(output / 'selection.csv', index=False)
-    eligible = [r for r in selection if r['converged']]
-    if not eligible:
-        summary['status'] = 'selection_not_converged'
+        if result['converged']:
+            initial, initial_source = result['E_final'].copy(), f'gamma_{gamma:g}'
+    scan = pd.DataFrame(selection)
+    corner = select_l_curve_corner(scan.gamma, scan.residual_norm, scan.regularization_norm, scan.converged)
+    scan['curvature'] = corner['curvature']
+    scan['eligible'] = corner['eligible']
+    scan['selected'] = False
+    if corner['optimal_index'] is not None:
+        scan.loc[corner['optimal_index'], 'selected'] = True
+    scan.to_csv(output/'selection.csv', index=False)
+    summary.update(l_curve_status=corner['status'], l_curve_message=corner['message'])
+    if corner['selected_gamma'] is None:
+        summary['status'] = f'l_curve_{corner["status"]}'
         _update_summary(output, summary)
+        plot_saved_stage(output, prepared)
         return summary
-    gamma = min(eligible, key=lambda r: r['validation_rms_mm'])['gamma']
+    gamma = corner['selected_gamma']
     summary['selected_gamma'] = gamma
-    summary['gamma_at_scan_boundary'] = gamma in (min(cfg.GAMMA_CANDIDATES), max(cfg.GAMMA_CANDIDATES))
+    summary['gamma_at_scan_boundary'] = False
+    with np.load(output/'l_curve'/f'gamma_{gamma:g}'/'fields.npz') as selected:
+        initial = selected['E_inverse'].copy()
     all_metrics, all_regions, solvers = [], [], []
     for nu in cfg.NU_VALUES:
         destination = output / f'nu_{nu:.2f}'
-        result = _optimize(cfg, mesh, fit, gamma, nu)
+        result = _optimize(cfg, mesh, fit, gamma, nu, initial.copy())
         fields = {'coordinates': mesh.coord, 'E_inverse': result['E_final'],
-                  'cost_history': result['cost_history'], 'gradient_norms': result['gradient_norms']}
+                  'cost_history': result['cost_history'], 'gradient_norms': result['gradient_norms'],
+                  'cost_tar_history': result['cost_tar_history'], 'cost_reg_history': result['cost_reg_history'],
+                  'final_gradient': result['final_gradient']}
         for case in cases:
             u, _ = solve_forward(mesh, case.bc_info['tensile_end_force'], cfg.THICKNESS, nu, result['E_final'])
             state = evaluate_observation(case, u)
@@ -410,7 +405,8 @@ def inverse_dic(prepared, output):
         regions = _regional_comparison(mesh, result['E_final'], calibration, cfg.REGION_BOUNDARIES_X)
         regions.insert(0, 'nu', nu)
         all_regions.extend(regions.to_dict(orient='records'))
-        solvers.append({'nu': nu, **_solver_summary(result)})
+        solvers.append({'nu': nu, **_solver_summary(result),
+                        'gradient_tolerance_satisfied': np.max(np.abs(result['final_gradient'])) <= cfg.GTOL})
         run_config = SimpleNamespace(**{k: v for k, v in vars(cfg).items() if k.isupper()},
                                      __file__=getattr(cfg, '__file__', None))
         run_config.NU, run_config.GAMMA = nu, gamma
@@ -455,6 +451,12 @@ def plot_saved_stage(output, prepared=None):
     cfg, mesh, cases, metadata, provenance = load_prepared(prepared)
     if any(summary.get(key) != value for key, value in provenance.items()):
         raise ValueError('Saved stage must refer to the SAME frozen preparation')
+    if workflow == 'dic_case_inverse':
+        plot_l_curve(output, pd.read_csv(output/'selection.csv'))
+        if summary['status'].startswith('l_curve_'):
+            write_stage_gallery(output, dict(summary, prepared_directory=str(prepared.resolve())),
+                                '③ L-curve 选参诊断（尚未生成模量结论）')
+            return summary
     if summary['status'] not in ('computed', 'inverse_not_converged'):
         raise ValueError('Complete the numerical stage before requesting its plots')
     with np.load(prepared/'fields.npz') as fields:
@@ -523,7 +525,10 @@ def compare_dic_results(prepared, forward, inverse, output, plots=True, plot_onl
                    upstream_sources={str(p): file_sha256(p/'run_metadata.json') for p in (forward, inverse)},
                    inverse_settings={key: sources[1]['configuration'][key]
                                      for key in ('FTOL', 'GTOL', 'MAX_ITER', 'MAX_FUN', 'GAMMA_CANDIDATES')},
-                   gamma_selection_method='buffered_spatial_validation', l_curve_enabled=False)
+                   gamma_selection_method=sources[1]['gamma_selection_method'],
+                   l_curve_enabled=sources[1]['l_curve_enabled'],
+                   inverse_directory=str(inverse.resolve()),
+                   l_curve_status=sources[1]['l_curve_status'], l_curve_message=sources[1]['l_curve_message'])
     metrics = pd.concat([pd.read_csv(forward/'comparison.csv'), pd.read_csv(inverse/'comparison.csv')], ignore_index=True)
     regions = pd.read_csv(inverse/'regional_comparison.csv')
     selection = pd.read_csv(inverse/'selection.csv')
