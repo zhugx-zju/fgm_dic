@@ -19,7 +19,7 @@
 
 在项目根目录、安装 `requirements.txt` 的 Python 环境中，依次运行：
 
-默认配置为原始 Tikhonov + L-curve，输出到 `results/dic_case_tikhonov_lcurve_20261019/`，尚未进行实际 DIC 计算。首次计算使用：
+默认配置为 DIC 范围计算域、原始 Tikhonov + L-curve，输出到 `results/dic_case_tikhonov_lcurve_20261019/`。已完成真实 DIC 准备和独立正演，反演与最终比较尚未运行。新实验四步命令为：
 
 ```powershell
 python -m script.step1_prepare_dic
@@ -27,6 +27,8 @@ python -m script.step2_forward_calibrated
 python -m script.step3_inverse_dic
 python -m script.step4_compare_results
 ```
+
+本组第一、二步已经完成，继续计算时从第三步开始；不要重复执行前两步覆盖冻结结果。
 
 **查看结果：双击项目根目录的 [打开结果.html](../打开结果.html)。** 每一步结束时都会打印本步绝对保存路径和实验总览路径，并更新这个固定入口。第 2—4 步的默认 `--config dic_case_config` 仅用于定位 `CASE_OUTPUT/01_prepared`；求解参数和数据仍来自第一步冻结文件。也可用 `--input <01_prepared目录>` 明确指定输入。
 
@@ -89,14 +91,16 @@ python -m script.step4_compare_results --config dic_case_sample3
 - `CASE_ID`、`CASE_OUTPUT`：实验身份与新结果目录。
 - `PLATFORMS`：各载荷平台的数据目录、首末阶段、识别或预测用途。载荷可通过 `FORCE_PAIRING_CSV` 的 `run/setting_N` 配对，或显式提供 `force_N` 和 `force_note`；平台名称不直接作为实际拉力。
 - `DIC_UNIT`、`DIC_COORDINATE_STATE`、位移与力的参考态：当前入口采用 mm、相对初始未加载图位移及相应实际拉力。坐标和位移必须共用长度单位；不自动识别单位或推断预载参考。
-- `GEO_L/GEO_H/THICKNESS`、分区位置及独立标定 CSV：来自试样与制造定义，不从有效测点跨度反推试样尺寸。标定保留既定方法、批次、样本数及组内 SD。
+- `DOMAIN_SOURCE`：默认 `dic_reference_bounds`，第一步从识别平台初始坐标解析 `GEO_L/GEO_H` 并冻结；预测平台不重新决定域。`THICKNESS/LOAD_SECTION_WIDTH` 来自试样定义，不能用内部 DIC 宽度替代真实承载宽度。`REGION_BOUNDARIES_CENTERED_X` 保留制造界面相对中心的位置，仅平移到新原点。旧配置缺少 `DOMAIN_SOURCE` 时仍按显式 `GEO_L/GEO_H` 处理。
 - `REGISTRATION`：同一坐标变换用于全部平台，坐标和位移同步变换；平移只作用于坐标，不独立缩放坐标轴。
 - `NEL_X/NEL_Y`：同一有限元网格用于独立正演、反演和回代；DIC 保持自己的真实测点和采样间距。
 - `NU_VALUES/PRIMARY_NU`：当前按实测范围比较 0.24/0.26/0.28，主值预先定为中点 0.26，不能看过留出误差后更换主值。
 
 ## 物理域与坐标配准
 
-当前物理计算域为中央 70×20 mm，厚 3.2 mm，五区长度 11/16/16/16/11 mm。新版 DIC 有效覆盖约 61.3664×18.5257 mm，点距约 0.289464301 mm。观测范围小于物理域时，只在真实有效测点计算残差，不补外推位移，不将该范围强行拉伸至 70×20 mm。未观测区域的识别值由平衡和正则延拓，不能与实测覆盖区等同解释。
+当前计算域由识别平台 DIC 初始坐标定义，约 61.3664×18.5257 mm，厚 3.2 mm，点距约 0.289464301 mm。不拉伸点云，不补外推位移。真实承载宽度仍为 20 mm，牵引取 F/(20t)；传入现有有限元内核的截取域端力为 F×GEO_H/20。`mean_corrected_force_N` 始终保存实际测得力，`model_end_force_N` 单独保存截取域端力，不能互换。
+
+`INTERNAL_SIDE_BOUNDARY='traction_free_approximation'` 显式采用内部横向截面自由近似；不配置该近似时拒绝将较窄区域直接作为自由侧边模型。严格子域等效尚未验证。几何、分区和载荷的完整定义见 [DIC 计算域及载荷截面](dic_roi_geometry.md)。
 
 当前配置的 `assumed_center` 保留 rot90 工作约定和点云居中假设，因此输出仍标为条件性结果。旋转平移不改变平面应力方程和合力定义，但不能单独证明材料区对应正确，也不能证明截取矩形的均布牵引近似成立。
 
@@ -107,7 +111,7 @@ python -m script.step4_compare_results --config dic_case_sample3
 - `explicit_verified`：给出已独立核验的 `matrix/offset_mm` 和核验依据 `note`。
 - `landmarks`：给出至少三个不共线的 `dic_points_mm/fem_points_mm`、独立定位依据和允许点位误差 `tolerance_mm`；仅拟合单位尺度的旋转/镜像和平移，不能拟合缩放。
 
-例如物理左标线中点、右标线中点和左标线处一侧边缘，可分别对应 FEM 的 (0,10)、(70,10)、(0,20) mm；原始参考图中必须独立定位这些点，不能拿有效点云的极值代替。控制点不必位于有效 DIC 测点内。
+`landmarks` 或 `explicit_verified` 仍可在显式尺寸域中使用。独立控制点必须按所选计算原点给出，不能把点云定域与材料位置核验混为一谈。默认 DIC 范围模式仅支持显式居中位置假设；需要独立地标定域时应选择 `configured_geometry`。
 
 域外点默认报错；只有显式设置 `OUTSIDE_POINT_POLICY='crop_to_physical_roi'` 才裁剪，并记录域内外数量。裁剪不改变物理分区或坐标尺度。
 
@@ -115,7 +119,7 @@ python -m script.step4_compare_results --config dic_case_sample3
 
 纯牵引有限元仅用三个约束去除刚体零空间：左下角 ux/uy 和右下角 uy。它们是求解的数值规范，不要求真实 DIC 在这些点位移为零，也不将一端当作物理夹紧边界。比较时对模型与 DIC 残差拟合相同的两平移和一微小转动，保留真实伸长及横向收缩。改变三个规范约束点后，配准残差与应变应不变；该性质已纳入检验。
 
-当前共用 70×20 个 Q4 单元、1×1 mm，正反问题均为 1491 个节点；反演所有节点模量独立，不绑定不同 y 行。该尺寸与五区界面对齐，但不等同于已经证明网格收敛。DIC 的点距约 0.2895 mm，不需要等于有限元单元尺寸；Q4 观测算子在真实 DIC 位置求值。
+当前共用 70×20 个 Q4 单元，约 0.876663×0.926286 mm，正反问题均为 1491 个节点；反演所有节点模量独立，不绑定不同 y 行。新域的制造界面不再全部与单元边界对齐，旧 70×20 mm 域的收敛结果不能直接视为新域已收敛。DIC 的点距约 0.2895 mm，不需要等于有限元单元尺寸；Q4 观测算子在真实 DIC 位置求值。
 
 ### 原始目标与 L-curve 选参
 
@@ -133,7 +137,7 @@ python -m script.step4_compare_results --config dic_case_sample3
 
 优化器使用 L-BFGS-B，在 `m=ln(E)` 上优化；`FTOL` 是目标函数下降停止条件，`GTOL` 是优化变量梯度停止条件，满足任一条件即可停止，还可能因预算或线搜索而结束。减小 `FTOL` 不代表已满足 `GTOL`，应查看保存的停止信息。
 
-新默认配置保留 `FTOL=1e-30、GTOL=1e-12`。已有结果 `dic_case_commonmesh_20261019_01` 仍保存旧目标、`FTOL=1e-11、GTOL=1e-7` 及空间验证所选 γ=10⁴；它们不是 L-curve 结果。当前只完成实现和临时验证，未重算实际 DIC。
+新默认配置保留 `FTOL=1e-30、GTOL=1e-12`。已有结果 `dic_case_commonmesh_20261019_01` 仍保存旧目标、`FTOL=1e-11、GTOL=1e-7` 及空间验证所选 γ=10⁴；它们不是 L-curve 结果。当前已完成新域的真实 DIC 准备与独立正演，未运行实际 DIC 的 L-curve 和反演。
 
 要让修改后的容差生效，应先选用新的 `CASE_OUTPUT` 并重新运行第 1 步以冻结新配置，再运行后续步骤。只修改源配置，或给第 3 步指定新的 `--output` 但继续读取旧 `01_prepared`，均不会更新求解设置。结果页显示的是实际保存计算的容差与停止原因。
 

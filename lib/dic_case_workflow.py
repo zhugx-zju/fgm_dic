@@ -1,7 +1,7 @@
 """Independent preparation, forward, inverse and comparison workflow stages.
 
-Physical geometry is independent of observation coverage. Both forward and
-inverse use the same Q4 mesh; raw point observations retain their coordinates.
+The computation ROI may follow DIC coverage; the actual load-section width
+is separate. Both forward and inverse retain the same raw point observations.
 """
 
 import json
@@ -150,6 +150,11 @@ def _validate(cfg):
     for key in ('GEO_L', 'GEO_H', 'THICKNESS'):
         if not np.isfinite(getattr(cfg, key)) or getattr(cfg, key) <= 0:
             raise ValueError(f'{key} must be positive and finite')
+    width = getattr(cfg, 'LOAD_SECTION_WIDTH', cfg.GEO_H)
+    if not np.isfinite(width) or width < cfg.GEO_H-1e-7:
+        raise ValueError('LOAD_SECTION_WIDTH must be finite and cover the model width')
+    if width > cfg.GEO_H+1e-7 and getattr(cfg, 'INTERNAL_SIDE_BOUNDARY', None) != 'traction_free_approximation':
+        raise ValueError('An internal-width ROI requires explicit INTERNAL_SIDE_BOUNDARY=traction_free_approximation; exact cut tractions are not implemented')
     for key in ('NEL_X', 'NEL_Y', 'MAX_ITER', 'MAX_FUN'):
         if int(getattr(cfg, key)) != getattr(cfg, key) or getattr(cfg, key) <= 0:
             raise ValueError(f'{key} must be a positive integer')
@@ -171,7 +176,8 @@ def _validate(cfg):
     if any(not np.isfinite(getattr(cfg, key)) or getattr(cfg, key) < 0 for key in ('FTOL', 'GTOL')):
         raise ValueError('FTOL and GTOL must be finite and nonnegative')
     edges = np.r_[0., cfg.REGION_BOUNDARIES_X, cfg.GEO_L]
-    if len(edges) != len(cfg.REGION_INFILL_PERCENT)+1 or np.any(np.diff(edges) <= 0):
+    if (len(edges) != len(cfg.REGION_INFILL_PERCENT)+1 or
+            not np.isfinite(edges).all() or np.any(np.diff(edges) <= 0)):
         raise ValueError('Material regions must partition the physical model length')
 
 
@@ -192,9 +198,36 @@ def _metrics(state):
             'p95_uy_mm': np.quantile(np.abs(residual[:, 1]), .95)}
 
 
+def resolve_dic_geometry(cfg, reference):
+    """Resolve ROI from fit data only, without scaling coordinates or material zones.
+
+    The manufacturing interfaces use the existing centered-placement assumption.
+    Extents are computed after the fixed direction transform, before translation.
+    The caller's module is not mutated; resolved values enter the frozen config.
+    """
+    resolved = SimpleNamespace(**vars(cfg))
+    source = getattr(cfg, 'DOMAIN_SOURCE', 'configured_geometry')
+    if source not in ('configured_geometry', 'dic_reference_bounds'):
+        raise ValueError('DOMAIN_SOURCE must be configured_geometry or dic_reference_bounds')
+    if source == 'dic_reference_bounds':
+        if cfg.REGISTRATION['mode'] != 'assumed_center':
+            raise ValueError('DIC-bound ROI currently requires explicit assumed_center placement')
+        matrix = np.asarray(cfg.REGISTRATION['matrix'], dtype=float)
+        if (matrix.shape != (2, 2) or not np.isfinite(matrix).all() or
+                not np.allclose(matrix @ matrix.T, np.eye(2), atol=1e-10, rtol=1e-9)):
+            raise ValueError('ROI direction transform must preserve lengths')
+        xy = reference.coordinates @ matrix.T
+        span = np.ptp(xy, axis=0)
+        if not np.isfinite(span).all() or np.any(span <= 0):
+            raise ValueError('DIC reference must define a finite 2D ROI')
+        resolved.GEO_L, resolved.GEO_H = map(float, span)
+        resolved.REGISTRATION = dict(cfg.REGISTRATION, cloud_center_fem_mm=(span/2).tolist())
+        resolved.REGION_BOUNDARIES_X = (np.asarray(cfg.REGION_BOUNDARIES_CENTERED_X, dtype=float)+span[0]/2).tolist()
+    return resolved
+
+
 def prepare_dic(cfg, output):
     """Stage 1: audit and freeze one case's inputs; do not run FE or inversion."""
-    _validate(cfg)
     output = Path(output)
     if output.exists():
         raise FileExistsError(f'Choose a new preparation output: {output}')
@@ -204,13 +237,28 @@ def prepare_dic(cfg, output):
                                             coordinate_state=cfg.DIC_COORDINATE_STATE)
         records[name] = _force_record(cfg, name, item)
     shared = check_platform_reference(platforms)
-    calibration = load_calibration(Path(cfg.CALIBRATION_CSV), cfg.CALIBRATION_METHOD, cfg.REGION_INFILL_PERCENT)
     reference = platforms[cfg.FIT_CASES[0]]
+    cfg = resolve_dic_geometry(cfg, reference)
+    _validate(cfg)
+    calibration = load_calibration(Path(cfg.CALIBRATION_CSV), cfg.CALIBRATION_METHOD, cfg.REGION_INFILL_PERCENT)
+    section_width = getattr(cfg, 'LOAD_SECTION_WIDTH', cfg.GEO_H)
+    for record in records.values():
+        # The existing FE kernel expects a force over its own loaded edge.
+        # F_roi = F_measured * w_roi / w_specimen preserves F/(w_specimen*t).
+        record['model_end_force_N'] = record['mean_corrected_force_N']*cfg.GEO_H/section_width
+        record['uniform_traction_MPa'] = record['mean_corrected_force_N']/(section_width*cfg.THICKNESS)
+        record['load_section_width_mm'] = section_width
+        record['force_reference_note'] = getattr(cfg, 'FORCE_REFERENCE_NOTE', '')
     matrix, offset, verified = registration_transform(reference.coordinates, cfg.REGISTRATION)
     summary = {'workflow': 'dic_case_preparation', 'status': 'prepared', 'case_id': cfg.CASE_ID,
                'coordinates_verified': verified, 'registration': cfg.REGISTRATION,
                'matrix': matrix, 'offset_mm': offset,
                'physical_model_mm': [cfg.GEO_L, cfg.GEO_H, cfg.THICKNESS],
+               'domain_geometry': {'source': getattr(cfg, 'DOMAIN_SOURCE', 'configured_geometry'),
+                                   'source_platform': cfg.FIT_CASES[0],
+                                   'load_section_width_mm': section_width,
+                                   'lateral_boundary': getattr(cfg, 'INTERNAL_SIDE_BOUNDARY', 'physical_free_edges'),
+                                   'material_position': 'centered assumption' if not verified else 'registered'},
                'shared_mesh': {'nel_x': cfg.NEL_X, 'nel_y': cfg.NEL_Y,
                                'hx_mm': cfg.GEO_L/cfg.NEL_X, 'hy_mm': cfg.GEO_H/cfg.NEL_Y,
                                'same_for_forward_and_inverse': True},
@@ -278,12 +326,16 @@ def load_prepared(source):
     with np.load(source/'fields.npz') as fields:
         arrays = {key: fields[key].copy() for key in fields.files}
     for name in cfg.PLATFORMS:
+        force_record = metadata['force_pairing'][name]
+        measured_force = force_record['mean_corrected_force_N']
+        model_force = force_record.get('model_end_force_N', measured_force)
         cases.append(make_observation_case(
-            mesh, name, metadata['force_pairing'][name]['mean_corrected_force_N'], cfg.THICKNESS,
+            mesh, name, model_force, cfg.THICKNESS,
             arrays[f'{name}_coordinates'], arrays[f'{name}_observed'],
             point_weights=arrays[f'{name}_point_area_mm2'],
             metadata={'coordinates_verified': metadata['coordinates_verified'],
-                      'registration': cfg.REGISTRATION, 'displacement_reference': cfg.DISPLACEMENT_REFERENCE}))
+                      'registration': cfg.REGISTRATION, 'displacement_reference': cfg.DISPLACEMENT_REFERENCE,
+                      'measured_force_N': measured_force, 'model_end_force_N': model_force}))
     provenance = {'prepared_metadata_sha256': file_sha256(source/'run_metadata.json'),
                   'prepared_fields_sha256': file_sha256(source/'fields.npz')}
     return cfg, mesh, cases, metadata, provenance
@@ -295,6 +347,8 @@ def _stage_summary(prepared, provenance, stage):
                                               'coverage', 'force_pairing', 'scope', 'primary_nu_prespecified',
                                               'objective_definition')}
     summary.update(provenance, workflow=stage, status='running')
+    if 'domain_geometry' in prepared:
+        summary['domain_geometry'] = prepared['domain_geometry']
     return summary
 
 

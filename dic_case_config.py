@@ -12,22 +12,29 @@ PLATFORMS = {
 }
 FORCE_PAIRING_CSV = SAMPLE_ROOT / 'analysis_results' / 'dic_timing_20261018' / 'selected_dic_windows.csv'
 FORCE_REFERENCE = 'corrected_force_from_unloaded_state'
+FORCE_REFERENCE_NOTE = 'Initial 60.1 N offset and unloaded DIC reference confirmed consistent for this experiment.'
 DIC_UNIT = 'mm'
 DIC_COORDINATE_STATE = 'deformed'
 DISPLACEMENT_REFERENCE = 'initial_unloaded_image'
-GEO_L, GEO_H, THICKNESS = 70., 20., 3.2
-# One mesh for BOTH independent forward and inverse; interfaces align at 1 mm.
+DOMAIN_SOURCE = 'dic_reference_bounds'
+# GEO_L/H are resolved from the fit platform before preparation is frozen.
+GEO_L, GEO_H, THICKNESS = None, None, 3.2
+LOAD_SECTION_WIDTH = 20.  # Actual specimen width, not the internal DIC ROI width.
+INTERNAL_SIDE_BOUNDARY = 'traction_free_approximation'
+# One mesh for BOTH independent forward and inverse; DIC points stay unchanged.
 NEL_X, NEL_Y = 70, 20
 REGION_INFILL_PERCENT = (50, 60, 70, 80, 90)
-REGION_BOUNDARIES_X = (11., 27., 43., 59.)
+# Manufacturing interfaces relative to the specimen center; no span scaling.
+REGION_BOUNDARIES_CENTERED_X = (-24., -8., 8., 24.)
+REGION_BOUNDARIES_X = None
 CALIBRATION_CSV = (PROJECT_ROOT / 'post_tensile_test' / 'analysis_results' /
                    'mixed_infill_20261017' / 'group_summary_and_residuals.csv')
 CALIBRATION_METHOD = 'independent'
 REGISTRATION = {
     'mode': 'assumed_center',
     'matrix': ((0., -1.), (1., 0.)),
-    'cloud_center_fem_mm': (35., 10.),
-    'note': 'rot90 working convention. Cloud center and material-zone placement are explicit assumptions; physical landmarks are not independently verified.',
+    'cloud_center_fem_mm': None,  # Resolved to half the DIC reference span.
+    'note': 'rot90 convention; ROI follows fit-platform reference bounds. Coincidence of ROI and specimen centers, and material orientation, remain assumptions.',
 }
 OUTSIDE_POINT_POLICY = 'reject'
 FIT_CASES, PREDICT_CASES = ('180N',), ('280N',)

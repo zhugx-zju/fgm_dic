@@ -21,6 +21,18 @@ table{border-collapse:collapse;font-size:14px;display:block;overflow:auto}th,td{
 </style>'''
 
 
+def _geometry_description(summary):
+    """Keep computation bounds distinct from the section carrying measured F."""
+    geometry = summary.get('domain_geometry', {})
+    if geometry.get('source') == 'dic_reference_bounds':
+        return (f"计算域由识别平台 DIC 初始坐标范围确定，尺寸为 {summary['physical_model_mm']} mm；"
+                f"真实承载宽度为 {geometry['load_section_width_mm']} mm。"
+                '牵引按真实截面计算，截取域端力按宽度比例分配；坐标和材料分区均未缩放。'
+                '内部横向截面暂按自由边界近似，材料位置仍按点云与试样居中假设；不代表子域严格等效。')
+    return (f"物理模型尺寸为 {summary['physical_model_mm']} mm；"
+            'DIC 点云定义有效观测覆盖，未用点云跨度缩放坐标。')
+
+
 def _link(path, base):
     return quote(Path(os.path.relpath(Path(path).resolve(), Path(base).resolve())).as_posix(), safe='/.:')
 
@@ -48,6 +60,7 @@ def publish_stage(case_root, stage, output, summary, project_root=None):
              f'<p class="path">保存位置：{html.escape(str(case_root))}</p>']
     if not record['coordinates_verified']:
         parts.append('<p>当前为条件性比较：点云位置与材料分区的物理配准尚未独立核验。</p>')
+    parts.append('<p>'+html.escape(_geometry_description(summary))+'</p>')
     comparison = record['stages'].get('04_comparison')
     if comparison and (Path(comparison['path'])/'打开查看结果.html').exists():
         parts.append(f'<h2><a href="{_link(Path(comparison["path"])/"打开查看结果.html", case_root)}">查看云图、模量曲线和定量对照 →</a></h2>')
@@ -113,6 +126,7 @@ def write_stage_gallery(output, summary, title):
                                                  for name, record in summary['force_pairing'].items()))+'</p>']
     if not summary['coordinates_verified']:
         parts.append('<p>物理配准尚未独立核验；当前图表对应显式位置假设。</p>')
+    parts.append('<p>'+html.escape(_geometry_description(summary))+'</p>')
     if summary['workflow'] != 'dic_case_preparation':
         parts.append(f'<p>{RELATIVE_ERROR_DESCRIPTION} 位移图单位为 mm，误差图单位为 %。</p>')
     if summary['workflow'] == 'dic_case_inverse':
@@ -184,7 +198,7 @@ def write_case_report(output, summary, metrics, regions, selection):
     overview = Path(summary.get('prepared_directory', output.parent/'01_prepared')).parent/'结果总览.html'
     lines = [f'# {title}', '', f'运行状态：`{status}`。物理坐标配准已核验：{verified}。', '',
              '## 几何、观测与统一网格', '',
-             f"物理模型尺寸为 {summary['physical_model_mm']} mm；DIC 点云只定义有效观测覆盖，不定义试样边界。未用点云跨度缩放坐标或修改模型尺寸。", '',
+             _geometry_description(summary), '',
              f"独立标定正演与自由二维反演共用 {mesh['nel_x']}×{mesh['nel_y']} 单元，单元尺寸 {mesh['hx_mm']}×{mesh['hy_mm']} mm。DIC 在原始测点参与比较，不先重采样到有限元节点。", '',
              '有限元三点约束只固定数值刚体规范；DIC 与模型在观测空间通过同一两平移、一微小转动子空间配准。未删除仿射伸长或横向收缩。', '',
              '有效观测与采样间距见 `input_audit.csv`。', '',
