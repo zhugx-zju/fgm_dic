@@ -24,7 +24,7 @@
 | 8 至 24 | 43 至 59 | 80% | 16 |
 | 24 至 35 | 59 至 70 | 90% | 11 |
 
-五区定义合成真值、独立标定正演和后处理统计。默认 35 × 10 单元反演包含 **396 个独立节点模量**，不绑定横向节点。输出完整二维场、宽度平均 E(x)、横向空间标准差和五区统计；空间标准差不是统计置信区间。
+五区定义合成真值、独立标定正演和后处理统计。当前分步流程的正反问题共用 **70 × 20 个 1×1 mm 单元**，反演包含 **1491 个独立节点模量**，不绑定横向节点；原 35×10 单元、396 参数设置保留用于历史结果复现。输出完整二维场、宽度平均 E(x)、横向空间标准差和五区统计；空间标准差不是统计置信区间。
 
 ## 目录
 
@@ -46,6 +46,17 @@ post_tensile_test/   原始试验、分区模量、时间配对及选定 DIC 场
 ```
 
 ## 环境与运行
+
+当前真实 DIC 主流程采用四个独立步骤，配置为 `dic_case_config.py`：
+
+```powershell
+python -m script.step1_prepare_dic --config dic_case_config
+python -m script.step2_forward_calibrated --input results/dic_case_commonmesh_20261019_01/01_prepared
+python -m script.step3_inverse_dic --input results/dic_case_commonmesh_20261019_01/01_prepared
+python -m script.step4_compare_results --input results/dic_case_commonmesh_20261019_01/01_prepared
+```
+
+各步保存中间结果；第 4 步只读取结果并比较出图。换数据时复制并修改单组配置，第 2—4 步读取新生成的 `01_prepared/`。正反问题共用 1×1 mm 网格，并在 ν=0.24/0.26/0.28 下按相同条件比较。坐标配准、物理域与有效 DIC 覆盖、参数说明及换数据方法见 [分步骤流程](docs/dic_stepwise_workflow.md)。以下入口保留用于原研究及专项验证。
 
 在项目根目录安装 `requirements.txt` 后运行：
 

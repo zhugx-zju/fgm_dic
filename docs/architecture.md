@@ -13,7 +13,9 @@
 | `fgm_asm/research.py` | 共用正演、分区材料、观测构造及位移比较 |
 | `lib/experiment_data.py` | CSV、参考坐标、平台统计、载荷和分区标定 |
 | `lib/dic_noise.py` | 逐帧刚体/趋势分解、时空相关、窗口敏感性及投影统计基线 |
-| `lib/research_workflows.py` | 合成验证及实验 inspect/model/forward/inverse 流程 |
+| `lib/dic_case_workflow.py` | 当前实验分步流程：冻结输入、独立正演、DIC 反演、保存结果比较 |
+| `lib/dic_case_reporting.py` | 同组实验的位移、模量与 ν 对照报告 |
+| `lib/research_workflows.py` | 合成验证及原实验 inspect/model/forward/inverse 入口 |
 | `lib/research_reporting.py` | 配置与来源记录、数组、位移图、模量图及剖面 |
 | `script/` | 命令行入口与算法验证实验 |
 
@@ -21,7 +23,7 @@
 
 单位为 mm、N、MPa，厚度为 3.2 mm。计算域 70×20 mm，两端施加等大反向牵引 ±F/(w·t)，侧边自由，仅去除三个刚体自由度。有限元刚度采用单位厚度约定，载荷按厚度换算。
 
-35×10 单元反演具有 396 个独立节点模量，E_a=exp(m_a)。各 y 行的未知量独立。50/60/70/80/90% 五区的位置用于独立材料正演和后处理，不绑定反演参数。支持 H1、仿射去趋势梯度及 Huber TGV 正则；模量尺度显式设为 E_REF。
+当前分步流程的正反问题共用 70×20 个 Q4 单元、1×1 mm，具有 1491 个独立节点模量，E_a=exp(m_a)。原 35×10 单元、396 参数设置保留用于历史结果复现。各 y 行的未知量独立。50/60/70/80/90% 五区的位置用于独立材料正演和后处理，不绑定反演参数。支持 H1、仿射去趋势梯度及 Huber TGV 正则；模量尺度显式设为 E_REF。当前按独立给定范围比较 ν=0.24/0.26/0.28，预先指定主值 0.26，不根据留出载荷选择主 ν。
 
 分区标定正演在 Gauss 点计算阶梯 E(x)，默认细网格对齐 x=11/27/43/59 mm 界面。反演使用连续 Q4 节点场；二者的界面表示不同，比较中应同时报告全场和界面附近误差。
 
@@ -32,6 +34,8 @@
 数据项为 `0.5*r.T@W@r`，伴随方程 `K*lambda=H.T@W@r`。模量梯度为各载荷的 `lambda.T*(dK/dE)*u` 之和，对 log(E) 乘以 E。刚体系数满足最优性条件，无需再求其导数。历史合成研究使用的完整节点质量矩阵目标为独立验证接口。
 
 ## 数据与结果
+
+当前主入口依次为 `step1_prepare_dic.py`、`step2_forward_calibrated.py`、`step3_inverse_dic.py`、`step4_compare_results.py`。第一步冻结单组配置与测点数据，第二、三步分别读取同一准备结果，第四步汇合保存的正反演结果且不重新求解。具体运行与换数据方式见 [分步骤流程](dic_stepwise_workflow.md)。
 
 平台 CSV 通过网格 ID 对齐，恢复初始参考坐标，检查重复点与跨帧/跨平台一致性。物理配准由显式 A/b 确定，所有载荷共用；坐标及位移同步变换。细节见 [坐标配准](dic_coordinate_registration.md)。
 
