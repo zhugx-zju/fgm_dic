@@ -13,8 +13,9 @@ PAGE_STYLE = '''<style>
 body{max-width:1400px;margin:28px auto;padding:0 24px;font:16px/1.65 "Microsoft YaHei",sans-serif;color:#17212b;background:#fafbfc}
 a{color:#075fa2}h1{font-size:28px}h2{margin-top:32px}.cards,.fields{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
 .card,figure{margin:0;background:white;padding:16px;border:1px solid #dce1e6;border-radius:8px}.card strong{display:block}.path,code{overflow-wrap:anywhere;font:13px/1.6 Consolas,monospace}
+.clouds{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
 table{border-collapse:collapse;font-size:14px;display:block;overflow:auto}th,td{padding:6px 10px;border-bottom:1px solid #ddd}img{width:100%;height:auto}pre{white-space:pre-wrap}
-@media(max-width:800px){.cards,.fields{grid-template-columns:1fr}}
+@media(max-width:800px){.cards,.fields,.clouds{grid-template-columns:1fr}}
 </style>'''
 
 
@@ -55,6 +56,10 @@ def publish_stage(case_root, stage, output, summary, project_root=None):
         if item:
             directory = Path(item['path'])
             parts.append(f'<p>状态：{html.escape(item["status"])}</p><p class="path">{html.escape(str(directory))}</p>')
+            gallery = directory/('打开查看结果.html' if key == '04_comparison' else '云图.html')
+            if gallery.exists():
+                count = len(list(directory.rglob('*.png')))
+                parts.append(f'<h3><a href="{_link(gallery, case_root)}">查看本步云图（{count} 幅）→</a></h3>')
             for name in (first, second, 'run_metadata.json'):
                 if name and (directory/name).exists():
                     parts.append(f'<p><a href="{_link(directory/name, case_root)}">{html.escape(name)}</a></p>')
@@ -74,17 +79,58 @@ def publish_stage(case_root, stage, output, summary, project_root=None):
              f'<p class="path">{html.escape(str(case_root))}</p>']
     if comparison and (Path(comparison['path'])/'打开查看结果.html').exists():
         parts.append(f'<h2><a href="{_link(Path(comparison["path"])/"打开查看结果.html", results)}">直接查看 DIC、正反演云图与误差 →</a></h2>')
-    parts.append('<p>实验总览内按四个步骤列出保存位置、表格、数值场和最终云图。</p><h2>其他实验</h2><ul>')
-    for page in sorted(results.glob('*/结果总览.html')):
-        if page.resolve() != overview:
+    parts.append('<p>实验总览内按四个步骤列出保存位置、表格、数值场和最终云图。</p>')
+    others = [p for p in sorted(results.glob('*/结果总览.html')) if p.resolve() != overview]
+    if others:
+        parts.append('<h2>其他实验</h2><ul>')
+        for page in others:
             parts.append(f'<li><a href="{_link(page, results)}">{html.escape(page.parent.name)}</a></li>')
-    parts.append('</ul><details><summary>历史结果目录</summary><ul>')
-    for directory in sorted(results.iterdir()):
-        if directory.is_dir() and not (directory/'结果总览.html').exists():
+        parts.append('</ul>')
+    history = [p for p in sorted(results.iterdir()) if p.is_dir() and not (p/'结果总览.html').exists()]
+    if history:
+        parts.append('<details><summary>其他结果目录</summary><ul>')
+        for directory in history:
             parts.append(f'<li><a href="{_link(directory, results)}/">{html.escape(directory.name)}</a></li>')
-    parts.append('</ul></details></html>')
+        parts.append('</ul></details>')
+    parts.append('</html>')
     (results/'index.html').write_text('\n'.join(parts), encoding='utf-8')
     print(f'结果总览: {overview}\n固定入口: {project_root / "打开结果.html"}')
+
+
+def write_stage_gallery(output, summary, title):
+    """Browse all generated stage plots from one visible entry."""
+    output = Path(output)
+    overview = Path(summary.get('prepared_directory', output.parent/'01_prepared')).parent/'结果总览.html'
+    parts = ['<!doctype html><html lang="zh-CN"><meta charset="utf-8">',
+             f'<title>{html.escape(title)}</title>', PAGE_STYLE,
+             f'<h1>{html.escape(title)}</h1>',
+             f'<p><a href="{_link(overview, output)}">返回四步结果总览</a></p>',
+             f'<p class="path">保存位置：{html.escape(str(output.resolve()))}</p>',
+             '<p>位移显示仅共同减去对应 DIC 分量均值，数值观测与预测保持原参考态。模型位移在真实 DIC 测点显示；模量图覆盖物理模型域，未观测边带属于模型延拓。最终跨模型对照见第 4 步的共用色标图。</p>',
+             '<p>实际拉力：'+html.escape('；'.join(f"{name}: {record['mean_corrected_force_N']:.6f} N"
+                                                 for name, record in summary['force_pairing'].items()))+'</p>']
+    if not summary['coordinates_verified']:
+        parts.append('<p>物理配准尚未独立核验；当前图表对应显式位置假设。</p>')
+    primary = f"nu_{summary['primary_nu_prespecified']:.2f}"
+    pictures = sorted(output.rglob('*.png'), key=lambda p: (
+        0 if p.parent == output else 1 if primary in p.parts else 2,
+        p.relative_to(output).parts[0], len(p.relative_to(output).parts), p.as_posix()))
+    parents = dict.fromkeys(p.parent for p in pictures)
+    for parent in parents:
+        label = parent.relative_to(output).as_posix()
+        parts.append(f'<h2>{html.escape(label if label != "." else "材料场")}</h2><div class="clouds">')
+        for picture in (p for p in pictures if p.parent == parent):
+            link = _link(picture, output)
+            parts.append(f'<figure><a href="{link}"><img src="{link}" alt="{html.escape(picture.stem)}"></a>')
+            vector = picture.with_suffix('.svg')
+            if vector.exists():
+                parts.append(f'<a href="{_link(vector, output)}">下载 SVG</a>')
+            parts.append('</figure>')
+        parts.append('</div>')
+    if not pictures:
+        parts.append('<p>当前仅有输入核查记录，尚无可绘制的已配准场。</p>')
+    parts.append('</html>')
+    (output/'云图.html').write_text('\n'.join(parts), encoding='utf-8')
 
 
 def write_case_report(output, summary, metrics, regions, selection):

@@ -8,25 +8,25 @@
 
 ## 四个独立步骤
 
-安装 `requirements.txt`，在项目根目录依次执行：
+安装 `requirements.txt`，在项目根目录依次执行以下命令，从当前已保存的结果生成各步云图：
 
 ```powershell
-python -m script.step1_prepare_dic
-python -m script.step2_forward_calibrated
-python -m script.step3_inverse_dic
-python -m script.step4_compare_results
+python -m script.step1_prepare_dic --plot-only
+python -m script.step2_forward_calibrated --plot-only
+python -m script.step3_inverse_dic --plot-only
+python -m script.step4_compare_results --plot-only
 ```
 
-换一批数据时，修改 [dic_case_config.py](dic_case_config.py) 中的输入、载荷配对、坐标与物理定义，并将 `CASE_OUTPUT` 改为新目录。四个脚本各自执行一步，不自动串行调度；后续计算读取第一步冻结的数据。已有输出拒绝覆盖。参数、输入约定与逐项文件说明见 [分步骤流程](docs/dic_stepwise_workflow.md)。
+换一批数据时，修改 [dic_case_config.py](dic_case_config.py) 中的输入、载荷配对、坐标与物理定义，将 `CASE_OUTPUT` 改为新目录，然后去掉 `--plot-only` 依次运行四个脚本。每一步计算后自动生成对应云图；后续计算读取第一步冻结的数据。已有数值输出拒绝覆盖。参数及逐项文件说明见 [分步骤流程](docs/dic_stepwise_workflow.md)。
 
 | 步骤 | 保存目录（均在 CASE_OUTPUT 下） | 主要文件 |
 | --- | --- | --- |
-| DIC 准备 | `01_prepared/` | `input_audit.csv`、`fields.npz`、配置与输入记录 |
-| 独立正演 | `02_forward/` | `comparison.csv`、各 ν 的 `fields.npz` |
-| DIC 反演 | `03_inverse/` | `selection.csv`、`regional_comparison.csv`、各 ν 的模量及位移 |
+| DIC 准备 | `01_prepared/` | `云图.html`、DIC 位移云图、冻结输入与核查记录 |
+| 独立正演 | `02_forward/` | `云图.html`、标定模量及各 ν 的位移云图、数值场 |
+| DIC 反演 | `03_inverse/` | `云图.html`、二维模量、E(x)、位移云图、识别与预测记录 |
 | 比较出图 | `04_comparison/` | `打开查看结果.html`、CSV、各 ν/平台的 PNG/SVG |
 
-当前实验目录为 `results/dic_case_commonmesh_20261019_01/`；按原 post_DIC 风格重出的图表位于其中 `04_comparison_postdic/`。实验根目录的 `结果总览.html` 指向当前图表版本。重新出图只运行第 4 步并指定 `--output <新目录>`，不需要重算正反问题。
+当前实验集中在 `results/dic_case_commonmesh_20261019_01/`，其中只有四步结果目录；坐标核验记录保存在 `01_prepared/reference_audit/`。实验根目录 `结果总览.html` 的四个卡片直接链接各步云图。`--plot-only` 可重复刷新图表，不新增重复结果目录，也不重算正反问题。
 
 ## 模型与当前结论范围
 

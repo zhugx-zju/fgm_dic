@@ -25,6 +25,7 @@ def plot_grid_fields(
     limits: dict[str, tuple[float, float]] | None = None,
     title_prefix: str = "Preprocessed ",
     unit: str | None = None,
+    bounds: tuple[float, float, float, float] | None = None,
 ) -> None:
     """Original post_DIC cloud style, shared by preprocessing and comparisons.
 
@@ -45,6 +46,9 @@ def plot_grid_fields(
         ax.set_title(f"{title_prefix}{title}")
         ax.set_xlabel("x (mm)" if unit else "X")
         ax.set_ylabel("y (mm)" if unit else "Y")
+        if bounds is not None:
+            ax.set_xlim(bounds[:2])
+            ax.set_ylim(bounds[2:])
         from mpl_toolkits.axes_grid1 import make_axes_locatable
 
         colorbar_axis = make_axes_locatable(ax).append_axes("right", size="5%", pad=.12)
@@ -53,6 +57,21 @@ def plot_grid_fields(
         fig.savefig(output_dir / f"{case_name}_{suffix}.png", dpi=300, bbox_inches="tight")
         fig.savefig(output_dir / f"{case_name}_{suffix}.svg", bbox_inches="tight")
         plt.close(fig)
+
+
+def plot_displacement_clouds(output, name, xy, displacement, grid_ids=None,
+                             display_origin=(0., 0.), title=''):
+    """Plot saved point values; reference changes affect display only."""
+    values = np.asarray(displacement, dtype=float).reshape(-1, 2)
+    origin = np.asarray(display_origin, dtype=float)
+    if values.shape != np.asarray(xy).shape or origin.shape != (2,):
+        raise ValueError('Displacements and coordinates must be (points, 2); display origin must be (2,)')
+    x, y, fields = grid_fields_from_points(
+        xy, {label: values[:, component]-origin[component]
+             for component, label in enumerate(('ux', 'uy'))}, grid_ids)
+    plot_grid_fields(Path(output), name, x, y,
+                     [(label, field, f'{title}: {label}') for label, field in fields.items()],
+                     cmap='jet', unit='mm', title_prefix='')
 
 def grid_fields_from_points(coordinates, fields, grid_ids=None):
     """Restore lattice ordering without resampling any displacement values.

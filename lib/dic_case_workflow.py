@@ -14,7 +14,7 @@ import pandas as pd
 from fgm_asm import MeshInfo, lbfgs_inverse_solver_scipy
 from fgm_asm.load_case import evaluate_observation
 from fgm_asm.research import make_observation_case, partition_modulus, solve_forward
-from .dic_preprocessing import save_dic_comparison
+from .dic_preprocessing import plot_displacement_clouds, plot_grid_fields, save_dic_comparison
 from .experiment_data import (check_platform_reference, dic_roi_mask, file_sha256,
                               load_calibration, load_dic_platform)
 from .research_reporting import plot_modulus_comparison, save_run, save_x_profile
@@ -274,6 +274,7 @@ def prepare_dic(cfg, output):
         summary['status'] = 'needs_registration'
     save_run(output, cfg, summary, arrays)
     pd.DataFrame(rows).to_csv(output / 'input_audit.csv', index=False)
+    plot_saved_stage(output)
     return summary
 
 
@@ -341,6 +342,7 @@ def forward_calibrated(prepared, output):
     pd.DataFrame(metrics).to_csv(output/'comparison.csv', index=False)
     summary['status'] = 'computed'
     _update_summary(output, summary)
+    plot_saved_stage(output, prepared)
     return summary
 
 
@@ -420,13 +422,92 @@ def inverse_dic(prepared, output):
     summary['solvers'] = solvers
     summary['status'] = ('computed' if all(r['converged'] for r in solvers) else 'inverse_not_converged')
     _update_summary(output, summary)
+    plot_saved_stage(output, prepared)
     return summary
 
 
-def compare_dic_results(prepared, forward, inverse, output, plots=True):
+def plot_saved_stage(output, prepared=None):
+    """Draw stage 1/2/3 from saved arrays without FE solves or optimization.
+
+    Only derived images, profiles and the gallery are refreshed. Frozen input,
+    solver fields, metadata and identification/validation metrics are read-only.
+    """
+    from .dic_case_reporting import write_stage_gallery
+
+    output = Path(output)
+    summary = json.loads((output/'run_metadata.json').read_text(encoding='utf-8'))
+    workflow = summary['workflow']
+    if workflow == 'dic_case_preparation':
+        with np.load(output/'fields.npz') as fields:
+            for name in summary['configuration']['PLATFORMS']:
+                if f'{name}_coordinates' not in fields:
+                    continue
+                measured = fields[f'{name}_observed']
+                plot_displacement_clouds(
+                    output/name, f'{name}_dic', fields[f'{name}_coordinates'], measured,
+                    fields[f'{name}_grid_ids'] if f'{name}_grid_ids' in fields else None,
+                    measured.mean(axis=0), f'{name}: DIC')
+        write_stage_gallery(output, summary, '① DIC 位移云图')
+        return summary
+    if workflow not in ('dic_calibrated_forward', 'dic_case_inverse'):
+        raise ValueError('Expected saved stage 1, 2 or 3 results')
+    prepared = Path(prepared) if prepared is not None else output.parent/'01_prepared'
+    cfg, mesh, cases, metadata, provenance = load_prepared(prepared)
+    if any(summary.get(key) != value for key, value in provenance.items()):
+        raise ValueError('Saved stage must refer to the SAME frozen preparation')
+    if summary['status'] not in ('computed', 'inverse_not_converged'):
+        raise ValueError('Complete the numerical stage before requesting its plots')
+    with np.load(prepared/'fields.npz') as fields:
+        grid_ids = {case.name: fields[f'{case.name}_grid_ids'].copy() for case in cases
+                    if f'{case.name}_grid_ids' in fields}
+    reference = partition_modulus(pd.DataFrame(metadata['calibration']).mean_E_MPa, cfg.REGION_BOUNDARIES_X)
+    bounds = (0., cfg.GEO_L, 0., cfg.GEO_H)
+    model = 'forward' if workflow == 'dic_calibrated_forward' else 'inverse'
+    if model == 'forward':
+        x, y = np.meshgrid((mesh.plot_x[0, :-1]+mesh.plot_x[0, 1:])/2,
+                            (mesh.plot_y[:-1, 0]+mesh.plot_y[1:, 0])/2)
+        plot_grid_fields(output, 'calibrated_modulus', x, y,
+                         [('E', reference(x, y), 'Independent calibrated E')], 'jet',
+                         title_prefix='', unit='MPa', bounds=bounds)
+    metrics = pd.read_csv(output/'comparison.csv')
+    for nu in cfg.NU_VALUES:
+        destination = output/f'nu_{nu:.2f}'
+        with np.load(destination/'fields.npz') as fields:
+            np.testing.assert_allclose(fields['coordinates'], mesh.coord, rtol=0, atol=0)
+            if model == 'inverse':
+                field = fields['E_inverse']
+                if field.shape != (mesh.n_nod,) or not np.isfinite(field).all() or np.any(field <= 0):
+                    raise ValueError('Saved inverse must contain one finite positive modulus per node')
+                plot_grid_fields(destination, 'inverse_modulus', mesh.plot_x, mesh.plot_y,
+                                 [('E', field.reshape(mesh.nods_y, mesh.nods_x), f'Free 2D E, nu={nu:.2f}')],
+                                 'jet', title_prefix='', unit='MPa', bounds=bounds)
+                save_x_profile(destination, mesh, field, reference)
+            else:
+                np.testing.assert_allclose(fields['E_calibrated'], reference(mesh.X, mesh.Y), rtol=0, atol=0)
+            for case in cases:
+                xy = np.column_stack([case.observation.x_meas, case.observation.y_meas])
+                prediction = fields[f'{case.name}_prediction']
+                residual = case.observation.u_measured-prediction
+                rms = np.sqrt(np.sum(case.observation.weight_vector*residual**2)/case.observation.weight_vector.sum())
+                row = metrics[(metrics.nu == nu) & (metrics['case'] == case.name) & (metrics.model == model)]
+                if len(row) != 1:
+                    raise ValueError('Missing/duplicate saved stage metric')
+                np.testing.assert_allclose(rms, row.rms_mm.iloc[0], atol=1e-12, rtol=1e-9)
+                plot_displacement_clouds(
+                    destination/case.name, f'{case.name}_{model}', xy, prediction,
+                    grid_ids.get(case.name), case.observation.u_measured.reshape(-1, 2).mean(axis=0),
+                    f'{case.name}: {model}, nu={nu:.2f}')
+    write_stage_gallery(output, dict(summary, prepared_directory=str(prepared.resolve())),
+                        '② 独立标定正演云图' if model == 'forward' else '③ DIC 反演模量及位移云图')
+    return summary
+
+
+def compare_dic_results(prepared, forward, inverse, output, plots=True, plot_only=False):
     """Stage 4: plot and compare saved results; no FE solve or optimization."""
-    if Path(output).exists():
+    if Path(output).exists() and not plot_only:
         raise FileExistsError('Choose a new comparison output')
+    if plot_only and not (Path(output)/'run_metadata.json').exists():
+        raise ValueError('--plot-only requires existing stage 4 results')
     cfg, mesh, cases, metadata, provenance = load_prepared(prepared)
     forward, inverse, output = Path(forward), Path(inverse), Path(output)
     sources = []
@@ -445,7 +526,17 @@ def compare_dic_results(prepared, forward, inverse, output, plots=True):
     metrics = pd.concat([pd.read_csv(forward/'comparison.csv'), pd.read_csv(inverse/'comparison.csv')], ignore_index=True)
     regions = pd.read_csv(inverse/'regional_comparison.csv')
     selection = pd.read_csv(inverse/'selection.csv')
-    save_run(output, cfg, summary)
+    if plot_only:
+        previous = json.loads((output/'run_metadata.json').read_text(encoding='utf-8'))
+        if (previous['workflow'] != summary['workflow'] or
+                any(previous.get(key) != value for key, value in provenance.items()) or
+                previous['upstream_sources'] != summary['upstream_sources']):
+            raise ValueError('Saved comparison must refer to the SAME frozen upstream results')
+        for filename, frame in (('comparison.csv', metrics), ('regional_comparison.csv', regions),
+                                ('selection.csv', selection)):
+            pd.testing.assert_frame_equal(pd.read_csv(output/filename), frame, check_dtype=False)
+    else:
+        save_run(output, cfg, summary)
     reference = partition_modulus(pd.DataFrame(metadata['calibration']).mean_E_MPa, cfg.REGION_BOUNDARIES_X)
     with np.load(Path(prepared)/'fields.npz') as fields:
         grid_ids = {case.name: fields[f'{case.name}_grid_ids'].copy() for case in cases
@@ -466,15 +557,17 @@ def compare_dic_results(prepared, forward, inverse, output, plots=True):
                     np.testing.assert_allclose(rms, recorded.rms_mm.iloc[0], atol=1e-12)
                     collection.append({'name': case.name, 'prediction': prediction, 'weighted_rms': rms})
             field = reconstructed['E_inverse'].copy()
-        save_run(destination, cfg, dict(summary, nu=nu), {'coordinates': mesh.coord, 'E_inverse': field})
+        if not plot_only:
+            save_run(destination, cfg, dict(summary, nu=nu), {'coordinates': mesh.coord, 'E_inverse': field})
         if plots:
             save_dic_comparison(destination, cases, states[0], states[1], cfg.FIT_CASES, grid_ids)
             plot_modulus_comparison(destination, mesh, reference(mesh.X, mesh.Y), field)
             save_x_profile(destination, mesh, field, reference)
-    metrics.to_csv(output/'comparison.csv', index=False)
-    regions.to_csv(output/'regional_comparison.csv', index=False)
-    selection.to_csv(output/'selection.csv', index=False)
-    pd.DataFrame(summary['coverage']).to_csv(output/'input_audit.csv', index=False)
+    if not plot_only:
+        metrics.to_csv(output/'comparison.csv', index=False)
+        regions.to_csv(output/'regional_comparison.csv', index=False)
+        selection.to_csv(output/'selection.csv', index=False)
+        pd.DataFrame(summary['coverage']).to_csv(output/'input_audit.csv', index=False)
     from .dic_case_reporting import write_case_report
     write_case_report(output, summary, metrics.to_dict(orient='records'), regions.to_dict(orient='records'), selection.to_dict(orient='records'))
     return summary

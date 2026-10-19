@@ -8,9 +8,9 @@
 
 | 步骤 | 脚本 | 输入 | 保存结果 |
 | --- | --- | --- | --- |
-| 1. 准备数据 | `script/step1_prepare_dic.py` | 实验配置、DIC CSV、载荷配对、独立标定 | `01_prepared/`：参考坐标、平均位移、测点面积、采样间距、覆盖范围、载荷与几何、配置和输入哈希 |
-| 2. 独立正演 | `script/step2_forward_calibrated.py` | `01_prepared/` | `02_forward/`：各 ν 的分区标定正演位移、测点预测、误差表 |
-| 3. DIC 反演 | `script/step3_inverse_dic.py` | `01_prepared/` | `03_inverse/`：训练内选参、各 ν 的自由二维模量、回代和留出预测、收敛记录 |
+| 1. 准备数据 | `script/step1_prepare_dic.py` | 实验配置、DIC CSV、载荷配对、独立标定 | `01_prepared/`：冻结输入、核查表、DIC 两分量云图和 `云图.html` |
+| 2. 独立正演 | `script/step2_forward_calibrated.py` | `01_prepared/` | `02_forward/`：分区标定模量云图、各 ν 的位移云图、数组、误差表和 `云图.html` |
+| 3. DIC 反演 | `script/step3_inverse_dic.py` | `01_prepared/` | `03_inverse/`：选参、各 ν 的二维模量及位移云图、E(x) 对照、数组与 `云图.html` |
 | 4. 比较出图 | `script/step4_compare_results.py` | 同一 `01_prepared/` 对应的正反演结果 | `04_comparison/`：DIC/独立正演/反演回代对照、二维模量、E(x)、五区统计、误差表和 HTML 报告 |
 
 第 2、3 步分别求解正问题和反问题；第 3 步不需要第 2 步的位移来识别模量，第 4 步才汇合两条证据链。第 4 步不重新运行有限元或优化器。
@@ -19,13 +19,13 @@
 
 在项目根目录、安装 `requirements.txt` 的 Python 环境中，依次运行：
 
-当前实验已保存结果。重新计算前只需将配置的 `CASE_OUTPUT` 改为新目录，四条命令不需要填写长结果路径。
+当前实验已有数值结果，直接运行以下四条命令重新生成云图：
 
 ```powershell
-python -m script.step1_prepare_dic --config dic_case_config
-python -m script.step2_forward_calibrated
-python -m script.step3_inverse_dic
-python -m script.step4_compare_results
+python -m script.step1_prepare_dic --plot-only
+python -m script.step2_forward_calibrated --plot-only
+python -m script.step3_inverse_dic --plot-only
+python -m script.step4_compare_results --plot-only
 ```
 
 **查看结果：双击项目根目录的 [打开结果.html](../打开结果.html)。** 每一步结束时都会打印本步绝对保存路径和实验总览路径，并更新这个固定入口。第 2—4 步的默认 `--config dic_case_config` 仅用于定位 `CASE_OUTPUT/01_prepared`；求解参数和数据仍来自第一步冻结文件。也可用 `--input <01_prepared目录>` 明确指定输入。
@@ -34,9 +34,10 @@ python -m script.step4_compare_results
 
 ```text
 结果总览.html                 四步保存位置、文件链接及最终图表入口
-01_prepared/                 DIC 坐标、位移、网格 ID、载荷、核查和配置
-02_forward/                  comparison.csv；nu_*/fields.npz 正演数值场
-03_inverse/                  selection.csv、regional_comparison.csv；nu_*/fields.npz
+01_prepared/                 云图.html；180N/、280N/ 的 DIC 位移 PNG/SVG
+  reference_audit/           已执行的坐标、刚体及显示一致性核验记录
+02_forward/                  云图.html、标定模量云图；nu_*/平台/ 位移 PNG/SVG
+03_inverse/                  云图.html；nu_*/ 中的模量云图、E(x)、平台位移 PNG/SVG
 04_comparison/               打开查看结果.html、误差与模量 CSV
   nu_0.26/                   主泊松比结果（另有 0.24、0.28）
     180N/、280N/             DIC、正演、反演及残差各分量 PNG/SVG，逐测点 CSV
@@ -44,13 +45,22 @@ python -m script.step4_compare_results
     x_profile.*              宽度平均 E(x) 与标定对照
 ```
 
-需要重新出图时，第 4 步用 `--output <新目录>`；总览会指向新的图表目录，旧图仍保留。本次按 post_DIC 风格重新出图的目录是 `04_comparison_postdic/`。第 4 步不重跑前面求解，每一步均拒绝覆盖已有数值结果。
+四步默认在完成数值计算后自动出图。`--plot-only` 只刷新已保存场的云图、展示页和派生剖面，不重读原始 DIC、不运行正演或优化器，也不覆盖冻结数组、配置或求解记录。图文件可按相同文件名刷新，避免每次重新出图新增一套结果目录。当前比较结果统一位于 `04_comparison/`。
 
 DIC 图复用原 `post_DIC` 的 `lib/dic_preprocessing.py::plot_grid_fields`：7×6 英寸、规则网格 `pcolormesh`、`jet`、等比例坐标、独立单图。DIC/独立正演/反演采用共用色标，两幅残差采用共用对称色标；HTML 并排排列原图。新输入冻结网格 ID，缺失点留空，不插值补测量。旧版冻结结果仅在可核验的轴对齐规则坐标上恢复网格顺序。绘图不改变配准、观测、载荷或反演结果。
 
 ## 换一组 DIC 数据
 
-直接修改 `dic_case_config.py` 中的新数据目录、物理定义和新的 `CASE_OUTPUT`，然后运行上述四条命令。若需要保留多组配置，可复制为 `dic_case_sample3.py`，四步均指定它：
+修改 `dic_case_config.py` 中的新数据目录、物理定义和新的 `CASE_OUTPUT`，然后运行不带 `--plot-only` 的四条命令，完成新一组计算并自动出图：
+
+```powershell
+python -m script.step1_prepare_dic
+python -m script.step2_forward_calibrated
+python -m script.step3_inverse_dic
+python -m script.step4_compare_results
+```
+
+已有数值结果仍拒绝覆盖；确需重算时使用新的 `CASE_OUTPUT`。若需要保留多组配置，可复制为 `dic_case_sample3.py`，四步均指定它：
 
 ```powershell
 python -m script.step1_prepare_dic --config dic_case_sample3
