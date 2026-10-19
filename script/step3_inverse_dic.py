@@ -1,6 +1,7 @@
 """Step 3: free 2D DIC inversion and held-out prediction; no calibrated forward fit."""
 
 import argparse
+import json
 from pathlib import Path
 
 from lib.config_utils import prepared_input
@@ -17,6 +18,10 @@ def main():
     args = parser.parse_args()
     source = prepared_input(args.input, args.config)
     output = args.output or source.parent/'03_inverse'
+    record_path = output/'run_metadata.json' if args.plot_only else source/'run_metadata.json'
+    saved = json.loads(record_path.read_text(encoding='utf-8'))['configuration']
+    print(f"Saved solver settings: FTOL={saved['FTOL']:g}, GTOL={saved['GTOL']:g}; "
+          'gamma selection=buffered spatial validation; L-curve=disabled')
     result = plot_saved_stage(output, source) if args.plot_only else inverse_dic(source, output)
     print('Inverse:', result['status'], output.resolve())
     publish_stage(source.parent, '03_inverse', output, result)

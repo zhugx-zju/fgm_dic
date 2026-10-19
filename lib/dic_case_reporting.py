@@ -8,6 +8,8 @@ from urllib.parse import quote
 
 import pandas as pd
 
+from .dic_preprocessing import RELATIVE_ERROR_DESCRIPTION
+
 
 PAGE_STYLE = '''<style>
 body{max-width:1400px;margin:28px auto;padding:0 24px;font:16px/1.65 "Microsoft YaHei",sans-serif;color:#17212b;background:#fafbfc}
@@ -106,11 +108,18 @@ def write_stage_gallery(output, summary, title):
              f'<h1>{html.escape(title)}</h1>',
              f'<p><a href="{_link(overview, output)}">返回四步结果总览</a></p>',
              f'<p class="path">保存位置：{html.escape(str(output.resolve()))}</p>',
-             '<p>位移显示仅共同减去对应 DIC 分量均值，数值观测与预测保持原参考态。模型位移在真实 DIC 测点显示；模量图覆盖物理模型域，未观测边带属于模型延拓。最终跨模型对照见第 4 步的共用色标图。</p>',
+             '<p>位移显示仅共同减去对应 DIC 分量均值，数值观测与预测保持原参考态。模型位移在真实 DIC 测点显示；DIC 与模型位移共用色标。模量图覆盖物理模型域，未观测边带属于模型延拓。</p>',
              '<p>实际拉力：'+html.escape('；'.join(f"{name}: {record['mean_corrected_force_N']:.6f} N"
                                                  for name, record in summary['force_pairing'].items()))+'</p>']
     if not summary['coordinates_verified']:
         parts.append('<p>物理配准尚未独立核验；当前图表对应显式位置假设。</p>')
+    if summary['workflow'] != 'dic_case_preparation':
+        parts.append(f'<p>{RELATIVE_ERROR_DESCRIPTION} 位移图单位为 mm，误差图单位为 %。</p>')
+    if summary['workflow'] == 'dic_case_inverse':
+        config = summary['configuration']
+        parts.append(f'<p>本次保存计算：FTOL={config["FTOL"]:g}，GTOL={config["GTOL"]:g}。'
+                     f'γ={summary["selected_gamma"]:g}，由识别平台的带缓冲空间验证选择；L-curve 未启用。'
+                     '修改源配置或重新出图均不会更新已保存的反演。</p>')
     primary = f"nu_{summary['primary_nu_prespecified']:.2f}"
     pictures = sorted(output.rglob('*.png'), key=lambda p: (
         0 if p.parent == output else 1 if primary in p.parts else 2,
@@ -118,8 +127,24 @@ def write_stage_gallery(output, summary, title):
     parents = dict.fromkeys(p.parent for p in pictures)
     for parent in parents:
         label = parent.relative_to(output).as_posix()
-        parts.append(f'<h2>{html.escape(label if label != "." else "材料场")}</h2><div class="clouds">')
-        for picture in (p for p in pictures if p.parent == parent):
+        parts.append(f'<h2>{html.escape(label if label != "." else "材料场")}</h2>')
+        grouped = set()
+        case = parent.name
+        for model, model_title in (('forward', '独立标定正演'), ('inverse', '反演回代')):
+            if not (parent/f'{case}_dic_ux.png').exists() or not (parent/f'{case}_{model}_ux.png').exists():
+                continue
+            parts.append(f'<p><a href="{_link(parent/"point_fields.csv", output)}">逐测点位移、残差（mm）与相对误差（%）</a>'
+                         f' · <a href="{_link(parent.parent/"relative_error_summary.csv", output)}">相对误差汇总 CSV</a></p>')
+            for component, component_title in (('ux', '轴向 ux'), ('uy', '横向 uy')):
+                parts.append(f'<h3>{component_title}：DIC—{model_title}对照</h3><div class="fields">')
+                for key, caption in (('dic', 'DIC（mm）'), (model, f'{model_title}（mm）'),
+                                     (f'{model}_error', f'{model_title}相对误差（%）')):
+                    picture = parent/f'{case}_{key}_{component}.png'
+                    grouped.add(picture)
+                    parts.append(_field_figure(picture, caption, output))
+                parts.append('</div>')
+        parts.append('<div class="clouds">')
+        for picture in (p for p in pictures if p.parent == parent and p not in grouped):
             link = _link(picture, output)
             parts.append(f'<figure><a href="{link}"><img src="{link}" alt="{html.escape(picture.stem)}"></a>')
             vector = picture.with_suffix('.svg')
@@ -131,6 +156,14 @@ def write_stage_gallery(output, summary, title):
         parts.append('<p>当前仅有输入核查记录，尚无可绘制的已配准场。</p>')
     parts.append('</html>')
     (output/'云图.html').write_text('\n'.join(parts), encoding='utf-8')
+
+
+def _field_figure(picture, caption, output):
+    link = _link(picture, output)
+    vector = _link(picture.with_suffix('.svg'), output)
+    return (f'<figure><figcaption>{html.escape(caption)}</figcaption>'
+            f'<a href="{link}"><img src="{link}" alt="{html.escape(caption)}"></a>'
+            f'<a href="{vector}">SVG</a></figure>')
 
 
 def write_case_report(output, summary, metrics, regions, selection):
@@ -148,7 +181,8 @@ def write_case_report(output, summary, metrics, regions, selection):
              f"独立标定正演与自由二维反演共用 {mesh['nel_x']}×{mesh['nel_y']} 单元，单元尺寸 {mesh['hx_mm']}×{mesh['hy_mm']} mm。DIC 在原始测点参与比较，不先重采样到有限元节点。", '',
              '有限元三点约束只固定数值刚体规范；DIC 与模型在观测空间通过同一两平移、一微小转动子空间配准。未删除仿射伸长或横向收缩。', '',
              '有效观测与采样间距见 `input_audit.csv`。', '',
-             '## 独立标定正演、DIC 与反演回代', '']
+             '## 独立标定正演、DIC 与反演回代', '', RELATIVE_ERROR_DESCRIPTION, '',
+             '位移及原始残差 CSV 保留 mm；相对误差图与逐测点新增列使用 %，各 ν 的 `relative_error_summary.csv` 保存分母和汇总指标。', '']
     if not metric_table.empty:
         lines += ['| ν | 平台 | 用途 | 模型 | 双分量 RMS (mm) | 轴向 RMSE (mm) | 横向 RMSE (mm) |',
                   '| --- | --- | --- | --- | ---: | ---: | ---: |']
@@ -162,6 +196,14 @@ def write_case_report(output, summary, metrics, regions, selection):
         lines += ['', '组内 SD 和反演场空间 SD 的含义不同，均不作为参数置信区间；分区统计包含未观测边带的模型延拓。', '',
                   f"主泊松比预先指定为 {summary['primary_nu_prespecified']}；其他 ν 为同条件敏感性比较，不根据留出平台误差更换主值。", '',
                   f"gamma={summary['selected_gamma']:g}，只按识别平台的带缓冲空间验证选择；是否处于扫描边界：{summary['gamma_at_scan_boundary']}。扫描边界最小值不代表全局最优。"]
+        settings = summary['inverse_settings']
+        lines += ['', '## 反演选参与实际停止设置', '',
+                  f"当前未启用 L-curve。gamma 候选值为 {settings['GAMMA_CANDIDATES']}；只使用识别平台的带缓冲空间验证选择，预测平台不参与选参。", '',
+                  f"已保存计算实际使用 FTOL={settings['FTOL']:g}、GTOL={settings['GTOL']:g}，最多 {settings['MAX_ITER']} 次迭代、{settings['MAX_FUN']} 次函数计算。配置取自上游反演记录，修改源配置和重新出图不会更新已有计算。", '',
+                  '函数容差和梯度容差是不同的停止条件；任一满足即可停止，不要求二者同时满足。', '',
+                  '| ν | 迭代数 | 停止信息 |', '| --- | ---: | --- |']
+        for solver in summary['solvers']:
+            lines.append(f"| {solver['nu']:.2f} | {solver['n_iterations']} | {solver['message']} |")
     else:
         lines += ['本阶段仅完成输入核查；未生成正反演结论。']
     lines += ['', '## 结论范围与复现', '',
@@ -175,24 +217,41 @@ def write_case_report(output, summary, metrics, regions, selection):
              f'<p>运行状态：{html.escape(status)}；物理配准已核验：{verified}。</p>',
              f'<p><a href="{_link(overview, output)}">返回实验结果总览</a> · <a href="comparison.csv">位移误差 CSV</a> · <a href="regional_comparison.csv">五区模量 CSV</a> · <a href="selection.csv">选参记录 CSV</a></p>',
              f'<p class="path">本页与图表保存于：{html.escape(str(output.resolve()))}</p>',
-             '<p>DIC 云图沿用 post_DIC：规则网格、jet 色图、等比例坐标及独立单图。三个位移场采用相同色标；两幅残差采用相同对称色标。显示时仅共同减去 DIC 分量均值，CSV 保留原参考态。</p>']
+             '<p>DIC 云图沿用 post_DIC：规则网格、jet 色图、等比例坐标及独立单图。三个位移场采用相同色标；两幅相对误差采用相同对称百分比色标。显示时仅共同减去 DIC 分量均值，CSV 保留原参考态。</p>',
+             f'<p>{RELATIVE_ERROR_DESCRIPTION}</p>']
     if not metric_table.empty:
+        settings = summary['inverse_settings']
+        parts.append(f'<p>本次反演实际使用 FTOL={settings["FTOL"]:g}、GTOL={settings["GTOL"]:g}；'
+                     f'γ={summary["selected_gamma"]:g}，按识别平台的带缓冲空间验证选择，L-curve 未启用。'
+                     '完整停止信息见页末报告。</p>')
         parts += ['<h2>位移定量对照</h2>', metric_table.to_html(index=False, border=0, float_format=lambda x: f'{x:.7g}'),
                   '<h2>模量与独立标定对照</h2>', region_table.to_html(index=False, border=0, float_format=lambda x: f'{x:.6g}')]
         for solver in sorted(summary['solvers'], key=lambda s: (s['nu'] != summary['primary_nu_prespecified'], s['nu'])):
             directory = f"nu_{solver['nu']:.2f}"
             parts += [f"<h2>ν={solver['nu']:.2f}，收敛状态：{solver['converged']}</h2>"]
+            relative_path = output/directory/'relative_error_summary.csv'
+            if relative_path.exists():
+                parts.append(f'<p><a href="{directory}/relative_error_summary.csv">相对误差汇总 CSV（含各分量的 DIC 分母）</a></p>')
+                relative_table = pd.read_csv(relative_path).rename(columns={
+                    'case': '平台', 'model': '模型', 'component': '分量',
+                    'dic_deformation_rms_mm': 'DIC 变形 RMS (mm)',
+                    'relative_weighted_rms_percent': '相对 RMS (%)',
+                    'absolute_relative_p95_percent': '绝对相对误差 P95 (%)'})
+                parts.append(relative_table.drop(columns=['role', 'relative_defined']).to_html(
+                    index=False, border=0, float_format=lambda x: f'{x:.6g}', na_rep='未定义'))
             for case in summary['force_pairing']:
                 parts += [f'<h3>{html.escape(case)} 位移场与残差</h3>',
-                          f'<p><a href="{directory}/{case}/point_fields.csv">逐测点位移与残差 CSV</a>（mm）</p>'] if (output/directory/case/'point_fields.csv').exists() else []
+                          f'<p><a href="{directory}/{case}/point_fields.csv">逐测点位移、残差（mm）与相对误差（%）CSV</a></p>'] if (output/directory/case/'point_fields.csv').exists() else []
                 for component, label in (('ux', '轴向 ux'), ('uy', '横向 uy')):
                     parts.append(f'<h4>{label}</h4><div class="fields">')
-                    for key, title in (('dic', 'DIC 实测'), ('forward', '独立标定正演'),
-                                       ('inverse', '反演回代'), ('forward_error', '独立标定正演 − DIC'),
-                                       ('inverse_error', '反演回代 − DIC')):
+                    for key, title in (('dic', 'DIC 实测（mm）'), ('forward', '独立标定正演（mm）'),
+                                       ('inverse', '反演回代（mm）'), ('forward_error', '独立标定正演相对误差（%）'),
+                                       ('inverse_error', '反演回代相对误差（%）')):
+                        if key == 'forward_error':
+                            parts.append('</div><div class="clouds">')
                         stem = f'{directory}/{case}/{case}_{key}_{component}'
                         if (output/f'{stem}.png').exists():
-                            parts.append(f'<figure><figcaption>{title}</figcaption><a href="{stem}.png"><img src="{stem}.png" alt="{title} {label}"></a><a href="{stem}.svg">SVG</a></figure>')
+                            parts.append(_field_figure(output/f'{stem}.png', title, output))
                     parts.append('</div>')
             for name in ('modulus_comparison.png', 'x_profile.png'):
                 if (output/directory/name).exists():

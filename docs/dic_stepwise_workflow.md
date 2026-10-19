@@ -9,8 +9,8 @@
 | 步骤 | 脚本 | 输入 | 保存结果 |
 | --- | --- | --- | --- |
 | 1. 准备数据 | `script/step1_prepare_dic.py` | 实验配置、DIC CSV、载荷配对、独立标定 | `01_prepared/`：冻结输入、核查表、DIC 两分量云图和 `云图.html` |
-| 2. 独立正演 | `script/step2_forward_calibrated.py` | `01_prepared/` | `02_forward/`：分区标定模量云图、各 ν 的位移云图、数组、误差表和 `云图.html` |
-| 3. DIC 反演 | `script/step3_inverse_dic.py` | `01_prepared/` | `03_inverse/`：选参、各 ν 的二维模量及位移云图、E(x) 对照、数组与 `云图.html` |
+| 2. 独立正演 | `script/step2_forward_calibrated.py` | `01_prepared/` | `02_forward/`：分区标定模量、各 ν 的 DIC／正演／相对误差对照、数组与 `云图.html` |
+| 3. DIC 反演 | `script/step3_inverse_dic.py` | `01_prepared/` | `03_inverse/`：选参、各 ν 的二维模量、DIC／回代／相对误差对照、E(x)、数组与 `云图.html` |
 | 4. 比较出图 | `script/step4_compare_results.py` | 同一 `01_prepared/` 对应的正反演结果 | `04_comparison/`：DIC/独立正演/反演回代对照、二维模量、E(x)、五区统计、误差表和 HTML 报告 |
 
 第 2、3 步分别求解正问题和反问题；第 3 步不需要第 2 步的位移来识别模量，第 4 步才汇合两条证据链。第 4 步不重新运行有限元或优化器。
@@ -36,18 +36,29 @@ python -m script.step4_compare_results --plot-only
 结果总览.html                 四步保存位置、文件链接及最终图表入口
 01_prepared/                 云图.html；180N/、280N/ 的 DIC 位移 PNG/SVG
   reference_audit/           已执行的坐标、刚体及显示一致性核验记录
-02_forward/                  云图.html、标定模量云图；nu_*/平台/ 位移 PNG/SVG
-03_inverse/                  云图.html；nu_*/ 中的模量云图、E(x)、平台位移 PNG/SVG
+02_forward/                  云图.html、标定模量；nu_*/平台/ DIC、正演和相对误差 PNG/SVG
+03_inverse/                  云图.html；nu_*/ 中的模量、E(x)、平台 DIC、回代和相对误差 PNG/SVG
 04_comparison/               打开查看结果.html、误差与模量 CSV
   nu_0.26/                   主泊松比结果（另有 0.24、0.28）
-    180N/、280N/             DIC、正演、反演及残差各分量 PNG/SVG，逐测点 CSV
+    180N/、280N/             DIC、正演、反演及相对误差各分量 PNG/SVG，逐测点 CSV
+    relative_error_summary.csv  各平台/模型/分量的归一化分母、相对 RMS 与 P95
     modulus_comparison.*     二维模量对照
     x_profile.*              宽度平均 E(x) 与标定对照
 ```
 
 四步默认在完成数值计算后自动出图。`--plot-only` 只刷新已保存场的云图、展示页和派生剖面，不重读原始 DIC、不运行正演或优化器，也不覆盖冻结数组、配置或求解记录。图文件可按相同文件名刷新，避免每次重新出图新增一套结果目录。当前比较结果统一位于 `04_comparison/`。
 
-DIC 图复用原 `post_DIC` 的 `lib/dic_preprocessing.py::plot_grid_fields`：7×6 英寸、规则网格 `pcolormesh`、`jet`、等比例坐标、独立单图。DIC/独立正演/反演采用共用色标，两幅残差采用共用对称色标；HTML 并排排列原图。新输入冻结网格 ID，缺失点留空，不插值补测量。旧版冻结结果仅在可核验的轴对齐规则坐标上恢复网格顺序。绘图不改变配准、观测、载荷或反演结果。
+DIC 图复用原 `post_DIC` 的 `lib/dic_preprocessing.py::plot_grid_fields`：7×6 英寸、规则网格 `pcolormesh`、`jet`、等比例坐标、独立单图。第 2、3 步直接按分量并排显示 DIC、模型及相对误差；第 4 步中 DIC/独立正演/反演共用位移色标，两幅相对误差共用对称百分比色标。新输入冻结网格 ID，缺失点留空，不插值补测量。旧版冻结结果仅在可核验的轴对齐规则坐标上恢复网格顺序。绘图不改变配准、观测、载荷或反演结果。
+
+### 相对误差的定义
+
+先用与反演相同的观测权重，将 DIC 位移投影到两平移、一微小转动子空间，令去除这些刚体分量后的位移为 `d_def`。各平台、各分量 `c` 的固定分母为：
+
+`s_c = sqrt(sum(w_c * d_def,c²) / sum(w_c))`，单位 mm。
+
+误差图显示有符号 RMS 归一化相对误差 `e_c = 100 * (u_model,c - u_DIC,c) / s_c`（%）。模型已通过原有三个刚体模式配准。分母只取决于对应平台的 DIC，全部 ν、独立正演和反演共用，刚体基准变化不改变该比例；不逐点除以会过零的位移。无可分辨变形的分量标为未定义，不设置人为分母下限或裁剪误差。
+
+图文件沿用 `*_forward_error_ux.*` 等名称，色标和标题明确改为相对误差；模量差异图原有相对百分比定义保持不变。`point_fields.csv` 保留原位移与残差 `*_mm` 列，新增 `*_relative_error_*_percent` 和分母列。各 ν 的 `relative_error_summary.csv` 保存加权相对 RMS 与逐点绝对相对误差 P95；绝对误差表仍保留 mm，供量纲核验与误差预算使用。百分比不等同于 DIC 测量不确定度。
 
 ## 换一组 DIC 数据
 
@@ -104,7 +115,15 @@ python -m script.step4_compare_results --config dic_case_sample3
 
 当前共用 70×20 个 Q4 单元、1×1 mm，正反问题均为 1491 个节点；反演所有节点模量独立，不绑定不同 y 行。该尺寸与五区界面对齐，但不等同于已经证明网格收敛。DIC 的点距约 0.2895 mm，不需要等于有限元单元尺寸；Q4 观测算子在真实 DIC 位置求值。
 
-gamma 仅在 `FIT_CASES` 的带缓冲空间验证点上选择。当前预设 ν=0.26 完成选参后，冻结 gamma，以相同初值、网格、预算分别运行三个 ν；`PREDICT_CASES` 不参与选择。扫描边界最小值、优化成功状态、物理配准状态和实验验证结论分别报告。
+gamma 仅在 `FIT_CASES` 的带缓冲空间验证点上选择。当前预设 ν=0.26 完成选参后，冻结 gamma，以相同初值、网格、预算分别运行三个 ν；`PREDICT_CASES` 不参与选择。**当前四步流程未启用 L-curve，也没有 L-curve 开关**；扫描三个 gamma 并按空间验证误差择优不是 L-curve 曲率选参。扫描边界最小值、优化成功状态、物理配准状态和实验验证结论分别报告。
+
+### 容差的生效范围
+
+优化器使用 L-BFGS-B，在 `m=ln(E)` 上优化；`FTOL` 是目标函数下降停止条件，`GTOL` 是优化变量梯度停止条件，满足任一条件即可停止，还可能因预算或线搜索而结束。减小 `FTOL` 不代表已满足 `GTOL`，应查看保存的停止信息。
+
+当前已有结果 `dic_case_commonmesh_20261019_01` 的配置快照为 `FTOL=1e-11、GTOL=1e-7`；源配置现为 `1e-30、1e-12`。主 ν=0.26 的已有反演迭代 198 次，由函数下降条件停止；γ=10⁴ 来自 180N 空间验证。重新出图不更新这些数值。
+
+要让修改后的容差生效，应先选用新的 `CASE_OUTPUT` 并重新运行第 1 步以冻结新配置，再运行后续步骤。只修改源配置，或给第 3 步指定新的 `--output` 但继续读取旧 `01_prepared`，均不会更新求解设置。结果页显示的是实际保存计算的容差与停止原因。
 
 ## 可复核性与完成范围
 

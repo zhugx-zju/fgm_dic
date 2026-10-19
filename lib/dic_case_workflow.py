@@ -484,8 +484,8 @@ def plot_saved_stage(output, prepared=None):
                 save_x_profile(destination, mesh, field, reference)
             else:
                 np.testing.assert_allclose(fields['E_calibrated'], reference(mesh.X, mesh.Y), rtol=0, atol=0)
+            states = []
             for case in cases:
-                xy = np.column_stack([case.observation.x_meas, case.observation.y_meas])
                 prediction = fields[f'{case.name}_prediction']
                 residual = case.observation.u_measured-prediction
                 rms = np.sqrt(np.sum(case.observation.weight_vector*residual**2)/case.observation.weight_vector.sum())
@@ -493,10 +493,8 @@ def plot_saved_stage(output, prepared=None):
                 if len(row) != 1:
                     raise ValueError('Missing/duplicate saved stage metric')
                 np.testing.assert_allclose(rms, row.rms_mm.iloc[0], atol=1e-12, rtol=1e-9)
-                plot_displacement_clouds(
-                    destination/case.name, f'{case.name}_{model}', xy, prediction,
-                    grid_ids.get(case.name), case.observation.u_measured.reshape(-1, 2).mean(axis=0),
-                    f'{case.name}: {model}, nu={nu:.2f}')
+                states.append({'prediction': prediction.copy(), 'weighted_rms': rms})
+        save_dic_comparison(destination, cases, {model: states}, cfg.FIT_CASES, grid_ids, nu=nu)
     write_stage_gallery(output, dict(summary, prepared_directory=str(prepared.resolve())),
                         '② 独立标定正演云图' if model == 'forward' else '③ DIC 反演模量及位移云图')
     return summary
@@ -522,7 +520,10 @@ def compare_dic_results(prepared, forward, inverse, output, plots=True, plot_onl
     summary.update(status=sources[1]['status'], selected_gamma=sources[1]['selected_gamma'],
                    prepared_directory=str(Path(prepared).resolve()),
                    gamma_at_scan_boundary=sources[1]['gamma_at_scan_boundary'], solvers=sources[1]['solvers'],
-                   upstream_sources={str(p): file_sha256(p/'run_metadata.json') for p in (forward, inverse)})
+                   upstream_sources={str(p): file_sha256(p/'run_metadata.json') for p in (forward, inverse)},
+                   inverse_settings={key: sources[1]['configuration'][key]
+                                     for key in ('FTOL', 'GTOL', 'MAX_ITER', 'MAX_FUN', 'GAMMA_CANDIDATES')},
+                   gamma_selection_method='buffered_spatial_validation', l_curve_enabled=False)
     metrics = pd.concat([pd.read_csv(forward/'comparison.csv'), pd.read_csv(inverse/'comparison.csv')], ignore_index=True)
     regions = pd.read_csv(inverse/'regional_comparison.csv')
     selection = pd.read_csv(inverse/'selection.csv')
@@ -560,7 +561,8 @@ def compare_dic_results(prepared, forward, inverse, output, plots=True, plot_onl
         if not plot_only:
             save_run(destination, cfg, dict(summary, nu=nu), {'coordinates': mesh.coord, 'E_inverse': field})
         if plots:
-            save_dic_comparison(destination, cases, states[0], states[1], cfg.FIT_CASES, grid_ids)
+            save_dic_comparison(destination, cases, {'forward': states[0], 'inverse': states[1]},
+                                cfg.FIT_CASES, grid_ids, nu=nu)
             plot_modulus_comparison(destination, mesh, reference(mesh.X, mesh.Y), field)
             save_x_profile(destination, mesh, field, reference)
     if not plot_only:

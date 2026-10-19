@@ -6,6 +6,13 @@ from pathlib import Path
 import matplotlib.pyplot as plt
 import numpy as np
 
+RELATIVE_ERROR_DESCRIPTION = (
+    '有符号相对误差 e_c=100×(u_model,c−u_DIC,c)/s_c（%）；'
+    's_c 是该平台 DIC 按观测权重去除两平移和一微小转动后的分量 RMS。'
+    '分母只由 DIC 决定，同一平台的全部模型与 ν 共用，不逐点除以过零位移。'
+    '无可分辨变形的分量标为未定义，不用任意小常数替代分母。'
+)
+
 # Preserve the original post_DIC typography without importing legacy plotting.
 plt.rcParams.update({
     'font.family': 'serif', 'font.serif': ['Times New Roman'],
@@ -39,9 +46,19 @@ def plot_grid_fields(
     for suffix, field, title in fields:
         fig, ax = plt.subplots(figsize=(7, 6))
         low, high = (limits or {}).get(suffix, (None, None))
-        mesh = ax.pcolormesh(x_grid, y_grid, np.ma.masked_invalid(field),
-                             shading="nearest", cmap=cmap, vmin=low, vmax=high,
-                             rasterized=True)
+        if np.isfinite(field).any():
+            mesh = ax.pcolormesh(x_grid, y_grid, np.ma.masked_invalid(field),
+                                 shading="nearest", cmap=cmap, vmin=low, vmax=high,
+                                 rasterized=True)
+            from mpl_toolkits.axes_grid1 import make_axes_locatable
+
+            colorbar_axis = make_axes_locatable(ax).append_axes("right", size="5%", pad=.12)
+            fig.colorbar(mesh, cax=colorbar_axis, label=unit or "")
+        else:
+            ax.set_xlim(float(x_grid.min()), float(x_grid.max()))
+            ax.set_ylim(float(y_grid.min()), float(y_grid.max()))
+            ax.text(.5, .5, 'No resolved DIC deformation\nRelative error undefined',
+                    ha='center', va='center', transform=ax.transAxes)
         ax.set_aspect("equal")
         ax.set_title(f"{title_prefix}{title}")
         ax.set_xlabel("x (mm)" if unit else "X")
@@ -49,10 +66,6 @@ def plot_grid_fields(
         if bounds is not None:
             ax.set_xlim(bounds[:2])
             ax.set_ylim(bounds[2:])
-        from mpl_toolkits.axes_grid1 import make_axes_locatable
-
-        colorbar_axis = make_axes_locatable(ax).append_axes("right", size="5%", pad=.12)
-        fig.colorbar(mesh, cax=colorbar_axis, label=unit or "")
         fig.tight_layout()
         fig.savefig(output_dir / f"{case_name}_{suffix}.png", dpi=300, bbox_inches="tight")
         fig.savefig(output_dir / f"{case_name}_{suffix}.svg", bbox_inches="tight")
@@ -73,7 +86,7 @@ def plot_displacement_clouds(output, name, xy, displacement, grid_ids=None,
                      [(label, field, f'{title}: {label}') for label, field in fields.items()],
                      cmap='jet', unit='mm', title_prefix='')
 
-def grid_fields_from_points(coordinates, fields, grid_ids=None):
+def grid_fields_from_points(coordinates, fields, grid_ids=None, *, allow_nan=False):
     """Restore lattice ordering without resampling any displacement values.
 
     New preparations retain integer grid IDs. For older frozen, axis-aligned
@@ -114,7 +127,8 @@ def grid_fields_from_points(coordinates, fields, grid_ids=None):
     grids = {}
     for name, values in fields.items():
         values = np.asarray(values, dtype=float)
-        if values.shape != (len(xy),) or not np.isfinite(values).all():
+        valid = not np.isinf(values).any() if allow_nan else np.isfinite(values).all()
+        if values.shape != (len(xy),) or not valid:
             raise ValueError(f"{name}: expected one finite value per saved DIC point")
         grids[name] = np.full(tuple(size), np.nan)
         grids[name][index] = values
@@ -123,52 +137,110 @@ def grid_fields_from_points(coordinates, fields, grid_ids=None):
         grids = {name: values.T for name, values in grids.items()}
     return cells[..., 0], cells[..., 1], grids
 
-def save_dic_comparison(output, cases, forward_states, inverse_states, fit_names, grid_ids=None):
-    """DIC, calibrated forward, inverse and residual maps in post_DIC style.
+def dic_relative_error_scale(case):
+    """DIC-only component RMS in mm, using the existing rigid projection.
+
+    This calls the observation operator at zero displacement, not a FE solve.
+    Its residual is DIC minus its weighted best rigid fit. The normalization
+    is invariant to addition of the same three rigid modes to both fields.
+    A roundoff-level zero has no relative error definition; return NaN.
+    """
+    from fgm_asm.load_case import evaluate_observation
+
+    obs = case.observation
+    if not case.remove_rigid_body:
+        raise ValueError('Relative DIC deformation errors require three-mode rigid registration')
+    deformation = evaluate_observation(case, np.zeros(obs.H.shape[1]))['residual'].reshape(-1, 2)
+    weights = obs.weight_vector.reshape(-1, 2)
+    total = weights.sum(axis=0)
+    if np.any(total <= 0):
+        raise ValueError('Each DIC component needs positive observation weight')
+    scale = np.sqrt(np.sum(weights*deformation**2, axis=0)/total)
+    raw_rms = np.sqrt(np.sum(weights*obs.u_measured.reshape(-1, 2)**2, axis=0)/total)
+    scale[scale <= 64*np.finfo(float).eps*np.maximum(raw_rms, np.finfo(float).tiny)] = np.nan
+    return scale
+
+
+def save_dic_comparison(output, cases, model_states, fit_names, grid_ids=None, *, nu=None):
+    """DIC, one or both FE models, and signed relative errors in post_DIC style.
 
     Predictions already include the solver's rigid registration. A common DIC
-    component mean is subtracted only for displaying the three displacement
-    maps; errors and exported point values remain in the original reference.
+    component mean is subtracted only for displacement display. Point CSVs
+    retain original mm displacements/residuals and add normalized percentages.
     """
     import pandas as pd
 
     output = Path(output)
-    rows = []
-    for case, forward, inverse in zip(cases, forward_states, inverse_states):
+    headings = {'forward': 'Independent calibration', 'inverse': 'Inverse back-substitution'}
+    if not model_states or set(model_states)-headings.keys():
+        raise ValueError('Expected forward and/or inverse saved model states')
+    if any(len(states) != len(cases) for states in model_states.values()):
+        raise ValueError('Each model must contain one state per DIC case')
+    rows, relative_rows = [], []
+    for index, case in enumerate(cases):
+        condition = case.name if nu is None else f'{case.name}, nu={nu:.2f}'
         xy = np.column_stack([case.observation.x_meas, case.observation.y_meas])
         observed = case.observation.u_measured.reshape(-1, 2)
-        predictions = [state['prediction'].reshape(-1, 2) for state in (forward, inverse)]
-        errors = [value-observed for value in predictions]
-        maps, limits, titles = {}, {}, {}
+        states = {model: values[index] for model, values in model_states.items()}
+        predictions = {model: state['prediction'].reshape(-1, 2) for model, state in states.items()}
+        if any(value.shape != observed.shape or not np.isfinite(value).all() for value in predictions.values()):
+            raise ValueError('Each prediction must be finite and aligned with DIC points')
+        errors = {model: value-observed for model, value in predictions.items()}
+        scale = dic_relative_error_scale(case)
+        relative = {model: 100*error/scale for model, error in errors.items()}
+        maps, error_maps, limits, titles = {}, {}, {}, {}
         point_table = {'x_mm': xy[:, 0], 'y_mm': xy[:, 1]}
         for component, label in enumerate(('ux', 'uy')):
             origin = observed[:, component].mean()
-            displayed = [values[:, component]-origin for values in (observed, *predictions)]
-            low, high = min(v.min() for v in displayed), max(v.max() for v in displayed)
+            displayed = {model: values[:, component]-origin for model, values in
+                         {'dic': observed, **predictions}.items()}
+            low, high = min(v.min() for v in displayed.values()), max(v.max() for v in displayed.values())
             if high == low:
                 low, high = low-1e-12, high+1e-12
-            bound = max(1e-12, *(np.abs(error[:, component]).max() for error in errors))
-            names = ('dic', 'forward', 'inverse', 'forward_error', 'inverse_error')
-            headings = ('DIC', 'Independent calibration', 'Inverse back-substitution',
-                        'Independent - DIC', 'Inverse - DIC')
-            values = [*displayed, *(error[:, component] for error in errors)]
-            for i, (name, heading, value) in enumerate(zip(names, headings, values)):
-                key = f'{name}_{label}'
-                maps[key], titles[key] = value, f'{case.name}: {heading}, {label}'
-                limits[key] = (low, high) if i < 3 else (-bound, bound)
-                point_table[f'{key}_mm'] = value+origin if i < 3 else value
-        x_grid, y_grid, fields = grid_fields_from_points(xy, maps, (grid_ids or {}).get(case.name))
+            bound = (max(1e-12, *(np.abs(error[:, component]).max() for error in relative.values()))
+                     if np.isfinite(scale[component]) else 1.)
+            for model, value in displayed.items():
+                key = f'{model}_{label}'
+                maps[key], titles[key] = value, f'{condition}\n{headings.get(model, "DIC")}: {label}'
+                limits[key] = (low, high)
+                point_table[f'{key}_mm'] = {'dic': observed, **predictions}[model][:, component]
+            for model, error in errors.items():
+                key = f'{model}_error_{label}'
+                error_maps[key] = relative[model][:, component]
+                titles[key] = f'{condition}: {model} relative error, {label}\nDIC deformation RMS = {scale[component]:.5g} mm'
+                limits[key] = (-bound, bound)
+                point_table[f'{key}_mm'] = error[:, component]
+                point_table[f'{model}_relative_error_{label}_percent'] = relative[model][:, component]
+            point_table[f'dic_deformation_rms_{label}_mm'] = np.full(len(xy), scale[component])
+        ids = (grid_ids or {}).get(case.name)
+        x_grid, y_grid, fields = grid_fields_from_points(xy, maps, ids)
         plot_grid_fields(output/case.name, case.name, x_grid, y_grid,
                          [(key, value, titles[key]) for key, value in fields.items()],
                          cmap='jet', limits=limits, title_prefix='', unit='mm')
+        x_grid, y_grid, fields = grid_fields_from_points(xy, error_maps, ids, allow_nan=True)
+        plot_grid_fields(output/case.name, case.name, x_grid, y_grid,
+                         [(key, value, titles[key]) for key, value in fields.items()],
+                         cmap='jet', limits=limits, title_prefix='', unit='% of DIC deformation RMS')
         pd.DataFrame(point_table).to_csv(output/case.name/'point_fields.csv', index=False)
-        for model, state, error in zip(('forward', 'inverse'), (forward, inverse), errors):
+        for model, state in states.items():
+            error = errors[model]
             rows.append({'case': case.name, 'role': 'fit' if case.name in fit_names else 'prediction',
                          'model': model, 'weighted_rms_mm': state['weighted_rms'],
                          'rmse_ux_mm': np.sqrt(np.mean(error[:, 0]**2)),
                          'rmse_uy_mm': np.sqrt(np.mean(error[:, 1]**2)),
                          'absolute_p95_ux_mm': np.quantile(np.abs(error[:, 0]), .95),
                          'absolute_p95_uy_mm': np.quantile(np.abs(error[:, 1]), .95)})
+            weights = case.observation.weight_vector.reshape(-1, 2)
+            for component, label in enumerate(('ux', 'uy')):
+                values = relative[model][:, component]
+                relative_rows.append({
+                    'case': case.name, 'role': rows[-1]['role'], 'model': model, 'component': label,
+                    'dic_deformation_rms_mm': scale[component], 'relative_defined': bool(np.isfinite(scale[component])),
+                    'relative_weighted_rms_percent': np.sqrt(np.average(values**2, weights=weights[:, component])),
+                    'absolute_relative_p95_percent': np.quantile(np.abs(values), .95),
+                })
     table = pd.DataFrame(rows)
-    table.to_csv(output/'forward_inverse_comparison.csv', index=False)
+    if len(model_states) == 2:
+        table.to_csv(output/'forward_inverse_comparison.csv', index=False)
+    pd.DataFrame(relative_rows).to_csv(output/'relative_error_summary.csv', index=False)
     return table
