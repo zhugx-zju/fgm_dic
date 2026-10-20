@@ -8,7 +8,7 @@
 
 ## 四个独立步骤
 
-安装 `requirements.txt`。默认配置采用 DIC 范围计算域及原始 Tikhonov + L-curve，结果目录为 `results/dic_case_tikhonov_lcurve_20261019/`；真实 DIC 四步计算已完成，L-curve选得γ≈3.1623×10⁻¹⁰。当前结果和数值停止条件见 [实际反演记录](docs/l_curve_dic_inversion_20261020.md)。新实验在项目根目录依次执行：
+安装 `requirements.txt`。默认配置采用 DIC 范围计算域及原始 Tikhonov + L-curve，结果目录为 `results/dic/`；真实 DIC 四步计算已完成，L-curve选得γ≈3.1623×10⁻¹⁰。当前结果和数值停止条件见 [实际反演记录](docs/l_curve_dic_inversion_20261020.md)。新实验在项目根目录依次执行：
 
 ```powershell
 python -m script.step1_prepare_dic
@@ -26,7 +26,7 @@ python -m script.step4_compare_results
 | DIC 反演 | `03_inverse/` | `云图.html`、二维模量、E(x)、DIC／回代／相对误差对照、识别与预测记录 |
 | 比较出图 | `04_comparison/` | `打开查看结果.html`、CSV、各 ν/平台的 PNG/SVG |
 
-浏览入口现指向已完成的DIC范围计算域四步结果，含L-curve、自由二维模量、独立标定正演/DIC/反演回代对照及280N预测；辅助诊断内另有ν=0.33固定γ敏感性结果。历史 `results/dic_case_commonmesh_20261019_01/` 保留旧 70×20 mm 域、旧目标及空间验证选参结果，不能与新域混用。每步自动更新同组 `结果总览.html` 的四个卡片。数值结果与当前内核一致时，`--plot-only` 可重复刷新图表，不重算正反问题；内核变化后需重新准备。
+浏览入口现指向已完成的DIC范围计算域四步结果，含L-curve、自由二维模量、独立标定正演/DIC/反演回代对照及280N预测；辅助诊断内另有ν=0.33固定γ敏感性结果。历史 `results/dic/history/` 保留旧 70×20 mm 域、旧目标及空间验证选参结果，不能与新域混用。每步自动更新同组 `结果总览.html` 的四个卡片。数值结果与当前内核一致时，`--plot-only` 可重复刷新图表，不重算正反问题；内核变化后需重新准备。
 
 误差云图统一采用百分比：位移误差以对应平台 DIC 去除三个刚体分量后的分量 RMS 归一化，避免逐点除以过零位移；原始残差仍以 mm 保存。第 2 步直接展示正演与 DIC 的并排对照，无需等到第 4 步。
 

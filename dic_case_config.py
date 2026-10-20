@@ -4,7 +4,7 @@ from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).resolve().parent
 CASE_ID = 'sample2_run3_tikhonov_lcurve'
-CASE_OUTPUT = PROJECT_ROOT / 'results' / 'dic_case_tikhonov_lcurve_20261019'
+CASE_OUTPUT = PROJECT_ROOT / 'results' / 'dic'
 SAMPLE_ROOT = PROJECT_ROOT / 'post_tensile_test' / '1016' / 'sample_2'
 PLATFORMS = {
     '180N': {'folder': SAMPLE_ROOT / '3' / '180N_3', 'stages': (259, 273), 'run': 3, 'setting_N': 180},

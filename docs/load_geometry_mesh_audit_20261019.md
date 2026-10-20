@@ -65,6 +65,6 @@
 
 ## 数值记录与结论边界
 
-结果保存在 `results/dic_case_commonmesh_20261019_01/load_geometry_mesh_audit_20261019_01/`：`load_audit.json` 保存原始 XLSB 身份、工作表、时间窗口与逐项载荷值；`geometry_audit.json` 保存 CAD 来源、尺度与测量缺口；`mesh_audit.json`、`mesh_comparison.csv` 保存细化条件、输入/内核哈希和位移比较。原始工作簿、DIC、独立标定及既有正反演结果保持不变；临时核验不保留测试源码。
+结果保存在 `results/dic/history/load_geometry_mesh_audit_20261019_01/`：`load_audit.json` 保存原始 XLSB 身份、工作表、时间窗口与逐项载荷值；`geometry_audit.json` 保存 CAD 来源、尺度与测量缺口；`mesh_audit.json`、`mesh_comparison.csv` 保存细化条件、输入/内核哈希和位移比较。原始工作簿、DIC、独立标定及既有正反演结果保持不变；临时核验不保留测试源码。
 
 本次补查后，可排除“旧域正演网格过粗”作为 19%—23% 差异的解释，也未发现既有配对规则中的载荷算术错误。载荷参考已按实验定义确认一致；该根试样实际截面尺寸、材料位置及测量系统仍需独立证据，不能把名义几何一致或程序计算一致写成实验条件完全正确。

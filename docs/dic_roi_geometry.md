@@ -66,6 +66,6 @@ F_{\rm ROI}=F_{\rm measured}\frac{w_{\rm ROI}}{20}.
 
 进一步的 [E尺度—ν联合诊断](joint_modulus_poisson_diagnosis_20261019.md) 采用允许ν范围0.24—0.33；ν=0.26仅作为历史基线，范围内联合最优位于ν=0.33、E倍率约1.247，横向相对原基线仍改善有限。
 
-当前准备、正演及图表保存于 `results/dic_case_tikhonov_lcurve_20261019/01_prepared/`、`02_forward/`，入口为同组 `结果总览.html`；`geometry_audit/` 保存解析及梯度检查、载荷与伸长核对记录。
+当前准备、正演及图表保存于 `results/dic/01_prepared/`、`02_forward/`，入口为同组 `结果总览.html`；`geometry_audit/` 保存解析及梯度检查、载荷与伸长核对记录。
 
 方案 TeX 源已同步；内置 LaTeX 编译器因 Windows 沙箱设置尚不可用，方案 PDF 未重新编译，不作为本次已核验交付。

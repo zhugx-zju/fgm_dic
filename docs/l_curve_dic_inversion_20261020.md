@@ -47,7 +47,7 @@
 
 ## 输出及核验范围
 
-当前主目录仍为 `results/dic_case_tikhonov_lcurve_20261019/`：
+当前主目录仍为 `results/dic/`：
 
 - `03_inverse/`：初始化数组、17点扫描、L-curve与曲率、各ν的自由二维E及DIC/回代云图。
 - `04_comparison/`：独立正演/DIC/反演三场同色标、分量残差、E(x)、五区统计和逐测点数据；入口`打开查看结果.html`。

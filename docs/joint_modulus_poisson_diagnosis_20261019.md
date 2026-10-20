@@ -41,7 +41,7 @@ E(x,y)=kE_{\rm calibrated}(x),\qquad k>0,\quad 0.24\leq\nu\leq0.33,
 
 ## 输出与当前流程
 
-正式有效的约束诊断保存于 `results/dic_case_tikhonov_lcurve_20261019/joint_E_nu_diagnosis_20261019_01/nu_024_033/`：
+正式有效的约束诊断保存于 `results/dic/joint_E_nu_diagnosis_20261019_01/nu_024_033/`：
 
 - `audit.json`：范围、来源、目标、选择平台、参数、输入与内核哈希、独立重求解核对。
 - `profile_scan.csv`、`comparison.csv`、`fields.npz`：逐ν目标与最优倍率、同条件比较、测点预测及刚体系数。

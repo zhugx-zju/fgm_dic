@@ -60,4 +60,4 @@
 
 ## 记录
 
-数值与图保存在 `results/dic_case_tikhonov_lcurve_20261019/modulus_assignment_audit_20261019_01/`：`audit.json`、`controlled_comparisons.csv`、`local_strain_descriptors.csv`、`fields.npz` 及 `axial_assignment_comparison.png/svg`。图显示相同真实测点截面的平均轴向位移相对左端之差，单位 μm；基线、反转和尺度诊断共享同一坐标与输入，180N/280N分别成图。PNG已检查渲染。临时算例源码不保留，正式数据、配置和既有结果不变。
+数值与图保存在 `results/dic/modulus_assignment_audit_20261019_01/`：`audit.json`、`controlled_comparisons.csv`、`local_strain_descriptors.csv`、`fields.npz` 及 `axial_assignment_comparison.png/svg`。图显示相同真实测点截面的平均轴向位移相对左端之差，单位 μm；基线、反转和尺度诊断共享同一坐标与输入，180N/280N分别成图。PNG已检查渲染。临时算例源码不保留，正式数据、配置和既有结果不变。

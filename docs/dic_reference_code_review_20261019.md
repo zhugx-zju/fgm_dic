@@ -60,7 +60,7 @@
 
 ## 本次执行证据
 
-本次在 Python 3.12.11 环境直接读取当前配置指定的 `_3` 原始窗口，调用现有生产函数完成临时检查。只保存数值记录，不保留测试源码。证据目录为 `results/dic_case_commonmesh_20261019_01/reference_code_review_20261019_01/`：
+本次在 Python 3.12.11 环境直接读取当前配置指定的 `_3` 原始窗口，调用现有生产函数完成临时检查。只保存数值记录，不保留测试源码。证据目录为 `results/dic/history/reference_code_review_20261019_01/`：
 
 - `review_evidence.json`：审查版本、配置身份、代码哈希、输入核对与各项数值。
 - `disjoint_reference_reproduction/`：C1 的受控 prepared 输出和参考检查记录；输入是在内存中修改的副本，原始 CSV 未改动，未继续正反演。

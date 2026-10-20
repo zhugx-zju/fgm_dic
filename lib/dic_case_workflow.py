@@ -649,9 +649,12 @@ def compare_dic_results(prepared, forward, inverse, output, plots=True, plot_onl
     selection = pd.read_csv(inverse/'selection.csv')
     if plot_only:
         previous = json.loads((output/'run_metadata.json').read_text(encoding='utf-8'))
+        # Absolute locations may change when a complete result tree is moved.
+        # Each upstream workflow and frozen preparation were checked above;
+        # retain the exact metadata hashes as the identity of both sources.
         if (previous['workflow'] != summary['workflow'] or
                 any(previous.get(key) != value for key, value in provenance.items()) or
-                previous['upstream_sources'] != summary['upstream_sources']):
+                sorted(previous['upstream_sources'].values()) != sorted(summary['upstream_sources'].values())):
             raise ValueError('Saved comparison must refer to the SAME frozen upstream results')
         for filename, frame in (('comparison.csv', metrics), ('regional_comparison.csv', regions),
                                 ('selection.csv', selection)):
