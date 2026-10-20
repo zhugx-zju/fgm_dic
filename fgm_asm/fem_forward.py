@@ -4,7 +4,7 @@ Forward FEM solver for FGM plane stress problems.
 
 import numpy as np
 from scipy.sparse import csr_matrix
-from scipy.sparse.linalg import factorized
+from scipy.sparse.linalg import splu
 
 
 class FEMInfo:
@@ -65,8 +65,16 @@ def get_fgm_ke(mesh_info, material_info, D0):
         ke: Element stiffness matrices [n_el, 8, 8]
     """
     E_gauss = _get_gauss_modulus(mesh_info, material_info)
-    weights = E_gauss * mesh_info.gauss_det_j * mesh_info.gauss_w[:, None]
-    return np.einsum('geia,ij,gejb,ge->eab', mesh_info.B_gauss, D0, mesh_info.B_gauss, weights)
+    # Geometry and nu stay fixed during an inverse solve. Cache only the
+    # unit-modulus Gauss matrices; E and its derivative remain unmodified.
+    key = np.asarray(D0).tobytes()
+    cache = getattr(mesh_info, '_unit_stiffness_cache', None)
+    if cache is None or cache[0] != key:
+        unit = np.einsum('geia,ij,gejb,ge->geab', mesh_info.B_gauss, D0,
+                         mesh_info.B_gauss, mesh_info.gauss_det_j)
+        mesh_info._unit_stiffness_cache = (key, unit)
+    weights = E_gauss * mesh_info.gauss_w[:, None]
+    return np.einsum('geab,ge->eab', mesh_info._unit_stiffness_cache[1], weights)
 
 
 def assemble_global_stiffness(mesh_info, ke):
@@ -111,7 +119,8 @@ def _get_free_solver(fem_info):
     """Return the cached sparse solve callable for the free DOFs."""
     if fem_info._solve_free is None:
         K_free = fem_info.K[fem_info.free_dof][:, fem_info.free_dof].tocsc()
-        fem_info._solve_free = factorized(K_free)
+        # The constrained plane-stress stiffness has symmetric sparsity.
+        fem_info._solve_free = splu(K_free, permc_spec='MMD_AT_PLUS_A').solve
     return fem_info._solve_free
 
 

@@ -1,6 +1,7 @@
 """Plot the 220 mm dogbone outline and seven lengthwise infill regions."""
 
 import json
+import importlib.util
 from pathlib import Path
 
 import matplotlib
@@ -27,7 +28,10 @@ def main() -> None:
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     outline = build_smooth_dogbone_polygon(SPECIMEN_CFG)
     parallel_left = -SPECIMEN_CFG.parallel_length / 2
-    prepared = PROJECT_ROOT / "results" / "dic" / "01_prepared" / "run_metadata.json"
+    spec = importlib.util.spec_from_file_location("active_dic_plot_config", PROJECT_ROOT / "dic_case_config.py")
+    config = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(config)
+    prepared = Path(config.CASE_OUTPUT) / "01_prepared" / "run_metadata.json"
     if not prepared.exists():
         raise FileNotFoundError("Run python -m script.step1_prepare_dic before plotting the observed ROI")
     record = json.loads(prepared.read_text(encoding="utf-8"))

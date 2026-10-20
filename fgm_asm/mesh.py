@@ -49,7 +49,7 @@ class MeshInfo:
     Mesh information class for a rectangular domain with uniform quad elements.
     """
 
-    def __init__(self, geo_l, geo_h, nel_x, nel_y):
+    def __init__(self, geo_l, geo_h, nel_x, nel_y, *, nodal_coordinates=None):
         """
         Initialize mesh information.
 
@@ -58,6 +58,8 @@ class MeshInfo:
             geo_h: Height of the domain
             nel_x: Number of elements in x direction
             nel_y: Number of elements in y direction
+            nodal_coordinates: Optional measured regular-grid coordinates in
+                row-major FE order. Export rounding is retained, not rescaled.
         """
         self.geo_l = geo_l
         self.geo_h = geo_h
@@ -84,6 +86,15 @@ class MeshInfo:
             plot_x.T.ravel('F'),
             plot_y.T.ravel('F'),
         ])
+        self.measured_nodal_grid = nodal_coordinates is not None
+        if self.measured_nodal_grid:
+            measured = np.asarray(nodal_coordinates, dtype=float)
+            if (measured.shape != self.coord.shape or not np.isfinite(measured).all() or
+                    not np.allclose(measured, self.coord, rtol=0, atol=1e-7)):
+                raise ValueError('Measured mesh must be a complete regular grid in FE node order (tolerance 1e-7 mm)')
+            self.coord = measured.copy()
+            plot_x = self.coord[:, 0].reshape(self.nods_y, self.nods_x)
+            plot_y = self.coord[:, 1].reshape(self.nods_y, self.nods_x)
         self.X = self.coord[:, 0]
         self.Y = self.coord[:, 1]
 

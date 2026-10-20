@@ -59,13 +59,13 @@ def get_stiffness_gradient(fem_info, lambda_vec, forw_U):
     lambda_ele = lambda_vec[ele_dof_id]
     forw_U_ele = forw_U[ele_dof_id]
 
-    grad_E = np.zeros((mesh_info.n_el, 4))
-
-    for ig in range(mesh_info.gauss_N.shape[0]):
-        B_i = fem_info.B_gauss[ig]
-        BD0B = np.einsum('eia,ij,ejb,e->eab', B_i, fem_info.D0, B_i, fem_info.det_j_gauss[ig])
-        directional_term = np.einsum('ea,eab,eb->e', lambda_ele, BD0B, forw_U_ele)
-        grad_E += (mesh_info.gauss_w[ig] * directional_term)[:, None] * mesh_info.gauss_N[ig][None, :]
+    # lambda_e.T B.T D0 B u_e = (B lambda_e).T D0 (B u_e).
+    # Contract the three strain components instead of rebuilding 8x8 matrices.
+    strain_u = np.einsum('geia,ea->gei', fem_info.B_gauss, forw_U_ele)
+    strain_lambda = np.einsum('geia,ea->gei', fem_info.B_gauss, lambda_ele)
+    directional = np.einsum('gei,ij,gej->ge', strain_lambda, fem_info.D0, strain_u)
+    weighted = directional * fem_info.det_j_gauss * mesh_info.gauss_w[:, None]
+    grad_E = np.einsum('ge,gn->en', weighted, mesh_info.gauss_N)
 
     return np.bincount(id_list, weights=grad_E.T.ravel(), minlength=mesh_info.n_nod)
 

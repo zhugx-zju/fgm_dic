@@ -15,7 +15,8 @@ from fgm_asm import MeshInfo, lbfgs_inverse_solver_scipy
 from fgm_asm.load_case import evaluate_observation
 from fgm_asm.l_curve import select_l_curve_corner
 from fgm_asm.research import make_observation_case, partition_modulus, solve_forward
-from .dic_preprocessing import plot_displacement_clouds, plot_grid_fields, save_dic_comparison
+from .dic_preprocessing import (grid_fields_from_points, plot_displacement_clouds,
+                                plot_grid_fields, save_dic_comparison)
 from .experiment_data import (check_platform_reference, dic_roi_mask, file_sha256,
                               load_calibration, load_dic_platform)
 from .research_reporting import plot_l_curve, plot_modulus_comparison, save_run, save_x_profile
@@ -257,6 +258,22 @@ def _metrics(state):
             'p95_uy_mm': np.quantile(np.abs(residual[:, 1]), .95)}
 
 
+def dic_mesh_coordinates(reference, matrix, offset):
+    """Complete measured lattice in FE order, retaining exported millimetres."""
+    xy = reference.coordinates @ np.asarray(matrix).T + np.asarray(offset)
+    x, y, _ = grid_fields_from_points(xy, {}, reference.grid_ids)
+    if x.size != len(xy):
+        raise ValueError('DIC mesh requires a complete rectangular point grid; no missing nodes are filled')
+    iy, ix = np.argsort(y.mean(axis=1)), np.argsort(x.mean(axis=0))
+    x, y = x[np.ix_(iy, ix)], y[np.ix_(iy, ix)]
+    if np.any(np.diff(x, axis=1) <= 0) or np.any(np.diff(y, axis=0) <= 0):
+        raise ValueError('DIC mesh axes must be strictly ordered')
+    coordinates = np.column_stack([x.ravel(), y.ravel()])
+    trial = MeshInfo(np.ptp(x), np.ptp(y), x.shape[1]-1, x.shape[0]-1,
+                     nodal_coordinates=coordinates)
+    return trial.coord, (trial.nel_x, trial.nel_y)
+
+
 def resolve_dic_geometry(cfg, reference):
     """Resolve ROI from fit data only, without scaling coordinates or material zones.
 
@@ -327,6 +344,15 @@ def resolve_dic_geometry(cfg, reference):
                 'direction_note': spec['note'],
                 'transverse_location': 'internal DIC ROI bounds; no measured specimen edge registration',
             }
+    mesh_source = getattr(cfg, 'MESH_SOURCE', 'configured_grid')
+    if mesh_source == 'dic_grid':
+        matrix, offset, _ = registration_transform(reference.coordinates, resolved.REGISTRATION)
+        if matrix is None:
+            raise ValueError('DIC mesh requires an explicit coordinate transform')
+        _, counts = dic_mesh_coordinates(reference, matrix, offset)
+        resolved.NEL_X, resolved.NEL_Y = counts
+    elif mesh_source != 'configured_grid':
+        raise ValueError('MESH_SOURCE must be configured_grid or dic_grid')
     return resolved
 
 
@@ -367,6 +393,8 @@ def prepare_dic(cfg, output):
                                                          'centered assumption' if not verified else 'registered')},
                'shared_mesh': {'nel_x': cfg.NEL_X, 'nel_y': cfg.NEL_Y,
                                'hx_mm': cfg.GEO_L/cfg.NEL_X, 'hy_mm': cfg.GEO_H/cfg.NEL_Y,
+                                'source': getattr(cfg, 'MESH_SOURCE', 'configured_grid'),
+                                'nodes': (cfg.NEL_X+1)*(cfg.NEL_Y+1),
                                'same_for_forward_and_inverse': True},
                'force_pairing': records, 'shared_reference': shared,
                'platforms': {name: p.metadata for name, p in platforms.items()},
@@ -382,6 +410,8 @@ def prepare_dic(cfg, output):
     if hasattr(cfg, 'FORCE_PAIRING_CSV') and any('force_N' not in i for i in cfg.PLATFORMS.values()):
         summary['force_source_sha256'] = file_sha256(Path(cfg.FORCE_PAIRING_CSV))
     arrays, rows = {}, []
+    if getattr(cfg, 'MESH_SOURCE', 'configured_grid') == 'dic_grid':
+        arrays['dic_mesh_coordinates'], _ = dic_mesh_coordinates(reference, matrix, offset)
     for name, platform in platforms.items():
         spacing = measured_grid_spacing(platform, matrix if matrix is not None else np.eye(2))
         row = {'case': name, 'dic_row_step_mm': spacing[0], 'dic_col_step_mm': spacing[1],
@@ -429,10 +459,11 @@ def load_prepared(source):
             raise ValueError('FE kernel changed since preparation; prepare a new case')
     cfg = SimpleNamespace(**metadata['configuration'], __file__=str(source/'configuration_snapshot.py')
                           if (source/'configuration_snapshot.py').exists() else None)
-    mesh = MeshInfo(cfg.GEO_L, cfg.GEO_H, cfg.NEL_X, cfg.NEL_Y)
     arrays, cases = {}, []
     with np.load(source/'fields.npz') as fields:
         arrays = {key: fields[key].copy() for key in fields.files}
+    mesh = MeshInfo(cfg.GEO_L, cfg.GEO_H, cfg.NEL_X, cfg.NEL_Y,
+                    nodal_coordinates=arrays.get('dic_mesh_coordinates'))
     for name in cfg.PLATFORMS:
         force_record = metadata['force_pairing'][name]
         measured_force = force_record['mean_corrected_force_N']

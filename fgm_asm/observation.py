@@ -259,6 +259,15 @@ def build_observation_operator(
     if np.any(y_meas < -tol) or np.any(y_meas > mesh_info.geo_h + tol):
         raise ValueError("At least one measurement y-coordinate lies outside the FE domain.")
 
+    if getattr(mesh_info, 'measured_nodal_grid', False):
+        from scipy.spatial import cKDTree
+        distance, nodes = cKDTree(mesh_info.coord).query(np.column_stack([x_meas, y_meas]))
+        if np.any(distance > 1e-7):
+            raise ValueError('DIC-grid observations must match measured FE nodes within 1e-7 mm')
+        columns = np.column_stack([2*nodes, 2*nodes+1]).ravel()
+        return csr_matrix((np.ones(len(columns)), (np.arange(len(columns)), columns)),
+                          shape=(len(columns), mesh_info.n_dof))
+
     x_use = np.clip(x_meas, 0.0, mesh_info.geo_l)
     y_use = np.clip(y_meas, 0.0, mesh_info.geo_h)
 

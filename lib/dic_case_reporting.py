@@ -64,6 +64,8 @@ def publish_stage(case_root, stage, output, summary, project_root=None):
     case_root.mkdir(parents=True, exist_ok=True)
     catalog = case_root/'结果目录.json'
     record = json.loads(catalog.read_text(encoding='utf-8')) if catalog.exists() else {'stages': {}}
+    if record.get('case_id') not in (None, summary['case_id']):
+        record = {'stages': {}}
     record.update(case_id=summary['case_id'], coordinates_verified=summary['coordinates_verified'])
     record['stages'][stage] = {'path': str(output), 'status': summary['status']}
     catalog.write_text(json.dumps(record, ensure_ascii=False, indent=2)+'\n', encoding='utf-8')
@@ -232,12 +234,17 @@ def write_case_report(output, summary, metrics, regions, selection):
     status = summary['status']
     cover = pd.DataFrame(summary['coverage'])
     metric_table, region_table = pd.DataFrame(metrics), pd.DataFrame(regions)
+    observation_description = (
+        'DIC参考点直接作为有限元节点，H仅将节点位移置换到测点顺序，无测点插值。'
+        if mesh.get('source') == 'dic_grid' else
+        'DIC在原始测点参与比较，H在实际位置计算Q4插值。'
+    )
     title = f"DIC 正反演对照：{summary['case_id']}"
     overview = Path(summary.get('prepared_directory', output.parent/'01_prepared')).parent/'结果总览.html'
     lines = [f'# {title}', '', f'运行状态：`{status}`。物理坐标配准已核验：{verified}。', '',
              '## 几何、观测与统一网格', '',
              _geometry_description(summary), '',
-             f"独立标定正演与自由二维反演共用 {mesh['nel_x']}×{mesh['nel_y']} 单元，单元尺寸 {mesh['hx_mm']}×{mesh['hy_mm']} mm。DIC 在原始测点参与比较，不先重采样到有限元节点。", '',
+             f"独立标定正演与自由二维反演共用 {mesh['nel_x']}×{mesh['nel_y']} 单元，单元尺寸 {mesh['hx_mm']}×{mesh['hy_mm']} mm。{observation_description}", '',
              '有限元三点约束只固定数值刚体规范；DIC 与模型在观测空间通过同一两平移、一微小转动子空间配准。未删除仿射伸长或横向收缩。', '',
              '有效观测与采样间距见 `input_audit.csv`。', '',
              '## 独立标定正演、DIC 与反演回代', '', RELATIVE_ERROR_DESCRIPTION, '',
@@ -252,7 +259,7 @@ def write_case_report(output, summary, metrics, regions, selection):
                   '| --- | --- | ---: | ---: | ---: |']
         for r in regions:
             lines.append(f"| {r['nu']:.2f} | {r['infill_percent']}% | {r['mean_E_MPa']:.1f}±{r['sd_E_MPa']:.1f} | {r['inverse_mean_E_MPa']:.1f} | {r['difference_percent']:+.2f}% |")
-        lines += ['', '组内 SD 和反演场空间 SD 的含义不同，均不作为参数置信区间；分区统计包含未观测边带的模型延拓。', '',
+        lines += ['', '组内 SD 和反演场空间 SD 的含义不同，均不作为参数置信区间；分区统计限于当前计算域，并非完整制造区统计。', '',
                   f"主泊松比预先指定为 {summary['primary_nu_prespecified']}；其他 ν 为同条件敏感性比较，不根据留出平台误差更换主值。", '',
                   f"gamma={summary['selected_gamma']:g}，只按识别平台的 L-curve 最大正曲率拐点选择；状态：{summary['l_curve_status']}。不按预测平台误差或独立材料标定调参。"]
         settings = summary['inverse_settings']

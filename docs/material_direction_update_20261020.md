@@ -1,5 +1,7 @@
 # 主流程材料方向统一更新
 
+**粗网格基线记录：** 下文为70×20单元、1491参数的结果，保留在`results/dic/`。当前DIC节点网格见[新记录](dic_mesh_workflow_20261020.md)，不得将旧γ或旧反演场混作新网格结果。
+
 ## 当前状态
 
 主配置与当前四步结果已统一采用填充率沿原始−Y递增。固定FEM x仍沿原始+Y，故独立标定模量与反演宽度均值总体都沿FEM x递减。原+Y递增四步作为`results/dic/history/plusY/`成员保存在`results/dic/history/previous_runs.zip`，见[历史索引](results_history.md)。当前采用方向为本轮明确的输入修正；拟合改善不作为独立制造方向测量。

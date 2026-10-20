@@ -3,8 +3,8 @@
 from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).resolve().parent
-CASE_ID = 'sample2_run3_marks_73_85_minusY'
-CASE_OUTPUT = PROJECT_ROOT / 'results' / 'dic'
+CASE_ID = 'sample2_run3_dic_mesh'
+CASE_OUTPUT = PROJECT_ROOT / 'results' / 'dic_mesh'
 SAMPLE_ROOT = PROJECT_ROOT / 'post_tensile_test' / '1016' / 'sample_2'
 PLATFORMS = {
     '180N': {'folder': SAMPLE_ROOT / '3' / '180N_2' / 'region', 'stages': (259, 273), 'run': 3, 'setting_N': 180},
@@ -21,8 +21,9 @@ DOMAIN_SOURCE = 'dic_reference_bounds'
 GEO_L, GEO_H, THICKNESS = None, None, 3.2
 LOAD_SECTION_WIDTH = 20.  # Actual specimen width, not the internal DIC ROI width.
 INTERNAL_SIDE_BOUNDARY = 'traction_free_approximation'
-# One mesh for BOTH independent forward and inverse; DIC points stay unchanged.
-NEL_X, NEL_Y = 70, 20
+# FE nodes are the complete DIC reference grid; counts resolve from fit data.
+MESH_SOURCE = 'dic_grid'
+NEL_X, NEL_Y = None, None
 # Groups are ordered along increasing FEM x = raw +Y.
 REGION_INFILL_PERCENT = (90, 80, 70, 60, 50)
 # Manufacturing x increases with infill; zero is the specimen center.
@@ -46,7 +47,7 @@ OUTSIDE_POINT_POLICY = 'reject'
 FIT_CASES, PREDICT_CASES = ('180N',), ('280N',)
 # Experiment-specific admissible range: 0.24 <= nu <= 0.33. The values below
 # retain the frozen workflow's historical comparison points, not measured nu.
-NU_VALUES = (.24, .26, .28)
+NU_VALUES = (.24, .26, .28, .33)
 PRIMARY_NU = .26  # Historical baseline; joint E/nu diagnosis is saved separately.
 # Original area-weighted displacement mismatch + gamma/2 * integral(|grad E|^2).
 # No reference modulus, noise normalization, or calibration-based initial field.
