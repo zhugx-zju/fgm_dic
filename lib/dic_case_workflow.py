@@ -34,6 +34,7 @@ def _solver_summary(result):
                                           'n_evaluations', 'final_cost', 'regularization_mode',
                                           'residual_norm', 'regularization_norm')}
     summary['final_gradient_inf'] = float(np.max(np.abs(result['final_gradient'])))
+    summary['line_search_restarts'] = result.get('line_search_restarts', [])
     return summary
 
 def _regional_comparison(mesh, field, calibration, boundaries):
@@ -182,11 +183,67 @@ def _validate(cfg):
 
 
 def _optimize(cfg, mesh, cases, gamma, nu, initial=None):
-    return lbfgs_inverse_solver_scipy(
+    result = lbfgs_inverse_solver_scipy(
         mesh, observation_cases=cases, E_init=initial,
         gamma=gamma, max_iter=cfg.MAX_ITER, max_fun=cfg.MAX_FUN,
         ftol=cfg.FTOL, gtol=cfg.GTOL, nu=nu,
         regularization_mode='gradient')
+    restarts = []
+    # A failed L-BFGS line search can leave an almost stationary iterate.
+    # Reset its history, without changing tolerances or the per-point budget.
+    while (not result['converged'] and 'ABNORMAL' in result['message'].upper() and
+           np.max(np.abs(result['final_gradient'])) <= 10*cfg.GTOL and
+           len(restarts) < 2):
+        remaining_iterations = cfg.MAX_ITER-result['n_iterations']
+        remaining_evaluations = cfg.MAX_FUN-result['n_evaluations']
+        if min(remaining_iterations, remaining_evaluations) <= 0:
+            break
+        previous = result
+        retried = lbfgs_inverse_solver_scipy(
+            mesh, observation_cases=cases, E_init=previous['E_final'], gamma=gamma,
+            max_iter=remaining_iterations, max_fun=remaining_evaluations,
+            ftol=cfg.FTOL, gtol=cfg.GTOL, nu=nu, regularization_mode='gradient')
+        restarts.append({'previous_message': previous['message'],
+                         'previous_gradient_inf': float(np.max(np.abs(previous['final_gradient']))),
+                         'restart_message': retried['message'],
+                         'restart_iterations': retried['n_iterations'],
+                         'restart_evaluations': retried['n_evaluations']})
+        for key in ('cost_history', 'cost_tar_history', 'cost_reg_history',
+                    'gradient_norms', 'grad_norm_history'):
+            retried[key] = np.r_[previous[key], retried[key][1:]]
+        retried['n_iterations'] += previous['n_iterations']
+        retried['n_evaluations'] += previous['n_evaluations']
+        result = retried
+    result['line_search_restarts'] = restarts
+    return result
+
+
+def homogeneous_dic_initial(mesh, cases, thickness, nu):
+    """Fit one uniform starting E from fit observations, with separate rigid modes.
+
+    U(E)=U(1 MPa)/E for uniform material under fixed loads. This determines
+    only an initial value; the inverse retains every independent nodal modulus.
+    No calibration values, reference-modulus normalization or held-out data enter.
+    """
+    numerator, denominator = 0., 0.
+    if not cases:
+        raise ValueError('Homogeneous initialization needs fit observations')
+    for case in cases:
+        unit_u, _ = solve_forward(mesh, case.bc_info['tensile_end_force'], thickness,
+                                  nu, np.ones(mesh.n_nod))
+        measured = evaluate_observation(case, np.zeros(mesh.n_dof))['residual']
+        predicted = measured-evaluate_observation(case, unit_u)['residual']
+        weights = case.observation.weight_vector
+        numerator += float(predicted @ (weights*measured))
+        denominator += float(predicted @ (weights*predicted))
+    if not np.isfinite([numerator, denominator]).all() or min(numerator, denominator) <= 0:
+        raise ValueError('Fit DIC does not support a positive finite homogeneous initial modulus')
+    initial_E = denominator/numerator
+    return np.full(mesh.n_nod, initial_E), {
+        'source': 'homogeneous_dic_fit', 'uniform_E_MPa': initial_E,
+        'fit_cases': [case.name for case in cases], 'nu': nu,
+        'uses_calibration': False, 'uses_prediction_cases': False,
+    }
 
 
 def _metrics(state):
@@ -386,16 +443,18 @@ def inverse_dic(prepared, output):
         raise FileExistsError('Choose a new inverse output')
     cfg, mesh, cases, metadata, provenance = load_prepared(prepared)
     calibration = pd.DataFrame(metadata['calibration'])
+    fit = [c for c in cases if c.name in cfg.FIT_CASES]
+    initial, initialization = homogeneous_dic_initial(mesh, fit, cfg.THICKNESS, cfg.PRIMARY_NU)
     summary = _stage_summary(metadata, provenance, 'dic_case_inverse')
     summary.update(gamma_selection_method='l_curve', l_curve_enabled=True, selected_gamma=None,
                    gamma_at_scan_boundary=None,
-                   scan_initialization='solver default (0.501 MPa), then decreasing-gamma continuation',
+                   scan_initialization='fit-DIC homogeneous initialization, then decreasing-gamma converged continuation',
+                   initialization=initialization,
                    final_initialization='selected L-curve field, identical for all nu')
-    save_run(output, cfg, summary)
+    save_run(output, cfg, summary, {'scan_initial_E': initial})
     output = Path(output)
-    fit = [c for c in cases if c.name in cfg.FIT_CASES]
     selection = []
-    initial, initial_source = None, 'solver_default'
+    initial_source = 'homogeneous_dic_fit'
     for gamma in sorted(cfg.GAMMA_CANDIDATES, reverse=True):
         result = _optimize(cfg, mesh, fit, gamma, cfg.PRIMARY_NU, initial)
         solver = _solver_summary(result)
@@ -581,6 +640,8 @@ def compare_dic_results(prepared, forward, inverse, output, plots=True, plot_onl
                                      for key in ('FTOL', 'GTOL', 'MAX_ITER', 'MAX_FUN', 'GAMMA_CANDIDATES')},
                    gamma_selection_method=sources[1]['gamma_selection_method'],
                    l_curve_enabled=sources[1]['l_curve_enabled'],
+                   scan_initialization=sources[1].get('scan_initialization', 'See saved inverse metadata'),
+                   initialization=sources[1].get('initialization'),
                    inverse_directory=str(inverse.resolve()),
                    l_curve_status=sources[1]['l_curve_status'], l_curve_message=sources[1]['l_curve_message'])
     metrics = pd.concat([pd.read_csv(forward/'comparison.csv'), pd.read_csv(inverse/'comparison.csv')], ignore_index=True)

@@ -230,7 +230,7 @@ def write_case_report(output, summary, metrics, regions, selection):
                   '目标函数为 `0.5*r.T@W_area@r + 0.5*gamma*integral(|grad(E)|^2)`。W_area 仅保留真实测点面积权重，不设参考模量，不作模量或噪声尺度归一化。', '',
                   f"已启用 L-curve。gamma 候选值为 {settings['GAMMA_CANDIDATES']}；在预设主 ν 下，仅使用识别平台，计算原始残差范数 ρ 与正则范数 η（不含 gamma）。", '',
                   '在 log(ρ)、log(η) 上用有符号三点曲率识别拐点，排除未收敛、重合、非单调及端部缺少支撑的候选；不能识别拐点时保留诊断并停止，不回退至空间验证或固定 gamma。', '',
-                  '扫描从大 gamma 到小 gamma 延续，首点使用原求解器默认初值 0.501 MPa，后续使用上个收敛解；全部 ν 最后从同一个所选场出发重新求解。独立标定不进入反演目标或初值。', '',
+                  f"扫描初始化策略：{summary.get('scan_initialization', '见上游反演元数据')}。全部ν最后从同一个所选场出发重新求解，独立标定不进入反演目标或初值。", '',
                   f"已保存计算实际使用 FTOL={settings['FTOL']:g}、GTOL={settings['GTOL']:g}，最多 {settings['MAX_ITER']} 次迭代、{settings['MAX_FUN']} 次函数计算。配置取自上游反演记录，修改源配置和重新出图不会更新已有计算。", '',
                   '函数容差和梯度容差是不同的停止条件；任一满足即可停止，不要求二者同时满足。', '',
                   '| ν | 迭代数 | 最终梯度 ∞ 范数 | 满足 GTOL | 停止信息 |', '| --- | ---: | ---: | --- | --- |']
