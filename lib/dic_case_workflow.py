@@ -455,7 +455,8 @@ def inverse_dic(prepared, output):
     output = Path(output)
     selection = []
     initial_source = 'homogeneous_dic_fit'
-    for gamma in sorted(cfg.GAMMA_CANDIDATES, reverse=True):
+    for scan_index, gamma in enumerate(sorted(cfg.GAMMA_CANDIDATES, reverse=True), start=1):
+        print(f'L-curve {scan_index}/{len(cfg.GAMMA_CANDIDATES)}: gamma={gamma:.12g}', flush=True)
         result = _optimize(cfg, mesh, fit, gamma, cfg.PRIMARY_NU, initial)
         solver = _solver_summary(result)
         record = {'gamma': gamma, 'nu': cfg.PRIMARY_NU, 'converged': result['converged'],

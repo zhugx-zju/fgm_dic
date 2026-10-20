@@ -1,4 +1,6 @@
-# 真实DIC的L-curve自由二维模量反演
+# 真实DIC的L-curve自由二维模量反演：17点基线
+
+本记录对应17点扫描，四步数值结果归档于 `results/dic/history/lcurve17/`。当前同范围50个对数等距点已经完成，见 [50点实际反演记录](l_curve_50_points_20261020.md)；两轮结果按各自冻结配置解释。
 
 ## 结果
 
@@ -47,12 +49,12 @@
 
 ## 输出及核验范围
 
-当前主目录仍为 `results/dic/`：
+17点四步主目录为 `results/dic/history/lcurve17/`：
 
 - `03_inverse/`：初始化数组、17点扫描、L-curve与曲率、各ν的自由二维E及DIC/回代云图。
 - `04_comparison/`：独立正演/DIC/反演三场同色标、分量残差、E(x)、五区统计和逐测点数据；入口`打开查看结果.html`。
-- `nu_033_inverse_check_20261020_01/`：相同γ下的上界敏感性、同ν独立正演对照、完整场及`诊断报告.html`。
-- `solver_initialization_check_20261019_01/`：初始化与重启核验、原冷启动扫描和首次完整扫描的原记录；不与当前扫描点混合选γ。
+- `results/dic/nu_033_inverse_check_20261020_01/`：沿用17点所选γ的上界敏感性、同ν独立正演对照、完整场及`诊断报告.html`。
+- `results/dic/solver_initialization_check_20261019_01/`：初始化与重启核验、原冷启动扫描和首次完整扫描的原记录；不与当前扫描点混合选γ。
 
 从根目录`打开结果.html`进入同组总览，可访问四步主结果与辅助诊断。实际执行命令为`python -m script.step3_inverse_dic`与`python -m script.step4_compare_results`，解释器为abqinter Python 3.12.11，输入及源代码哈希随数值记录保存。
 

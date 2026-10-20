@@ -45,6 +45,7 @@ PRIMARY_NU = .26  # Historical baseline; joint E/nu diagnosis is saved separatel
 # Original area-weighted displacement mismatch + gamma/2 * integral(|grad E|^2).
 # No reference modulus, noise normalization, or calibration-based initial field.
 REGULARIZATION_MODE = 'gradient'
-GAMMA_CANDIDATES = tuple(10.**(-12 + .5*i) for i in range(17))
+# 50 logarithmically spaced candidates, including both endpoints.
+GAMMA_CANDIDATES = tuple(10.**(-12 + 8*i/49) for i in range(50))
 MAX_ITER, MAX_FUN = 1500, 12000
 FTOL, GTOL = 1e-30, 1e-12

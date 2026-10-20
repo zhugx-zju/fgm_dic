@@ -95,6 +95,8 @@ def publish_stage(case_root, stage, output, summary, project_root=None):
     history = case_root/'history'/'结果总览.html'
     if history.exists():
         parts.append(f'<p><a href="{_link(history, case_root)}">历史版本结果 →</a>（按原计算条件保留）</p>')
+    for archive in sorted((case_root/'history').glob('*/结果总览.html')):
+        parts.append(f'<p><a href="{_link(archive, case_root)}">历史版本：{html.escape(archive.parent.name)} →</a></p>')
     diagnostics = sorted(case_root.rglob('诊断报告.html'))
     if diagnostics:
         parts.append('<h2>辅助诊断</h2><ul>')
