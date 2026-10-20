@@ -11,7 +11,7 @@
 | 1. 准备数据 | `script/step1_prepare_dic.py` | 实验配置、DIC CSV、载荷配对、独立标定 | `01_prepared/`：冻结输入、核查表、DIC 两分量云图和 `云图.html` |
 | 2. 独立正演 | `script/step2_forward_calibrated.py` | `01_prepared/` | `02_forward/`：分区标定模量、各 ν 的 DIC／正演／相对误差对照、数组与 `云图.html` |
 | 3. DIC 反演 | `script/step3_inverse_dic.py` | `01_prepared/` | `03_inverse/`：L-curve 与曲率、各 ν 的二维模量、DIC／回代／相对误差对照、E(x)、数组与 `云图.html` |
-| 4. 比较出图 | `script/step4_compare_results.py` | 同一 `01_prepared/` 对应的正反演结果 | `04_comparison/`：DIC/独立正演/反演回代对照、二维模量、E(x)、五区统计、误差表和 HTML 报告 |
+| 4. 比较出图 | `script/step4_compare_results.py` | 同一 `01_prepared/` 对应的正反演结果 | `04_comparison/`：DIC/独立正演/反演回代对照、二维模量、E(x)、分区统计、误差表和 HTML 报告 |
 
 第 2、3 步分别求解正问题和反问题；第 3 步不需要第 2 步的位移来识别模量，第 4 步才汇合两条证据链。第 4 步不重新运行有限元或优化器。
 
@@ -19,7 +19,7 @@
 
 在项目根目录、安装 `requirements.txt` 的 Python 环境中，依次运行：
 
-默认配置使用 `180N_2/region`、`280N_2/region`，按73/85 mm标线中点及材料沿−Y递增定位，保留独立毫米尺度，输出到 `results/dic_mesh/`。50点扫描及四步计算按新几何执行，结果见[当前DIC网格记录](dic_mesh_workflow_20261020.md)。旧版本统一存于`history/previous_runs.zip`，见[历史索引](results_history.md)。新实验四步命令为：
+默认配置读取`180N_2/all_region`和`280N_2/all_region`；从七个连续16 mm目标区与实际坐标取交集，得到约106×18.48 mm、368×65点。沿用已确认共享毫米坐标系下的原横线定位，输出到`results/dic_full/`，定义与当前状态见[全域七区](dic_full_workflow_20261020.md)。旧region结果在`results/dic_mesh/`，历史索引见[历史结果](results_history.md)。新实验四步命令为：
 
 ```powershell
 python -m script.step1_prepare_dic
@@ -51,7 +51,7 @@ python -m script.step4_compare_results
 history/                     previous_runs.zip、文件哈希清单和历史索引
 ```
 
-当前实验统一保存在 `results/dic_mesh/`。L-curve 扫描与识别模量共用 `03_inverse/`，不再因选参方式另建并列实验目录。历史版本位于 `results/dic/history/`，保留各自冻结数据和计算条件；所有浏览入口均从统一总览访问。移动整套结果时保留原元数据中的计算时路径与哈希，后续出图以实际输入目录定位，并核验冻结文件身份。
+当前实验统一保存在 `results/dic_full/`。L-curve 扫描与识别模量共用 `03_inverse/`，不再因选参方式另建并列实验目录。历史版本位于 `results/dic/history/`，保留各自冻结数据和计算条件；所有浏览入口均从统一总览访问。移动整套结果时保留原元数据中的计算时路径与哈希，后续出图以实际输入目录定位，并核验冻结文件身份。
 
 四步默认在完成数值计算后自动出图。已有与当前数值内核一致的结果时，给相应命令加 `--plot-only`，仅刷新已保存场、L-curve、展示页及派生剖面，不重读原始 DIC、不运行正演或优化器，也不覆盖冻结数组、配置或求解记录。图文件按相同文件名刷新，比较结果统一位于 `04_comparison/`。旧 `results/dic/history/` 浏览文件仍保留，但其目标函数与当前方案不同，不能绕过内核核对直接混用或继续计算。
 
@@ -96,18 +96,18 @@ python -m script.step4_compare_results --config dic_case_sample3
 - `CASE_ID`、`CASE_OUTPUT`：实验身份与新结果目录。
 - `PLATFORMS`：各载荷平台的数据目录、首末阶段、识别或预测用途。载荷可通过 `FORCE_PAIRING_CSV` 的 `run/setting_N` 配对，或显式提供 `force_N` 和 `force_note`；平台名称不直接作为实际拉力。
 - `DIC_UNIT`、`DIC_COORDINATE_STATE`、位移与力的参考态：当前入口采用 mm、相对初始未加载图位移及相应实际拉力。坐标和位移必须共用长度单位；不自动识别单位或推断预载参考。
-- `DOMAIN_SOURCE`：默认 `dic_reference_bounds`，第一步从识别平台初始坐标解析 `GEO_L/GEO_H` 并冻结；预测平台不重新决定域。`THICKNESS/LOAD_SECTION_WIDTH` 来自试样定义，不能用内部 DIC 宽度替代真实承载宽度。`REGION_INFILL_PERCENT`按FEM x排列为90/80/70/60/50%，`REGISTRATION.material_x_sign=-1`控制材料方向，`REGION_BOUNDARIES_MANUFACTURING_X`保留制造界面位置，`specimen_marks`按已确认标线中点映射到FEM原点。旧配置缺少 `DOMAIN_SOURCE` 时仍按显式 `GEO_L/GEO_H` 处理。
+- `DOMAIN_SOURCE`：默认 `dic_reference_bounds`，第一步从识别平台初始坐标解析 `GEO_L/GEO_H` 并冻结；预测平台不重新决定域。`THICKNESS/LOAD_SECTION_WIDTH` 来自试样定义，不能用内部 DIC 宽度替代真实承载宽度。`REGION_INFILL_PERCENT`按FEM x排列为100/90/80/70/60/50/40%，`REGISTRATION.material_x_sign=-1`控制材料方向，`REGION_BOUNDARIES_MANUFACTURING_X`保留制造界面位置，当前`material_coordinates`模式用原始坐标与制造坐标锚点传递位置；`MATERIAL_WINDOW_MM=(-56,56)`按目标坐标连续裁剪，保留真实测点边界。旧`specimen_marks`模式仍用于region的两条标线定位。旧配置缺少 `DOMAIN_SOURCE` 时仍按显式 `GEO_L/GEO_H` 处理。
 - `REGISTRATION`：同一坐标变换用于全部平台，坐标和位移同步变换；平移只作用于坐标，不独立缩放坐标轴。
-- `MESH_SOURCE/NEL_X/NEL_Y`：默认`dic_grid`，由完整DIC点阵解析212×67个单元，保留实际参考坐标；显式`configured_grid`才使用给定单元数。正演、反演及回代共用此网格。
-- `NU_VALUES/PRIMARY_NU`：本组允许范围为 0.24—0.33，具体ν尚未独立确定；当前四步的0.24/0.26/0.28/0.33是预设比较点，0.26 是历史参考值，不是实测中点或已测定材料值。历史 [E—ν联合诊断](results_history.md) 保留旧输入。本轮四个ν共用新DIC网格和固定主γ，见 [DIC网格报告](dic_mesh_workflow_20261020.md)，仅用180N识别，不以280N调参。
+- `MESH_SOURCE/NEL_X/NEL_Y`：默认`dic_grid`，由完整裁剪DIC点阵解析367×64个单元，保留实际参考坐标；显式`configured_grid`才使用给定单元数。正演、反演及回代共用此网格。
+- `NU_VALUES/PRIMARY_NU`：本组允许范围为 0.24—0.33，具体ν尚未独立确定；当前四步的0.24/0.26/0.28/0.33是预设比较点，0.26 是历史参考值，不是实测中点或已测定材料值。历史 [E—ν联合诊断](results_history.md) 保留旧输入。本轮四个ν共用新DIC网格和固定主γ，见 [全域七区报告](dic_full_workflow_20261020.md)，仅用180N识别，不以280N调参。
 
 ## 物理域与坐标配准
 
-当前计算域由识别平台 DIC 初始坐标定义，约 61.497354×19.435484 mm，厚 3.2 mm，点距约 0.290081857 mm。不拉伸点云，不补外推位移。真实承载宽度仍为 20 mm，牵引取 F/(20t)；传入现有有限元内核的截取域端力为 F×GEO_H/20。`mean_corrected_force_N` 始终保存实际测得力，`model_end_force_N` 单独保存截取域端力，不能互换。
+当前计算域由识别平台 DIC 初始坐标定义，约 105.995085×18.484156 mm，厚 3.2 mm，点距约 0.288814944 mm。不拉伸点云，不补外推位移。真实承载宽度仍为 20 mm，牵引取 F/(20t)；传入现有有限元内核的截取域端力为 F×GEO_H/20。`mean_corrected_force_N` 始终保存实际测得力，`model_end_force_N` 单独保存截取域端力，不能互换。
 
 `INTERNAL_SIDE_BOUNDARY='traction_free_approximation'` 显式采用内部横向截面自由近似；不配置该近似时拒绝将较窄区域直接作为自由侧边模型。严格子域等效尚未验证。几何、分区和载荷的完整定义见 [DIC 计算域及载荷截面](dic_roi_geometry.md)。
 
-当前配置采用`specimen_marks`：73 mm为高填充率端、85 mm为低填充率端，region边界对应横线，方向Q=((0,1),(-1,0))。独立DIC跨度61.497354 mm与名义标线推算62 mm的差异保留；材料制造坐标为36.748676795−FEM x mm。因近似标线间隔、名义总长和横向位置仍有未闭合项，状态保持条件性，但不再将材料位置放在试样中心。
+当前配置采用`material_coordinates`：共享参考确认后，用原region标线中点的原始Y0=−21.50749765093 mm与制造ξ=6 mm传递位置，方向Q=((0,1),(-1,0))。裁剪后制造ξ=55.74727501954−FEM x mm，原横线定位精度及内部侧边的验证状态保留。
 
 配准支持以下显式模式：
 
@@ -125,15 +125,15 @@ python -m script.step4_compare_results --config dic_case_sample3
 
 纯牵引有限元仅用三个约束去除刚体零空间：左下角 ux/uy 和右下角 uy。它们是求解的数值规范，不要求真实 DIC 在这些点位移为零，也不将一端当作物理夹紧边界。比较时对模型与 DIC 残差拟合相同的两平移和一微小转动，保留真实伸长及横向收缩。改变三个规范约束点后，配准残差与应变应不变；该性质已纳入检验。
 
-当前直接用213×68个DIC参考点作为有限元节点，形成212×67个Q4单元，单元约0.290082×0.290082 mm。正反问题共用14,484个独立模量参数，不绑定不同y行；H是节点到DIC测点顺序的置换，不进行粗网格插值。实际节点坐标保留导出毫米值，只容许1e-7 mm舍入差异；缺点或无法匹配的网格拒绝运行。制造界面仍按物理位置取值。旧70×20单元结果仅作对照，细化本身不等于已经证明网格收敛。
+当前直接用368×65个DIC参考点作为有限元节点，形成367×64个Q4单元，间距约0.288815 mm。23,920个E参数独立，不绑定y行；H为完整节点置换。裁剪只选择观测点，不插值位移、不缩放坐标、不把部分覆盖改称完整七区；实际端区15.747275/10.247810 mm，中间五区各16 mm。当前结果与旧region的网格、几何及观测不同，必须分别保存。
 
 ### 原始目标与 L-curve 选参
 
-目标为 `J(E)=0.5*r.T@W_area@r + 0.5*gamma*integral(|grad E|^2)`。只保留真实 DIC 测点面积权重；不设参考模量，不除以模量或人为噪声尺度，不采用仿射去趋势正则。每个节点的 `m=ln(E)` 独立优化，正则作用于 E，不作用于 log(E)。五区标定只用于独立正演和后处理，不进入反演目标、初值或选参。
+目标为 `J(E)=0.5*r.T@W_area@r + 0.5*gamma*integral(|grad E|^2)`。只保留真实 DIC 测点面积权重；不设参考模量，不除以模量或人为噪声尺度，不采用仿射去趋势正则。每个节点的 `m=ln(E)` 独立优化，正则作用于 E，不作用于 log(E)。七区标定只用于独立正演和后处理，不进入反演目标、初值或选参。
 
 仅在 `FIT_CASES`、预设主 ν=0.26 下计算 L-curve：横轴 `rho=sqrt(r.T@W_area@r)`（mm²），纵轴 `eta=sqrt(integral(|grad E|^2))`（MPa），两轴取对数；eta 不乘 gamma。默认 gamma 从 10⁻¹² 到 10⁻⁴，共 50 个对数等距点，含两端点；log10 间距为 8/49，相邻值倍率约 1.45635。取消空间验证分割，不按拟合/留出误差或材料标定择优。
 
-扫描由大 gamma 到小 gamma 延续：首点使用识别平台位移拟合的均匀模量初值，后续只继承此前的收敛解。先用均匀1 MPa材料计算单位响应，再将公共位移尺度与每个平台的三个刚体分量一起作面积加权最小二乘，恢复初始E；本轮DIC节点网格仅用180N得到约2144.2286 MPa。此值只用于初始化，后续14,484个节点全部独立；不读取独立材料标定或280N，不作为E_REF，不改变原目标及单位。初始数组、来源和逐γ延续来源均保存。原0.501 MPa冷启动的6个未收敛点已随同组初始化核验归档，不与新扫描混合。
+扫描由大 gamma 到小 gamma 延续：首点使用识别平台位移拟合的均匀模量初值，后续只继承此前的收敛解。先用均匀1 MPa材料计算单位响应，再将公共位移尺度与每个平台的三个刚体分量一起作面积加权最小二乘，恢复初始E；本轮全域选区仅用180N得到约2004.7751 MPa。此值只用于初始化，后续23,920个节点全部独立；不读取独立材料标定或280N，不作为E_REF，不改变原目标及单位。初始数组、来源和逐γ延续来源均保存。原0.501 MPa冷启动的6个未收敛点已随同组初始化核验归档，不与新扫描混合。
 
 根据递增 gamma 顺序计算有符号三点 Menger 曲率，取最大正曲率内部点；要求至少五个有效点，峰值两侧各有两个有效扫描点。未收敛点、非正范数、近重合点、非单调局部分支及近乎直线的三点不用于选参。数值阈值为 log 范数单调容许波动 10⁻⁵、最小三点边长 10⁻⁴、最小可分辨正曲率 10⁻⁶；近重合点的微小优化波动可能产生虚假大曲率，故先检查边长。这些阈值用于排除数值退化，不是实验一致性判据。
 

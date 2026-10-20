@@ -35,12 +35,15 @@ def _geometry_description(summary):
     if geometry.get('source') == 'dic_reference_bounds':
         marks = summary.get('material_registration')
         position = ('材料位置仍按点云与试样居中假设；' if marks is None else
-                    f"材料按横线中点定位，制造坐标从左至右为 {marks['manufacturing_roi_x_mm']} mm；"
+                    f"制造坐标从左至右为 {marks['manufacturing_roi_x_mm']} mm；"
                     f"制造坐标相对FEM x的系数为 {marks.get('manufacturing_x_fem_coefficient', 1):+d}；"
                     f"沿FEM x的填充率顺序为 {marks.get('infill_order_along_fem_x', '见冻结配置')}%；"
-                    f"标线端距推算间隔 {marks['nominal_mark_gap_mm']:.6f} mm，"
-                    f"与导出跨度之差 {marks['dic_minus_nominal_mark_gap_mm']:+.6f} mm，保留独立毫米尺度。"
                     '当前方向 ux=DY、uy=−DX；')
+        if marks and marks['method'] == 'shared_reference_material_coordinates_unit_scale':
+            position += '材料定位沿用已确认共用参考图的原始坐标；连续截取目标范围与实测数据的交集，缺失端不补点。'
+        elif marks and 'nominal_mark_gap_mm' in marks:
+            position += (f"按横线中点定位，标线端距推算间隔 {marks['nominal_mark_gap_mm']:.6f} mm，"
+                         f"与导出跨度之差 {marks['dic_minus_nominal_mark_gap_mm']:+.6f} mm，保留独立毫米尺度。")
         return (f"计算域由识别平台 DIC 初始坐标范围确定，尺寸为 {summary['physical_model_mm']} mm；"
                 f"真实承载宽度为 {geometry['load_section_width_mm']} mm。"
                 '牵引按真实截面计算，截取域端力按宽度比例分配；坐标和材料分区均未缩放。'

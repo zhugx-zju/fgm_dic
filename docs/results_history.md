@@ -1,6 +1,6 @@
 # 历史结果与复现来源
 
-当前DIC节点网格结果为`results/dic_mesh/01_prepared/`至`04_comparison/`，采用沿原始+Y模量递减的材料方向。旧70×20单元粗网格结果原位保留在`results/dic/`；其`direction_update/`记录当时的定位、复用及ν=0.33补充条件。
+当前全域七区结果为`results/dic_full/01_prepared/`至`04_comparison/`；61.5 mm region的DIC节点网格结果保留在`results/dic_mesh/`，采用沿原始+Y模量递减的材料方向。旧70×20单元粗网格结果原位保留在`results/dic/`；其`direction_update/`记录当时的定位、复用及ν=0.33补充条件。
 
 粗网格完整备份为[coarse_mesh.zip](../results/dic/history/coarse_mesh.zip)，成员与SHA-256见[coarse_mesh_manifest.json](../results/dic/history/coarse_mesh_manifest.json)，共687个成员，包含冻结结果和当时的配置、算法、流程源码。原位结果与备份均保留，不将粗网格数值当成当前DIC网格结果。
 
@@ -32,4 +32,4 @@
 - `docs/partition_forward_diagnostic_20261020.md`
 - `docs/partition_modulus_diagnosis_20261019.md`
 
-独立材料标定、原始DIC、制造几何和当前算法源码仍保留在项目原目录，与历史计算包分开。当前研究方法、结果和限制以[DIC网格记录](dic_mesh_workflow_20261020.md)、[验证方案](../plan/validation_plan.md)和[分步流程](dic_stepwise_workflow.md)为准。
+独立材料标定、原始DIC、制造几何和当前算法源码仍保留在项目原目录，与历史计算包分开。当前研究方法、结果和限制以[全域七区记录](dic_full_workflow_20261020.md)、[验证方案](../plan/validation_plan.md)和[分步流程](dic_stepwise_workflow.md)为准。

@@ -1,4 +1,6 @@
-# DIC节点网格的正反问题
+# region DIC节点网格的正反问题
+
+**保留基线：** 本文为61.5 mm region的14,484参数结果。当前主输入已扩至all_region连续七区，见[全域七区](dic_full_workflow_20261020.md)。
 
 ## 当前定义
 

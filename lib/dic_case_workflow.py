@@ -5,6 +5,7 @@ is separate. Both forward and inverse retain the same raw point observations.
 """
 
 import json
+from dataclasses import replace
 from pathlib import Path
 from types import SimpleNamespace
 
@@ -85,7 +86,7 @@ def registration_transform(reference_xy, specification):
         verified = True
     else:
         matrix = np.asarray(specification['matrix'], dtype=float)
-        if mode in ('explicit_verified', 'specimen_marks'):
+        if mode in ('explicit_verified', 'specimen_marks', 'material_coordinates'):
             offset = np.asarray(specification['offset_mm'], dtype=float)
             # Approximate end distances need not reproduce the independent
             # DIC millimetre span exactly; midpoint alignment is conditional.
@@ -96,7 +97,7 @@ def registration_transform(reference_xy, specification):
                 xy.min(axis=0)+xy.max(axis=0))/2
             verified = False
         else:
-            raise ValueError('Registration mode must be pending, landmarks, explicit_verified, specimen_marks or assumed_center')
+            raise ValueError('Unknown registration mode; supply explicit physical coordinate information')
     if (matrix.shape != (2, 2) or offset.shape != (2,) or not np.isfinite(matrix).all() or
             not np.isfinite(offset).all() or
             not np.allclose(matrix @ matrix.T, np.eye(2), atol=1e-10, rtol=1e-9)):
@@ -274,6 +275,55 @@ def dic_mesh_coordinates(reference, matrix, offset):
     return trial.coord, (trial.nel_x, trial.nel_y)
 
 
+def extract_material_window(platforms, cfg):
+    """Clip one continuous coordinate window without resampling DIC points.
+
+    The material map is inherited from the confirmed shared reference image.
+    Available whole axial rows are retained; missing end coverage is recorded,
+    never filled or reassigned to a different material partition.
+    """
+    if not hasattr(cfg, 'MATERIAL_WINDOW_MM'):
+        return platforms
+    spec = cfg.REGISTRATION
+    if spec['mode'] != 'material_coordinates' or not spec.get('shared_reference_confirmed'):
+        raise ValueError('Material-window extraction requires a confirmed shared reference and material map')
+    lower, upper = np.asarray(cfg.MATERIAL_WINDOW_MM, dtype=float)
+    if not np.isfinite([lower, upper]).all() or lower >= upper:
+        raise ValueError('MATERIAL_WINDOW_MM must contain two increasing finite coordinates')
+    matrix = np.asarray(spec['matrix'], dtype=float)
+    sign = spec['material_x_sign']
+    if sign not in (-1, 1):
+        raise ValueError('material_x_sign must be +1 or -1')
+    selected = {}
+    for name, platform in platforms.items():
+        axial = (platform.coordinates @ matrix.T)[:, 0]
+        material = spec['manufacturing_anchor_mm'] + sign*(axial-spec['raw_axial_anchor_mm'])
+        inside = (material >= lower-1e-7) & (material <= upper+1e-7)
+        if inside.sum() < 4:
+            raise ValueError(f'{name}: requested material window has insufficient DIC coverage')
+        ids = platform.grid_ids[inside]
+        if len(ids) != np.prod(np.ptp(ids, axis=0)+1):
+            raise ValueError(f'{name}: coordinate crop must retain a complete rectangular DIC grid')
+        bounds = [float(material[inside].min()), float(material[inside].max())]
+        extraction = {
+            'method': 'continuous_material_coordinate_window_no_resampling',
+            'requested_manufacturing_bounds_mm': [float(lower), float(upper)],
+            'available_manufacturing_bounds_mm': [float(material.min()), float(material.max())],
+            'selected_manufacturing_bounds_mm': bounds,
+            'unavailable_requested_end_mm': [max(0., float(material.min()-lower)),
+                                             max(0., float(upper-material.max()))],
+            'boundary_sampling_remainder_mm': [bounds[0]-max(lower, float(material.min())),
+                                               min(upper, float(material.max()))-bounds[1]],
+            'input_points': len(axial), 'selected_points': int(inside.sum()),
+            'selected_grid_shape': (np.ptp(ids, axis=0)+1).tolist(),
+        }
+        selected[name] = replace(platform, coordinates=platform.coordinates[inside],
+                                 displacement=platform.displacement[inside],
+                                 temporal_std=platform.temporal_std[inside], grid_ids=ids,
+                                 metadata=dict(platform.metadata, extraction=extraction))
+    return selected
+
+
 def resolve_dic_geometry(cfg, reference):
     """Resolve ROI from fit data only, without scaling coordinates or material zones.
 
@@ -287,8 +337,8 @@ def resolve_dic_geometry(cfg, reference):
         raise ValueError('DOMAIN_SOURCE must be configured_geometry or dic_reference_bounds')
     if source == 'dic_reference_bounds':
         mode = cfg.REGISTRATION['mode']
-        if mode not in ('assumed_center', 'specimen_marks'):
-            raise ValueError('DIC-bound ROI requires specimen_marks or explicit assumed_center placement')
+        if mode not in ('assumed_center', 'specimen_marks', 'material_coordinates'):
+            raise ValueError('DIC-bound ROI requires explicit material positioning or an assumed center')
         matrix = np.asarray(cfg.REGISTRATION['matrix'], dtype=float)
         if (matrix.shape != (2, 2) or not np.isfinite(matrix).all() or
                 not np.allclose(matrix @ matrix.T, np.eye(2), atol=1e-10, rtol=1e-9)):
@@ -301,6 +351,36 @@ def resolve_dic_geometry(cfg, reference):
         if mode == 'assumed_center':
             resolved.REGISTRATION = dict(cfg.REGISTRATION, cloud_center_fem_mm=(span/2).tolist())
             resolved.REGION_BOUNDARIES_X = (np.asarray(cfg.REGION_BOUNDARIES_CENTERED_X, dtype=float)+span[0]/2).tolist()
+        elif mode == 'material_coordinates':
+            spec = cfg.REGISTRATION
+            sign = spec['material_x_sign']
+            if sign not in (-1, 1) or not spec.get('shared_reference_confirmed'):
+                raise ValueError('Explicit material coordinates require sign and shared-reference confirmation')
+            material_offset = float(spec['manufacturing_anchor_mm'] +
+                                    sign*(xy[:, 0].min()-spec['raw_axial_anchor_mm']))
+            boundaries = np.asarray(cfg.REGION_BOUNDARIES_MANUFACTURING_X, dtype=float)
+            if (not np.isfinite(boundaries).all() or np.any(np.diff(boundaries) <= 0) or
+                    np.any(sign*np.diff(cfg.REGION_INFILL_PERCENT) <= 0)):
+                raise ValueError('Material interfaces and group order must follow the configured direction')
+            resolved.MANUFACTURING_X_SIGN = sign
+            resolved.MANUFACTURING_X_OFFSET_MM = material_offset
+            resolved.REGION_BOUNDARIES_X = np.sort((boundaries-material_offset)/sign).tolist()
+            resolved.REGISTRATION = dict(spec, offset_mm=(-xy.min(axis=0)).tolist())
+            resolved.MATERIAL_REGISTRATION = {
+                'method': 'shared_reference_material_coordinates_unit_scale',
+                'manufacturing_x_offset_mm': material_offset,
+                'manufacturing_x_fem_coefficient': sign,
+                'manufacturing_x_relation': f'manufacturing_x = {sign} * FEM_x + {material_offset:.12g} mm',
+                'infill_order_along_fem_x': list(cfg.REGION_INFILL_PERCENT),
+                'manufacturing_roi_x_mm': [material_offset, float(material_offset+sign*span[0])],
+                'manufacturing_mark_x_mm': [-spec['specimen_length_mm']/2+spec['low_infill_mark_end_distance_mm'],
+                                           spec['specimen_length_mm']/2-spec['high_infill_mark_end_distance_mm']],
+                'raw_axial_anchor_mm': spec['raw_axial_anchor_mm'],
+                'manufacturing_anchor_mm': spec['manufacturing_anchor_mm'],
+                'anchor_prepared_metadata_sha256': spec['anchor_prepared_metadata_sha256'],
+                'length_scale_factor': 1., 'direction_note': spec['note'],
+                'transverse_location': 'internal DIC ROI bounds; no measured specimen edge registration',
+            }
         else:
             spec = cfg.REGISTRATION
             if spec.get('mark_reference') != 'roi_axial_extrema':
@@ -366,6 +446,7 @@ def prepare_dic(cfg, output):
         platforms[name] = load_dic_platform(Path(item['folder']), *item['stages'],
                                             coordinate_state=cfg.DIC_COORDINATE_STATE)
         records[name] = _force_record(cfg, name, item)
+    platforms = extract_material_window(platforms, cfg)
     shared = check_platform_reference(platforms)
     reference = platforms[cfg.FIT_CASES[0]]
     cfg = resolve_dic_geometry(cfg, reference)
@@ -388,7 +469,7 @@ def prepare_dic(cfg, output):
                                    'source_platform': cfg.FIT_CASES[0],
                                    'load_section_width_mm': section_width,
                                    'lateral_boundary': getattr(cfg, 'INTERNAL_SIDE_BOUNDARY', 'physical_free_edges'),
-                                   'material_position': ('confirmed_marks_midpoint_unit_scale'
+                                   'material_position': (cfg.MATERIAL_REGISTRATION['method']
                                                          if hasattr(cfg, 'MATERIAL_REGISTRATION') else
                                                          'centered assumption' if not verified else 'registered')},
                'shared_mesh': {'nel_x': cfg.NEL_X, 'nel_y': cfg.NEL_Y,
