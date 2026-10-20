@@ -29,6 +29,13 @@ COMPONENT_REFERENCE_TEXT = (
 )
 
 
+def _objective_description(summary):
+    weights = summary.get('displacement_component_weights', {'ux': 1., 'uy': 1.})
+    return (f"位移失配使用面积权重 × 分量系数：ux={weights['ux']:g}、uy={weights['uy']:g}。"
+            '系数乘在残差平方上；同一权重用于刚体配准、初值、伴随梯度和 L-curve，不缩放原始位移。'
+            '不设参考模量，不作模量或噪声尺度归一化。双分量 RMS 随权重定义改变，跨权重比较应分别看两个分量的 mm 误差。')
+
+
 def _geometry_description(summary):
     """Keep computation bounds distinct from the section carrying measured F."""
     geometry = summary.get('domain_geometry', {})
@@ -158,6 +165,7 @@ def write_stage_gallery(output, summary, title):
              f'<p><a href="{_link(overview, output)}">返回四步结果总览</a></p>',
              f'<p class="path">保存位置：{html.escape(str(output.resolve()))}</p>',
              f'<p>{reference_text}</p>',
+             f'<p>{_objective_description(summary)}</p>',
              '<p>实际拉力：'+html.escape('；'.join(f"{name}: {record['mean_corrected_force_N']:.6f} N"
                                                  for name, record in summary['force_pairing'].items()))+'</p>']
     if not summary['coordinates_verified']:
@@ -267,7 +275,7 @@ def write_case_report(output, summary, metrics, regions, selection):
                   f"gamma={summary['selected_gamma']:g}，只按识别平台的 L-curve 最大正曲率拐点选择；状态：{summary['l_curve_status']}。不按预测平台误差或独立材料标定调参。"]
         settings = summary['inverse_settings']
         lines += ['', '## 反演选参与实际停止设置', '',
-                  '目标函数为 `0.5*r.T@W_area@r + 0.5*gamma*integral(|grad(E)|^2)`。W_area 仅保留真实测点面积权重，不设参考模量，不作模量或噪声尺度归一化。', '',
+                  f"目标函数：`{summary['objective_definition']}`。", '', _objective_description(summary), '',
                   f"已启用 L-curve。gamma 候选值为 {settings['GAMMA_CANDIDATES']}；在预设主 ν 下，仅使用识别平台，计算原始残差范数 ρ 与正则范数 η（不含 gamma）。", '',
                   '在 log(ρ)、log(η) 上用有符号三点曲率识别拐点，排除未收敛、重合、非单调及端部缺少支撑的候选；不能识别拐点时保留诊断并停止，不回退至空间验证或固定 gamma。', '',
                   f"扫描初始化策略：{summary.get('scan_initialization', '见上游反演元数据')}。全部ν最后从同一个所选场出发重新求解，独立标定不进入反演目标或初值。", '',
@@ -291,7 +299,8 @@ def write_case_report(output, summary, metrics, regions, selection):
              f'<p class="path">本页与图表保存于：{html.escape(str(output.resolve()))}</p>',
              '<p>DIC 云图沿用 post_DIC：规则网格、jet 色图、等比例坐标及独立单图。三个位移场采用相同色标；两幅相对误差采用相同对称百分比色标。显示时仅共同减去 DIC 分量均值，CSV 保留原参考态。</p>',
              f'<p>{COMPONENT_REFERENCE_TEXT}</p>',
-             f'<p>{RELATIVE_ERROR_DESCRIPTION}</p>']
+             f'<p>{RELATIVE_ERROR_DESCRIPTION}</p>',
+             f'<p>{_objective_description(summary)}</p>']
     if not metric_table.empty:
         settings = summary['inverse_settings']
         parts.append(f'<p>本次反演实际使用 FTOL={settings["FTOL"]:g}、GTOL={settings["GTOL"]:g}；'

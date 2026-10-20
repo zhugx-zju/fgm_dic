@@ -11,6 +11,7 @@ from types import SimpleNamespace
 
 import numpy as np
 import pandas as pd
+from scipy.sparse import diags
 
 from fgm_asm import MeshInfo, lbfgs_inverse_solver_scipy
 from fgm_asm.load_case import evaluate_observation
@@ -146,7 +147,16 @@ def _force_record(cfg, name, item):
     return record
 
 
+def displacement_component_weights(cfg):
+    """Quadratic coefficients for FEM (axial ux, transverse uy), not amplitudes."""
+    weights = np.asarray(getattr(cfg, 'DISPLACEMENT_COMPONENT_WEIGHTS', (1., 1.)), dtype=float)
+    if weights.shape != (2,) or not np.all(np.isfinite(weights) & (weights > 0)):
+        raise ValueError('DISPLACEMENT_COMPONENT_WEIGHTS must contain two positive finite coefficients (ux, uy)')
+    return weights
+
+
 def _validate(cfg):
+    displacement_component_weights(cfg)
     if cfg.DIC_UNIT != 'mm':
         raise ValueError('Convert positions AND displacements to mm before this pipeline')
     if (cfg.DISPLACEMENT_REFERENCE != 'initial_unloaded_image' or
@@ -486,6 +496,13 @@ def prepare_dic(cfg, output):
                'objective_definition': '0.5*r.T@W_area@r + 0.5*gamma*integral(|grad(E)|^2); no modulus or noise normalization',
                'physical_validation_status': 'not_established; geometry registration and boundary-equivalence evidence are distinct',
                'scope': 'registered comparison' if verified else 'conditional comparison under explicit registration assumptions'}
+    component_weights = displacement_component_weights(cfg)
+    summary['displacement_component_weights'] = dict(zip(('ux', 'uy'), component_weights.tolist()))
+    if not np.array_equal(component_weights, [1., 1.]):
+        summary['objective_definition'] = (
+            f'0.5*sum(area_i*({component_weights[0]:g}*r_ux_i^2 + '
+            f'{component_weights[1]:g}*r_uy_i^2)) + 0.5*gamma*integral(|grad(E)|^2); '
+            'quadratic component coefficients; no modulus or noise normalization')
     if hasattr(cfg, 'MATERIAL_REGISTRATION'):
         summary['material_registration'] = cfg.MATERIAL_REGISTRATION
     if hasattr(cfg, 'FORCE_PAIRING_CSV') and any('force_N' not in i for i in cfg.PLATFORMS.values()):
@@ -545,17 +562,26 @@ def load_prepared(source):
         arrays = {key: fields[key].copy() for key in fields.files}
     mesh = MeshInfo(cfg.GEO_L, cfg.GEO_H, cfg.NEL_X, cfg.NEL_Y,
                     nodal_coordinates=arrays.get('dic_mesh_coordinates'))
+    component_weights = displacement_component_weights(cfg)
     for name in cfg.PLATFORMS:
         force_record = metadata['force_pairing'][name]
         measured_force = force_record['mean_corrected_force_N']
         model_force = force_record.get('model_end_force_N', measured_force)
-        cases.append(make_observation_case(
+        case = make_observation_case(
             mesh, name, model_force, cfg.THICKNESS,
             arrays[f'{name}_coordinates'], arrays[f'{name}_observed'],
             point_weights=arrays[f'{name}_point_area_mm2'],
             metadata={'coordinates_verified': metadata['coordinates_verified'],
                       'registration': cfg.REGISTRATION, 'displacement_reference': cfg.DISPLACEMENT_REFERENCE,
-                      'measured_force_N': measured_force, 'model_end_force_N': model_force}))
+                      'measured_force_N': measured_force, 'model_end_force_N': model_force,
+                      'displacement_component_weights': component_weights.tolist()})
+        if not np.array_equal(component_weights, [1., 1.]):
+            # One W drives the rigid fit, objective, adjoint, initialization and
+            # L-curve. Observed values, H and physical point areas stay unchanged.
+            weights = case.observation.weight_vector * np.tile(component_weights, len(case.observation.x_meas))
+            observation = replace(case.observation, weight_vector=weights, W=diags(weights, format='csr'))
+            case = replace(case, observation=observation)
+        cases.append(case)
     provenance = {'prepared_metadata_sha256': file_sha256(source/'run_metadata.json'),
                   'prepared_fields_sha256': file_sha256(source/'fields.npz')}
     return cfg, mesh, cases, metadata, provenance
@@ -571,6 +597,8 @@ def _stage_summary(prepared, provenance, stage):
         summary['domain_geometry'] = prepared['domain_geometry']
     if 'material_registration' in prepared:
         summary['material_registration'] = prepared['material_registration']
+    if 'displacement_component_weights' in prepared:
+        summary['displacement_component_weights'] = prepared['displacement_component_weights']
     return summary
 
 
@@ -600,6 +628,83 @@ def forward_calibrated(prepared, output):
     _update_summary(output, summary)
     plot_saved_stage(output, prepared)
     return summary
+
+
+def resume_l_curve(prepared, output):
+    """Retry abnormal line searches using only each point's remaining budget.
+
+    Original trial arrays, metadata and the pre-recovery table are retained.
+    Iteration-limit failures have no remaining budget and are not retried.
+    """
+    output = Path(output)
+    cfg, mesh, cases, metadata, provenance = load_prepared(prepared)
+    summary = json.loads((output/'run_metadata.json').read_text(encoding='utf-8'))
+    if (summary['workflow'] != 'dic_case_inverse' or
+            not summary['status'].startswith('l_curve_') or
+            any(summary[key] != value for key, value in provenance.items()) or
+            summary['configuration'] != metadata['configuration']):
+        raise ValueError('Resume requires an unresolved scan with the same frozen preparation and settings')
+    scan_path = output/'selection.csv'
+    archive = output/'selection_before_recovery.csv'
+    if archive.exists():
+        if archive.read_bytes() != scan_path.read_bytes():
+            raise FileExistsError('A recovery has already changed the scan; inspect it before another attempt')
+    else:
+        archive.write_bytes(scan_path.read_bytes())
+    selection = pd.read_csv(scan_path).to_dict(orient='records')
+    fit = [c for c in cases if c.name in cfg.FIT_CASES]
+    for index, previous in enumerate(selection):
+        previous = {key: value for key, value in previous.items()
+                    if key not in ('curvature', 'eligible', 'selected', 'solution_directory')}
+        if previous['converged'] or 'ABNORMAL' not in previous['stop_message'].upper():
+            continue
+        remaining_iter = cfg.MAX_ITER-int(previous['iterations'])
+        remaining_fun = cfg.MAX_FUN-int(previous['evaluations'])
+        if min(remaining_iter, remaining_fun) <= 0:
+            continue
+        gamma = previous['gamma']
+        trial = output/'l_curve'/f'gamma_{gamma:g}'
+        attempt = 1
+        while (trial/f'recovery_{attempt}').exists():
+            attempt += 1
+        recovered = trial/f'recovery_{attempt}'
+        with np.load(trial/'fields.npz') as saved:
+            old_fields = {key: saved[key].copy() for key in saved.files}
+        limited = SimpleNamespace(**vars(cfg))
+        limited.MAX_ITER, limited.MAX_FUN = remaining_iter, remaining_fun
+        print(f'Recover gamma={gamma:.12g}: remaining iterations={remaining_iter}, evaluations={remaining_fun}', flush=True)
+        result = _optimize(limited, mesh, fit, gamma, cfg.PRIMARY_NU, old_fields['E_inverse'])
+        result['n_iterations'] += int(previous['iterations'])
+        result['n_evaluations'] += int(previous['evaluations'])
+        for key in ('cost_history', 'cost_tar_history', 'cost_reg_history', 'gradient_norms'):
+            result[key] = np.r_[old_fields[key], result[key][1:]]
+        result['line_search_restarts'].insert(0, {
+            'previous_message': previous['stop_message'], 'previous_iterations': previous['iterations'],
+            'previous_evaluations': previous['evaluations'], 'remaining_iterations': remaining_iter,
+            'remaining_evaluations': remaining_fun, 'restart_message': result['message']})
+        solver = _solver_summary(result)
+        record = dict(previous, converged=result['converged'], residual_norm=result['residual_norm'],
+                      regularization_norm=result['regularization_norm'],
+                      data_cost=.5*result['residual_norm']**2,
+                      regularization_cost=.5*gamma*result['regularization_norm']**2,
+                      iterations=result['n_iterations'], evaluations=result['n_evaluations'],
+                      final_gradient_inf=solver['final_gradient_inf'],
+                      gradient_tolerance_satisfied=solver['final_gradient_inf'] <= cfg.GTOL,
+                      stop_message=result['message'], solution_directory=str(recovered.relative_to(output)))
+        save_run(recovered, cfg, {'solver': solver, 'selection': record,
+                 'previous_selection': previous, 'fit_cases': cfg.FIT_CASES, 'uses_prediction_cases': False},
+                 {'E_inverse': result['E_final'], 'cost_history': result['cost_history'],
+                  'cost_tar_history': result['cost_tar_history'], 'cost_reg_history': result['cost_reg_history'],
+                  'gradient_norms': result['gradient_norms'], 'final_gradient': result['final_gradient']})
+        selection[index] = record
+    summary['scan_recovery'] = {
+        'method': 'reset L-BFGS history only for abnormal line-search failures, within original total budget',
+        'original_selection': str(archive.resolve()),
+        'source_sha256': {str(path.relative_to(Path(__file__).resolve().parents[1])): file_sha256(path)
+                          for path in (Path(__file__), Path(__file__).resolve().parents[1]/'script/step3_inverse_dic.py')}}
+    summary['status'] = 'running'
+    _update_summary(output, summary)
+    return _finish_dic_inverse(cfg, mesh, cases, metadata, summary, selection, prepared, output)
 
 
 def inverse_dic(prepared, output):
@@ -643,6 +748,12 @@ def inverse_dic(prepared, output):
         pd.DataFrame(selection).to_csv(output / 'selection.csv', index=False)
         if result['converged']:
             initial, initial_source = result['E_final'].copy(), f'gamma_{gamma:g}'
+    return _finish_dic_inverse(cfg, mesh, cases, metadata, summary, selection, prepared, output)
+
+
+def _finish_dic_inverse(cfg, mesh, cases, metadata, summary, selection, prepared, output):
+    calibration = pd.DataFrame(metadata['calibration'])
+    fit = [c for c in cases if c.name in cfg.FIT_CASES]
     scan = pd.DataFrame(selection)
     corner = select_l_curve_corner(scan.gamma, scan.residual_norm, scan.regularization_norm, scan.converged)
     scan['curvature'] = corner['curvature']
@@ -660,7 +771,9 @@ def inverse_dic(prepared, output):
     gamma = corner['selected_gamma']
     summary['selected_gamma'] = gamma
     summary['gamma_at_scan_boundary'] = False
-    with np.load(output/'l_curve'/f'gamma_{gamma:g}'/'fields.npz') as selected:
+    directory = scan.loc[corner['optimal_index']].get('solution_directory')
+    selected_directory = output/directory if isinstance(directory, str) else output/'l_curve'/f'gamma_{gamma:g}'
+    with np.load(selected_directory/'fields.npz') as selected:
         initial = selected['E_inverse'].copy()
     all_metrics, all_regions, solvers = [], [], []
     for nu in cfg.NU_VALUES:
