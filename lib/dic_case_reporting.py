@@ -33,10 +33,16 @@ def _geometry_description(summary):
     """Keep computation bounds distinct from the section carrying measured F."""
     geometry = summary.get('domain_geometry', {})
     if geometry.get('source') == 'dic_reference_bounds':
+        marks = summary.get('material_registration')
+        position = ('材料位置仍按点云与试样居中假设；' if marks is None else
+                    f"材料按已确认的横线中点定位，制造坐标范围为 {marks['manufacturing_roi_x_mm']} mm；"
+                    f"标线端距推算间隔 {marks['nominal_mark_gap_mm']:.6f} mm，"
+                    f"与导出跨度之差 {marks['dic_minus_nominal_mark_gap_mm']:+.6f} mm，保留独立毫米尺度。"
+                    '当前方向 ux=DY、uy=−DX；')
         return (f"计算域由识别平台 DIC 初始坐标范围确定，尺寸为 {summary['physical_model_mm']} mm；"
                 f"真实承载宽度为 {geometry['load_section_width_mm']} mm。"
                 '牵引按真实截面计算，截取域端力按宽度比例分配；坐标和材料分区均未缩放。'
-                '内部横向截面暂按自由边界近似，材料位置仍按点云与试样居中假设；不代表子域严格等效。')
+                '内部横向截面暂按自由边界近似；'+position+'不代表子域严格等效。')
     return (f"物理模型尺寸为 {summary['physical_model_mm']} mm；"
             'DIC 点云定义有效观测覆盖，未用点云跨度缩放坐标。')
 

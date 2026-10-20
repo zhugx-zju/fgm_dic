@@ -84,16 +84,18 @@ def registration_transform(reference_xy, specification):
         verified = True
     else:
         matrix = np.asarray(specification['matrix'], dtype=float)
-        if mode == 'explicit_verified':
+        if mode in ('explicit_verified', 'specimen_marks'):
             offset = np.asarray(specification['offset_mm'], dtype=float)
-            verified = True
+            # Approximate end distances need not reproduce the independent
+            # DIC millimetre span exactly; midpoint alignment is conditional.
+            verified = mode == 'explicit_verified'
         elif mode == 'assumed_center':
             xy = np.asarray(reference_xy, dtype=float)
             offset = np.asarray(specification['cloud_center_fem_mm'])-matrix @ (
                 xy.min(axis=0)+xy.max(axis=0))/2
             verified = False
         else:
-            raise ValueError('Registration mode must be pending, landmarks, explicit_verified or assumed_center')
+            raise ValueError('Registration mode must be pending, landmarks, explicit_verified, specimen_marks or assumed_center')
     if (matrix.shape != (2, 2) or offset.shape != (2,) or not np.isfinite(matrix).all() or
             not np.isfinite(offset).all() or
             not np.allclose(matrix @ matrix.T, np.eye(2), atol=1e-10, rtol=1e-9)):
@@ -258,7 +260,7 @@ def _metrics(state):
 def resolve_dic_geometry(cfg, reference):
     """Resolve ROI from fit data only, without scaling coordinates or material zones.
 
-    The manufacturing interfaces use the existing centered-placement assumption.
+    Material coordinates come from measured marks or a legacy center assumption.
     Extents are computed after the fixed direction transform, before translation.
     The caller's module is not mutated; resolved values enter the frozen config.
     """
@@ -267,8 +269,9 @@ def resolve_dic_geometry(cfg, reference):
     if source not in ('configured_geometry', 'dic_reference_bounds'):
         raise ValueError('DOMAIN_SOURCE must be configured_geometry or dic_reference_bounds')
     if source == 'dic_reference_bounds':
-        if cfg.REGISTRATION['mode'] != 'assumed_center':
-            raise ValueError('DIC-bound ROI currently requires explicit assumed_center placement')
+        mode = cfg.REGISTRATION['mode']
+        if mode not in ('assumed_center', 'specimen_marks'):
+            raise ValueError('DIC-bound ROI requires specimen_marks or explicit assumed_center placement')
         matrix = np.asarray(cfg.REGISTRATION['matrix'], dtype=float)
         if (matrix.shape != (2, 2) or not np.isfinite(matrix).all() or
                 not np.allclose(matrix @ matrix.T, np.eye(2), atol=1e-10, rtol=1e-9)):
@@ -278,8 +281,41 @@ def resolve_dic_geometry(cfg, reference):
         if not np.isfinite(span).all() or np.any(span <= 0):
             raise ValueError('DIC reference must define a finite 2D ROI')
         resolved.GEO_L, resolved.GEO_H = map(float, span)
-        resolved.REGISTRATION = dict(cfg.REGISTRATION, cloud_center_fem_mm=(span/2).tolist())
-        resolved.REGION_BOUNDARIES_X = (np.asarray(cfg.REGION_BOUNDARIES_CENTERED_X, dtype=float)+span[0]/2).tolist()
+        if mode == 'assumed_center':
+            resolved.REGISTRATION = dict(cfg.REGISTRATION, cloud_center_fem_mm=(span/2).tolist())
+            resolved.REGION_BOUNDARIES_X = (np.asarray(cfg.REGION_BOUNDARIES_CENTERED_X, dtype=float)+span[0]/2).tolist()
+        else:
+            spec = cfg.REGISTRATION
+            if spec.get('mark_reference') != 'roi_axial_extrema':
+                raise ValueError('specimen_marks requires the confirmed region ends at the two marks')
+            if spec.get('length_scale_source') != 'independent_dic_calibration':
+                raise ValueError('Resolve DIC length calibration first; mark alignment never rescales data')
+            lengths = np.asarray([spec['specimen_length_mm'], spec['low_infill_mark_end_distance_mm'],
+                                  spec['high_infill_mark_end_distance_mm']], dtype=float)
+            if not np.isfinite(lengths).all() or np.any(lengths <= 0) or lengths[1:].sum() >= lengths[0]:
+                raise ValueError('Mark end distances must be positive and leave a positive gap')
+            low_mark = -lengths[0]/2+lengths[1]
+            high_mark = lengths[0]/2-lengths[2]
+            mark_center = (low_mark+high_mark)/2
+            material_offset = float(mark_center-span[0]/2)
+            boundaries = np.asarray(cfg.REGION_BOUNDARIES_MANUFACTURING_X, dtype=float)
+            resolved.MANUFACTURING_X_OFFSET_MM = material_offset
+            resolved.REGION_BOUNDARIES_X = (boundaries-material_offset).tolist()
+            resolved.REGISTRATION = dict(spec, offset_mm=(-xy.min(axis=0)).tolist())
+            mapped_bounds = [material_offset, float(material_offset+span[0])]
+            resolved.MATERIAL_REGISTRATION = {
+                'method': 'confirmed_marks_midpoint_unit_scale',
+                'manufacturing_x_equals_fem_x_plus_mm': material_offset,
+                'manufacturing_mark_x_mm': [float(low_mark), float(high_mark)],
+                'manufacturing_roi_x_mm': mapped_bounds,
+                'nominal_mark_gap_mm': float(high_mark-low_mark),
+                'dic_span_mm': float(span[0]),
+                'dic_minus_nominal_mark_gap_mm': float(span[0]-(high_mark-low_mark)),
+                'endpoint_discrepancy_mm': [mapped_bounds[0]-float(low_mark), mapped_bounds[1]-float(high_mark)],
+                'length_scale_factor': 1.,
+                'direction_note': spec['note'],
+                'transverse_location': 'internal DIC ROI bounds; no measured specimen edge registration',
+            }
     return resolved
 
 
@@ -315,7 +351,9 @@ def prepare_dic(cfg, output):
                                    'source_platform': cfg.FIT_CASES[0],
                                    'load_section_width_mm': section_width,
                                    'lateral_boundary': getattr(cfg, 'INTERNAL_SIDE_BOUNDARY', 'physical_free_edges'),
-                                   'material_position': 'centered assumption' if not verified else 'registered'},
+                                   'material_position': ('confirmed_marks_midpoint_unit_scale'
+                                                         if hasattr(cfg, 'MATERIAL_REGISTRATION') else
+                                                         'centered assumption' if not verified else 'registered')},
                'shared_mesh': {'nel_x': cfg.NEL_X, 'nel_y': cfg.NEL_Y,
                                'hx_mm': cfg.GEO_L/cfg.NEL_X, 'hy_mm': cfg.GEO_H/cfg.NEL_Y,
                                'same_for_forward_and_inverse': True},
@@ -328,6 +366,8 @@ def prepare_dic(cfg, output):
                'objective_definition': '0.5*r.T@W_area@r + 0.5*gamma*integral(|grad(E)|^2); no modulus or noise normalization',
                'physical_validation_status': 'not_established; geometry registration and boundary-equivalence evidence are distinct',
                'scope': 'registered comparison' if verified else 'conditional comparison under explicit registration assumptions'}
+    if hasattr(cfg, 'MATERIAL_REGISTRATION'):
+        summary['material_registration'] = cfg.MATERIAL_REGISTRATION
     if hasattr(cfg, 'FORCE_PAIRING_CSV') and any('force_N' not in i for i in cfg.PLATFORMS.values()):
         summary['force_source_sha256'] = file_sha256(Path(cfg.FORCE_PAIRING_CSV))
     arrays, rows = {}, []
@@ -406,6 +446,8 @@ def _stage_summary(prepared, provenance, stage):
     summary.update(provenance, workflow=stage, status='running')
     if 'domain_geometry' in prepared:
         summary['domain_geometry'] = prepared['domain_geometry']
+    if 'material_registration' in prepared:
+        summary['material_registration'] = prepared['material_registration']
     return summary
 
 

@@ -16,10 +16,18 @@
 \author{}
 \date{}
 
+% Historical synthetic figure sources are not present in this checkout.
+\newcommand{\historicalfigure}[1]{%
+  \IfFileExists{#1}{\includegraphics[width=\linewidth]{#1}}{%
+    \fbox{\parbox{0.94\linewidth}{\small 历史合成图件源文件未随当前工作区保存：\par
+    {\footnotesize\ttfamily\detokenize{#1}}\par
+    本处仅保留原分析文字与统计，不将缺失图件作为本次几何修正的核验证据。}}}%
+}
+
 \begin{document}
 \maketitle
 
-\noindent\textbf{几何更正（2026-10-20）：}两条横线距各自外端的最新报告值约为 73 mm 和 85 mm，原各 75 mm 的描述不符本次测量。若总长采用名义 220 mm 且分别从相对外端量起，则线间约 62 mm、中点偏离试样中心约 6 mm；制造方向与 DIC 边缘对应尚待核验。下文居中区域及旧示意图仅保留为原计算假设，不作为实际材料定位依据。不得直接按 $62/70$ 缩放坐标或位移；更正事实及影响见项目 \texttt{docs/dic\_roi\_geometry.md}。本次未修改计算配置或重算结果。
+\noindent\textbf{几何修正（2026-10-20）：}已确认73 mm对应高填充率端、85 mm对应低填充率端，region两端对应横线，填充率沿原始$+Y$递增。按名义总长220 mm，横线制造坐标为$-25/+37$ mm、中点为$+6$ mm。独立DIC毫米尺度保留，当前region跨度61.497354 mm与推算62 mm相差0.502646 mm；采用标线中点配准并记录端点差，不缩放位置或位移。主配置与四步输入已更新，旧居中结果归档保留。
 
 \section{实验目的与共用试样几何}
 本实验利用增材制造构造可控的空间非均匀等效刚度，通过拉伸试验同步获取载荷与数字图像相关（DIC）位移场，并采用伴随方法识别平行段内的等效杨氏模量分布。填充率是制造控制量，待识别的 $E_{\mathrm{eq}}$ 是给定打印工艺和加载方向下的有效参数；不将标称填充率直接等同于材料模量。
@@ -44,37 +52,47 @@ $x$ 范围 & $[-75,-40]$ & $[-40,-24]$ & $[-24,-8]$ & $[-8,8]$ & $[8,24]$ & $[24
 \end{tabular}
 \end{table}
 
-X1 和 X7 的填充率分别延续至左、右肩部及夹持端，避免平行段与肩部交界处额外改变打印设置。原方案按两条标线各距试样最外端 75 mm、线间 70 mm 描述；该居中标线假设已因本次 73/85 mm 测量而需要纠正，不能作为实际位置。当前域取识别平台 DIC 初始坐标范围，约 $L=61.3664\,\mathrm{mm}$、$H=18.5257\,\mathrm{mm}$，位于宽 $w=20\,\mathrm{mm}$ 的试样内部；见图~\ref{fig:specimen} 的旧方案参照。
+X1和X7的填充率分别延续至肩部和夹持端。
+
+当前主计算使用\texttt{180N\_2/region}及\texttt{280N\_2/region}。区域位于真实宽20 mm试样内部，独立标定的跨度为$L=61.497354$ mm、$H=19.435484$ mm；制造范围约为$[-24.748677,36.748677]$ mm。标线端距为近似实测，未强制将独立跨度改为62 mm；几何与计算坐标的关系见图~\ref{fig:specimen}。
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=\linewidth]{dogbone_220mm_region_schematic.pdf}
-\caption{七区制造示意及中央 70 mm 标线区；当前计算域由 DIC 初始坐标范围确定，区域长度见表~\ref{tab:roi}。}
+\includegraphics[width=\linewidth]{dogbone_marks_73_85_geometry.pdf}
+\caption{标线端距与制造材料位置，以及当前独立毫米尺度下的计算分区；上图为轴向填充分配条，不表示外轮廓形状。}
 \label{fig:specimen}
 \end{figure}
 
 \begin{table}[htbp]
 \centering
-\caption{DIC 居中位置假设下的五区；物理坐标原点仍位于试样中心。}
+\caption{按标线中点定位的五区；制造坐标原点位于试样中心。}
 \label{tab:roi}
 \begin{tabular}{cccccc}
 \toprule
 制造分区 & X2 & X3 & X4 & X5 & X6 \\
 \midrule
 填充率（\%） & 50 & 60 & 70 & 80 & 90 \\
-物理 $x$（mm） & $[-30.6832,-24]$ & $[-24,-8]$ & $[-8,8]$ & $[8,24]$ & $[24,30.6832]$ \\
-长度（mm） & 6.6832 & 16 & 16 & 16 & 6.6832 \\
+物理 $x$（mm） & $[-24.7487,-24]$ & $[-24,-8]$ & $[-8,8]$ & $[8,24]$ & $[24,36.7487]$ \\
+长度（mm） & 0.7487 & 16 & 16 & 16 & 12.7487 \\
 \bottomrule
 \end{tabular}
 \end{table}
-当前使用 $x_{\mathrm{FEM}}=x+L/2$、$y_{\mathrm{FEM}}=y+H/2$，五区界面约为 $6.6832,22.6832,38.6832,54.6832$ mm。界面仅平移，不按点云跨度缩放；点云与试样中心对应仍为显式假设。制造仍为七区，不能把裁剪计算域误解为修改打印试样。
+当前制造坐标与计算坐标的关系为
+\[
+ x_{\rm FEM}=x_{\rm manufacture}+24.748676795.
+\]
+五区界面在计算坐标中为
+\[
+ 0.748677,\quad16.748677,\quad32.748677,\quad48.748677\quad\mathrm{mm}.
+\]
+数据方向同步采用$x_{\rm FEM}=Y_0+b_x$、$y_{\rm FEM}=-X_0+b_y$，位移分量为$u_x=DY,u_y=-DX$。方向和位置不由位移拟合选择。横向位置仍为内部DIC区域，材料定位精度及边界等效分别记录。
 
 \section{平行段的截取与力学等效}
 在平行段内选取矩形观测域
 \begin{equation}
- \Omega=(-L/2,L/2)\times(-H/2,H/2),\qquad (L,H)\approx(61.3664,18.5257)\,\mathrm{mm},
+ \Omega=(0,L)\times(0,H),\qquad (L,H)\approx(61.497354,19.435484)\,\mathrm{mm},
 \end{equation}
-在居中假设下，其两端分别距肩部约 $44.3168\,\mathrm{mm}$。在该域内，X2 和 X6 各保留约 $6.6832\,\mathrm{mm}$，X3、X4、X5 各为 $16\,\mathrm{mm}$。DIC 记录该域内表面位移；平面应力近似下，反演模型满足
+该域两端在制造坐标中分别为$-24.748677/+36.748677$ mm，距名义肩部分别约50.2513/38.2513 mm。X2和X6覆盖约0.7487/12.7487 mm，X3、X4、X5各16 mm。DIC 记录该域内表面位移；平面应力近似下，反演模型满足
 \begin{equation}
  \nabla\!\cdot\boldsymbol\sigma=\boldsymbol 0,\qquad
  \boldsymbol\sigma=\mathsf C\bigl(E_{\mathrm{eq}}(x,y),\nu\bigr):
@@ -91,7 +109,7 @@ X1 和 X7 的填充率分别延续至左、右肩部及夹持端，避免平行�
 以此为基础，将截取域两端的真实截面牵引近似为静力等效的均布牵引：
 \begin{equation}
  \boldsymbol\sigma\boldsymbol n=\pm q\boldsymbol e_x
- \quad\text{于}\quad x=\pm L/2,
+ \quad\text{于}\quad x=0\ \text{或}\ L,
  \qquad q=\frac{F}{wt}.
 \end{equation}
 此处 $w=20\,\mathrm{mm}$ 为真实承载宽度；截取域端力为 $F_{\rm ROI}=FH/w$，传入单位厚度内核后边合力为 $F_{\rm ROI}/t$。不能把全部实测力直接施加到更窄的 ROI。该条件及内部侧边零牵引均是\emph{边界近似}；严格等效需用完整模型的切面牵引核验，不能由同一矩形模型的合成自洽性代替。
@@ -111,7 +129,7 @@ $\mathsf H_k$ 为 Q4 测点观测算子，$\mathsf W_k$ 仅为测点面积权重
 
 第 3 次实验的 180N、280N 平台分别选帧 259--273、436--450，实际拉力约 119.77618 N、219.73545 N，已扣除夹具自重初始读数。DIC 相对最初未加载图；默认用前者反演、后者预测。成比例载荷可检验重复性和预测，不自动增加空间可辨识性。平台帧的标准差不直接除以帧数平方根。
 
-新版 DIC 有效覆盖约 $61.3664\times18.5257\,\mathrm{mm}$，点距约 $0.2894643\,\mathrm{mm}$；当前用其初始坐标跨度定义计算域，而不改变试样真实承载宽度。坐标和位移同步采用单位尺度的轴向变换，禁止独立缩放两轴强行匹配。60.1 N 初始偏置扣除已确认与 DIC 参考一致；材料位置与内部侧边近似仍保留条件性解释。
+当前region有效覆盖约 $61.497354\times19.435484\,\mathrm{mm}$，点距约 $0.290081857\,\mathrm{mm}$；当前用其初始坐标跨度定义计算域，而不改变试样真实承载宽度。坐标和位移同步采用单位尺度的$+Y$轴向变换，禁止独立缩放两轴强行匹配。60.1 N 初始偏置扣除已确认与 DIC 参考一致；标线推算间隔与独立跨度的差异，以及内部侧边近似仍保留条件性解释。
 
 \section{合成数据先导：全场正则项的形式与边界偏差}
 以下保留历史 110 mm 合成研究条件及结果，尚未作为当前 DIC 范围实验验证。该研究在 $55\times10$ 个双线性四边形单元上使用 $616$ 个独立节点模量，令 $m_i=\log E_i$。对两端等大反向的均布牵引及完整节点位移合成观测，实际求解的单载荷目标为
@@ -178,21 +196,21 @@ $\exp[(\ln8)x/110]$ & $0$ & $\mathcal R_{\rm H1}$ & 4.4167 & 1.4291 & 23.7202 \\
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=\linewidth]{regularization_linear_field_comparison.pdf}
+\historicalfigure{regularization_linear_field_comparison.pdf}
 \caption{线性 $E(x)$、零噪声合成场：上排为两种正则项的二维重建，下排为绝对相对误差；同一行共用色标。新方法接近零误差的前提是线性真值落在其零空间。}
 \label{fig:regularization_linear}
 \end{figure}
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=\linewidth]{regularization_exponential_2_field_comparison.pdf}
+\historicalfigure{regularization_exponential_2_field_comparison.pdf}
 \caption{缓变指数 $E(x)=\exp[(\ln2)x/110]$、零噪声合成场的同色标比较；新正则项减小两端偏差，但指数曲率仍受到惩罚。}
 \label{fig:regularization_exp2}
 \end{figure}
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=\linewidth]{regularization_exponential_8_field_comparison.pdf}
+\historicalfigure{regularization_exponential_8_field_comparison.pdf}
 \caption{较陡指数 $E(x)=\exp[(\ln8)x/110]$、零噪声合成场；右端残留的大误差表明，缓变指数算例的改善不能直接外推到高对比度材料。}
 \label{fig:regularization_exp8}
 \end{figure}
@@ -280,17 +298,17 @@ Tikhonov 指 $\|\mathsf Lz\|_2^2$ 一类\emph{二次惩罚}，不是仅能处理
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=\linewidth]{tgv_20261015_linear_fields.pdf}
+\historicalfigure{tgv_20261015_linear_fields.pdf}
 \caption{线性真值、$1\%$ 位移噪声、预先指定的测试种子 $42$：真值与三种方法的二维模量及误差场，同一行共用色标。图中为单个种子，表~\ref{tab:tgv_results} 为三种子平均。}
 \end{figure}
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=\linewidth]{tgv_20261015_exponential_fields.pdf}
+\historicalfigure{tgv_20261015_exponential_fields.pdf}
 \caption{指数真值的相同协议比较。TGV 减少区内噪声，但本次两端精度不及仿射去趋势；这限制了由线性场推断其一般优势的结论。}
 \end{figure}
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=\linewidth]{tgv_20261015_layered_fields.pdf}
+\historicalfigure{tgv_20261015_layered_fields.pdf}
 \caption{七段升降跳变真值的相同协议比较。TGV 改善平台并降低平均误差，界面仍有明显局部误差；本图是矩形合成场，未引入真实狗骨肩部与分区界面误差。}
 \end{figure}
 

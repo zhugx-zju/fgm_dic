@@ -19,7 +19,7 @@
 
 在项目根目录、安装 `requirements.txt` 的 Python 环境中，依次运行：
 
-默认配置为 DIC 范围计算域、原始 Tikhonov + L-curve，输出到 `results/dic/`。50点扫描及真实DIC四步已完成，γ≈5.9636×10⁻¹⁰，结果见 [50点实际反演记录](l_curve_50_points_20261020.md)。17点基线归档在 `history/lcurve17/`。新实验四步命令为：
+默认配置使用 `180N_2/region`、`280N_2/region`，按73/85 mm标线中点和+Y方向定位，保留独立毫米尺度，输出到 `results/dic/`。50点扫描及四步计算按新几何执行，结果见[当前修正记录](mark_geometry_correction_20261020.md)。旧居中50点和17点分别在 `history/pre_marks/`、`history/lcurve17/`。新实验四步命令为：
 
 ```powershell
 python -m script.step1_prepare_dic
@@ -96,27 +96,28 @@ python -m script.step4_compare_results --config dic_case_sample3
 - `CASE_ID`、`CASE_OUTPUT`：实验身份与新结果目录。
 - `PLATFORMS`：各载荷平台的数据目录、首末阶段、识别或预测用途。载荷可通过 `FORCE_PAIRING_CSV` 的 `run/setting_N` 配对，或显式提供 `force_N` 和 `force_note`；平台名称不直接作为实际拉力。
 - `DIC_UNIT`、`DIC_COORDINATE_STATE`、位移与力的参考态：当前入口采用 mm、相对初始未加载图位移及相应实际拉力。坐标和位移必须共用长度单位；不自动识别单位或推断预载参考。
-- `DOMAIN_SOURCE`：默认 `dic_reference_bounds`，第一步从识别平台初始坐标解析 `GEO_L/GEO_H` 并冻结；预测平台不重新决定域。`THICKNESS/LOAD_SECTION_WIDTH` 来自试样定义，不能用内部 DIC 宽度替代真实承载宽度。`REGION_BOUNDARIES_CENTERED_X` 保留制造界面相对中心的位置，仅平移到新原点。旧配置缺少 `DOMAIN_SOURCE` 时仍按显式 `GEO_L/GEO_H` 处理。
+- `DOMAIN_SOURCE`：默认 `dic_reference_bounds`，第一步从识别平台初始坐标解析 `GEO_L/GEO_H` 并冻结；预测平台不重新决定域。`THICKNESS/LOAD_SECTION_WIDTH` 来自试样定义，不能用内部 DIC 宽度替代真实承载宽度。`REGION_BOUNDARIES_MANUFACTURING_X`保留制造界面位置，`specimen_marks`按已确认标线中点映射到FEM原点。旧配置缺少 `DOMAIN_SOURCE` 时仍按显式 `GEO_L/GEO_H` 处理。
 - `REGISTRATION`：同一坐标变换用于全部平台，坐标和位移同步变换；平移只作用于坐标，不独立缩放坐标轴。
 - `NEL_X/NEL_Y`：同一有限元网格用于独立正演、反演和回代；DIC 保持自己的真实测点和采样间距。
-- `NU_VALUES/PRIMARY_NU`：本组允许范围为 0.24—0.33，具体ν尚未独立确定；当前四步冻结的 0.24/0.26/0.28 是历史比较点，0.26 是历史参考值，不是实测中点或已测定材料值。新的 [E—ν联合诊断](joint_modulus_poisson_diagnosis_20261019.md) 在完整允许范围内仅用180N选参，不将本轮结果混入既有冻结正反演。
+- `NU_VALUES/PRIMARY_NU`：本组允许范围为 0.24—0.33，具体ν尚未独立确定；当前四步冻结的 0.24/0.26/0.28 是预设比较点，0.26 是历史参考值，不是实测中点或已测定材料值。历史 [E—ν联合诊断](joint_modulus_poisson_diagnosis_20261019.md) 保留旧输入。本轮另按新输入、固定主γ计算ν=0.33敏感性，见 [标线修正报告](mark_geometry_correction_20261020.md)，仅用180N识别，不以280N调参。
 
 ## 物理域与坐标配准
 
-当前计算域由识别平台 DIC 初始坐标定义，约 61.3664×18.5257 mm，厚 3.2 mm，点距约 0.289464301 mm。不拉伸点云，不补外推位移。真实承载宽度仍为 20 mm，牵引取 F/(20t)；传入现有有限元内核的截取域端力为 F×GEO_H/20。`mean_corrected_force_N` 始终保存实际测得力，`model_end_force_N` 单独保存截取域端力，不能互换。
+当前计算域由识别平台 DIC 初始坐标定义，约 61.497354×19.435484 mm，厚 3.2 mm，点距约 0.290081857 mm。不拉伸点云，不补外推位移。真实承载宽度仍为 20 mm，牵引取 F/(20t)；传入现有有限元内核的截取域端力为 F×GEO_H/20。`mean_corrected_force_N` 始终保存实际测得力，`model_end_force_N` 单独保存截取域端力，不能互换。
 
 `INTERNAL_SIDE_BOUNDARY='traction_free_approximation'` 显式采用内部横向截面自由近似；不配置该近似时拒绝将较窄区域直接作为自由侧边模型。严格子域等效尚未验证。几何、分区和载荷的完整定义见 [DIC 计算域及载荷截面](dic_roi_geometry.md)。
 
-当前配置的 `assumed_center` 保留 rot90 工作约定和点云居中假设，因此输出仍标为条件性结果。旋转平移不改变平面应力方程和合力定义，但不能单独证明材料区对应正确，也不能证明截取矩形的均布牵引近似成立。
+当前配置采用`specimen_marks`：73 mm为高填充率端、85 mm为低填充率端，region边界对应横线，方向Q=((0,1),(-1,0))。独立DIC跨度61.497354 mm与名义标线推算62 mm的差异保留；材料制造坐标为FEM x−24.748676795 mm。因近似标线间隔、名义总长和横向位置仍有未闭合项，状态保持条件性，但不再将材料位置放在试样中心。
 
-配准支持四种显式模式：
+配准支持以下显式模式：
 
 - `pending`：未定位；第 1 步保存输入审查结果，后续求解拒绝启动。
+- `specimen_marks`：从已确认的高/低填充率端距及region两端标线对应计算中点，只使用单位尺度；冻结制造覆盖、材料界面及与名义标线间隔的差异。
 - `assumed_center`：显式提供正交矩阵及假定点云中心位置；可探索计算，但配准状态保持未核验。
 - `explicit_verified`：给出已独立核验的 `matrix/offset_mm` 和核验依据 `note`。
 - `landmarks`：给出至少三个不共线的 `dic_points_mm/fem_points_mm`、独立定位依据和允许点位误差 `tolerance_mm`；仅拟合单位尺度的旋转/镜像和平移，不能拟合缩放。
 
-`landmarks` 或 `explicit_verified` 仍可在显式尺寸域中使用。独立控制点必须按所选计算原点给出，不能把点云定域与材料位置核验混为一谈。默认 DIC 范围模式仅支持显式居中位置假设；需要独立地标定域时应选择 `configured_geometry`。
+`landmarks` 或 `explicit_verified` 仍可在显式尺寸域中使用。独立控制点必须按所选计算原点给出，不能把点云定域与材料位置核验混为一谈。DIC范围模式支持当前标线中点模式及历史显式居中假设；独立地标定域可选择 `configured_geometry`。
 
 域外点默认报错；只有显式设置 `OUTSIDE_POINT_POLICY='crop_to_physical_roi'` 才裁剪，并记录域内外数量。裁剪不改变物理分区或坐标尺度。
 
@@ -124,7 +125,7 @@ python -m script.step4_compare_results --config dic_case_sample3
 
 纯牵引有限元仅用三个约束去除刚体零空间：左下角 ux/uy 和右下角 uy。它们是求解的数值规范，不要求真实 DIC 在这些点位移为零，也不将一端当作物理夹紧边界。比较时对模型与 DIC 残差拟合相同的两平移和一微小转动，保留真实伸长及横向收缩。改变三个规范约束点后，配准残差与应变应不变；该性质已纳入检验。
 
-当前共用 70×20 个 Q4 单元，约 0.876663×0.926286 mm，正反问题均为 1491 个节点；反演所有节点模量独立，不绑定不同 y 行。新域的制造界面不再全部与单元边界对齐，旧 70×20 mm 域的收敛结果不能直接视为新域已收敛。DIC 的点距约 0.2895 mm，不需要等于有限元单元尺寸；Q4 观测算子在真实 DIC 位置求值。
+当前共用 70×20 个 Q4 单元，约 0.878534×0.971774 mm，正反问题均为 1491 个节点；反演所有节点模量独立，不绑定不同 y 行。新域的制造界面不再全部与单元边界对齐，旧 70×20 mm 域的收敛结果不能直接视为新域已收敛。DIC 的点距约 0.2895 mm，不需要等于有限元单元尺寸；Q4 观测算子在真实 DIC 位置求值。
 
 ### 原始目标与 L-curve 选参
 
@@ -146,7 +147,7 @@ python -m script.step4_compare_results --config dic_case_sample3
 
 优化器使用 L-BFGS-B，在 `m=ln(E)` 上优化；`FTOL` 是目标函数下降停止条件，`GTOL` 是优化变量梯度停止条件，满足任一条件即可停止，还可能因预算或线搜索而结束。减小 `FTOL` 不代表已满足 `GTOL`，应查看保存的停止信息。
 
-新配置保留 `FTOL=1e-30、GTOL=1e-12`，50点L-curve与四步计算已经完成。50个扫描点中49个按求解器规则成功，最弱γ点达到迭代上限并排除；所选γ与最后各ν的求解按函数下降条件停止，未满足GTOL，不能把`converged=true`写成严格梯度条件已满足。17点基线位于 `history/lcurve17/`；`results/dic/history/` 原四步目录仍保存旧目标、`FTOL=1e-11、GTOL=1e-7` 及空间验证所选 γ=10⁴，后者不是L-curve结果。
+新配置保留 `FTOL=1e-30、GTOL=1e-12`，50点L-curve与四步计算已经完成。50个扫描点中49个按求解器规则成功，最弱γ点达到迭代上限并排除；所选γ与最后各ν的求解按函数下降条件停止，未满足GTOL，不能把`converged=true`写成严格梯度条件已满足。旧居中50点与17点分别位于 `history/pre_marks/`、`history/lcurve17/`；`results/dic/history/` 原四步目录仍保存旧目标、`FTOL=1e-11、GTOL=1e-7` 及空间验证所选 γ=10⁴，后者不是L-curve结果。
 
 要让修改后的容差生效，应先选用新的 `CASE_OUTPUT` 并重新运行第 1 步以冻结新配置，再运行后续步骤。只修改源配置，或给第 3 步指定新的 `--output` 但继续读取旧 `01_prepared`，均不会更新求解设置。结果页显示的是实际保存计算的容差与停止原因。
 

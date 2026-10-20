@@ -1,4 +1,6 @@
-# 真实DIC的50点L-curve扫描与反演
+# 旧居中几何的50点L-curve扫描与反演
+
+本记录对应修正前的_3数据、居中材料位置及−Y轴向。四步结果和scan50_audit已归档于 `results/dic/history/pre_marks/`，不代表当前已确认几何。当前修正见[新记录](mark_geometry_correction_20261020.md)。
 
 ## 结果与比较条件
 
@@ -49,8 +51,8 @@
 
 ## 保存与复现
 
-当前四步结果在 `results/dic/`：`03_inverse/l_curve/gamma_*/` 保存50点数组及停止信息，`03_inverse/selection.csv` 保存范数、曲率和选中标记；`03_inverse/l_curve.png/.svg` 为曲线，`04_comparison/打开查看结果.html` 为主对照页。
+本版四步结果在 `results/dic/history/pre_marks/`：`03_inverse/l_curve/gamma_*/` 保存50点数组及停止信息，`03_inverse/selection.csv` 保存范数、曲率和选中标记；`03_inverse/l_curve.png/.svg` 为曲线，`04_comparison/打开查看结果.html` 为主对照页。
 
 17点四步结果及原核验记录保存在 `results/dic/history/lcurve17/`，旧70×20 mm域仍位于 `results/dic/history/` 原四步目录。两版数据不混用。
 
-本轮核验在 `results/dic/scan50_audit/`：`preflight.json`、`input_consistency.json`、`final_validation.json`、`metrics_17_50.csv`、归档SHA256及逐步日志。使用abqinter Python，分别执行四个步骤脚本；未增加batch入口或修改力学及伴随内核。
+本版核验在 `results/dic/history/pre_marks/scan50_audit/`：`preflight.json`、`input_consistency.json`、`final_validation.json`、`metrics_17_50.csv`、归档SHA256及逐步日志。使用abqinter Python，分别执行四个步骤脚本；未增加batch入口或修改力学及伴随内核。
