@@ -297,21 +297,32 @@ def resolve_dic_geometry(cfg, reference):
             low_mark = -lengths[0]/2+lengths[1]
             high_mark = lengths[0]/2-lengths[2]
             mark_center = (low_mark+high_mark)/2
-            material_offset = float(mark_center-span[0]/2)
+            material_sign = spec.get('material_x_sign', 1)
+            if material_sign not in (-1, 1):
+                raise ValueError('material_x_sign must be +1 or -1')
+            material_offset = float(mark_center-material_sign*span[0]/2)
             boundaries = np.asarray(cfg.REGION_BOUNDARIES_MANUFACTURING_X, dtype=float)
+            if (not np.isfinite(boundaries).all() or np.any(np.diff(boundaries) <= 0) or
+                    np.any(material_sign*np.diff(cfg.REGION_INFILL_PERCENT) <= 0)):
+                raise ValueError('Manufacturing interfaces must increase; infill order must match material_x_sign')
+            resolved.MANUFACTURING_X_SIGN = material_sign
             resolved.MANUFACTURING_X_OFFSET_MM = material_offset
-            resolved.REGION_BOUNDARIES_X = (boundaries-material_offset).tolist()
+            resolved.REGION_BOUNDARIES_X = np.sort((boundaries-material_offset)/material_sign).tolist()
             resolved.REGISTRATION = dict(spec, offset_mm=(-xy.min(axis=0)).tolist())
-            mapped_bounds = [material_offset, float(material_offset+span[0])]
+            mapped_bounds = [material_offset, float(material_offset+material_sign*span[0])]
+            mark_order = [float(low_mark), float(high_mark)] if material_sign == 1 else [float(high_mark), float(low_mark)]
             resolved.MATERIAL_REGISTRATION = {
                 'method': 'confirmed_marks_midpoint_unit_scale',
-                'manufacturing_x_equals_fem_x_plus_mm': material_offset,
-                'manufacturing_mark_x_mm': [float(low_mark), float(high_mark)],
+                'manufacturing_x_offset_mm': material_offset,
+                'manufacturing_x_fem_coefficient': material_sign,
+                'manufacturing_x_relation': f'manufacturing_x = {material_sign} * FEM_x + {material_offset:.12g} mm',
+                'infill_order_along_fem_x': list(cfg.REGION_INFILL_PERCENT),
+                'manufacturing_mark_x_mm': mark_order,
                 'manufacturing_roi_x_mm': mapped_bounds,
                 'nominal_mark_gap_mm': float(high_mark-low_mark),
                 'dic_span_mm': float(span[0]),
                 'dic_minus_nominal_mark_gap_mm': float(span[0]-(high_mark-low_mark)),
-                'endpoint_discrepancy_mm': [mapped_bounds[0]-float(low_mark), mapped_bounds[1]-float(high_mark)],
+                'endpoint_discrepancy_mm': [value-mark for value, mark in zip(mapped_bounds, mark_order)],
                 'length_scale_factor': 1.,
                 'direction_note': spec['note'],
                 'transverse_location': 'internal DIC ROI bounds; no measured specimen edge registration',

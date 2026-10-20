@@ -19,7 +19,7 @@
 
 在项目根目录、安装 `requirements.txt` 的 Python 环境中，依次运行：
 
-默认配置使用 `180N_2/region`、`280N_2/region`，按73/85 mm标线中点和+Y方向定位，保留独立毫米尺度，输出到 `results/dic/`。50点扫描及四步计算按新几何执行，结果见[当前修正记录](mark_geometry_correction_20261020.md)。旧居中50点和17点分别在 `history/pre_marks/`、`history/lcurve17/`。新实验四步命令为：
+默认配置使用 `180N_2/region`、`280N_2/region`，按73/85 mm标线中点及材料沿−Y递增定位，保留独立毫米尺度，输出到 `results/dic/`。50点扫描及四步计算按新几何执行，结果见[当前修正记录](material_direction_update_20261020.md)。旧居中50点和17点分别在 `history/pre_marks/`、`history/lcurve17/`。新实验四步命令为：
 
 ```powershell
 python -m script.step1_prepare_dic
@@ -28,7 +28,7 @@ python -m script.step3_inverse_dic
 python -m script.step4_compare_results
 ```
 
-本组四步均已完成；不要重复执行数值计算覆盖冻结结果。查看既有结果或仅更新显示时使用`--plot-only`。
+本组四步均已完成；本次材料方向更新复用了输入完全相同的既有反演和50点扫描，只重算独立正演并更新分区统计与全部图表；不要重复执行数值计算覆盖冻结结果。查看既有结果或仅更新显示时使用`--plot-only`。
 
 **查看结果：双击项目根目录的 [打开结果.html](../打开结果.html)。** 每一步结束时都会打印本步绝对保存路径和实验总览路径，并更新这个固定入口。第 2—4 步的默认 `--config dic_case_config` 仅用于定位 `CASE_OUTPUT/01_prepared`；求解参数和数据仍来自第一步冻结文件。也可用 `--input <01_prepared目录>` 明确指定输入。
 
@@ -96,10 +96,10 @@ python -m script.step4_compare_results --config dic_case_sample3
 - `CASE_ID`、`CASE_OUTPUT`：实验身份与新结果目录。
 - `PLATFORMS`：各载荷平台的数据目录、首末阶段、识别或预测用途。载荷可通过 `FORCE_PAIRING_CSV` 的 `run/setting_N` 配对，或显式提供 `force_N` 和 `force_note`；平台名称不直接作为实际拉力。
 - `DIC_UNIT`、`DIC_COORDINATE_STATE`、位移与力的参考态：当前入口采用 mm、相对初始未加载图位移及相应实际拉力。坐标和位移必须共用长度单位；不自动识别单位或推断预载参考。
-- `DOMAIN_SOURCE`：默认 `dic_reference_bounds`，第一步从识别平台初始坐标解析 `GEO_L/GEO_H` 并冻结；预测平台不重新决定域。`THICKNESS/LOAD_SECTION_WIDTH` 来自试样定义，不能用内部 DIC 宽度替代真实承载宽度。`REGION_BOUNDARIES_MANUFACTURING_X`保留制造界面位置，`specimen_marks`按已确认标线中点映射到FEM原点。旧配置缺少 `DOMAIN_SOURCE` 时仍按显式 `GEO_L/GEO_H` 处理。
+- `DOMAIN_SOURCE`：默认 `dic_reference_bounds`，第一步从识别平台初始坐标解析 `GEO_L/GEO_H` 并冻结；预测平台不重新决定域。`THICKNESS/LOAD_SECTION_WIDTH` 来自试样定义，不能用内部 DIC 宽度替代真实承载宽度。`REGION_INFILL_PERCENT`按FEM x排列为90/80/70/60/50%，`REGISTRATION.material_x_sign=-1`控制材料方向，`REGION_BOUNDARIES_MANUFACTURING_X`保留制造界面位置，`specimen_marks`按已确认标线中点映射到FEM原点。旧配置缺少 `DOMAIN_SOURCE` 时仍按显式 `GEO_L/GEO_H` 处理。
 - `REGISTRATION`：同一坐标变换用于全部平台，坐标和位移同步变换；平移只作用于坐标，不独立缩放坐标轴。
 - `NEL_X/NEL_Y`：同一有限元网格用于独立正演、反演和回代；DIC 保持自己的真实测点和采样间距。
-- `NU_VALUES/PRIMARY_NU`：本组允许范围为 0.24—0.33，具体ν尚未独立确定；当前四步冻结的 0.24/0.26/0.28 是预设比较点，0.26 是历史参考值，不是实测中点或已测定材料值。历史 [E—ν联合诊断](joint_modulus_poisson_diagnosis_20261019.md) 保留旧输入。本轮另按新输入、固定主γ计算ν=0.33敏感性，见 [标线修正报告](mark_geometry_correction_20261020.md)，仅用180N识别，不以280N调参。
+- `NU_VALUES/PRIMARY_NU`：本组允许范围为 0.24—0.33，具体ν尚未独立确定；当前四步冻结的 0.24/0.26/0.28 是预设比较点，0.26 是历史参考值，不是实测中点或已测定材料值。历史 [E—ν联合诊断](joint_modulus_poisson_diagnosis_20261019.md) 保留旧输入。本轮另按新输入、固定主γ计算ν=0.33敏感性，见 [标线修正报告](material_direction_update_20261020.md)，仅用180N识别，不以280N调参。
 
 ## 物理域与坐标配准
 
@@ -107,7 +107,7 @@ python -m script.step4_compare_results --config dic_case_sample3
 
 `INTERNAL_SIDE_BOUNDARY='traction_free_approximation'` 显式采用内部横向截面自由近似；不配置该近似时拒绝将较窄区域直接作为自由侧边模型。严格子域等效尚未验证。几何、分区和载荷的完整定义见 [DIC 计算域及载荷截面](dic_roi_geometry.md)。
 
-当前配置采用`specimen_marks`：73 mm为高填充率端、85 mm为低填充率端，region边界对应横线，方向Q=((0,1),(-1,0))。独立DIC跨度61.497354 mm与名义标线推算62 mm的差异保留；材料制造坐标为FEM x−24.748676795 mm。因近似标线间隔、名义总长和横向位置仍有未闭合项，状态保持条件性，但不再将材料位置放在试样中心。
+当前配置采用`specimen_marks`：73 mm为高填充率端、85 mm为低填充率端，region边界对应横线，方向Q=((0,1),(-1,0))。独立DIC跨度61.497354 mm与名义标线推算62 mm的差异保留；材料制造坐标为36.748676795−FEM x mm。因近似标线间隔、名义总长和横向位置仍有未闭合项，状态保持条件性，但不再将材料位置放在试样中心。
 
 配准支持以下显式模式：
 

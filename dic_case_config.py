@@ -3,7 +3,7 @@
 from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).resolve().parent
-CASE_ID = 'sample2_run3_marks_73_85'
+CASE_ID = 'sample2_run3_marks_73_85_minusY'
 CASE_OUTPUT = PROJECT_ROOT / 'results' / 'dic'
 SAMPLE_ROOT = PROJECT_ROOT / 'post_tensile_test' / '1016' / 'sample_2'
 PLATFORMS = {
@@ -23,7 +23,8 @@ LOAD_SECTION_WIDTH = 20.  # Actual specimen width, not the internal DIC ROI widt
 INTERNAL_SIDE_BOUNDARY = 'traction_free_approximation'
 # One mesh for BOTH independent forward and inverse; DIC points stay unchanged.
 NEL_X, NEL_Y = 70, 20
-REGION_INFILL_PERCENT = (50, 60, 70, 80, 90)
+# Groups are ordered along increasing FEM x = raw +Y.
+REGION_INFILL_PERCENT = (90, 80, 70, 60, 50)
 # Manufacturing x increases with infill; zero is the specimen center.
 REGION_BOUNDARIES_MANUFACTURING_X = (-24., -8., 8., 24.)
 REGION_BOUNDARIES_X = None
@@ -33,12 +34,13 @@ CALIBRATION_METHOD = 'independent'
 REGISTRATION = {
     'mode': 'specimen_marks',
     'matrix': ((0., 1.), (-1., 0.)),  # x=+Y, y=-X; ux=DY, uy=-DX.
+    'material_x_sign': -1,  # Manufacturing infill coordinate decreases along FEM x.
     'specimen_length_mm': 220.,  # Manufacturing nominal length.
     'low_infill_mark_end_distance_mm': 85.,
     'high_infill_mark_end_distance_mm': 73.,
     'mark_reference': 'roi_axial_extrema',
     'length_scale_source': 'independent_dic_calibration',
-    'note': 'User confirmed: 73 mm mark at high-infill end, 85 mm at low-infill end; region ends correspond to the marks; infill increases along raw +Y. Retain independently calibrated mm. Align mark midpoint without scaling; record the approximate mark-gap/export-span discrepancy.',
+    'note': 'Adopted material-direction correction: infill increases along raw -Y; 73 mm mark at high-infill end, 85 mm at low-infill end; region ends correspond to the marks. Retain independently calibrated mm. Align mark midpoint without scaling; record the approximate mark-gap/export-span discrepancy.',
 }
 OUTSIDE_POINT_POLICY = 'reject'
 FIT_CASES, PREDICT_CASES = ('180N',), ('280N',)

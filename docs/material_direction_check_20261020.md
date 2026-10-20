@@ -1,5 +1,7 @@
 # 独立标定正演的材料方向对照
 
+**后续状态：** 两方向对照数值保留；主流程现已采用minusY方向，见[统一更新](material_direction_update_20261020.md)。下方复现读取归档的plusY准备数据以保持候选标签不变。
+
 ## 结论
 
 制造方向目前存在争议，原“填充率沿原始+Y递增”改为待复核的计算假设。固定DIC坐标、载荷、几何、标定模量和泊松比，将整套材料分布镜像后，正演轴向位移误差减小，但伸长总量偏差仍在。不能仅凭拟合优劣确定真实方向，也不能仅凭原方向下反演E与标定趋势相反判定反演或材料实验失败。
@@ -76,7 +78,7 @@ import pandas as pd
 from lib.dic_case_workflow import load_prepared
 from fgm_asm.research import partition_modulus, solve_forward
 from fgm_asm.load_case import evaluate_observation
-cfg, mesh, cases, metadata, provenance = load_prepared(Path("results/dic/01_prepared"))
+cfg, mesh, cases, metadata, provenance = load_prepared(Path("results/dic/history/plusY/01_prepared"))
 values = pd.DataFrame(metadata["calibration"]).mean_E_MPa
 plus = partition_modulus(values, cfg.REGION_BOUNDARIES_X)
 minus = lambda x, y: plus(mesh.geo_l - np.asarray(x), y)
