@@ -18,7 +18,7 @@
 | 60% | 44.748677—60.748677 | 16 | 1638.6619 |
 | 50% | 60.748677—61.497354 | 0.748677 | 1396.4108 |
 
-界面和各段长度随材料一起镜像，不只把E值倒序。标定顺序由`REGION_INFILL_PERCENT=(90,80,70,60,50)`指定，制造映射由`REGISTRATION.material_x_sign=-1`指定。原+Y递增结果归档于`results/dic/history/plusY/`；方向对照记录仍保留两种候选的实际数值。当前采用方向不被描述为独立实测结论。
+界面和各段长度随材料一起镜像，不只把E值倒序。标定顺序由`REGION_INFILL_PERCENT=(90,80,70,60,50)`指定，制造映射由`REGISTRATION.material_x_sign=-1`指定。原+Y递增结果作为`history/plusY/`成员保存于`results/dic/history/previous_runs.zip`；方向对照记录仍保留两种候选的实际数值。当前采用方向不被描述为独立实测结论。
 
 ## 当前计算域、载荷与网格
 
@@ -39,7 +39,7 @@ DIC点阵为213×68、点距约0.290081857 mm。正反问题共用70×20 Q4单�
 
 `180N_2/all_region`、`280N_2/all_region`现已取得相同阶段导出，各26,585点，跨度约117.836497×18.484156 mm。它与region采样网格不同，点距约0.288814944 mm；相同行列ID不能直接当作相同材料点。最近空间测点也只是邻近采样，不能当作严格共同点或据其差异估计相机标定误差。
 
-本轮主计算限定为已确认对应横线的region；all_region用于覆盖和邻近样本诊断，记录在`results/dic/geometry_fix/region_all_region_audit.json`。尚未通过独立共同标线/材料点建立大区的精确制造位置，未将其裁成新的主计算域。
+本轮主计算限定为已确认对应横线的region；all_region用于覆盖和邻近样本诊断，原核验记录作为`geometry_fix/region_all_region_audit.json`成员保存在历史包。尚未通过独立共同标线/材料点建立大区的精确制造位置，未将其裁成新的主计算域。
 
 完整中间五区的制造范围为[−40,40] mm、长80 mm；完整平行段七区为[−75,75] mm、长150 mm。当前region仅约61.5 mm，不能称为完整五区。all_region跨度117.84 mm也不足以覆盖完整150 mm七区；能否连续覆盖目标80 mm五区还需确定位置、有效点及横向覆盖。
 
@@ -47,8 +47,6 @@ DIC点阵为213×68、点距约0.290081857 mm。正反问题共用70×20 Q4单�
 
 ## 配置、结果与历史记录
 
-当前`dic_case_config.py`使用`REGISTRATION.mode='specimen_marks'`、`REGION_BOUNDARIES_MANUFACTURING_X`及独立单位尺度。准备阶段冻结`material_registration`，后续正演、反演、统计和绘图均读取相同坐标与分区。四步主结果仍保存于`results/dic/`，当前核验及材料定位图位于`direction_update/`；`geometry_fix/`保留原+Y输入的核验记录。
+当前`dic_case_config.py`使用`REGISTRATION.mode='specimen_marks'`、`REGION_BOUNDARIES_MANUFACTURING_X`及独立单位尺度。准备阶段冻结`material_registration`，后续正演、反演、统计和绘图均读取相同坐标与分区。四步主结果仍保存于`results/dic/`，当前核验及材料定位图位于`direction_update/`；历史包中的`geometry_fix/`保留原+Y输入的核验记录。
 
-旧居中50点结果及其扫描核验归档于`results/dic/history/pre_marks/`，17点基线仍在`history/lcurve17/`。旧_3的61.3664×18.5257 mm、−Y递增及6.6832/22.6832/38.6832/54.6832 mm界面只属于历史配置，旧误差和分区均值不能当作本轮结果。
-
-此前[标线候选正演诊断](mark_geometry_forward_diagnostic_20261020.md)、[分区模量诊断](partition_modulus_diagnosis_20261019.md)、[E—ν诊断](joint_modulus_poisson_diagnosis_20261019.md)各有自己的旧输入和假设，按原记录解释，不用于替代当前已确认几何或选择本轮参数。数值自洽、完整试样边界等效及误差预算分别报告。
+旧居中50点、17点基线、原+Y递增版本及其他探索诊断统一保存在`results/dic/history/previous_runs.zip`，原路径和文件哈希见[历史索引](results_history.md)。这些记录不能作为当前计算条件的结果。数值自洽、物理方向确认及实验误差预算仍分别评价。

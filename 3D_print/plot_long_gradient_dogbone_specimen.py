@@ -1,5 +1,8 @@
 """Plot the 220 mm dogbone outline and seven lengthwise infill regions."""
 
+import json
+from pathlib import Path
+
 import matplotlib
 
 matplotlib.use("Agg")
@@ -17,15 +20,25 @@ from stl_builders import build_smooth_dogbone_polygon
 
 
 OUTPUT_PATH = OUTPUT_DIR / "dogbone_220mm_region_schematic.png"
-# Actual experiment markers, measured from each outer end (not the shoulder).
-MARKER_DISTANCE_FROM_OUTER_END_MM = 75.0
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
 
 
 def main() -> None:
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     outline = build_smooth_dogbone_polygon(SPECIMEN_CFG)
     parallel_left = -SPECIMEN_CFG.parallel_length / 2
-    roi_half_length = SPECIMEN_CFG.total_length / 2 - MARKER_DISTANCE_FROM_OUTER_END_MM
+    prepared = PROJECT_ROOT / "results" / "dic" / "01_prepared" / "run_metadata.json"
+    if not prepared.exists():
+        raise FileNotFoundError("Run python -m script.step1_prepare_dic before plotting the observed ROI")
+    record = json.loads(prepared.read_text(encoding="utf-8"))
+    placement = record["material_registration"]
+    marks = sorted(placement["manufacturing_mark_x_mm"])
+    low_distance = record["registration"]["low_infill_mark_end_distance_mm"]
+    high_distance = record["registration"]["high_infill_mark_end_distance_mm"]
+    roi_left, roi_right = sorted(placement["manufacturing_roi_x_mm"])
+    material_sign = placement.get("manufacturing_x_fem_coefficient", 1)
+    if abs(SPECIMEN_CFG.total_length - record["registration"]["specimen_length_mm"]) > 1e-8:
+        raise ValueError("Printed specimen and prepared DIC must use the same nominal length")
 
     fig, ax = plt.subplots(figsize=(12, 3.5), dpi=250)
     specimen_patch = Polygon(outline, closed=True, facecolor="#f1f1f1", edgecolor="none")
@@ -73,16 +86,29 @@ def main() -> None:
     ax.add_patch(Polygon(outline, closed=True, fill=False, edgecolor="#222222", linewidth=1.3))
     for x in (-75, 75):
         ax.axvline(x, color="#444444", linestyle="--", linewidth=0.8)
-    for x in (-roi_half_length, roi_half_length):
+    for x in marks:
         ax.axvline(x, color="#222222", linestyle=":", linewidth=1.0)
-    ax.text(0, 23, f"{2 * roi_half_length:g} mm inverse ROI", ha="center", va="center", fontsize=9)
-    ax.set(xlim=(-114, 114), ylim=(-27, 27), xlabel="Tensile axis x (mm)", ylabel="Width y (mm)")
+    ax.annotate(f"{low_distance:g} mm to low-infill end; mark {marks[0]:+g}",
+                xy=(marks[0], 10), xytext=(-64, 23), fontsize=8, ha="center",
+                arrowprops={"arrowstyle": "->", "linewidth": 0.7})
+    ax.annotate(f"{high_distance:g} mm to high-infill end; mark {marks[1]:+g}",
+                xy=(marks[1], 10), xytext=(76, 23), fontsize=8, ha="center",
+                arrowprops={"arrowstyle": "->", "linewidth": 0.7})
+    ax.plot([roi_left, roi_right], [-14, -14], color="#c33a2b", linewidth=2)
+    ax.text((roi_left+roi_right)/2, -18,
+            f"DIC span {roi_right-roi_left:.6f} mm (independent mm scale)",
+            ha="center", fontsize=8, color="#9a2920")
+    direction = "opposite" if material_sign == -1 else "same"
+    ax.set(xlim=(-114, 114), ylim=(-29, 29),
+           xlabel=f"Manufacturing xi (mm); FEM x is {direction} to xi",
+           ylabel="Width (mm)")
     ax.set_aspect("equal")
     ax.grid(False)
     ax.set_title("220 mm dogbone: longer edge regions and seven full-width infill levels")
     fig.tight_layout()
     fig.savefig(OUTPUT_PATH, dpi=300)
     fig.savefig(OUTPUT_PATH.with_suffix(".pdf"))
+    fig.savefig(OUTPUT_PATH.with_suffix(".svg"))
     plt.close(fig)
 
 

@@ -115,7 +115,7 @@ def plot_l_curve(output, selection):
 def plot_modulus_comparison(output, mesh, reference, reconstructed):
     fig, axes = plt.subplots(1, 3, figsize=(12, 3.4), constrained_layout=True)
     lo, hi = min(reference.min(), reconstructed.min()), max(reference.max(), reconstructed.max())
-    for index, (values, title) in enumerate(((reference, 'Reference E (MPa)'),
+    for index, (values, title) in enumerate(((reference, 'Calibrated E (MPa)'),
                                              (reconstructed, 'Inverse E (MPa)'),
                                              (100 * (reconstructed / reference - 1), 'Relative difference (%)'))):
         kwargs = {'vmin': lo, 'vmax': hi} if index < 2 else {}
@@ -153,7 +153,7 @@ def save_x_profile(output, mesh, reconstructed, reference):
     fig, axes = plt.subplots(2, 1, figsize=(7., 5.), sharex=True, constrained_layout=True)
     dense_x = np.linspace(0., mesh.geo_l, 1401)
     axes[0].plot(dense_x, reference(dense_x, np.zeros_like(dense_x)), color='black',
-                 linestyle='--', label='1D reference')
+                 linestyle='--', label='Independent calibration')
     axes[0].plot(x, mean, color='#0072B2', label='2D inverse: width mean')
     axes[0].fill_between(x, mean-spread, mean+spread, color='#0072B2', alpha=.18,
                          label='Transverse spatial SD')

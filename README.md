@@ -28,7 +28,7 @@ python -m script.step4_compare_results
 | DIC 反演 | `03_inverse/` | `云图.html`、二维模量、E(x)、DIC／回代／相对误差对照、识别与预测记录 |
 | 比较出图 | `04_comparison/` | `打开查看结果.html`、CSV、各 ν/平台的 PNG/SVG |
 
-浏览入口指向标线及方向修正后的DIC范围四步结果，含L-curve、自由二维模量、独立标定正演/DIC/反演回代对照及280N预测。旧居中50点保存在 `history/pre_marks/`，17点基线保存在 `results/dic/history/lcurve17/`；本轮ν=0.33敏感性已按新输入、固定本轮50点所选γ重算，保存在 `results/dic/direction_update/nu_0.33/`；旧辅助诊断保留原输入。历史 `results/dic/history/` 原四步目录保留旧 70×20 mm 域、旧目标及空间验证选参结果，不能与新域混用。每步自动更新同组 `结果总览.html` 的四个卡片。数值结果与当前内核一致时，`--plot-only` 可重复刷新图表，不重算正反问题；内核变化后需重新准备。
+浏览入口指向当前递减方向的四步结果，含L-curve、自由二维模量及正演/DIC/反演回代对照。ν=0.33补充图在`results/dic/direction_update/nu_0.33/`。旧方向、旧网格及探索性诊断集中在`results/dic/history/previous_runs.zip`，版本条件与索引见[历史结果](docs/results_history.md)。每步更新同组`结果总览.html`；`--plot-only`只更新图表，不重算正反问题。
 
 误差云图统一采用百分比：位移误差以对应平台 DIC 去除三个刚体分量后的分量 RMS 归一化，避免逐点除以过零位移；原始残差仍以 mm 保存。第 2 步直接展示正演与 DIC 的并排对照，无需等到第 4 步。
 

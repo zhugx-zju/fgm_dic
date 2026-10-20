@@ -19,7 +19,7 @@
 
 在项目根目录、安装 `requirements.txt` 的 Python 环境中，依次运行：
 
-默认配置使用 `180N_2/region`、`280N_2/region`，按73/85 mm标线中点及材料沿−Y递增定位，保留独立毫米尺度，输出到 `results/dic/`。50点扫描及四步计算按新几何执行，结果见[当前修正记录](material_direction_update_20261020.md)。旧居中50点和17点分别在 `history/pre_marks/`、`history/lcurve17/`。新实验四步命令为：
+默认配置使用 `180N_2/region`、`280N_2/region`，按73/85 mm标线中点及材料沿−Y递增定位，保留独立毫米尺度，输出到 `results/dic/`。50点扫描及四步计算按新几何执行，结果见[当前修正记录](material_direction_update_20261020.md)。旧版本统一存于`history/previous_runs.zip`，见[历史索引](results_history.md)。新实验四步命令为：
 
 ```powershell
 python -m script.step1_prepare_dic
@@ -48,7 +48,7 @@ python -m script.step4_compare_results
     relative_error_summary.csv  各平台/模型/分量的归一化分母、相对 RMS 与 P95
     modulus_comparison.*     二维模量对照
     x_profile.*              宽度平均 E(x) 与标定对照
-history/                     原版本四步结果及核验记录
+history/                     previous_runs.zip、文件哈希清单和历史索引
 ```
 
 当前实验统一保存在 `results/dic/`。L-curve 扫描与识别模量共用 `03_inverse/`，不再因选参方式另建并列实验目录。历史版本位于 `history/`，保留各自冻结数据和计算条件；所有浏览入口均从统一总览访问。移动整套结果时保留原元数据中的计算时路径与哈希，后续出图以实际输入目录定位，并核验冻结文件身份。
@@ -99,7 +99,7 @@ python -m script.step4_compare_results --config dic_case_sample3
 - `DOMAIN_SOURCE`：默认 `dic_reference_bounds`，第一步从识别平台初始坐标解析 `GEO_L/GEO_H` 并冻结；预测平台不重新决定域。`THICKNESS/LOAD_SECTION_WIDTH` 来自试样定义，不能用内部 DIC 宽度替代真实承载宽度。`REGION_INFILL_PERCENT`按FEM x排列为90/80/70/60/50%，`REGISTRATION.material_x_sign=-1`控制材料方向，`REGION_BOUNDARIES_MANUFACTURING_X`保留制造界面位置，`specimen_marks`按已确认标线中点映射到FEM原点。旧配置缺少 `DOMAIN_SOURCE` 时仍按显式 `GEO_L/GEO_H` 处理。
 - `REGISTRATION`：同一坐标变换用于全部平台，坐标和位移同步变换；平移只作用于坐标，不独立缩放坐标轴。
 - `NEL_X/NEL_Y`：同一有限元网格用于独立正演、反演和回代；DIC 保持自己的真实测点和采样间距。
-- `NU_VALUES/PRIMARY_NU`：本组允许范围为 0.24—0.33，具体ν尚未独立确定；当前四步冻结的 0.24/0.26/0.28 是预设比较点，0.26 是历史参考值，不是实测中点或已测定材料值。历史 [E—ν联合诊断](joint_modulus_poisson_diagnosis_20261019.md) 保留旧输入。本轮另按新输入、固定主γ计算ν=0.33敏感性，见 [标线修正报告](material_direction_update_20261020.md)，仅用180N识别，不以280N调参。
+- `NU_VALUES/PRIMARY_NU`：本组允许范围为 0.24—0.33，具体ν尚未独立确定；当前四步冻结的 0.24/0.26/0.28 是预设比较点，0.26 是历史参考值，不是实测中点或已测定材料值。历史 [E—ν联合诊断](results_history.md) 保留旧输入。本轮另按新输入、固定主γ计算ν=0.33敏感性，见 [标线修正报告](material_direction_update_20261020.md)，仅用180N识别，不以280N调参。
 
 ## 物理域与坐标配准
 
@@ -147,7 +147,7 @@ python -m script.step4_compare_results --config dic_case_sample3
 
 优化器使用 L-BFGS-B，在 `m=ln(E)` 上优化；`FTOL` 是目标函数下降停止条件，`GTOL` 是优化变量梯度停止条件，满足任一条件即可停止，还可能因预算或线搜索而结束。减小 `FTOL` 不代表已满足 `GTOL`，应查看保存的停止信息。
 
-新配置保留 `FTOL=1e-30、GTOL=1e-12`，50点L-curve与四步计算已经完成。50个扫描点中49个按求解器规则成功，最弱γ点达到迭代上限并排除；所选γ与最后各ν的求解按函数下降条件停止，未满足GTOL，不能把`converged=true`写成严格梯度条件已满足。旧居中50点与17点分别位于 `history/pre_marks/`、`history/lcurve17/`；`results/dic/history/` 原四步目录仍保存旧目标、`FTOL=1e-11、GTOL=1e-7` 及空间验证所选 γ=10⁴，后者不是L-curve结果。
+新配置保留 `FTOL=1e-30、GTOL=1e-12`，50点L-curve与四步计算已经完成。50个扫描点中49个按求解器规则成功，最弱γ点达到迭代上限并排除；所选γ与最后各ν的求解按函数下降条件停止，未满足GTOL，不能把`converged=true`写成严格梯度条件已满足。旧居中50点、17点及更早的空间验证选参记录均作为原目录成员保存在`history/previous_runs.zip`。旧目标与参数条件见[历史索引](results_history.md)，不能与当前L-curve结果混用。
 
 要让修改后的容差生效，应先选用新的 `CASE_OUTPUT` 并重新运行第 1 步以冻结新配置，再运行后续步骤。只修改源配置，或给第 3 步指定新的 `--output` 但继续读取旧 `01_prepared`，均不会更新求解设置。结果页显示的是实际保存计算的容差与停止原因。
 

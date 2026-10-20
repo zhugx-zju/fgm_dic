@@ -37,6 +37,7 @@ def _geometry_description(summary):
         position = ('材料位置仍按点云与试样居中假设；' if marks is None else
                     f"材料按横线中点定位，制造坐标从左至右为 {marks['manufacturing_roi_x_mm']} mm；"
                     f"制造坐标相对FEM x的系数为 {marks.get('manufacturing_x_fem_coefficient', 1):+d}；"
+                    f"沿FEM x的填充率顺序为 {marks.get('infill_order_along_fem_x', '见冻结配置')}%；"
                     f"标线端距推算间隔 {marks['nominal_mark_gap_mm']:.6f} mm，"
                     f"与导出跨度之差 {marks['dic_minus_nominal_mark_gap_mm']:+.6f} mm，保留独立毫米尺度。"
                     '当前方向 ux=DY、uy=−DX；')

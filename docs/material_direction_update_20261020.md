@@ -2,7 +2,7 @@
 
 ## 当前状态
 
-主配置与当前四步结果已统一采用填充率沿原始−Y递增。固定FEM x仍沿原始+Y，故独立标定模量与反演宽度均值总体都沿FEM x递减。原+Y递增四步完整归档于`results/dic/history/plusY/`。当前采用方向为本轮明确的输入修正；拟合改善不作为独立制造方向测量。
+主配置与当前四步结果已统一采用填充率沿原始−Y递增。固定FEM x仍沿原始+Y，故独立标定模量与反演宽度均值总体都沿FEM x递减。原+Y递增四步作为`results/dic/history/plusY/`成员保存在`results/dic/history/previous_runs.zip`，见[历史索引](results_history.md)。当前采用方向为本轮明确的输入修正；拟合改善不作为独立制造方向测量。
 
 ## 同一物理位置的材料对应
 
