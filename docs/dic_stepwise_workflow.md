@@ -54,6 +54,8 @@ python -m script.step4_compare_results
 
 DIC 图复用原 `post_DIC` 的 `lib/dic_preprocessing.py::plot_grid_fields`：7×6 英寸、规则网格 `pcolormesh`、`jet`、等比例坐标、独立单图。第 2、3 步直接按分量并排显示 DIC、模型及相对误差；第 4 步中 DIC/独立正演/反演共用位移色标，两幅相对误差共用对称百分比色标。新输入冻结网格 ID，缺失点留空，不插值补测量。旧版冻结结果仅在可核验的轴对齐规则坐标上恢复网格顺序。绘图不改变配准、观测、载荷或反演结果。
 
+第 2—4 步还自动生成同一张图内的 ux/uy 四格对照（`*_forward_dic_components.*`、`*_inverse_dic_components.*`，PNG/SVG）：上排处理后的 DIC、下排配准后的有限元，左列 ux、右列 uy，每列共用色标。两排分别为 `d−mean(d)` 与 `HU+Rc−mean(d)`，位置均为真实 DIC 测点的 FEM 坐标；图下方标注该位移参考。各步骤 HTML 直接展示四格图，原分量单图、误差图及未居中的逐点 CSV 继续保留。详见[共同参考及实际核验](dic_reference_consistency.md#正演与反演的-uxuy-四格对照)。
+
 ### 相对误差的定义
 
 先用与反演相同的观测权重，将 DIC 位移投影到两平移、一微小转动子空间，令去除这些刚体分量后的位移为 `d_def`。各平台、各分量 `c` 的固定分母为：

@@ -161,6 +161,37 @@ def dic_relative_error_scale(case):
     return scale
 
 
+def plot_dic_fe_components(output, name, x_grid, y_grid, fields, limits, model, title):
+    """Show both displacement components in one figure, in the DIC reference.
+
+    ``fields`` contains d-mean(d) and HU+Rc-mean(d), already evaluated at
+    identical DIC positions. This is a display of the existing residual, not
+    a separate rigid fit, FE interpolation, or displacement normalization.
+    """
+    fig, axes = plt.subplots(2, 2, figsize=(12, 5.4), sharex=True, sharey=True,
+                             layout='constrained')
+    fig.suptitle(title, fontsize=14)
+    for column, component in enumerate(('ux', 'uy')):
+        low, high = limits[f'dic_{component}']
+        for row, (key, label) in enumerate((('dic', 'Processed DIC'), (model, 'Registered FE'))):
+            ax = axes[row, column]
+            image = ax.pcolormesh(x_grid, y_grid, np.ma.masked_invalid(fields[f'{key}_{component}']),
+                                  shading='nearest', cmap='jet', vmin=low, vmax=high,
+                                  rasterized=True)
+            ax.set(xlim=(x_grid.min(), x_grid.max()), ylim=(y_grid.min(), y_grid.max()),
+                   aspect='equal', title=f'{label}: $u_{component[-1]}$')
+            ax.set_xlabel('x (mm) - loading direction')
+            ax.set_ylabel('y (mm)')
+            ax.tick_params(labelbottom=True, labelleft=True)
+        fig.colorbar(image, ax=axes[:, column], label=f'$u_{component[-1]}$ (mm)', shrink=.85)
+    fig.supxlabel('Same DIC points and FEM axes; one color scale per component.\n'
+                  'DIC: d - mean(d); FE: HU + fitted rigid motion - mean(d).', fontsize=10)
+    stem = Path(output)/f'{name}_{model}_dic_components'
+    fig.savefig(stem.with_suffix('.png'), dpi=300)
+    fig.savefig(stem.with_suffix('.svg'))
+    plt.close(fig)
+
+
 def save_dic_comparison(output, cases, model_states, fit_names, grid_ids=None, *, nu=None):
     """DIC, one or both FE models, and signed relative errors in post_DIC style.
 
@@ -217,6 +248,12 @@ def save_dic_comparison(output, cases, model_states, fit_names, grid_ids=None, *
         plot_grid_fields(output/case.name, case.name, x_grid, y_grid,
                          [(key, value, titles[key]) for key, value in fields.items()],
                          cmap='jet', limits=limits, title_prefix='', unit='mm')
+        for model in states:
+            label = headings[model]
+            if model == 'inverse' and case.name not in fit_names:
+                label = 'Inverse modulus: held-out prediction'
+            plot_dic_fe_components(output/case.name, case.name, x_grid, y_grid,
+                                   fields, limits, model, f'{condition} | {label}')
         x_grid, y_grid, fields = grid_fields_from_points(xy, error_maps, ids, allow_nan=True)
         plot_grid_fields(output/case.name, case.name, x_grid, y_grid,
                          [(key, value, titles[key]) for key, value in fields.items()],

@@ -20,6 +20,14 @@ table{border-collapse:collapse;font-size:14px;display:block;overflow:auto}th,td{
 @media(max-width:800px){.cards,.fields,.clouds{grid-template-columns:1fr}}
 </style>'''
 
+COMPONENT_REFERENCE_TEXT = (
+    '四格位移图：上排为处理后的 DIC，下排为配准后的有限元；左列 ux（拉伸方向），'
+    '右列 uy（宽度方向），各列共用色标，单位 mm。DIC 显示 d−mean(d)，'
+    '有限元显示 HU+Rc−mean(d)，其中 Rc 为已有残差配准的两平移和一微小转动。'
+    '两者使用相同物理坐标和真实 DIC 测点，不直接将三个约束下的原始节点 U 与 DIC 对比。'
+    '共同均值只改变绘图零点，不改变残差或伸长。坐标和位移采用同一个正交变换，位置平移不加到位移上。'
+)
+
 
 def _geometry_description(summary):
     """Keep computation bounds distinct from the section carrying measured F."""
@@ -124,12 +132,14 @@ def write_stage_gallery(output, summary, title):
     """Browse all generated stage plots from one visible entry."""
     output = Path(output)
     overview = Path(summary.get('prepared_directory', output.parent/'01_prepared')).parent/'结果总览.html'
+    reference_text = ('DIC 单图仅在显示时减去对应分量均值，位置与位移均已转换到 FEM 轴向。'
+                      if summary['workflow'] == 'dic_case_preparation' else COMPONENT_REFERENCE_TEXT)
     parts = ['<!doctype html><html lang="zh-CN"><meta charset="utf-8">',
              f'<title>{html.escape(title)}</title>', PAGE_STYLE,
              f'<h1>{html.escape(title)}</h1>',
              f'<p><a href="{_link(overview, output)}">返回四步结果总览</a></p>',
              f'<p class="path">保存位置：{html.escape(str(output.resolve()))}</p>',
-             '<p>位移显示仅共同减去对应 DIC 分量均值，数值观测与预测保持原参考态。模型位移在真实 DIC 测点显示；DIC 与模型位移共用色标。模量图覆盖物理模型域，未观测边带属于模型延拓。</p>',
+             f'<p>{reference_text}</p>',
              '<p>实际拉力：'+html.escape('；'.join(f"{name}: {record['mean_corrected_force_N']:.6f} N"
                                                  for name, record in summary['force_pairing'].items()))+'</p>']
     if not summary['coordinates_verified']:
@@ -164,6 +174,13 @@ def write_stage_gallery(output, summary, title):
                 continue
             parts.append(f'<p><a href="{_link(parent/"point_fields.csv", output)}">逐测点位移、残差（mm）与相对误差（%）</a>'
                          f' · <a href="{_link(parent.parent/"relative_error_summary.csv", output)}">相对误差汇总 CSV</a></p>')
+            panel = parent/f'{case}_{model}_dic_components.png'
+            if panel.exists():
+                grouped.add(panel)
+                label = ('反演模量预测' if model == 'inverse' and
+                         case not in summary['configuration']['FIT_CASES'] else model_title)
+                parts.append(f'<h3>DIC—{label}：ux、uy 四格对照</h3>')
+                parts.append(_field_figure(panel, '上排 DIC，下排有限元；左 ux，右 uy；每列共用色标（mm）', output))
             for component, component_title in (('ux', '轴向 ux'), ('uy', '横向 uy')):
                 parts.append(f'<h3>{component_title}：DIC—{model_title}对照</h3><div class="fields">')
                 for key, caption in (('dic', 'DIC（mm）'), (model, f'{model_title}（mm）'),
@@ -250,6 +267,7 @@ def write_case_report(output, summary, metrics, regions, selection):
              f'<p><a href="{_link(overview, output)}">返回实验结果总览</a> · <a href="comparison.csv">位移误差 CSV</a> · <a href="regional_comparison.csv">五区模量 CSV</a> · <a href="selection.csv">选参记录 CSV</a></p>',
              f'<p class="path">本页与图表保存于：{html.escape(str(output.resolve()))}</p>',
              '<p>DIC 云图沿用 post_DIC：规则网格、jet 色图、等比例坐标及独立单图。三个位移场采用相同色标；两幅相对误差采用相同对称百分比色标。显示时仅共同减去 DIC 分量均值，CSV 保留原参考态。</p>',
+             f'<p>{COMPONENT_REFERENCE_TEXT}</p>',
              f'<p>{RELATIVE_ERROR_DESCRIPTION}</p>']
     if not metric_table.empty:
         settings = summary['inverse_settings']
@@ -276,6 +294,10 @@ def write_case_report(output, summary, metrics, regions, selection):
             for case in summary['force_pairing']:
                 parts += [f'<h3>{html.escape(case)} 位移场与残差</h3>',
                           f'<p><a href="{directory}/{case}/point_fields.csv">逐测点位移、残差（mm）与相对误差（%）CSV</a></p>'] if (output/directory/case/'point_fields.csv').exists() else []
+                for model, label in (('forward', '独立标定正演'), ('inverse', '反演模量回代或预测')):
+                    panel = output/directory/case/f'{case}_{model}_dic_components.png'
+                    if panel.exists():
+                        parts.append(_field_figure(panel, f'DIC—{label}四格图：上排 DIC，下排有限元；左 ux，右 uy；单位 mm', output))
                 for component, label in (('ux', '轴向 ux'), ('uy', '横向 uy')):
                     parts.append(f'<h4>{label}</h4><div class="fields">')
                     for key, title in (('dic', 'DIC 实测（mm）'), ('forward', '独立标定正演（mm）'),
