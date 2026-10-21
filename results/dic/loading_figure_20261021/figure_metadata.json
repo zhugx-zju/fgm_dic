@@ -1,0 +1,63 @@
+{
+  "case_id": "sample2_run3_marks_73_85_minusY",
+  "target_result": "results/dic/结果总览.html",
+  "run": 3,
+  "frequency_Hz": 5,
+  "time_mapping": "t_machine = stage / 5 - 5.618778938656367 s (estimated)",
+  "force_baseline_N": 60.1,
+  "plotted_time_range_s": [
+    0,
+    112.82
+  ],
+  "verification": [
+    {
+      "case": "180N",
+      "stage_inclusive": [
+        259,
+        273
+      ],
+      "frames": 15,
+      "representative_stage": 266,
+      "machine_time_s_estimated": [
+        46.18122106134363,
+        48.98122106134363
+      ],
+      "mean_corrected_force_N_recomputed": 119.77617870327234,
+      "full_field_source_hashes_verified": 15
+    },
+    {
+      "case": "280N",
+      "stage_inclusive": [
+        436,
+        450
+      ],
+      "frames": 15,
+      "representative_stage": 443,
+      "machine_time_s_estimated": [
+        81.58122106134364,
+        84.38122106134364
+      ],
+      "mean_corrected_force_N_recomputed": 219.7354506515086,
+      "full_field_source_hashes_verified": 15
+    }
+  ],
+  "source_sha256": {
+    "results\\dic\\01_prepared\\run_metadata.json": "a6ba26af014d17b5580852e5ba1ae807372cab9ca51e6a9e2fb61b3610cf39f1",
+    "post_tensile_test\\1016\\sample_2\\analysis_results\\dic_timing_20261018\\timing_checks.json": "75e06716a9f6f2994e33f6f4c8289038fec2a8905cbb64ea0a8b6b94900bfeae",
+    "post_tensile_test\\1016\\sample_2\\DY_3.csv": "9fb392218934d0f0526df9b29b52665fe9c0f6b5c1187ce3ffd452a19d87bd6e",
+    "post_tensile_test\\1016\\sample_2\\sample_2_3.xlsb": "e45ea84b2fb72f6e65c57c160e38ea15a4cfc7e58ec90887a2abed24ee96e4e5",
+    "post_tensile_test\\1016\\sample_2\\analysis_results\\dic_timing_20261018\\selected_dic_windows.csv": "0bfae0a64afcc69084fe34fc7754749c43add19f6fd9b3118d2ebbd2924f4787"
+  },
+  "script_sha256": "de9e93519ac4c3243a9ff03ac29e14720606363c30aa1f243e1810144d48d4f8",
+  "environment": {
+    "python": "3.13.2",
+    "numpy": "2.4.0",
+    "matplotlib": "3.10.9"
+  },
+  "git_head_before_figure_commit": "52aaa898bc476d5e237baf2facb4eaee5a65fe91",
+  "limitations": [
+    "Synchronization is estimated from plateau events; no photo timestamp verification.",
+    "Two same-section points indicate motion timing, not specimen extension or full-field stability.",
+    "Only the common force/DIC time range is plotted; no force extrapolation."
+  ]
+}
