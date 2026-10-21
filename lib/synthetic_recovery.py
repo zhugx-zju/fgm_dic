@@ -1,0 +1,335 @@
+"""Controlled noiseless recovery, using the experimental FE and inverse kernels.
+
+Sharp analytical layers and their nodal Q4 counterpart distinguish material
+representation error from recovery error. No experimental displacement enters
+the synthetic observations, initialization, objective or selection.
+"""
+
+import json
+from copy import deepcopy
+from pathlib import Path
+from types import SimpleNamespace
+
+import numpy as np
+import pandas as pd
+
+from fgm_asm.load_case import evaluate_observation
+from fgm_asm.research import partition_modulus, solve_forward
+from .experiment_data import file_sha256
+from .research_reporting import save_run
+
+
+def prepare_synthetic(configuration, output: str | Path) -> dict:
+    """Freeze geometry/loads/H from a current preparation; replace observations."""
+    from .dic_case_workflow import _validate, load_prepared, plot_saved_stage
+
+    output = Path(output)
+    if output.exists():
+        raise FileExistsError(f'Choose a new synthetic output: {output}')
+    source = Path(configuration.SYNTHETIC_SOURCE_PREPARED)
+    base, mesh, cases, metadata, provenance = load_prepared(source)
+    cfg = SimpleNamespace(**{k: v for k, v in vars(base).items() if k.isupper()},
+                          __file__=configuration.__file__)
+    # Geometry, force, partition and H cannot be altered through this diagnostic.
+    allowed = ('CASE_ID', 'CASE_OUTPUT', 'SYNTHETIC_SOURCE_PREPARED',
+               'SYNTHETIC_REPRESENTATION', 'SYNTHETIC_NU', 'NU_VALUES', 'PRIMARY_NU',
+               'REGULARIZATION_MODE', 'DISPLACEMENT_COMPONENT_WEIGHTS',
+               'GAMMA_CANDIDATES', 'MAX_ITER', 'MAX_FUN', 'FTOL', 'GTOL',
+               'RECOVERY_DIAGNOSTIC_GAMMAS')
+    for key in allowed:
+        setattr(cfg, key, getattr(configuration, key))
+    if cfg.SYNTHETIC_REPRESENTATION not in ('nodal_q4', 'sharp_layers'):
+        raise ValueError('Choose nodal_q4 or sharp_layers synthetic material')
+    if cfg.REGULARIZATION_MODE != 'gradient' or cfg.NU_VALUES != (cfg.SYNTHETIC_NU,):
+        raise ValueError('This controlled recovery fixes the known nu and H1 objective')
+    if not np.array_equal(cfg.DISPLACEMENT_COMPONENT_WEIGHTS, [1., 1.]):
+        raise ValueError('This recovery protocol uses equal component weights')
+    gammas = np.asarray(cfg.RECOVERY_DIAGNOSTIC_GAMMAS, dtype=float)
+    if gammas.shape != (2,) or not np.all(np.isfinite(gammas) & (gammas > 0)):
+        raise ValueError('Declare exactly two positive finite diagnostic gammas before generation')
+    _validate(cfg)
+    field = partition_modulus(pd.DataFrame(metadata['calibration']).mean_E_MPa,
+                              cfg.REGION_BOUNDARIES_X)
+    nodal = field(mesh.X, mesh.Y)
+    modulus = field if cfg.SYNTHETIC_REPRESENTATION == 'sharp_layers' else nodal
+    with np.load(source/'fields.npz') as saved:
+        # Keep only geometry and physical point areas. Raw DIC displacements are
+        # deliberately absent; they must never become synthetic observations.
+        suffixes = ('_coordinates', '_point_area_mm2', '_grid_ids')
+        arrays = {k: saved[k].copy() for k in saved.files
+                  if k.endswith(suffixes) and '_raw_' not in k}
+    truth = {'coordinates': mesh.coord, 'E_truth_nodes': nodal}
+    xg = np.einsum('en,gn->ge', mesh.x_ele, mesh.gauss_N)
+    yg = np.einsum('en,gn->ge', mesh.y_ele, mesh.gauss_N)
+    truth['E_truth_gauss'] = (field(xg, yg) if callable(modulus) else
+                              (nodal[mesh.ele_nods_id-1] @ mesh.gauss_N.T).T)
+    checks = {}
+    for case in cases:
+        u, _ = solve_forward(mesh, case.bc_info['tensile_end_force'], cfg.THICKNESS,
+                             cfg.SYNTHETIC_NU, modulus)
+        uv = np.asarray(case.observation.H @ u).reshape(-1, 2)
+        arrays[f'{case.name}_observed'] = uv
+        truth[f'{case.name}_U'] = u
+        truth[f'{case.name}_observed'] = uv
+        checks[case.name] = {'points': len(uv), 'finite': bool(np.isfinite(uv).all())}
+    summary = deepcopy(metadata)
+    for key in ('configuration', 'source_sha256', 'environment'):
+        summary.pop(key, None)
+    summary.update(case_id=cfg.CASE_ID, scope='noiseless same-model recovery only',
+                   physical_validation_status='synthetic; does not validate the physical experiment',
+                   displacement_component_weights={'ux': 1., 'uy': 1.},
+                   objective_definition='0.5*r.T@W_area@r + 0.5*gamma*integral(|grad(E)|^2); no modulus or noise normalization')
+    summary['synthetic_observations'] = {
+        'source_prepared': str(source.resolve()), **provenance,
+        'representation': cfg.SYNTHETIC_REPRESENTATION, 'known_nu': cfg.SYNTHETIC_NU,
+        'noise_added': False, 'rigid_motion_added': False,
+        'experimental_displacements_used': False, 'checks': checks,
+        'truth_file': 'truth/fields.npz',
+        'meaning': 'DIC denotes inherited observation positions only; displacement values are generated by FE',
+    }
+    summary['platforms'] = {case.name: {'source': 'synthetic FE', 'frame_count': 0}
+                            for case in cases}
+    for row in summary['coverage']:
+        row['frame_count'] = 0
+    save_run(output, cfg, summary, arrays)
+    save_run(output/'truth', cfg, {'workflow': 'synthetic_truth',
+                                  'synthetic_observations': summary['synthetic_observations']}, truth)
+    pd.DataFrame(summary['coverage']).to_csv(output/'input_audit.csv', index=False)
+    plot_saved_stage(output)
+    return summary
+
+
+def recovery_metrics(mesh, recovered: np.ndarray, truth: np.ndarray) -> dict:
+    """Area-integrated error in the actual Gauss material, including interfaces."""
+    values = (recovered[mesh.ele_nods_id-1] @ mesh.gauss_N.T).T
+    weights = mesh.gauss_abs_det_j * mesh.gauss_w[:, None]
+    difference = values-truth
+    return {
+        'modulus_relative_rms_percent': float(100*np.sqrt(
+            np.sum(weights*difference**2)/np.sum(weights*truth**2))),
+        'modulus_rms_MPa': float(np.sqrt(np.sum(weights*difference**2)/weights.sum())),
+        'modulus_min_MPa': float(recovered.min()),
+        'modulus_max_MPa': float(recovered.max()),
+    }
+
+
+def run_recovery_diagnostics(prepared: str | Path, output: str | Path) -> list[dict]:
+    """Two predeclared gamma checks; never used as L-curve fallback/selection."""
+    from .dic_case_workflow import (_metrics, _optimize, _solver_summary,
+                                    homogeneous_dic_initial, load_prepared)
+
+    cfg, mesh, cases, metadata, provenance = load_prepared(prepared)
+    if not metadata.get('synthetic_observations'):
+        raise ValueError('Recovery diagnostics require an explicitly synthetic preparation')
+    fit = [case for case in cases if case.name in cfg.FIT_CASES]
+    initial, initialization = homogeneous_dic_initial(mesh, fit, cfg.THICKNESS, cfg.PRIMARY_NU)
+    with np.load(Path(prepared)/'truth'/'fields.npz') as saved:
+        truth = saved['E_truth_gauss'].copy()
+    summary = {'workflow': 'synthetic_fixed_gamma_diagnostic', 'initialization': initialization,
+               **provenance, 'selection': 'not selected; experimental gamma and predeclared weak gamma',
+               'synthetic_observations': metadata['synthetic_observations']}
+    save_run(output, cfg, summary, {'initial_E': initial})
+    rows = []
+    for gamma in cfg.RECOVERY_DIAGNOSTIC_GAMMAS:
+        result = _optimize(cfg, mesh, fit, gamma, cfg.PRIMARY_NU, initial.copy())
+        arrays = {'E_inverse': result['E_final'], 'cost_history': result['cost_history'],
+                  'final_gradient': result['final_gradient']}
+        metrics = recovery_metrics(mesh, result['E_final'], truth)
+        point_metrics = []
+        for case in cases:
+            u, _ = solve_forward(mesh, case.bc_info['tensile_end_force'], cfg.THICKNESS,
+                                 cfg.PRIMARY_NU, result['E_final'])
+            state = evaluate_observation(case, u)
+            arrays[f'{case.name}_prediction'] = state['prediction']
+            point_metrics.append({'case': case.name, **_metrics(state)})
+        solver = _solver_summary(result)
+        record = dict(summary, gamma=gamma, solver=solver, **metrics, displacement=point_metrics)
+        save_run(Path(output)/f'gamma_{gamma:g}', cfg, record, arrays)
+        rows.append({'gamma': gamma, **metrics, **solver, 'displacement': point_metrics})
+    from .research_reporting import _json_value
+    (Path(output)/'diagnostics.json').write_text(
+        json.dumps(_json_value(rows), ensure_ascii=False, indent=2, allow_nan=False), encoding='utf-8')
+    return rows
+
+
+def write_recovery_report(root: str | Path) -> list[dict]:
+    """Compare saved synthetic recoveries with the unchanged real-data baseline."""
+    import html
+    import matplotlib.pyplot as plt
+    from .dic_case_workflow import load_prepared
+    from .dic_preprocessing import save_dic_comparison
+    from .research_reporting import _json_value, plot_modulus_comparison
+
+    root = Path(root)
+    baseline = root.parent/'coarse'/'03_inverse'
+    with np.load(baseline/'nu_0.26'/'fields.npz') as saved:
+        real_E = saved['E_inverse'].copy()
+        real_coordinates = saved['coordinates'].copy()
+    rows, region_rows = [], []
+    fig, axes = plt.subplots(2, 1, figsize=(10, 7.5), sharex=True, layout='constrained')
+    links = []
+    for axis, name in zip(axes, ('nodal', 'layered')):
+        directory = root/name
+        cfg, mesh, cases, metadata, provenance = load_prepared(directory/'01_prepared')
+        np.testing.assert_array_equal(mesh.coord, real_coordinates)
+        with np.load(directory/'01_prepared'/'truth'/'fields.npz') as saved:
+            target = saved['E_truth_gauss'].copy()
+            target_nodes = saved['E_truth_nodes'].copy()
+        weights = mesh.gauss_abs_det_j * mesh.gauss_w[:, None]
+        gx = np.einsum('en,gn->ge', mesh.x_ele, mesh.gauss_N)
+        groups = np.searchsorted(cfg.REGION_BOUNDARIES_X, gx, side='right')
+        x = mesh.plot_x[0]
+        field = partition_modulus(pd.DataFrame(metadata['calibration']).mean_E_MPa,
+                                  cfg.REGION_BOUNDARIES_X)
+        truth_x = np.linspace(0, cfg.GEO_L, 2000)
+        if name == 'layered':
+            axis.plot(truth_x, field(truth_x, truth_x*0), 'k-', lw=1.5, label='True sharp layers')
+        else:
+            axis.plot(x, target_nodes.reshape(mesh.nods_y, mesh.nods_x)[0],
+                      'k-', lw=1.5, label='True nodal Q4 field')
+        diagnostics = json.loads((directory/'diagnostics'/'diagnostics.json').read_text(encoding='utf-8'))
+        runs = [('experimental_gamma', directory/'diagnostics'/f"gamma_{diagnostics[0]['gamma']:g}",
+                 '#d07b00', '--'),
+                ('weak_gamma', directory/'diagnostics'/f"gamma_{diagnostics[1]['gamma']:g}",
+                 '#0072b2', '-')]
+        scan_path = directory/'03_inverse'/'run_metadata.json'
+        scan = json.loads(scan_path.read_text(encoding='utf-8')) if scan_path.exists() else {}
+        if scan.get('selected_gamma') is not None and (directory/'03_inverse'/'nu_0.26'/'fields.npz').exists():
+            runs.append(('synthetic_l_curve', directory/'03_inverse'/'nu_0.26', '#009e73', '-.'))
+        for label, source, color, style in runs:
+            record = json.loads((source/'run_metadata.json').read_text(encoding='utf-8'))
+            with np.load(source/'fields.npz') as saved:
+                E = saved['E_inverse'].copy()
+            metrics = recovery_metrics(mesh, E, target)
+            values = (E[mesh.ele_nods_id-1] @ mesh.gauss_N.T).T
+            region_errors = []
+            for index, infill in enumerate(cfg.REGION_INFILL_PERCENT):
+                mask = groups == index
+                actual = float(np.average(target[mask], weights=weights[mask]))
+                recovered = float(np.average(values[mask], weights=weights[mask]))
+                error = 100*(recovered/actual-1)
+                region_errors.append(error)
+                region_rows.append({'representation': name, 'run': label, 'infill_percent': infill,
+                                    'true_mean_E_MPa': actual, 'recovered_mean_E_MPa': recovered,
+                                    'difference_percent': error})
+            solver = record['solver']
+            displacement = []
+            states = []
+            for case in cases:
+                u, _ = solve_forward(mesh, case.bc_info['tensile_end_force'], cfg.THICKNESS,
+                                     cfg.PRIMARY_NU, E)
+                state = evaluate_observation(case, u)
+                residual = state['residual'].reshape(-1, 2)
+                errors = np.sqrt(np.mean(residual**2, axis=0))*1000
+                displacement.append({'case': case.name, 'ux_um': errors[0], 'uy_um': errors[1]})
+                states.append(state)
+            gamma = record.get('gamma', record.get('selected_gamma'))
+            rows.append({'representation': name, 'run': label, 'gamma': gamma, **metrics,
+                         'regional_mean_absolute_error_percent': np.mean(np.abs(region_errors)),
+                         'max_regional_absolute_error_percent': np.max(np.abs(region_errors)),
+                         'converged': solver['converged'],
+                         'gradient_tolerance_satisfied': solver['final_gradient_inf'] <= cfg.GTOL,
+                         'final_gradient_inf': solver['final_gradient_inf'],
+                         'stop_message': solver['message'],
+                         **{f"{r['case']}_{c}_um": r[c+'_um'] for r in displacement for c in ('ux', 'uy')}})
+            profile = np.trapz(E.reshape(mesh.nods_y, mesh.nods_x), mesh.plot_y[:, 0], axis=0)/cfg.GEO_H
+            labels = {'experimental_gamma': 'Synthetic, experimental gamma',
+                      'weak_gamma': 'Synthetic, weak gamma', 'synthetic_l_curve': 'Synthetic, own L-curve'}
+            axis.plot(x, profile, style, color=color, lw=1.4, label=labels[label])
+            # Replot cached predictions only. Numerical solve above is an independent
+            # check; agreement with saved observations/arrays is required here.
+            with np.load(source/'fields.npz') as saved:
+                for case, state in zip(cases, states):
+                    np.testing.assert_allclose(state['prediction'], saved[f'{case.name}_prediction'],
+                                               atol=1e-12, rtol=1e-10)
+            plots = directory/'recovery_comparison'/label
+            plots.mkdir(parents=True, exist_ok=True)
+            plot_modulus_comparison(plots, mesh, target_nodes, E)
+            with np.load(directory/'01_prepared'/'fields.npz') as saved:
+                ids = {case.name: saved[f'{case.name}_grid_ids'].copy() for case in cases}
+            save_dic_comparison(plots, cases, {'inverse': states}, cfg.FIT_CASES, ids, nu=cfg.PRIMARY_NU)
+            links.append((f'{name} / {label}', plots.relative_to(root).as_posix()))
+        real_profile = np.trapz(real_E.reshape(mesh.nods_y, mesh.nods_x), mesh.plot_y[:, 0], axis=0)/cfg.GEO_H
+        axis.plot(x, real_profile, ':', color='#cc79a7', lw=1.5, label='Real DIC inversion (H1 baseline)')
+        for edge in cfg.REGION_BOUNDARIES_X:
+            axis.axvline(edge, color='.8', lw=.6, zorder=0)
+        axis.set(ylabel='Width-mean E (MPa)', title=f'{name}: free 2D inverse, known nu=0.26')
+        axis.legend(fontsize=8, ncol=2)
+        if name == 'layered':
+            real_metrics = recovery_metrics(mesh, real_E, target)
+    axes[-1].set_xlabel('FEM x (mm) - loading direction')
+    for extension in ('png', 'svg'):
+        fig.savefig(root/f'recovery_profiles.{extension}', dpi=300)
+    plt.close(fig)
+    frame = pd.DataFrame(rows)
+    frame.to_csv(root/'recovery_summary.csv', index=False)
+    pd.DataFrame(region_rows).to_csv(root/'regional_recovery.csv', index=False)
+    (root/'recovery_summary.json').write_text(json.dumps(
+        _json_value({'recoveries': rows, 'real_dic_against_sharp_reference': real_metrics}),
+        ensure_ascii=False, indent=2, allow_nan=False), encoding='utf-8')
+    from .dic_case_reporting import PAGE_STYLE
+    selected = frame[(frame.representation == 'layered') & (frame.run == 'synthetic_l_curve')]
+    key_result = ''
+    if len(selected) == 1:
+        result = selected.iloc[0]
+        key_result = (f'<p><strong>结论：分层正问题的无噪声位移可以恢复接近给定值的模量分布。</strong>'
+                      f'按原50点L-curve自动选参，模量全场相对RMS误差为{result.modulus_relative_rms_percent:.2f}%，'
+                      f'七区均值平均绝对偏差为{result.regional_mean_absolute_error_percent:.2f}%。'
+                      '真实DIC基线七区均值相对独立标定的平均绝对偏差约15.00%；该标定不是分区试样的已知真值。'
+                      '结果支持实验输入与模型之间存在额外不一致，不能单独归因为DIC测量精度。</p>')
+    quick = frame.rename(columns={
+        'representation': '真值表示', 'run': '反演参数来源',
+        'modulus_relative_rms_percent': '模量全场相对RMS(%)',
+        'regional_mean_absolute_error_percent': '七区均值平均绝对偏差(%)',
+        '180N_ux_um': '180N轴向RMSE(μm)', '180N_uy_um': '180N横向RMSE(μm)',
+    })
+    quick = quick[['真值表示', '反演参数来源', '模量全场相对RMS(%)',
+                   '七区均值平均绝对偏差(%)', '180N轴向RMSE(μm)', '180N横向RMSE(μm)']]
+    quick['真值表示'] = quick['真值表示'].replace({'nodal': '节点Q4', 'layered': '突变分层'})
+    quick['反演参数来源'] = quick['反演参数来源'].replace({
+        'experimental_gamma': '沿用实验γ', 'weak_gamma': '预设弱γ诊断', 'synthetic_l_curve': '各自50点L-curve'})
+    parts = ['<!doctype html><html lang="zh-CN"><meta charset="utf-8"><title>分层位移反演核验</title>',
+             PAGE_STYLE, '<h1>用分层正问题位移检验模量恢复能力</h1>',
+             key_result,
+             '<p>无噪声、已知ν=0.26；同一106×18.48 mm域、121×19单元、2440个独立节点模量、23920个观测位置。'
+             '全部合成位移由当前有限元生成，未混入实验DIC位移。初值仅从180N合成位移拟合均匀模量，未使用真值场初始化。</p>',
+             '<p>nodal：真值可由反演节点精确表示，用于同模型恢复检查；layered：原分区正问题在高斯点直接赋突变模量，'
+             '反演连续节点场不能精确表示该界面。两组均保留自由二维参数，未绑定y行。</p>',
+             '<p>experimental_gamma为真实DIC基线已经选定的γ；weak_gamma为预先声明的1e-12，用于正则偏差检查。'
+             '它们不称为合成数据的L-curve选择，未依据真值误差选优。各组另扫原50个γ，若无有效拐点保留失败，不能用固定γ诊断替代选参。</p>',
+             '<img src="recovery_profiles.png"><p><a href="recovery_profiles.svg">SVG</a> · '
+             '<a href="recovery_summary.csv">全场误差CSV</a> · <a href="regional_recovery.csv">逐区真值与恢复值CSV</a></p>',
+             '<p>全场误差=100√[∫(E识别−E真值)²/∫E真值²]，在相同高斯点按面积积分，包含界面。'
+             '分区误差使用同一高斯积分计算真值及恢复均值，与全场误差区分。</p>',
+             quick.to_html(index=False, border=0, float_format=lambda v: f'{v:.4g}'),
+             '<details><summary>完整参数、梯度与停止信息</summary>'+
+             frame.to_html(index=False, border=0, float_format=lambda v: f'{v:.6g}')+'</details>',
+             '<h2>二维模量、合成位移与反演回代</h2>']
+    for label, path in links:
+        parts += [f'<h3>{html.escape(label)}</h3>', f'<img src="{path}/modulus_comparison.png">',
+                  f'<img src="{path}/180N/180N_inverse_dic_components.png">',
+                  f'<p><a href="{path}/180N/point_fields.csv">180N逐点CSV</a> · '
+                  f'<a href="{path}/280N/280N_inverse_dic_components.png">280N位移对照</a> · '
+                  f'<a href="{path}/relative_error_summary.csv">相对误差CSV</a></p>']
+    parts.append('<h2>完整L-curve与四步结果</h2>')
+    for name in ('nodal', 'layered'):
+        path = root/name/'03_inverse'/'run_metadata.json'
+        record = json.loads(path.read_text(encoding='utf-8')) if path.exists() else {}
+        parts.append(f'<p>{name}：{html.escape(record.get("status", "not_started"))}；'
+                     f'γ={record.get("selected_gamma")} · <a href="{name}/结果总览.html">四步结果</a> · '
+                     f'<a href="{name}/03_inverse/云图.html">L-curve与停止诊断</a></p>')
+    parts.append('<p><strong>解释范围：</strong>同模型合成恢复良好可排除“这套算法完全不能恢复该分布”，'
+                 '但不能证明真实实验误差全部来自DIC精度。本试验同时消除了实验噪声、未知ν、'
+                 '材料响应及边界模型不一致。280N合成为比例线性响应，仅检验尺度预测，不能当成新增独立识别信息。'
+                 '一组无噪声算例不证明任意模量的唯一性或抗噪稳健性。</p></html>')
+    (root/'分层位移反演核验.html').write_text('\n'.join(parts), encoding='utf-8')
+    inputs = [baseline/'nu_0.26'/'fields.npz']
+    for name in ('nodal', 'layered'):
+        inputs.extend((root/name).rglob('fields.npz'))
+        inputs.extend((root/name).glob('*/run_metadata.json'))
+    (root/'report_provenance.json').write_text(json.dumps({
+        'input_sha256': {str(path.resolve()): file_sha256(path) for path in inputs},
+        'source_sha256': file_sha256(Path(__file__)),
+        'statement': 'Read saved fields; recompute metrics/predictions; no new optimization',
+    }, ensure_ascii=False, indent=2), encoding='utf-8')
+    return rows

@@ -36,6 +36,8 @@ python -m script.step4_compare_results
 
 正则对照使用`dic_tv_config.py`及`results/dic_full/tv/`；δ=10阈值对照为`dic_tv10_config.py`及其`delta10/`。四步指定相应`--config`，同一粗网格、等权重，Huber-TV与原H1分别选γ。δ=1未得到有效拐点，δ=10已完成但横向误差没有实质改善。定义、核验和状态见[Huber-TV对照](docs/dic_tv_workflow_20261021.md)。
 
+分层正问题位移的无噪声恢复采用`dic_synthetic_config.py`与节点表示对照`dic_synthetic_nodal_config.py`，仍用原四步入口，结果另存`results/dic_full/synthetic/`。固定已知ν、同粗网格与观测，区分正则偏差、突变界面表示和实验额外偏差；合成恢复不能唯一归因DIC误差。协议及结果见[合成恢复](docs/synthetic_recovery_20261021.md)。
+
 误差云图统一采用百分比：位移误差以对应平台 DIC 去除三个刚体分量后的分量 RMS 归一化，避免逐点除以过零位移；原始残差仍以 mm 保存。第 2 步直接展示正演与 DIC 的并排对照，无需等到第 4 步。
 
 等权重主线反演目标为 `0.5*r.T@W_area@r + 0.5*gamma*integral(|grad E|^2)`，不设置参考模量，不作模量或人为噪声尺度归一化。gamma 仅用识别平台的 L-curve 拐点选择，扫描范数、曲率、停止信息和 PNG/SVG 保存于第 3 步；无可辨识拐点时停止并保留诊断。求解容差来自第 1 步冻结配置，源配置修改后，需重新准备输入才能生效。

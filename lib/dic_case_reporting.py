@@ -29,6 +29,16 @@ COMPONENT_REFERENCE_TEXT = (
 )
 
 
+def _synthetic_notice(summary):
+    source = summary.get('synthetic_observations')
+    if not source:
+        return ''
+    return ('本页为无噪声合成恢复试验：位移全部由有限元生成，不使用实验DIC位移；'
+            f"已知ν={source['known_nu']}，材料表示={source['representation']}。"
+            '沿用DIC测点和坐标，图表中的DIC字段名仅表示观测位置。'
+            '节点表示与突变分层表示的差异须单独评价；本试验不验证实验测量精度或物理模型。')
+
+
 def _objective_description(summary):
     weights = summary.get('displacement_component_weights', {'ux': 1., 'uy': 1.})
     config = summary.get('configuration', {})
@@ -91,6 +101,11 @@ def publish_stage(case_root, stage, output, summary, project_root=None):
     parts = ['<!doctype html><html lang="zh-CN"><meta charset="utf-8"><title>实验结果总览</title>', PAGE_STYLE,
              f'<h1>{html.escape(record["case_id"])}</h1>',
              f'<p class="path">保存位置：{html.escape(str(case_root))}</p>']
+    if _synthetic_notice(summary):
+        parts.append('<p><strong>'+html.escape(_synthetic_notice(summary))+'</strong></p>')
+        recovery_page = case_root.parent/'分层位移反演核验.html'
+        if recovery_page.exists():
+            parts.append(f'<h2><a href="{_link(recovery_page, case_root)}">分层位移恢复与真实DIC反演汇总 →</a></h2>')
     if not record['coordinates_verified']:
         parts.append('<p>当前为条件性比较：点云位置与材料分区的物理配准尚未独立核验。</p>')
     parts.append('<p>'+html.escape(_geometry_description(summary))+'</p>')
@@ -173,6 +188,8 @@ def write_stage_gallery(output, summary, title):
              f'<p>{_objective_description(summary)}</p>',
              '<p>实际拉力：'+html.escape('；'.join(f"{name}: {record['mean_corrected_force_N']:.6f} N"
                                                  for name, record in summary['force_pairing'].items()))+'</p>']
+    if _synthetic_notice(summary):
+        parts.insert(5, '<p><strong>'+html.escape(_synthetic_notice(summary))+'</strong></p>')
     if not summary['coordinates_verified']:
         parts.append('<p>物理配准尚未独立核验；当前图表对应显式位置假设。</p>')
     parts.append('<p>'+html.escape(_geometry_description(summary))+'</p>')
@@ -295,6 +312,8 @@ def write_case_report(output, summary, metrics, regions, selection):
               '优化停止状态、物理配准状态和实验物理一致性分别记录。完整狗骨与截取矩形域的边界等效、绝对测量误差与材料标定转移仍需独立证据，本运行不自动宣告实验验证通过。', '',
               '每次输出目录独立保存输入哈希、配置快照、软件环境、识别与预测分工、选择记录、二维数组、误差与区域统计。不得覆盖既有结果。', '',
               '汇总文件：`comparison.csv`、`regional_comparison.csv`、`selection.csv`；每个 ν 子目录保存完整场及 PNG/SVG。']
+    if _synthetic_notice(summary):
+        lines.insert(2, _synthetic_notice(summary))
     (output / 'report.md').write_text('\n'.join(lines)+'\n', encoding='utf-8')
     parts = ['<!doctype html><meta charset="utf-8">', f'<title>{html.escape(title)}</title>',
              PAGE_STYLE,
@@ -306,6 +325,8 @@ def write_case_report(output, summary, metrics, regions, selection):
              f'<p>{COMPONENT_REFERENCE_TEXT}</p>',
              f'<p>{RELATIVE_ERROR_DESCRIPTION}</p>',
              f'<p>{_objective_description(summary)}</p>']
+    if _synthetic_notice(summary):
+        parts.insert(4, '<p><strong>'+html.escape(_synthetic_notice(summary))+'</strong></p>')
     if not metric_table.empty:
         settings = summary['inverse_settings']
         parts.append(f'<p>本次反演实际使用 FTOL={settings["FTOL"]:g}、GTOL={settings["GTOL"]:g}；'

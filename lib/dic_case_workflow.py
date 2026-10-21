@@ -452,7 +452,10 @@ def resolve_dic_geometry(cfg, reference):
 
 
 def prepare_dic(cfg, output):
-    """Stage 1: audit and freeze one case's inputs; do not run FE or inversion."""
+    """Stage 1: freeze experimental inputs, or explicitly generated FE data."""
+    if hasattr(cfg, 'SYNTHETIC_SOURCE_PREPARED'):
+        from .synthetic_recovery import prepare_synthetic
+        return prepare_synthetic(cfg, output)
     output = Path(output)
     if output.exists():
         raise FileExistsError(f'Choose a new preparation output: {output}')
@@ -584,6 +587,7 @@ def load_prepared(source):
             metadata={'coordinates_verified': metadata['coordinates_verified'],
                       'registration': cfg.REGISTRATION, 'displacement_reference': cfg.DISPLACEMENT_REFERENCE,
                       'measured_force_N': measured_force, 'model_end_force_N': model_force,
+                      'synthetic_observations': metadata.get('synthetic_observations'),
                       'displacement_component_weights': component_weights.tolist()})
         if not np.array_equal(component_weights, [1., 1.]):
             # One W drives the rigid fit, objective, adjoint, initialization and
@@ -609,6 +613,8 @@ def _stage_summary(prepared, provenance, stage):
         summary['material_registration'] = prepared['material_registration']
     if 'displacement_component_weights' in prepared:
         summary['displacement_component_weights'] = prepared['displacement_component_weights']
+    if 'synthetic_observations' in prepared:
+        summary['synthetic_observations'] = prepared['synthetic_observations']
     return summary
 
 
@@ -844,7 +850,7 @@ def plot_saved_stage(output, prepared=None):
                 plot_displacement_clouds(
                     output/name, f'{name}_dic', fields[f'{name}_coordinates'], measured,
                     fields[f'{name}_grid_ids'] if f'{name}_grid_ids' in fields else None,
-                    measured.mean(axis=0), f'{name}: DIC')
+                    measured.mean(axis=0), f'{name}: Synthetic FE' if summary.get('synthetic_observations') else f'{name}: DIC')
         write_stage_gallery(output, summary, '① DIC 位移云图')
         return summary
     if workflow not in ('dic_calibrated_forward', 'dic_case_inverse'):

@@ -161,7 +161,8 @@ def dic_relative_error_scale(case):
     return scale
 
 
-def plot_dic_fe_components(output, name, x_grid, y_grid, fields, limits, model, title):
+def plot_dic_fe_components(output, name, x_grid, y_grid, fields, limits, model, title,
+                           observation_label='Processed DIC'):
     """Show both displacement components in one figure, in the DIC reference.
 
     ``fields`` contains d-mean(d) and HU+Rc-mean(d), already evaluated at
@@ -173,7 +174,7 @@ def plot_dic_fe_components(output, name, x_grid, y_grid, fields, limits, model, 
     fig.suptitle(title, fontsize=14)
     for column, component in enumerate(('ux', 'uy')):
         low, high = limits[f'dic_{component}']
-        for row, (key, label) in enumerate((('dic', 'Processed DIC'), (model, 'Registered FE'))):
+        for row, (key, label) in enumerate((('dic', observation_label), (model, 'Registered FE'))):
             ax = axes[row, column]
             image = ax.pcolormesh(x_grid, y_grid, np.ma.masked_invalid(fields[f'{key}_{component}']),
                                   shading='nearest', cmap='jet', vmin=low, vmax=high,
@@ -184,8 +185,8 @@ def plot_dic_fe_components(output, name, x_grid, y_grid, fields, limits, model, 
             ax.set_ylabel('y (mm)')
             ax.tick_params(labelbottom=True, labelleft=True)
         fig.colorbar(image, ax=axes[:, column], label=f'$u_{component[-1]}$ (mm)', shrink=.85)
-    fig.supxlabel('Same DIC points and FEM axes; one color scale per component.\n'
-                  'DIC: d - mean(d); FE: HU + fitted rigid motion - mean(d).', fontsize=10)
+    fig.supxlabel('Same observation points and FEM axes; one color scale per component.\n'
+                  'Observation: d - mean(d); FE: HU + fitted rigid motion - mean(d).', fontsize=10)
     stem = Path(output)/f'{name}_{model}_dic_components'
     fig.savefig(stem.with_suffix('.png'), dpi=300)
     fig.savefig(stem.with_suffix('.svg'))
@@ -209,6 +210,7 @@ def save_dic_comparison(output, cases, model_states, fit_names, grid_ids=None, *
         raise ValueError('Each model must contain one state per DIC case')
     rows, relative_rows = [], []
     for index, case in enumerate(cases):
+        observation_label = 'Synthetic FE' if case.metadata.get('synthetic_observations') else 'DIC'
         condition = case.name if nu is None else f'{case.name}, nu={nu:.2f}'
         xy = np.column_stack([case.observation.x_meas, case.observation.y_meas])
         observed = case.observation.u_measured.reshape(-1, 2)
@@ -232,13 +234,13 @@ def save_dic_comparison(output, cases, model_states, fit_names, grid_ids=None, *
                      if np.isfinite(scale[component]) else 1.)
             for model, value in displayed.items():
                 key = f'{model}_{label}'
-                maps[key], titles[key] = value, f'{condition}\n{headings.get(model, "DIC")}: {label}'
+                maps[key], titles[key] = value, f'{condition}\n{headings.get(model, observation_label)}: {label}'
                 limits[key] = (low, high)
                 point_table[f'{key}_mm'] = {'dic': observed, **predictions}[model][:, component]
             for model, error in errors.items():
                 key = f'{model}_error_{label}'
                 error_maps[key] = relative[model][:, component]
-                titles[key] = f'{condition}: {model} relative error, {label}\nDIC deformation RMS = {scale[component]:.5g} mm'
+                titles[key] = f'{condition}: {model} relative error, {label}\n{observation_label} deformation RMS = {scale[component]:.5g} mm'
                 limits[key] = (-bound, bound)
                 point_table[f'{key}_mm'] = error[:, component]
                 point_table[f'{model}_relative_error_{label}_percent'] = relative[model][:, component]
@@ -253,11 +255,12 @@ def save_dic_comparison(output, cases, model_states, fit_names, grid_ids=None, *
             if model == 'inverse' and case.name not in fit_names:
                 label = 'Inverse modulus: held-out prediction'
             plot_dic_fe_components(output/case.name, case.name, x_grid, y_grid,
-                                   fields, limits, model, f'{condition} | {label}')
+                                   fields, limits, model, f'{condition} | {label}',
+                                   observation_label=observation_label)
         x_grid, y_grid, fields = grid_fields_from_points(xy, error_maps, ids, allow_nan=True)
         plot_grid_fields(output/case.name, case.name, x_grid, y_grid,
                          [(key, value, titles[key]) for key, value in fields.items()],
-                         cmap='jet', limits=limits, title_prefix='', unit='% of DIC deformation RMS')
+                         cmap='jet', limits=limits, title_prefix='', unit=f'% of {observation_label} deformation RMS')
         pd.DataFrame(point_table).to_csv(output/case.name/'point_fields.csv', index=False)
         for model, state in states.items():
             error = errors[model]
