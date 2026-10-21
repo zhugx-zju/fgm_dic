@@ -16,6 +16,7 @@ from scipy.sparse import diags
 from fgm_asm import MeshInfo, lbfgs_inverse_solver_scipy
 from fgm_asm.load_case import evaluate_observation
 from fgm_asm.l_curve import select_l_curve_corner
+from fgm_asm.exact_tv import ExactTVOptions, exact_tv_inverse_solver
 from fgm_asm.research import make_observation_case, partition_modulus, solve_forward
 from .dic_preprocessing import (grid_fields_from_points, plot_displacement_clouds,
                                 plot_grid_fields, save_dic_comparison)
@@ -38,7 +39,23 @@ def _solver_summary(result):
                                           'residual_norm', 'regularization_norm')}
     summary['final_gradient_inf'] = float(np.max(np.abs(result['final_gradient'])))
     summary['line_search_restarts'] = result.get('line_search_restarts', [])
+    for key in ('tv_certificate', 'solution_method', 'regularization_resolved'):
+        if key in result:
+            summary[key] = result[key]
     return summary
+
+
+def _regularization_cost(cfg, gamma, eta):
+    return gamma*eta if cfg.REGULARIZATION_MODE == 'exact_tv' else .5*gamma*eta**2
+
+
+def _tv_arrays(result):
+    return {key: result[key] for key in ('tv_dual', 'tv_split_gradient') if key in result}
+
+
+def _save_tv_evidence(destination, result):
+    if 'tv_history' in result:
+        pd.DataFrame(result['tv_history']).to_csv(Path(destination)/'tv_history.csv', index=False)
 
 def _regional_comparison(mesh, field, calibration, boundaries):
     values = (field[mesh.ele_nods_id - 1] @ mesh.gauss_N.T).T
@@ -186,8 +203,12 @@ def _validate(cfg):
     if (len(cfg.GAMMA_CANDIDATES) < 5 or len(set(cfg.GAMMA_CANDIDATES)) != len(cfg.GAMMA_CANDIDATES) or
             any(g <= 0 or not np.isfinite(g) for g in cfg.GAMMA_CANDIDATES)):
         raise ValueError('L-curve requires at least five distinct positive finite gamma candidates')
-    if cfg.REGULARIZATION_MODE not in ('gradient', 'huber_tv'):
-        raise ValueError('Choose gradient or huber_tv regularization on the free nodal E field')
+    if cfg.REGULARIZATION_MODE not in ('gradient', 'huber_tv', 'exact_tv'):
+        raise ValueError('Choose gradient, huber_tv or exact_tv on the free nodal E field')
+    if cfg.REGULARIZATION_MODE == 'exact_tv':
+        ExactTVOptions(**cfg.EXACT_TV_OPTIONS, max_evaluations=cfg.MAX_FUN)
+        if getattr(cfg, 'EXACT_TV_SOLVER', 'admm') not in ('admm', 'primal_dual'):
+            raise ValueError('EXACT_TV_SOLVER must be admm or primal_dual')
     if cfg.REGULARIZATION_MODE == 'huber_tv' and (
             not np.isfinite(cfg.TV_DELTA) or cfg.TV_DELTA <= 0):
         raise ValueError('TV_DELTA must be positive and finite (MPa/mm)')
@@ -199,7 +220,21 @@ def _validate(cfg):
         raise ValueError('Material regions must partition the physical model length')
 
 
-def _optimize(cfg, mesh, cases, gamma, nu, initial=None):
+def _optimize(cfg, mesh, cases, gamma, nu, initial=None, initial_dual=None):
+    if cfg.REGULARIZATION_MODE == 'exact_tv':
+        def progress(row):
+            interval = 200 if getattr(cfg, 'EXACT_TV_SOLVER', 'admm') == 'primal_dual' else 20
+            if row['iteration'] % interval == 0:
+                print(f"  TV outer={row['iteration']}, evaluations={row['evaluations']}, "
+                      f"stationarity/tol={row['stationarity']/row['stationarity_tol']:.3g}, "
+                      f"primal/tol={row['primal_rms']/row['primal_tol']:.3g}, "
+                      f"gap/tol={abs(row['fenchel_gap'])/row['gap_tol']:.3g}", flush=True)
+        return exact_tv_inverse_solver(mesh, cases, initial, gamma, nu,
+            options=ExactTVOptions(**cfg.EXACT_TV_OPTIONS, max_evaluations=cfg.MAX_FUN),
+            initial_dual=initial_dual, callback=progress,
+            solver=getattr(cfg, 'EXACT_TV_SOLVER', 'admm'),
+            primal_step=getattr(cfg, 'EXACT_TV_PRIMAL_STEP', 2e8),
+            coupling=getattr(cfg, 'EXACT_TV_COUPLING', .9))
     options = {'delta': cfg.TV_DELTA} if cfg.REGULARIZATION_MODE == 'huber_tv' else None
     result = lbfgs_inverse_solver_scipy(
         mesh, observation_cases=cases, E_init=initial,
@@ -522,6 +557,12 @@ def prepare_dic(cfg, output):
             f'0.5*sum(area_i*({component_weights[0]:g}*r_ux_i^2 + '
             f'{component_weights[1]:g}*r_uy_i^2)) + 0.5*gamma*integral(rho_delta(|grad(E)|)); '
             f'Huber delta={cfg.TV_DELTA:g} MPa/mm; no modulus or noise normalization')
+    if cfg.REGULARIZATION_MODE == 'exact_tv':
+        summary['objective_definition'] = (
+            f'0.5*sum(area_i*({component_weights[0]:g}*r_ux_i^2 + '
+            f'{component_weights[1]:g}*r_uy_i^2)) + gamma*integral(sqrt(E_x^2+E_y^2)); '
+            'unsmoothed isotropic TV, 2x2 Gauss quadrature, free continuous Q4 nodal E; '
+            'no modulus or noise normalization; displacement trial/test functions unchanged')
     if hasattr(cfg, 'MATERIAL_REGISTRATION'):
         summary['material_registration'] = cfg.MATERIAL_REGISTRATION
     if hasattr(cfg, 'FORCE_PAIRING_CSV') and any('force_N' not in i for i in cfg.PLATFORMS.values()):
@@ -588,7 +629,9 @@ def load_prepared(source):
         raise ValueError('Preparation records pending registration; supply physical landmarks or an explicit conditional placement')
     root = Path(__file__).resolve().parents[1]
     recorded = {path.replace('\\', '/'): digest for path, digest in metadata['source_sha256'].items()}
-    for name in MECHANICS_SOURCE_FILES:
+    mechanics = MECHANICS_SOURCE_FILES + (('exact_tv.py',) if
+        metadata['configuration']['REGULARIZATION_MODE'] == 'exact_tv' else ())
+    for name in mechanics:
         path = f'fgm_asm/{name}'
         if path not in recorded or file_sha256(root / path) != recorded[path]:
             raise ValueError('FE kernel changed since preparation; prepare a new case')
@@ -678,6 +721,8 @@ def resume_l_curve(prepared, output):
     """
     output = Path(output)
     cfg, mesh, cases, metadata, provenance = load_prepared(prepared)
+    if cfg.REGULARIZATION_MODE == 'exact_tv':
+        raise ValueError('Exact-TV scan trials retain KKT evidence; L-BFGS line-search recovery does not apply')
     summary = json.loads((output/'run_metadata.json').read_text(encoding='utf-8'))
     if (summary['workflow'] != 'dic_case_inverse' or
             not summary['status'].startswith('l_curve_') or
@@ -748,7 +793,7 @@ def resume_l_curve(prepared, output):
 
 
 def inverse_dic(prepared, output):
-    """Stage 3: original Tikhonov objective, fit-only L-curve, held-out prediction."""
+    """Stage 3: configured objective, fit-only L-curve, held-out prediction."""
     if Path(output).exists():
         raise FileExistsError('Choose a new inverse output')
     cfg, mesh, cases, metadata, provenance = load_prepared(prepared)
@@ -764,16 +809,18 @@ def inverse_dic(prepared, output):
     save_run(output, cfg, summary, {'scan_initial_E': initial})
     output = Path(output)
     selection = []
+    initial_dual = None
     initial_source = 'homogeneous_dic_fit'
     for scan_index, gamma in enumerate(sorted(cfg.GAMMA_CANDIDATES, reverse=True), start=1):
         print(f'L-curve {scan_index}/{len(cfg.GAMMA_CANDIDATES)}: gamma={gamma:.12g}', flush=True)
-        result = _optimize(cfg, mesh, fit, gamma, cfg.PRIMARY_NU, initial)
+        result = _optimize(cfg, mesh, fit, gamma, cfg.PRIMARY_NU, initial, initial_dual)
         solver = _solver_summary(result)
         record = {'gamma': gamma, 'nu': cfg.PRIMARY_NU, 'converged': result['converged'],
                   'residual_norm': result['residual_norm'],
                   'regularization_norm': result['regularization_norm'],
                   'data_cost': .5*result['residual_norm']**2,
-                  'regularization_cost': .5*gamma*result['regularization_norm']**2,
+                  'regularization_cost': _regularization_cost(cfg, gamma, result['regularization_norm']),
+                  'regularization_resolved': result.get('regularization_resolved', True),
                   'iterations': result['n_iterations'], 'evaluations': result['n_evaluations'],
                   'final_gradient_inf': solver['final_gradient_inf'],
                   'gradient_tolerance_satisfied': solver['final_gradient_inf'] <= cfg.GTOL,
@@ -784,10 +831,15 @@ def inverse_dic(prepared, output):
                   'uses_prediction_cases': False, 'objective_definition': summary['objective_definition']},
                  {'E_inverse': result['E_final'], 'cost_history': result['cost_history'],
                   'cost_tar_history': result['cost_tar_history'], 'cost_reg_history': result['cost_reg_history'],
-                  'gradient_norms': result['gradient_norms'], 'final_gradient': result['final_gradient']})
+                  'gradient_norms': result['gradient_norms'], 'final_gradient': result['final_gradient'],
+                  **_tv_arrays(result)})
+        _save_tv_evidence(output/'l_curve'/f'gamma_{gamma:g}', result)
         pd.DataFrame(selection).to_csv(output / 'selection.csv', index=False)
         if result['converged']:
             initial, initial_source = result['E_final'].copy(), f'gamma_{gamma:g}'
+            initial_dual = result.get('tv_dual') if np.ptp(initial) > 0 else None
+        print(f"  stop={result['message']}; evaluations={result['n_evaluations']}; "
+              f"rho={result['residual_norm']:.7g}; eta={result['regularization_norm']:.7g}", flush=True)
     return _finish_dic_inverse(cfg, mesh, cases, metadata, summary, selection, prepared, output)
 
 
@@ -795,7 +847,8 @@ def _finish_dic_inverse(cfg, mesh, cases, metadata, summary, selection, prepared
     calibration = pd.DataFrame(metadata['calibration'])
     fit = [c for c in cases if c.name in cfg.FIT_CASES]
     scan = pd.DataFrame(selection)
-    corner = select_l_curve_corner(scan.gamma, scan.residual_norm, scan.regularization_norm, scan.converged)
+    qualified = scan.converged & scan.get('regularization_resolved', True)
+    corner = select_l_curve_corner(scan.gamma, scan.residual_norm, scan.regularization_norm, qualified)
     scan['curvature'] = corner['curvature']
     scan['eligible'] = corner['eligible']
     scan['selected'] = False
@@ -815,14 +868,15 @@ def _finish_dic_inverse(cfg, mesh, cases, metadata, summary, selection, prepared
     selected_directory = output/directory if isinstance(directory, str) else output/'l_curve'/f'gamma_{gamma:g}'
     with np.load(selected_directory/'fields.npz') as selected:
         initial = selected['E_inverse'].copy()
+        initial_dual = selected['tv_dual'].copy() if 'tv_dual' in selected else None
     all_metrics, all_regions, solvers = [], [], []
     for nu in cfg.NU_VALUES:
         destination = output / f'nu_{nu:.2f}'
-        result = _optimize(cfg, mesh, fit, gamma, nu, initial.copy())
+        result = _optimize(cfg, mesh, fit, gamma, nu, initial.copy(), initial_dual)
         fields = {'coordinates': mesh.coord, 'E_inverse': result['E_final'],
                   'cost_history': result['cost_history'], 'gradient_norms': result['gradient_norms'],
                   'cost_tar_history': result['cost_tar_history'], 'cost_reg_history': result['cost_reg_history'],
-                  'final_gradient': result['final_gradient']}
+                  'final_gradient': result['final_gradient'], **_tv_arrays(result)}
         for case in cases:
             u, _ = solve_forward(mesh, case.bc_info['tensile_end_force'], cfg.THICKNESS, nu, result['E_final'])
             state = evaluate_observation(case, u)
@@ -844,6 +898,7 @@ def _finish_dic_inverse(cfg, mesh, cases, metadata, summary, selection, prepared
         run_config.NU, run_config.GAMMA = nu, gamma
         save_run(destination, run_config, dict(summary, solver=_solver_summary(result), nu=nu,
                                                inverse_parameter_count=mesh.n_nod), fields)
+        _save_tv_evidence(destination, result)
         regions.to_csv(destination / 'regional_modulus_comparison.csv', index=False)
         pd.DataFrame(all_metrics).to_csv(output / 'comparison.csv', index=False)
         pd.DataFrame(all_regions).to_csv(output / 'regional_comparison.csv', index=False)
@@ -885,7 +940,7 @@ def plot_saved_stage(output, prepared=None):
         raise ValueError('Saved stage must refer to the SAME frozen preparation')
     if workflow == 'dic_case_inverse':
         plot_l_curve(output, pd.read_csv(output/'selection.csv'), cfg.REGULARIZATION_MODE)
-        if summary['status'].startswith('l_curve_'):
+        if summary['status'].startswith(('l_curve_', 'interrupted_')):
             write_stage_gallery(output, dict(summary, prepared_directory=str(prepared.resolve())),
                                 '③ L-curve 选参诊断（尚未生成模量结论）')
             return summary
@@ -956,7 +1011,10 @@ def compare_dic_results(prepared, forward, inverse, output, plots=True, plot_onl
                    gamma_at_scan_boundary=sources[1]['gamma_at_scan_boundary'], solvers=sources[1]['solvers'],
                    upstream_sources={str(p): file_sha256(p/'run_metadata.json') for p in (forward, inverse)},
                    inverse_settings={key: sources[1]['configuration'][key]
-                                     for key in ('FTOL', 'GTOL', 'MAX_ITER', 'MAX_FUN', 'GAMMA_CANDIDATES')},
+                                     for key in ('FTOL', 'GTOL', 'MAX_ITER', 'MAX_FUN', 'GAMMA_CANDIDATES',
+                                                 'REGULARIZATION_MODE', 'EXACT_TV_OPTIONS', 'EXACT_TV_SOLVER',
+                                                 'EXACT_TV_PRIMAL_STEP', 'EXACT_TV_COUPLING')
+                                     if key in sources[1]['configuration']},
                    gamma_selection_method=sources[1]['gamma_selection_method'],
                    l_curve_enabled=sources[1]['l_curve_enabled'],
                    scan_initialization=sources[1].get('scan_initialization', 'See saved inverse metadata'),

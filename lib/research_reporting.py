@@ -66,6 +66,7 @@ def plot_l_curve(output, selection, regularization_mode='gradient'):
     valid = (data.converged.astype(bool) & np.isfinite(data.residual_norm) &
              (data.residual_norm > 0) & np.isfinite(data.regularization_norm) &
              (data.regularization_norm > 0))
+    valid &= data.get('regularization_resolved', True)
     selected = data.get('selected', pd.Series(False, index=data.index)).astype(bool)
     fig, ax = plt.subplots(figsize=(7, 5))
     ax.loglog(data.residual_norm.where(valid), data.regularization_norm.where(valid),
@@ -80,6 +81,8 @@ def plot_l_curve(output, selection, regularization_mode='gradient'):
                   markersize=13, label=f'Selected gamma={row.gamma:.3g}')
     regularization_label = (r'Huber-TV norm $\sqrt{R}$ ($(\mathrm{MPa}\,\mathrm{mm})^{1/2}$)'
                             if regularization_mode == 'huber_tv' else r'Tikhonov gradient norm $\eta$ (MPa)')
+    if regularization_mode == 'exact_tv':
+        regularization_label = r'Exact TV $\int |\nabla E|\,dA$ (MPa mm)'
     ax.set(xlabel=r'Area-weighted residual norm $\rho$ (mm$^2$)',
            ylabel=regularization_label,
            title='L-curve' if selected.any() else 'L-curve: selection unresolved')

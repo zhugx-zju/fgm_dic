@@ -23,7 +23,10 @@ def main():
     output = args.output or source.parent/'03_inverse'
     record_path = output/'run_metadata.json' if args.plot_only else source/'run_metadata.json'
     saved = json.loads(record_path.read_text(encoding='utf-8'))['configuration']
-    print(f"Saved solver settings: FTOL={saved['FTOL']:g}, GTOL={saved['GTOL']:g}; "
+    stopping = (f"TV simultaneous KKT checks={saved['EXACT_TV_OPTIONS']}"
+                if saved['REGULARIZATION_MODE'] == 'exact_tv' else
+                f"FTOL={saved['FTOL']:g}, GTOL={saved['GTOL']:g}")
+    print(f"Saved solver settings: {stopping}; "
           f"regularization={saved['REGULARIZATION_MODE']}; gamma selection=L-curve; "
           f"{len(saved['GAMMA_CANDIDATES'])} candidates, "
           f"[{min(saved['GAMMA_CANDIDATES']):g}, {max(saved['GAMMA_CANDIDATES']):g}]")

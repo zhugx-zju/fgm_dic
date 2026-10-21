@@ -14,13 +14,17 @@
 | `MESH_SOURCE` | `'configured_grid'` | 用`CONFIGURED_ELEMENTS`指定单元数，保留全部DIC观测位置 |
 | `REGULARIZATION_MODE` | `'gradient'` | 原一阶Tikhonov/H1，作用于E的梯度平方 |
 | `REGULARIZATION_MODE` | `'huber_tv'` | Huber-TV，阈值由`TV_DELTA`给出，单位MPa/mm |
+| `REGULARIZATION_MODE` | `'exact_tv'` | 不平滑的各向同性TV，目标中为`gamma*integral(sqrt(E_x**2+E_y**2))`，无1/2或Huber阈值 |
+| `EXACT_TV_OPTIONS` | 外/内迭代预算及四类停止证据阈值 | 仅精确TV使用；`MAX_FUN`为每个γ/ν的总FE函数计算预算 |
+| `EXACT_TV_SOLVER` | `'primal_dual'`或`'admm'` | 同一精确TV目标的两种数值求解器；本轮实验使用前者 |
+| `EXACT_TV_PRIMAL_STEP` / `EXACT_TV_COUPLING` | 2e8 / 0.9 | 原始—对偶法的数值步长与谱耦合系数，不进入目标函数 |
 | `DISPLACEMENT_COMPONENT_WEIGHTS` | 如`(1.,10.)` | 轴向ux、横向uy的残差平方系数，不缩放位移 |
 | `PRIMARY_NU` / `NU_VALUES` | 当前允许0.24—0.33 | 实验模式的主泊松比与固定γ敏感性比较点 |
 | `SYNTHETIC_NU` | 如`.26` | 合成生成及反演共用的已知ν，自动冻结为单个比较值 |
 | `GAMMA_COUNT` | 默认50 | L-curve候选数量，含范围两端 |
 | `GAMMA_LOG10_RANGE` | `None`或如`(-12.,-4.)` | `None`时H1用1e-12—1e-4，TV用1e-10—1e-2；不同正则的γ单位不同 |
 
-支持三种数据模式×两种网格×两种正则。TGV尚未接入当前四步流程，不作为可选值展示。选择网格只改变FE离散，不改变原始毫米尺度、真实承载截面或DIC测点数。
+支持三种数据模式、两种网格及三种正则。TGV尚未接入当前四步流程，不作为可选值展示。选择网格只改变FE离散，不改变原始毫米尺度、真实承载截面或DIC测点数。精确TV接入与本轮实验配置见[实验精确TV对照](dic_exact_tv_20261021.md)。
 
 例如用分层位移、原粗网格和TV进行新计算：
 
@@ -62,7 +66,9 @@ python -m script.step4_compare_results --input results/dic_full/synthetic/layere
 
 ## 当前层次
 
-`dic_case_config.py`负责用户选择；`script/step1_*.py`至`step4_*.py`负责分步执行；`lib/dic_case_workflow.py`负责准备、正反演和比较，`lib/synthetic_recovery.py`只生成合成观测及其核验；`fgm_asm/`保留共用有限元与伴随内核。模式切换没有新增独立求解器。
+`dic_case_config.py`负责用户选择；`script/step1_*.py`至`step4_*.py`负责分步执行；`lib/dic_case_workflow.py`负责准备、正反演和比较，`lib/synthetic_recovery.py`只生成合成观测及其核验；`fgm_asm/`保留共用有限元与伴随内核。H1与Huber-TV使用原L-BFGS求解器；精确TV使用`fgm_asm/exact_tv.py`的原始—对偶法或非线性ADMM，复用相同正演、观测和伴随数据梯度。
+
+精确TV的L-curve纵坐标为`TV(E)`本身（MPa·mm），不是`√TV(E)`；代价为`gamma*TV(E)`。满足局部KKT条件的均匀场保存为有效求解，但零TV或梯度未超过数值约束分辨阈值的场不参与对数曲率。每个γ和最终ν保存`tv_history.csv`、对偶场及分裂梯度；须同时满足驻点残差、Fenchel间隙和对偶可行性。原始—对偶法直接计算`z=GE`，约束残差恒为零；ADMM还需独立检查其约束残差。原`FTOL`、`GTOL`不决定精确TV的成功状态，`--resume`的旧L-BFGS异常线搜索恢复不用于TV。
 
 第2步始终保留独立分层标定正演。选择`synthetic_nodal`时，它与节点真值存在材料表示差异，准确合成误差应对照`truth/fields.npz`，不能将第2步的分层场误当成节点真值。合成模式不自动宣告实验物理验证完成；无有效L-curve拐点时仍保留诊断并停止。
 

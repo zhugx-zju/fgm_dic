@@ -5,7 +5,7 @@ from pathlib import Path
 PROJECT_ROOT = Path(__file__).resolve().parent
 
 # ==================== 常用选择：通常只修改这一段 ====================
-RUN_NAME = 'run01'  # 新计算换一个名称；结果保存在 results/dic_full/<RUN_NAME>/。
+RUN_NAME = 'exact_tv_coarse_pd_20261021'  # 新计算换一个名称；结果保存在 results/dic_full/<RUN_NAME>/。
 
 # 'dic'：实验DIC位移；'synthetic_layered'：分层正演生成位移；
 # 'synthetic_nodal'：节点Q4模量正演生成位移。三者使用下方同一组坐标和载荷。
@@ -13,12 +13,20 @@ DATA_MODE = 'dic'
 
 # 'dic_grid'：DIC点直接作为FE节点；'configured_grid'：指定FE单元数，
 # 仍保留全部DIC观测位置。当前原粗网格密度对应121×19单元。
-MESH_SOURCE = 'dic_grid'
+MESH_SOURCE = 'configured_grid'
 CONFIGURED_ELEMENTS = (121, 19)
 
-# 'gradient'：一阶Tikhonov/H1；'huber_tv'：Huber-TV。当前四步只支持这两种。
-REGULARIZATION_MODE = 'gradient'
+# 'gradient'：梯度平方；'huber_tv'：Huber平滑TV；'exact_tv'：不平滑的梯度幅值积分。
+REGULARIZATION_MODE = 'exact_tv'
 TV_DELTA = 10.0  # 仅Huber-TV使用，单位MPa/mm。
+# 精确TV停止须同时满足驻点、分裂约束、对偶可行性和Fenchel间隙条件。
+# MAX_FUN为每个γ/ν的总FE函数预算；原始—对偶法严格计数。
+# FTOL/GTOL只用于原H1/Huber求解器；max_inner/adapt_interval仅用于ADMM。
+EXACT_TV_SOLVER = 'primal_dual'  # 'admm'保留既有合成验证入口。
+EXACT_TV_PRIMAL_STEP, EXACT_TV_COUPLING = 2e8, .9  # 数值步长；不缩放目标函数。
+EXACT_TV_OPTIONS = dict(max_outer=12000, max_inner=150, stationarity_atol=1e-9,
+    stationarity_rtol=1e-3, primal_atol=1e-6, primal_rtol=1e-4,
+    gap_atol=1e-9, gap_rtol=1e-4, adapt_interval=10)
 DISPLACEMENT_COMPONENT_WEIGHTS = (1., 1.)  # (轴向ux, 横向uy)残差平方系数。
 
 PRIMARY_NU = .26
@@ -84,8 +92,8 @@ if DATA_MODE not in ('dic', 'synthetic_layered', 'synthetic_nodal'):
     raise ValueError('DATA_MODE应为dic、synthetic_layered或synthetic_nodal')
 if MESH_SOURCE not in ('dic_grid', 'configured_grid'):
     raise ValueError('MESH_SOURCE应为dic_grid或configured_grid')
-if REGULARIZATION_MODE not in ('gradient', 'huber_tv'):
-    raise ValueError('REGULARIZATION_MODE应为gradient或huber_tv')
+if REGULARIZATION_MODE not in ('gradient', 'huber_tv', 'exact_tv'):
+    raise ValueError('REGULARIZATION_MODE应为gradient、huber_tv或exact_tv')
 if not isinstance(GAMMA_COUNT, int) or GAMMA_COUNT < 5:
     raise ValueError('GAMMA_COUNT必须为不少于5的整数')
 CASE_ID = f'sample2_run3_{RUN_NAME}'

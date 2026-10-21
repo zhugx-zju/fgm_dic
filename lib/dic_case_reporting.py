@@ -45,10 +45,38 @@ def _objective_description(summary):
     regularizer = ('正则为Huber-TV，阈值δ='+str(config['TV_DELTA'])+' MPa/mm，作用于E的梯度幅值。'
                    if config.get('REGULARIZATION_MODE') == 'huber_tv' else
                    '正则为模量梯度平方积分。')
+    if config.get('REGULARIZATION_MODE') == 'exact_tv':
+        regularizer = ('正则项为 γ∫Ω√[(∂E/∂x)²+(∂E/∂y)²]dA，无Huber阈值或平滑ε；'
+                       'L-curve纵坐标直接取该积分（不含γ、不再开平方，单位MPa·mm）。'
+                       '模量为连续Q4插值 E=ΣNᵢEᵢ，每个节点Eᵢ独立，各y行不绑定；'
+                       '位移试函数和测试函数仍取原Q4的Nᵢ，不使用SUPG，也不输入分区界面或层数。')
     return (f"位移失配使用面积权重 × 分量系数：ux={weights['ux']:g}、uy={weights['uy']:g}。"
             '系数乘在残差平方上；同一权重用于刚体配准、初值、伴随梯度和 L-curve，不缩放原始位移。'
             '不设参考模量，不作模量或噪声尺度归一化。双分量 RMS 随权重定义改变，跨权重比较应分别看两个分量的 mm 误差。'
             + regularizer)
+
+
+def _solver_settings_description(settings):
+    if settings.get('REGULARIZATION_MODE') == 'exact_tv':
+        opts = settings['EXACT_TV_OPTIONS']
+        if settings.get('EXACT_TV_SOLVER', 'admm') == 'primal_dual':
+            return (f"精确TV使用非线性原始—对偶迭代，最多{opts['max_outer']}步、"
+                    f"每个γ/ν最多{settings['MAX_FUN']}次FE函数计算，"
+                    f"初始模量步长{settings['EXACT_TV_PRIMAL_STEP']:g}，耦合系数{settings['EXACT_TV_COUPLING']:g}。"
+                    f"驻点残差阈值={opts['stationarity_atol']:g}+{opts['stationarity_rtol']:g}×数据/正则导数∞范数的较大值；"
+                    f"间隙阈值={opts['gap_atol']:g}+{opts['gap_rtol']:g}×γTV(E)。"
+                    '对偶场逐点投影到|p|≤γ，允许的数值超界为1e-12×γ；驻点残差与Fenchel间隙须同时通过。'
+                    'z=GE直接计算，因此约束残差恒为零，不另作ADMM迭代残差解释。'
+                    '模量更新直接在正E上进行，记录的驻点残差仍为对log(E)的导数，便于与原证据对照。'
+                    '原FTOL/GTOL不决定成功；局部一阶条件通过不证明全局最优或实验物理有效。')
+        return (f"精确TV使用非线性ADMM，最多{opts['max_outer']}次外迭代、"
+                f"每次材料子问题最多{opts['max_inner']}次迭代，每个γ/ν总计最多{settings['MAX_FUN']}次FE函数计算。"
+                f"实际核验阈值为{opts}。驻点残差、GE=z约束、Fenchel间隙及|p|≤γ须同时通过；"
+                '内层函数下降或原GTOL不作为精确TV收敛证明。强正则均匀场允许直接核验同一组条件。'
+                '这些条件仅证明近似局部一阶驻点，物理模型有效性另行评价。')
+    return (f"FTOL={settings['FTOL']:g}、GTOL={settings['GTOL']:g}，"
+            f"最多{settings['MAX_ITER']}次迭代、{settings['MAX_FUN']}次函数计算。"
+            '函数容差和梯度容差任一满足即可停止。')
 
 
 def _geometry_description(summary):
@@ -199,11 +227,10 @@ def write_stage_gallery(output, summary, title):
         config = summary['configuration']
         gamma = summary.get('selected_gamma')
         selected = f'{gamma:g}' if gamma is not None else '尚未选定'
-        parts.append(f'<p>本次保存计算：FTOL={config["FTOL"]:g}，GTOL={config["GTOL"]:g}。'
+        parts.append(f'<p>本次保存计算：{html.escape(_solver_settings_description(config))}'
                      f'γ={selected}，由识别平台的 L-curve 正曲率拐点选择。'
                      '修改源配置或重新出图均不会更新已保存的反演。</p>')
-        parts.append('<p>目标函数：0.5 rᵀW_A r + 0.5 γ ∫|∇E|² dA。'
-                     'W_A 仅为测点面积权重；不设置参考模量，不做模量或噪声尺度归一化。</p>')
+        parts.append('<p>目标函数：'+html.escape(summary['objective_definition'])+'</p>')
         parts.append(f'<p>L-curve 状态：{html.escape(summary.get("l_curve_status", "running"))}；'
                      f'{html.escape(summary.get("l_curve_message", ""))}。'
                      '<a href="selection.csv">扫描范数、曲率、收敛与选参记录</a></p>')
@@ -301,11 +328,20 @@ def write_case_report(output, summary, metrics, regions, selection):
                   f"已启用 L-curve。gamma 候选值为 {settings['GAMMA_CANDIDATES']}；在预设主 ν 下，仅使用识别平台，计算原始残差范数 ρ 与正则范数 η（不含 gamma）。", '',
                   '在 log(ρ)、log(η) 上用有符号三点曲率识别拐点，排除未收敛、重合、非单调及端部缺少支撑的候选；不能识别拐点时保留诊断并停止，不回退至空间验证或固定 gamma。', '',
                   f"扫描初始化策略：{summary.get('scan_initialization', '见上游反演元数据')}。全部ν最后从同一个所选场出发重新求解，独立标定不进入反演目标或初值。", '',
-                  f"已保存计算实际使用 FTOL={settings['FTOL']:g}、GTOL={settings['GTOL']:g}，最多 {settings['MAX_ITER']} 次迭代、{settings['MAX_FUN']} 次函数计算。配置取自上游反演记录，修改源配置和重新出图不会更新已有计算。", '',
-                  '函数容差和梯度容差是不同的停止条件；任一满足即可停止，不要求二者同时满足。', '',
-                  '| ν | 迭代数 | 最终梯度 ∞ 范数 | 满足 GTOL | 停止信息 |', '| --- | ---: | ---: | --- | --- |']
-        for solver in summary['solvers']:
-            lines.append(f"| {solver['nu']:.2f} | {solver['n_iterations']} | {solver['final_gradient_inf']:.6g} | {solver['gradient_tolerance_satisfied']} | {solver['message']} |")
+                  _solver_settings_description(settings), '']
+        if settings.get('REGULARIZATION_MODE') == 'exact_tv':
+            lines += ['TV实际证据如下：三个残差比值须≤1，对偶超界/γ须≤1e-12。', '',
+                      '| ν | 更新步数 | 驻点残差/阈值 | 约束残差/阈值 | 间隙绝对值/阈值 | 对偶超界/γ | 通过一阶证据 |',
+                      '| --- | ---: | ---: | ---: | ---: | ---: | --- |']
+            for solver in summary['solvers']:
+                c = solver['tv_certificate']
+                lines.append(f"| {solver['nu']:.2f} | {solver['n_iterations']} | {c['stationarity']/c['stationarity_tol']:.6g} | "
+                             f"{c['primal_rms']/c['primal_tol']:.6g} | {abs(c['fenchel_gap'])/c['gap_tol']:.6g} | "
+                             f"{c['dual_violation']/summary['selected_gamma']:.6g} | {solver['converged']} |")
+        else:
+            lines += ['| ν | 迭代数 | 最终梯度 ∞ 范数 | 满足 GTOL | 停止信息 |', '| --- | ---: | ---: | --- | --- |']
+            for solver in summary['solvers']:
+                lines.append(f"| {solver['nu']:.2f} | {solver['n_iterations']} | {solver['final_gradient_inf']:.6g} | {solver['gradient_tolerance_satisfied']} | {solver['message']} |")
     else:
         lines += ['本阶段仅完成输入核查；未生成正反演结论。']
     lines += ['', '## 结论范围与复现', '',
@@ -329,7 +365,7 @@ def write_case_report(output, summary, metrics, regions, selection):
         parts.insert(4, '<p><strong>'+html.escape(_synthetic_notice(summary))+'</strong></p>')
     if not metric_table.empty:
         settings = summary['inverse_settings']
-        parts.append(f'<p>本次反演实际使用 FTOL={settings["FTOL"]:g}、GTOL={settings["GTOL"]:g}；'
+        parts.append(f'<p>本次反演实际使用：{html.escape(_solver_settings_description(settings))}'
                      f'γ={summary["selected_gamma"]:g}，由识别平台的 L-curve 选定。'
                      '完整停止信息见页末报告。</p>')
         inverse = Path(summary['inverse_directory'])

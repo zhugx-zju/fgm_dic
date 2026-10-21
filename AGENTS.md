@@ -2,7 +2,7 @@
 
 ## 用户配置入口
 
-日常选择统一修改`dic_case_config.py`：`DATA_MODE`为dic/synthetic_layered/synthetic_nodal，`MESH_SOURCE`为dic_grid/configured_grid，`REGULARIZATION_MODE`为gradient/huber_tv；权重、泊松比、γ范围及预算也在顶部。新计算由`RUN_NAME`定位`results/dic_full/<RUN_NAME>/`，原四步默认运行，不增加总batch。合成模式直接使用同配置中的DIC参考坐标/载荷，不依赖旧TV准备目录；真值另存truth。专用旧配置仅保留为已有结果的复现入口。默认配置方式读取时，第2—4步核对第1步冻结配置摘要；显式`--input`按原冻结运行读取，仍核验内核与上游身份。具体选项见`docs/unified_configuration.md`。
+日常选择统一修改`dic_case_config.py`：`DATA_MODE`为dic/synthetic_layered/synthetic_nodal，`MESH_SOURCE`为dic_grid/configured_grid，`REGULARIZATION_MODE`为gradient/huber_tv/exact_tv；权重、泊松比、γ范围及预算也在顶部。精确TV目标为`f+gamma*TV(E)`，L-curve纵坐标为TV本身；`EXACT_TV_SOLVER`可选primal_dual/admm，以一阶证据而非原FTOL/GTOL判定成功。新计算由`RUN_NAME`定位`results/dic_full/<RUN_NAME>/`，原四步默认运行，不增加总batch。合成模式直接使用同配置中的DIC参考坐标/载荷，不依赖旧TV准备目录；真值另存truth。专用旧配置仅保留为已有结果的复现入口。默认配置方式读取时，第2—4步核对第1步冻结配置摘要；显式`--input`按原冻结运行读取，仍核验内核与上游身份。具体选项见`docs/unified_configuration.md`。
 
 ## 当前主计算：全域DIC连续七区
 
@@ -27,6 +27,8 @@
 已有四个ν对照的γ均在主ν=0.26下选定后固定，属于敏感性分析，不等同ν/γ联合识别。两套权重的180N误差均偏向ν上限0.33，主ν仍为0.26；下一阶段优先核查ν及γ耦合，仅180N选参，不能将边界最优称为真实ν。汇总见`docs/dic_uy10_workflow_20261021.md`及`results/dic_full/uy10/04_comparison/泊松比对照.html`。
 
 正则辅助对照为`dic_tv_config.py`及`results/dic_full/tv/`：等权重、同粗网格、自由二维E，Huber-TV阈值δ=1 MPa/mm，50个γ为1e-10—1e-2。仅180N、主ν=0.26选参，280N预测。δ=1的50点仅22点按求解器条件停止、无有效拐点；`dic_tv10_config.py`及`tv/delta10/`的δ=10对照四步已完成，41/50点停止、所选γ=1.2648552168552957e-7，四个最终ν按函数下降停但未达GTOL，横向误差未实质改善。原H1主线保留；不同正则的γ单位不同，不直接照搬。新内核默认H1路径已按旧保存场复核一致，新增TV须重新准备冻结输入。协议及状态见`docs/dic_tv_workflow_20261021.md`。
+
+精确TV实际DIC对照位于`results/dic_full/exact_tv_coarse_pd_20261021/`，通过统一配置和原四步完成；自由二维2440节点、23920观测与原粗网格数组逐位相同。目标`f+gamma*integral(|grad E|)`，非线性原始—对偶法选γ=1.2648552168552957e-7；35/50点通过一阶证据（24点零TV不参与曲率），15个弱γ达预算，四个最终ν均通过。主ν下材料区域平均绝对差异由H1的14.997%变为14.860%，最差偏高32.075%增至38.996%，280N轴向RMSE由2.003增至2.178 μm，未显示实质改善；更明显平台合并了前三个统计区，不称为恢复七层。原H1主线保留；独立核验、失败记录及算法定义见`docs/dic_exact_tv_20261021.md`。
 
 ## 研究主线与交付重点
 
