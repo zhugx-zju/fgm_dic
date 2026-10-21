@@ -103,10 +103,7 @@ def field_metrics(mesh, case, field, kind):
     """Common area-weighted evaluation on the finer observation lattice."""
     obs = case.observation
     predicted = np.asarray(obs.H[::2, ::2] @ field).ravel()
-    # Observation coordinates are explicit in the controlled synthetic lattice.
-    xx, yy = np.meshgrid(np.linspace(0, mesh.geo_l, 4*mesh.nel_x+1),
-                         np.linspace(0, mesh.geo_h, 4*mesh.nel_y+1))
-    truth = truth_function(kind)(xx.ravel(), yy.ravel())
+    truth = truth_function(kind)(obs.x_meas, obs.y_meas)
     weights = obs.weight_vector[::2]
     relative = np.sqrt(weights @ (predicted-truth)**2 / (weights @ truth**2))
     return dict(area_relative_rms=float(relative),
