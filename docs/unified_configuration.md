@@ -66,7 +66,7 @@ python -m script.step4_compare_results --input results/dic_full/synthetic/layere
 
 ## 当前层次
 
-当前配置指向242×38网格的`exact_tv_refine_242x38_20261021`。该组已完成准备、独立正演及固定粗网格γ的辅助诊断；尚未运行新的完整L-curve。诊断入口与复现命令见[真实TV网格加密](dic_tv_refinement_20261021.md)，不能把单γ诊断当作细网格已重新选参。
+当前配置指向242×38网格的`exact_tv_refine_242x38_20261021`，四步及50点独立选参已完成，γ重新选得1.2648552168552957e-7；此前固定γ诊断另存。最弱点中断后以较小步长作2000次诊断重算、仍排除；关键邻点明确追加734次FE后通过。最终32/50点通过（8点非零TV），四个最终ν均通过；额外预算和中断计算量单列，不能声称相同总预算。新入口为该组`mesh_reselected/index.html`，协议、异常记录和复现命令见[真实TV网格加密](dic_tv_refinement_20261021.md)。重新选参后材料差异和280N预测仍几乎不变。
 
 `dic_case_config.py`负责用户选择；`script/step1_*.py`至`step4_*.py`负责分步执行；`lib/dic_case_workflow.py`负责准备、正反演和比较，`lib/synthetic_recovery.py`只生成合成观测及其核验；`fgm_asm/`保留共用有限元与伴随内核。H1与Huber-TV使用原L-BFGS求解器；精确TV使用`fgm_asm/exact_tv.py`的原始—对偶法或非线性ADMM，复用相同正演、观测和伴随数据梯度。
 

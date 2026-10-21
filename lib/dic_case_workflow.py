@@ -1012,7 +1012,7 @@ def compare_dic_results(prepared, forward, inverse, output, plots=True, plot_onl
                    upstream_sources={str(p): file_sha256(p/'run_metadata.json') for p in (forward, inverse)},
                    inverse_settings={key: sources[1]['configuration'][key]
                                      for key in ('FTOL', 'GTOL', 'MAX_ITER', 'MAX_FUN', 'GAMMA_CANDIDATES',
-                                                 'REGULARIZATION_MODE', 'EXACT_TV_OPTIONS', 'EXACT_TV_SOLVER',
+                                                 'REGULARIZATION_MODE', 'TV_DELTA', 'EXACT_TV_OPTIONS', 'EXACT_TV_SOLVER',
                                                  'EXACT_TV_PRIMAL_STEP', 'EXACT_TV_COUPLING')
                                      if key in sources[1]['configuration']},
                    gamma_selection_method=sources[1]['gamma_selection_method'],
@@ -1021,6 +1021,9 @@ def compare_dic_results(prepared, forward, inverse, output, plots=True, plot_onl
                    initialization=sources[1].get('initialization'),
                    inverse_directory=str(inverse.resolve()),
                    l_curve_status=sources[1]['l_curve_status'], l_curve_message=sources[1]['l_curve_message'])
+    for key in ('scan_recovery', 'scan_completion'):
+        if key in sources[1]:
+            summary[key] = sources[1][key]
     metrics = pd.concat([pd.read_csv(forward/'comparison.csv'), pd.read_csv(inverse/'comparison.csv')], ignore_index=True)
     regions = pd.read_csv(inverse/'regional_comparison.csv')
     selection = pd.read_csv(inverse/'selection.csv')

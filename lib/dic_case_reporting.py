@@ -41,8 +41,8 @@ def _synthetic_notice(summary):
 
 def _objective_description(summary):
     weights = summary.get('displacement_component_weights', {'ux': 1., 'uy': 1.})
-    config = summary.get('configuration', {})
-    regularizer = ('正则为Huber-TV，阈值δ='+str(config['TV_DELTA'])+' MPa/mm，作用于E的梯度幅值。'
+    config = summary.get('configuration', summary.get('inverse_settings', {}))
+    regularizer = ('正则为Huber-TV，阈值δ='+str(config.get('TV_DELTA', '见冻结配置'))+' MPa/mm，作用于E的梯度幅值。'
                    if config.get('REGULARIZATION_MODE') == 'huber_tv' else
                    '正则为模量梯度平方积分。')
     if config.get('REGULARIZATION_MODE') == 'exact_tv':
@@ -77,6 +77,32 @@ def _solver_settings_description(settings):
     return (f"FTOL={settings['FTOL']:g}、GTOL={settings['GTOL']:g}，"
             f"最多{settings['MAX_ITER']}次迭代、{settings['MAX_FUN']}次函数计算。"
             '函数容差和梯度容差任一满足即可停止。')
+
+
+def _tv_recovery_description(summary):
+    recovery = summary.get('scan_recovery')
+    if not recovery or not recovery.get('additional_evaluation_budget_per_attempt'):
+        return ''
+    attempts = '；'.join(
+        f"γ={a['gamma']:.9g}：追加{a['extra_evaluations']}次，累计{a['total_evaluations']}次FE"
+        for a in recovery['attempts'])
+    return (f"基础扫描之外，按180N曲率峰缺少的邻点另行追加计算；每个相关γ最多追加"
+            f"{recovery['additional_evaluation_budget_per_attempt']}次，实际总追加"
+            f"{recovery['actual_extra_FE_evaluations']}次。{attempts}。"
+            '同一γ从保存的失败E和对偶场重启，目标和停止容差不变；标定与280N不参与补算对象选择。'
+            '原50点状态与原失败场分别保留；此处不能称为两网格相同总预算的效率比较。')
+
+
+def _scan_completion_description(summary):
+    record = summary.get('scan_completion')
+    if not record:
+        return ''
+    return (f"γ={record['interrupted_gamma']:g}的原尝试因正模量步长下溢中断，最后状态未保存；"
+            f"日志确认至少{record['interrupted_FE_lower_bound']}次FE，配置上限为"
+            f"{record['interrupted_FE_upper_bound']}次，确数不可恢复。随后用较小数值步长"
+            f"{record['retry_primal_step']:g}补算{record['retry_actual_evaluations']}次，"
+            f"通过一阶条件：{record['retry_converged']}。目标与容差不变，未通过的场仍排除。"
+            '表中求解次数统计保存的尝试，中断尝试的上述计算量需另计。')
 
 
 def _geometry_description(summary):
@@ -227,13 +253,21 @@ def write_stage_gallery(output, summary, title):
         config = summary['configuration']
         gamma = summary.get('selected_gamma')
         selected = f'{gamma:g}' if gamma is not None else '尚未选定'
-        parts.append(f'<p>本次保存计算：{html.escape(_solver_settings_description(config))}'
+        label = '基础扫描与最终ν设置（追加预算另列）' if _tv_recovery_description(summary) else '本次保存计算'
+        parts.append(f'<p>{label}：{html.escape(_solver_settings_description(config))}'
                      f'γ={selected}，由识别平台的 L-curve 正曲率拐点选择。'
                      '修改源配置或重新出图均不会更新已保存的反演。</p>')
         parts.append('<p>目标函数：'+html.escape(summary['objective_definition'])+'</p>')
         parts.append(f'<p>L-curve 状态：{html.escape(summary.get("l_curve_status", "running"))}；'
                      f'{html.escape(summary.get("l_curve_message", ""))}。'
                      '<a href="selection.csv">扫描范数、曲率、收敛与选参记录</a></p>')
+        if _tv_recovery_description(summary):
+            parts.append('<p><strong>'+html.escape(_tv_recovery_description(summary))+'</strong> '
+                         '<a href="tv_recovery_protocol.json">追加预算协议</a> · '
+                         '<a href="selection_before_tv_recovery.csv">原50点记录</a></p>')
+        if _scan_completion_description(summary):
+            parts.append('<p>'+html.escape(_scan_completion_description(summary))+
+                         ' <a href="interrupted_scan_protocol.json">中断与补算记录</a></p>')
     primary = f"nu_{summary['primary_nu_prespecified']:.2f}"
     pictures = sorted(output.rglob('*.png'), key=lambda p: (
         0 if p.parent == output else 1 if primary in p.parts else 2,
@@ -329,6 +363,10 @@ def write_case_report(output, summary, metrics, regions, selection):
                   '在 log(ρ)、log(η) 上用有符号三点曲率识别拐点，排除未收敛、重合、非单调及端部缺少支撑的候选；不能识别拐点时保留诊断并停止，不回退至空间验证或固定 gamma。', '',
                   f"扫描初始化策略：{summary.get('scan_initialization', '见上游反演元数据')}。全部ν最后从同一个所选场出发重新求解，独立标定不进入反演目标或初值。", '',
                   _solver_settings_description(settings), '']
+        if _tv_recovery_description(summary):
+            lines += ['基础预算的例外：'+_tv_recovery_description(summary), '']
+        if _scan_completion_description(summary):
+            lines += [_scan_completion_description(summary), '']
         if settings.get('REGULARIZATION_MODE') == 'exact_tv':
             lines += ['TV实际证据如下：三个残差比值须≤1，对偶超界/γ须≤1e-12。', '',
                       '| ν | 更新步数 | 驻点残差/阈值 | 约束残差/阈值 | 间隙绝对值/阈值 | 对偶超界/γ | 通过一阶证据 |',
@@ -355,7 +393,7 @@ def write_case_report(output, summary, metrics, regions, selection):
              PAGE_STYLE,
              f'<h1>{html.escape(title)}</h1>',
              f'<p>运行状态：{html.escape(status)}；物理配准已核验：{verified}。</p>',
-             f'<p><a href="{_link(overview, output)}">返回实验结果总览</a> · <a href="comparison.csv">位移误差 CSV</a> · <a href="regional_comparison.csv">五区模量 CSV</a> · <a href="selection.csv">选参记录 CSV</a></p>',
+             f'<p><a href="{_link(overview, output)}">返回实验结果总览</a> · <a href="comparison.csv">位移误差 CSV</a> · <a href="regional_comparison.csv">区域模量 CSV</a> · <a href="selection.csv">选参记录 CSV</a></p>',
              f'<p class="path">本页与图表保存于：{html.escape(str(output.resolve()))}</p>',
              '<p>DIC 云图沿用 post_DIC：规则网格、jet 色图、等比例坐标及独立单图。三个位移场采用相同色标；两幅相对误差采用相同对称百分比色标。显示时仅共同减去 DIC 分量均值，CSV 保留原参考态。</p>',
              f'<p>{COMPONENT_REFERENCE_TEXT}</p>',
@@ -365,10 +403,16 @@ def write_case_report(output, summary, metrics, regions, selection):
         parts.insert(4, '<p><strong>'+html.escape(_synthetic_notice(summary))+'</strong></p>')
     if not metric_table.empty:
         settings = summary['inverse_settings']
-        parts.append(f'<p>本次反演实际使用：{html.escape(_solver_settings_description(settings))}'
+        label = '基础扫描与最终ν设置（追加预算另列）' if _tv_recovery_description(summary) else '本次反演实际使用'
+        parts.append(f'<p>{label}：{html.escape(_solver_settings_description(settings))}'
                      f'γ={summary["selected_gamma"]:g}，由识别平台的 L-curve 选定。'
                      '完整停止信息见页末报告。</p>')
         inverse = Path(summary['inverse_directory'])
+        if _tv_recovery_description(summary):
+            parts.append('<p><strong>'+html.escape(_tv_recovery_description(summary))+'</strong> '
+                         f'<a href="{_link(inverse/"tv_recovery_protocol.json", output)}">追加预算协议</a></p>')
+        if _scan_completion_description(summary):
+            parts.append('<p>'+html.escape(_scan_completion_description(summary))+'</p>')
         parts.append(f'<p><a href="{_link(inverse/"云图.html", output)}">查看 L-curve、曲率图与反演场</a></p>')
         parts += ['<h2>位移定量对照</h2>', metric_table.to_html(index=False, border=0, float_format=lambda x: f'{x:.7g}'),
                   '<h2>模量与独立标定对照</h2>', region_table.to_html(index=False, border=0, float_format=lambda x: f'{x:.6g}')]
