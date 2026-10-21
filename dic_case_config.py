@@ -1,10 +1,38 @@
-"""One DIC experiment: four independent scripts consume this prepared case."""
+"""统一用户配置：在本文件选择数据、网格和正则，再分别运行原四步脚本。"""
 
 from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).resolve().parent
-CASE_ID = 'sample2_run3_full_partitions'
-CASE_OUTPUT = PROJECT_ROOT / 'results' / 'dic_full'
+
+# ==================== 常用选择：通常只修改这一段 ====================
+RUN_NAME = 'run01'  # 新计算换一个名称；结果保存在 results/dic_full/<RUN_NAME>/。
+
+# 'dic'：实验DIC位移；'synthetic_layered'：分层正演生成位移；
+# 'synthetic_nodal'：节点Q4模量正演生成位移。三者使用下方同一组坐标和载荷。
+DATA_MODE = 'dic'
+
+# 'dic_grid'：DIC点直接作为FE节点；'configured_grid'：指定FE单元数，
+# 仍保留全部DIC观测位置。当前原粗网格密度对应121×19单元。
+MESH_SOURCE = 'dic_grid'
+CONFIGURED_ELEMENTS = (121, 19)
+
+# 'gradient'：一阶Tikhonov/H1；'huber_tv'：Huber-TV。当前四步只支持这两种。
+REGULARIZATION_MODE = 'gradient'
+TV_DELTA = 10.0  # 仅Huber-TV使用，单位MPa/mm。
+DISPLACEMENT_COMPONENT_WEIGHTS = (1., 1.)  # (轴向ux, 横向uy)残差平方系数。
+
+PRIMARY_NU = .26
+NU_VALUES = (.24, .26, .28, .33)  # 实验模式的固定γ敏感性比较。
+SYNTHETIC_NU = .26  # 合成模式生成和反演均用此已知值，不自动混入ν敏感性。
+
+GAMMA_COUNT = 50
+# None：H1自动用(-12,-4)，TV自动用(-10,-2)；也可显式写(-12.,-4.)。
+# γ单位随正则不同，不能直接照搬相同数值范围比较强度。
+GAMMA_LOG10_RANGE = None
+MAX_ITER, MAX_FUN = 1500, 12000
+FTOL, GTOL = 1e-30, 1e-12
+
+# ==================== 数据目录、帧范围和物理定义 ====================
 SAMPLE_ROOT = PROJECT_ROOT / 'post_tensile_test' / '1016' / 'sample_2'
 PLATFORMS = {
     '180N': {'folder': SAMPLE_ROOT / '3' / '180N_2' / 'all_region', 'stages': (259, 273), 'run': 3, 'setting_N': 180},
@@ -21,9 +49,6 @@ DOMAIN_SOURCE = 'dic_reference_bounds'
 GEO_L, GEO_H, THICKNESS = None, None, 3.2
 LOAD_SECTION_WIDTH = 20.  # Actual specimen width, not the internal DIC ROI width.
 INTERNAL_SIDE_BOUNDARY = 'traction_free_approximation'
-# FE nodes are the complete DIC reference grid; counts resolve from fit data.
-MESH_SOURCE = 'dic_grid'
-NEL_X, NEL_Y = None, None
 # Groups are ordered along increasing FEM x = raw +Y.
 REGION_INFILL_PERCENT = (100, 90, 80, 70, 60, 50, 40)
 # Manufacturing x increases with infill; zero is the specimen center.
@@ -50,14 +75,28 @@ REGISTRATION = {
 }
 OUTSIDE_POINT_POLICY = 'reject'
 FIT_CASES, PREDICT_CASES = ('180N',), ('280N',)
-# Experiment-specific admissible range: 0.24 <= nu <= 0.33. The values below
-# retain the frozen workflow's historical comparison points, not measured nu.
-NU_VALUES = (.24, .26, .28, .33)
-PRIMARY_NU = .26  # Historical baseline; joint E/nu diagnosis is saved separately.
-# Original area-weighted displacement mismatch + gamma/2 * integral(|grad E|^2).
-# No reference modulus, noise normalization, or calibration-based initial field.
-REGULARIZATION_MODE = 'gradient'
-# 50 logarithmically spaced candidates, including both endpoints.
-GAMMA_CANDIDATES = tuple(10.**(-12 + 8*i/49) for i in range(50))
-MAX_ITER, MAX_FUN = 1500, 12000
-FTOL, GTOL = 1e-30, 1e-12
+
+# ==================== 派生设置：通常不需要修改 ====================
+if (not RUN_NAME or RUN_NAME in ('.', '..') or
+        any(character in RUN_NAME for character in '<>:"/\\|?*')):
+    raise ValueError('RUN_NAME应为单个目录名，例如 run01')
+if DATA_MODE not in ('dic', 'synthetic_layered', 'synthetic_nodal'):
+    raise ValueError('DATA_MODE应为dic、synthetic_layered或synthetic_nodal')
+if MESH_SOURCE not in ('dic_grid', 'configured_grid'):
+    raise ValueError('MESH_SOURCE应为dic_grid或configured_grid')
+if REGULARIZATION_MODE not in ('gradient', 'huber_tv'):
+    raise ValueError('REGULARIZATION_MODE应为gradient或huber_tv')
+if not isinstance(GAMMA_COUNT, int) or GAMMA_COUNT < 5:
+    raise ValueError('GAMMA_COUNT必须为不少于5的整数')
+CASE_ID = f'sample2_run3_{RUN_NAME}'
+CASE_OUTPUT = PROJECT_ROOT / 'results' / 'dic_full' / RUN_NAME
+NEL_X, NEL_Y = CONFIGURED_ELEMENTS if MESH_SOURCE == 'configured_grid' else (None, None)
+if DATA_MODE != 'dic':
+    SYNTHETIC_REPRESENTATION = ('sharp_layers' if DATA_MODE == 'synthetic_layered' else 'nodal_q4')
+    PRIMARY_NU, NU_VALUES = SYNTHETIC_NU, (SYNTHETIC_NU,)
+if GAMMA_LOG10_RANGE is None:
+    GAMMA_LOG10_RANGE = (-12., -4.) if REGULARIZATION_MODE == 'gradient' else (-10., -2.)
+if len(GAMMA_LOG10_RANGE) != 2 or not GAMMA_LOG10_RANGE[0] < GAMMA_LOG10_RANGE[1]:
+    raise ValueError('GAMMA_LOG10_RANGE应为递增的两个log10端点')
+GAMMA_CANDIDATES = tuple(10.**(GAMMA_LOG10_RANGE[0] +
+    (GAMMA_LOG10_RANGE[1]-GAMMA_LOG10_RANGE[0])*i/(GAMMA_COUNT-1)) for i in range(GAMMA_COUNT))

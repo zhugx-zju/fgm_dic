@@ -459,6 +459,11 @@ def prepare_dic(cfg, output):
     output = Path(output)
     if output.exists():
         raise FileExistsError(f'Choose a new preparation output: {output}')
+    from .config_utils import configuration_fingerprint
+    requested_fingerprint = configuration_fingerprint(cfg)
+    data_mode = getattr(cfg, 'DATA_MODE', 'dic')
+    if data_mode not in ('dic', 'synthetic_layered', 'synthetic_nodal'):
+        raise ValueError('DATA_MODE must be dic, synthetic_layered or synthetic_nodal')
     platforms, records = {}, {}
     for name, item in cfg.PLATFORMS.items():
         platforms[name] = load_dic_platform(Path(item['folder']), *item['stages'],
@@ -480,6 +485,7 @@ def prepare_dic(cfg, output):
         record['force_reference_note'] = getattr(cfg, 'FORCE_REFERENCE_NOTE', '')
     matrix, offset, verified = registration_transform(reference.coordinates, cfg.REGISTRATION)
     summary = {'workflow': 'dic_case_preparation', 'status': 'prepared', 'case_id': cfg.CASE_ID,
+               'requested_configuration_sha256': requested_fingerprint,
                'coordinates_verified': verified, 'registration': cfg.REGISTRATION,
                'matrix': matrix, 'offset_mm': offset,
                'physical_model_mm': [cfg.GEO_L, cfg.GEO_H, cfg.THICKNESS],
@@ -548,7 +554,25 @@ def prepare_dic(cfg, output):
     summary['coverage'] = rows
     if matrix is None:
         summary['status'] = 'needs_registration'
+    truth = None
+    if data_mode != 'dic':
+        if matrix is None:
+            raise ValueError('Synthetic observations require resolved physical coordinates')
+        from .synthetic_recovery import generate_synthetic_fields
+        mesh = MeshInfo(cfg.GEO_L, cfg.GEO_H, cfg.NEL_X, cfg.NEL_Y,
+                        nodal_coordinates=arrays.get('dic_mesh_coordinates'))
+        # Only H and the force are used to generate observations. In particular,
+        # experimental displacement values never enter the synthetic field.
+        cases = [make_observation_case(
+            mesh, name, records[name]['model_end_force_N'], cfg.THICKNESS,
+            arrays[f'{name}_coordinates'], np.zeros_like(arrays[f'{name}_coordinates']),
+            point_weights=arrays[f'{name}_point_area_mm2']) for name in cfg.PLATFORMS]
+        arrays, truth = generate_synthetic_fields(cfg, mesh, cases, summary, arrays,
+            {'geometry_source': 'DIC reference coordinates and force from the unified configuration'})
     save_run(output, cfg, summary, arrays)
+    if truth is not None:
+        save_run(output/'truth', cfg, {'workflow': 'synthetic_truth',
+            'synthetic_observations': summary['synthetic_observations']}, truth)
     pd.DataFrame(rows).to_csv(output / 'input_audit.csv', index=False)
     plot_saved_stage(output)
     return summary

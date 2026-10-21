@@ -1,5 +1,9 @@
 # Project conventions
 
+## 用户配置入口
+
+日常选择统一修改`dic_case_config.py`：`DATA_MODE`为dic/synthetic_layered/synthetic_nodal，`MESH_SOURCE`为dic_grid/configured_grid，`REGULARIZATION_MODE`为gradient/huber_tv；权重、泊松比、γ范围及预算也在顶部。新计算由`RUN_NAME`定位`results/dic_full/<RUN_NAME>/`，原四步默认运行，不增加总batch。合成模式直接使用同配置中的DIC参考坐标/载荷，不依赖旧TV准备目录；真值另存truth。专用旧配置仅保留为已有结果的复现入口。默认配置方式读取时，第2—4步核对第1步冻结配置摘要；显式`--input`按原冻结运行读取，仍核验内核与上游身份。具体选项见`docs/unified_configuration.md`。
+
 ## 当前主计算：全域DIC连续七区
 
 当前主配置读取`180N_2/all_region`和`280N_2/all_region`，结果位于`results/dic_full/`。七个连续16 mm目标区对应制造ξ∈[−56,56] mm，总长112 mm；按实际导出坐标取交集，边界不补点、不缩放。实际范围ξ∈[−50.247809517,55.747275020] mm，计算域105.995084537×18.484156435 mm。沿FEM x为100/90/80/70/60/50/40%，长度15.747275/16/16/16/16/16/10.247810 mm。不能写成七段都已完整取得16 mm。

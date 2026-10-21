@@ -1,5 +1,7 @@
 # DIC 实验的分步骤计算流程
 
+**统一用户入口为根目录`dic_case_config.py`。** 顶部选择数据模式、网格、正则、权重、泊松比和γ范围；下方保留输入路径与物理定义。日常不必切换专用配置文件，见[单文件配置](unified_configuration.md)。
+
 四步共用的物理坐标、位移基准、牵引边界和测点观测约定，见 [DIC—有限元参考一致性](dic_reference_consistency.md)。该说明分别定义原始位移、三个刚体分量拟合、绘图居中及真实端差，附当前代码对应与核对结果。
 
 ## 脚本及数据流
@@ -19,7 +21,7 @@
 
 在项目根目录、安装 `requirements.txt` 的 Python 环境中，依次运行：
 
-默认配置读取`180N_2/all_region`和`280N_2/all_region`；从七个连续16 mm目标区与实际坐标取交集，得到约106×18.48 mm、368×65点。沿用已确认共享毫米坐标系下的原横线定位，输出到`results/dic_full/`，定义与当前状态见[全域七区](dic_full_workflow_20261020.md)。旧region结果在`results/dic_mesh/`，历史索引见[历史结果](results_history.md)。新实验四步命令为：
+默认配置读取`180N_2/all_region`和`280N_2/all_region`；从七个连续16 mm目标区与实际坐标取交集，得到约106×18.48 mm、368×65点，沿用原横线定位。已有主线结果位于`results/dic_full/`，新计算按`RUN_NAME`保存到其子目录，默认`run01/`；已有定义与状态见[全域七区](dic_full_workflow_20261020.md)。旧region结果及历史索引保留。新计算四步命令为：
 
 ```powershell
 python -m script.step1_prepare_dic
@@ -30,7 +32,7 @@ python -m script.step4_compare_results
 
 本轮DIC节点网格改变了离散问题，50点扫描与反演必须重新计算，不能复用粗网格场；不要重复执行数值计算覆盖冻结结果。查看既有结果或仅更新显示时使用`--plot-only`。
 
-**查看结果：双击项目根目录的 [打开结果.html](../打开结果.html)。** 每一步结束时都会打印本步绝对保存路径和实验总览路径，并更新这个固定入口。第 2—4 步的默认 `--config dic_case_config` 仅用于定位 `CASE_OUTPUT/01_prepared`；求解参数和数据仍来自第一步冻结文件。也可用 `--input <01_prepared目录>` 明确指定输入。
+**查看结果：双击项目根目录的 [打开结果.html](../打开结果.html)。** 每一步结束时打印本步绝对保存路径并更新入口。第2—4步默认定位`CASE_OUTPUT/01_prepared`并核对当前统一配置与第1步摘要一致，再读取冻结参数和数据。读取旧运行可用`--input <原01_prepared目录>`，该方式不采用当前编辑中的参数，仍核验内核和上游身份。
 
 全部结果集中在配置的 `CASE_OUTPUT` 下：
 
@@ -51,7 +53,7 @@ python -m script.step4_compare_results
 history/                     previous_runs.zip、文件哈希清单和历史索引
 ```
 
-当前实验统一保存在 `results/dic_full/`。L-curve 扫描与识别模量共用 `03_inverse/`，不再因选参方式另建并列实验目录。历史版本位于 `results/dic/history/`，保留各自冻结数据和计算条件；所有浏览入口均从统一总览访问。移动整套结果时保留原元数据中的计算时路径与哈希，后续出图以实际输入目录定位，并核验冻结文件身份。
+已有主线保存在`results/dic_full/`，统一入口的新计算保存在`results/dic_full/<RUN_NAME>/`。每组L-curve扫描与识别模量共用`03_inverse/`，不因选参方法另拆目录。历史版本保留各自冻结定义；移动结果树后，用显式`--input`定位原准备目录并核验冻结身份。
 
 四步默认在完成数值计算后自动出图。已有与当前数值内核一致的结果时，给相应命令加 `--plot-only`，仅刷新已保存场、L-curve、展示页及派生剖面，不重读原始 DIC、不运行正演或优化器，也不覆盖冻结数组、配置或求解记录。图文件按相同文件名刷新，比较结果统一位于 `04_comparison/`。旧 `results/dic/history/` 浏览文件仍保留，但其目标函数与当前方案不同，不能绕过内核核对直接混用或继续计算。
 
@@ -71,15 +73,15 @@ DIC 图复用原 `post_DIC` 的 `lib/dic_preprocessing.py::plot_grid_fields`：7
 
 ## 换一组 DIC 数据
 
-分层无噪声恢复为独立辅助对照：`dic_synthetic_config`及`dic_synthetic_nodal_config`沿用原四步入口，第1步继承当前冻结几何/载荷/测点并生成FE位移，不读取实验位移作观测；第3步保持原自由二维H1及50点L-curve。固定γ诊断与准确真值评价另存于同组，不能冒称自动选参结果。定义、命令及解释范围见[合成恢复](synthetic_recovery_20261021.md)。
+日常合成模式在统一文件选择`DATA_MODE='synthetic_layered'`或`'synthetic_nodal'`，第1步直接从同文件指定的DIC取得坐标和载荷并生成FE位移，可搭配H1或Huber-TV，不读取实验位移作观测。旧专用配置仍复现原冻结源、H1和50点L-curve对照，固定γ诊断不能冒称自动选参；见[合成恢复](synthetic_recovery_20261021.md)。
 
-Huber-TV对照配置为`dic_tv_config.py`，`REGULARIZATION_MODE='huber_tv'`、`TV_DELTA=1.0`（MPa/mm）；仍用原四步脚本，另存`results/dic_full/tv/`。R单位及γ范围与H1不同，扫描分别选参；主线默认仍为gradient。实现、协议和核验见[正则对照](dic_tv_workflow_20261021.md)。
+日常TV选择`REGULARIZATION_MODE='huber_tv'`并给出`TV_DELTA`，统一文件默认阈值10 MPa/mm；γ范围留`None`时自动用1e-10—1e-2。旧δ=1/10配置与`results/dic_full/tv/`保留原对照定义。R单位与H1不同，分别选参；见[正则对照](dic_tv_workflow_20261021.md)。
 
-分量权重实验可在独立配置中设置`DISPLACEMENT_COMPONENT_WEIGHTS=(1.,10.)`，分别为FEM轴向ux、横向uy残差平方的乘数；缺省为(1,1)。新权重必须重新准备输入、扫描和反演，不能只改源配置或重画旧图。横向十倍权重对照见[协议及结果](dic_uy10_workflow_20261021.md)。
+分量权重直接在统一配置设置`DISPLACEMENT_COMPONENT_WEIGHTS=(1.,10.)`，分别为轴向ux、横向uy残差平方的乘数，默认(1,1)。新权重使用新`RUN_NAME`重新准备、扫描和反演，不能靠重画旧图生效。已有对照见[协议及结果](dic_uy10_workflow_20261021.md)。
 
 若完整扫描因线搜索异常而缺少拐点支撑，可在第3步增加`--resume`。它只恢复异常点的L-BFGS历史并使用原总预算的剩余额度；保留初次候选和`selection_before_recovery.csv`，将新数组存入该点的`recovery_*`，选参表显式记录`solution_directory`。迭代上限耗尽的点不重算，已完成反演不接受恢复；不放宽容差或自动指定γ。后处理读取显式恢复路径。
 
-修改 `dic_case_config.py` 中的新数据目录、物理定义和新的 `CASE_OUTPUT`，然后运行不带 `--plot-only` 的四条命令，完成新一组计算并自动出图：
+修改`dic_case_config.py`中的数据或计算选项并更换`RUN_NAME`，再运行不带`--plot-only`的四条命令：
 
 ```powershell
 python -m script.step1_prepare_dic
@@ -88,7 +90,7 @@ python -m script.step3_inverse_dic
 python -m script.step4_compare_results
 ```
 
-已有数值结果仍拒绝覆盖；确需重算时使用新的 `CASE_OUTPUT`。若需要保留多组配置，可复制为 `dic_case_sample3.py`，四步均指定它：
+已有数值结果拒绝覆盖。通常只修改同一文件并更换`RUN_NAME`，每次结果自带冻结配置；仍兼容显式专用配置，例如：
 
 ```powershell
 python -m script.step1_prepare_dic --config dic_case_sample3
@@ -101,7 +103,7 @@ python -m script.step4_compare_results --config dic_case_sample3
 
 必须逐组明确的参数：
 
-- `CASE_ID`、`CASE_OUTPUT`：实验身份与新结果目录。
+- `RUN_NAME`：统一入口的运行身份与目录名，派生`CASE_ID`、`CASE_OUTPUT`；旧专用配置仍可直接指定后两者。
 - `PLATFORMS`：各载荷平台的数据目录、首末阶段、识别或预测用途。载荷可通过 `FORCE_PAIRING_CSV` 的 `run/setting_N` 配对，或显式提供 `force_N` 和 `force_note`；平台名称不直接作为实际拉力。
 - `DIC_UNIT`、`DIC_COORDINATE_STATE`、位移与力的参考态：当前入口采用 mm、相对初始未加载图位移及相应实际拉力。坐标和位移必须共用长度单位；不自动识别单位或推断预载参考。
 - `DOMAIN_SOURCE`：默认 `dic_reference_bounds`，第一步从识别平台初始坐标解析 `GEO_L/GEO_H` 并冻结；预测平台不重新决定域。`THICKNESS/LOAD_SECTION_WIDTH` 来自试样定义，不能用内部 DIC 宽度替代真实承载宽度。`REGION_INFILL_PERCENT`按FEM x排列为100/90/80/70/60/50/40%，`REGISTRATION.material_x_sign=-1`控制材料方向，`REGION_BOUNDARIES_MANUFACTURING_X`保留制造界面位置，当前`material_coordinates`模式用原始坐标与制造坐标锚点传递位置；`MATERIAL_WINDOW_MM=(-56,56)`按目标坐标连续裁剪，保留真实测点边界。旧`specimen_marks`模式仍用于region的两条标线定位。旧配置缺少 `DOMAIN_SOURCE` 时仍按显式 `GEO_L/GEO_H` 处理。
@@ -157,7 +159,7 @@ python -m script.step4_compare_results --config dic_case_sample3
 
 新配置保留 `FTOL=1e-30、GTOL=1e-12`，50点L-curve与四步计算已经完成。50个扫描点中49个按求解器规则成功，最弱γ点达到迭代上限并排除；所选γ与最后各ν的求解按函数下降条件停止，未满足GTOL，不能把`converged=true`写成严格梯度条件已满足。旧居中50点、17点及更早的空间验证选参记录均作为原目录成员保存在`history/previous_runs.zip`。旧目标与参数条件见[历史索引](results_history.md)，不能与当前L-curve结果混用。
 
-要让修改后的容差生效，应先选用新的 `CASE_OUTPUT` 并重新运行第 1 步以冻结新配置，再运行后续步骤。只修改源配置，或给第 3 步指定新的 `--output` 但继续读取旧 `01_prepared`，均不会更新求解设置。结果页显示的是实际保存计算的容差与停止原因。
+要让修改后的容差生效，统一入口先更换`RUN_NAME`并重新运行第1步，再运行后续步骤。默认方式拒绝读取与当前配置摘要不一致的准备文件。显式`--input`始终使用原冻结设置，给第3步换`--output`不会修改它。结果页显示实际保存的容差与停止原因。
 
 ## 可复核性与完成范围
 

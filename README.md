@@ -2,6 +2,8 @@
 
 **当前主计算为全域DIC连续七区：** 从`all_region`按既定材料坐标截取七个连续16 mm目标区，取实际数据交集后为105.995085×18.484156 mm。368×65个DIC参考点直接作为有限元节点，形成367×64个Q4单元、23,920个独立模量参数。定义、数值状态及结果见[全域七区记录](docs/dic_full_workflow_20261020.md)。
 
+**日常计算只修改 [dic_case_config.py](dic_case_config.py)。** 文件顶部统一选择实验DIC／分层合成／节点合成、DIC／指定网格、H1／Huber-TV、分量权重、泊松比和γ范围。然后依次运行下面四个默认脚本，无需切换配置文件。新结果按`RUN_NAME`保存到`results/dic_full/<RUN_NAME>/`；已有主线结果保留原位置。[选项与示例](docs/unified_configuration.md)。
+
 **查看当前结果：双击根目录 [打开结果.html](打开结果.html)。** 页面直接进入当前实验，列出四步保存位置、云图、位移误差、模量对照及数值文件。每个步骤结束时也会打印绝对路径。
 
 本项目的主线是：**独立材料标定 → 分区正演与 DIC 对照；DIC → 自由二维 E(x,y) 反演 → 与独立标定对照；识别场回代及留出载荷预测。** 反演不绑定不同 y 行，也不以分区模量作为强先验。默认 180N 识别、280N 留出预测，不用留出平台调参。
@@ -10,7 +12,7 @@
 
 ## 四个独立步骤
 
-安装 `requirements.txt`。当前配置采用73/85 mm标线中点、原始−Y递增方向和独立毫米尺度，输出到 `results/dic_full/`。50个对数等距γ覆盖10⁻¹²—10⁻⁴，180N选参、280N固定预测；结果和实际停止条件见[当前全域记录](docs/dic_full_workflow_20261020.md)。新实验在项目根目录依次执行：
+安装 `requirements.txt`。统一配置沿用73/85 mm标线中点、原始−Y递增方向和独立毫米尺度，默认实验DIC、DIC节点网格、H1，`RUN_NAME='run01'`。H1默认50个对数等距γ覆盖10⁻¹²—10⁻⁴；180N选参、280N固定预测。已有主线结果和实际停止条件见[当前全域记录](docs/dic_full_workflow_20261020.md)。新计算在项目根目录依次执行：
 
 ```powershell
 python -m script.step1_prepare_dic
@@ -19,7 +21,7 @@ python -m script.step3_inverse_dic
 python -m script.step4_compare_results
 ```
 
-换一批数据时，修改 [dic_case_config.py](dic_case_config.py) 中的输入、载荷配对、坐标与物理定义，将 `CASE_OUTPUT` 改为新目录，然后去掉 `--plot-only` 依次运行四个脚本。每一步计算后自动生成对应云图；后续计算读取第一步冻结的数据。已有数值输出拒绝覆盖。参数及逐项文件说明见 [分步骤流程](docs/dic_stepwise_workflow.md)。
+换数据或计算选项时，修改同一配置文件并更换`RUN_NAME`，然后依次运行四个脚本。每一步自动生成云图；后续步骤核对用户配置并读取第1步冻结数据。已有数值输出拒绝覆盖。参数及逐项文件说明见 [分步骤流程](docs/dic_stepwise_workflow.md)。
 
 | 步骤 | 保存目录（均在 CASE_OUTPUT 下） | 主要文件 |
 | --- | --- | --- |
@@ -30,9 +32,9 @@ python -m script.step4_compare_results
 
 浏览入口指向`results/dic_full/`。取数及实现核验位于`verification/`，同点方向对照位于`direction_check/`；旧region节点网格保留在`results/dic_mesh/`，旧粗网格保留在`results/dic/`。
 
-同条件粗网格对照使用`dic_coarse_config.py`，四步命令增加`--config dic_coarse_config`；结果在`results/dic_full/coarse/`，采用121×19个单元、2440个独立E参数，并保留全部DIC测点。细网格计算继续独立运行，比较时几何、数据和载荷相同。
+日常粗网格选择`MESH_SOURCE='configured_grid'`与`CONFIGURED_ELEMENTS=(121,19)`。已有对照在`results/dic_full/coarse/`，`dic_coarse_config.py`保留其复现入口；几何、数据和载荷与细网格相同。
 
-横向位移十倍权重对照使用`dic_uy10_config.py`及`results/dic_full/uy10/`，四步增加`--config dic_uy10_config`。`DISPLACEMENT_COMPONENT_WEIGHTS=(1.,10.)`表示面积加权的残差平方系数ux:uy=1:10；默认不设置时仍为1:1。协议及状态见[十倍横向权重](docs/dic_uy10_workflow_20261021.md)。
+日常横向十倍权重直接在统一文件设置`DISPLACEMENT_COMPONENT_WEIGHTS=(1.,10.)`。已有`dic_uy10_config.py`及`results/dic_full/uy10/`保留其复现定义。系数表示面积加权的残差平方权重；协议及状态见[十倍横向权重](docs/dic_uy10_workflow_20261021.md)。
 
 正则对照使用`dic_tv_config.py`及`results/dic_full/tv/`；δ=10阈值对照为`dic_tv10_config.py`及其`delta10/`。四步指定相应`--config`，同一粗网格、等权重，Huber-TV与原H1分别选γ。δ=1未得到有效拐点，δ=10已完成但横向误差没有实质改善。定义、核验和状态见[Huber-TV对照](docs/dic_tv_workflow_20261021.md)。
 
