@@ -31,9 +31,14 @@ COMPONENT_REFERENCE_TEXT = (
 
 def _objective_description(summary):
     weights = summary.get('displacement_component_weights', {'ux': 1., 'uy': 1.})
+    config = summary.get('configuration', {})
+    regularizer = ('正则为Huber-TV，阈值δ='+str(config['TV_DELTA'])+' MPa/mm，作用于E的梯度幅值。'
+                   if config.get('REGULARIZATION_MODE') == 'huber_tv' else
+                   '正则为模量梯度平方积分。')
     return (f"位移失配使用面积权重 × 分量系数：ux={weights['ux']:g}、uy={weights['uy']:g}。"
             '系数乘在残差平方上；同一权重用于刚体配准、初值、伴随梯度和 L-curve，不缩放原始位移。'
-            '不设参考模量，不作模量或噪声尺度归一化。双分量 RMS 随权重定义改变，跨权重比较应分别看两个分量的 mm 误差。')
+            '不设参考模量，不作模量或噪声尺度归一化。双分量 RMS 随权重定义改变，跨权重比较应分别看两个分量的 mm 误差。'
+            + regularizer)
 
 
 def _geometry_description(summary):

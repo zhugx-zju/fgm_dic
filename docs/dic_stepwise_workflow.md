@@ -71,6 +71,8 @@ DIC 图复用原 `post_DIC` 的 `lib/dic_preprocessing.py::plot_grid_fields`：7
 
 ## 换一组 DIC 数据
 
+Huber-TV对照配置为`dic_tv_config.py`，`REGULARIZATION_MODE='huber_tv'`、`TV_DELTA=1.0`（MPa/mm）；仍用原四步脚本，另存`results/dic_full/tv/`。R单位及γ范围与H1不同，扫描分别选参；主线默认仍为gradient。实现、协议和核验见[正则对照](dic_tv_workflow_20261021.md)。
+
 分量权重实验可在独立配置中设置`DISPLACEMENT_COMPONENT_WEIGHTS=(1.,10.)`，分别为FEM轴向ux、横向uy残差平方的乘数；缺省为(1,1)。新权重必须重新准备输入、扫描和反演，不能只改源配置或重画旧图。横向十倍权重对照见[协议及结果](dic_uy10_workflow_20261021.md)。
 
 若完整扫描因线搜索异常而缺少拐点支撑，可在第3步增加`--resume`。它只恢复异常点的L-BFGS历史并使用原总预算的剩余额度；保留初次候选和`selection_before_recovery.csv`，将新数组存入该点的`recovery_*`，选参表显式记录`solution_directory`。迭代上限耗尽的点不重算，已完成反演不接受恢复；不放宽容差或自动指定γ。后处理读取显式恢复路径。

@@ -5,6 +5,28 @@ Tikhonov regularization module for inverse problems.
 import numpy as np
 
 
+def get_huber_tv_value_gradient(mesh_info, material_info, delta=1.0):
+    """Isotropic Huber-TV on E, with delta in MPa/mm and R in MPa*mm.
+
+    rho(s)=s^2/(2*delta) for s<=delta, else s-delta/2. No preferred
+    interface, direction, reference modulus or component normalization enters.
+    """
+    if not np.isfinite(delta) or delta <= 0:
+        raise ValueError('Huber-TV delta must be positive and finite (MPa/mm)')
+    values = material_info.get_current_modulus()[mesh_info.ele_nods_id-1]
+    gx = np.einsum('gea,ea->ge', mesh_info.gauss_dNdx, values)
+    gy = np.einsum('gea,ea->ge', mesh_info.gauss_dNdy, values)
+    magnitude = np.hypot(gx, gy)
+    weights = mesh_info.gauss_abs_det_j * mesh_info.gauss_w[:, None]
+    rho = np.where(magnitude <= delta, magnitude**2/(2*delta), magnitude-delta/2)
+    factor = weights/np.maximum(magnitude, delta)
+    element_gradient = np.einsum('ge,gea->ea', factor*gx, mesh_info.gauss_dNdx)
+    element_gradient += np.einsum('ge,gea->ea', factor*gy, mesh_info.gauss_dNdy)
+    gradient = np.bincount((mesh_info.ele_nods_id-1).ravel(), weights=element_gradient.ravel(),
+                           minlength=mesh_info.n_nod)
+    return float(np.sum(weights*rho)), gradient
+
+
 def get_tikhonov_regularization(mesh_info, material_info):
     """
     Calculate the Tikhonov regularization value.

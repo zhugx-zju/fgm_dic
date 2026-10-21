@@ -186,8 +186,11 @@ def _validate(cfg):
     if (len(cfg.GAMMA_CANDIDATES) < 5 or len(set(cfg.GAMMA_CANDIDATES)) != len(cfg.GAMMA_CANDIDATES) or
             any(g <= 0 or not np.isfinite(g) for g in cfg.GAMMA_CANDIDATES)):
         raise ValueError('L-curve requires at least five distinct positive finite gamma candidates')
-    if cfg.REGULARIZATION_MODE != 'gradient':
-        raise ValueError('This workflow uses the original gradient Tikhonov penalty on E')
+    if cfg.REGULARIZATION_MODE not in ('gradient', 'huber_tv'):
+        raise ValueError('Choose gradient or huber_tv regularization on the free nodal E field')
+    if cfg.REGULARIZATION_MODE == 'huber_tv' and (
+            not np.isfinite(cfg.TV_DELTA) or cfg.TV_DELTA <= 0):
+        raise ValueError('TV_DELTA must be positive and finite (MPa/mm)')
     if any(not np.isfinite(getattr(cfg, key)) or getattr(cfg, key) < 0 for key in ('FTOL', 'GTOL')):
         raise ValueError('FTOL and GTOL must be finite and nonnegative')
     edges = np.r_[0., cfg.REGION_BOUNDARIES_X, cfg.GEO_L]
@@ -197,11 +200,12 @@ def _validate(cfg):
 
 
 def _optimize(cfg, mesh, cases, gamma, nu, initial=None):
+    options = {'delta': cfg.TV_DELTA} if cfg.REGULARIZATION_MODE == 'huber_tv' else None
     result = lbfgs_inverse_solver_scipy(
         mesh, observation_cases=cases, E_init=initial,
         gamma=gamma, max_iter=cfg.MAX_ITER, max_fun=cfg.MAX_FUN,
         ftol=cfg.FTOL, gtol=cfg.GTOL, nu=nu,
-        regularization_mode='gradient')
+        regularization_mode=cfg.REGULARIZATION_MODE, regularization_options=options)
     restarts = []
     # A failed L-BFGS line search can leave an almost stationary iterate.
     # Reset its history, without changing tolerances or the per-point budget.
@@ -216,7 +220,8 @@ def _optimize(cfg, mesh, cases, gamma, nu, initial=None):
         retried = lbfgs_inverse_solver_scipy(
             mesh, observation_cases=cases, E_init=previous['E_final'], gamma=gamma,
             max_iter=remaining_iterations, max_fun=remaining_evaluations,
-            ftol=cfg.FTOL, gtol=cfg.GTOL, nu=nu, regularization_mode='gradient')
+            ftol=cfg.FTOL, gtol=cfg.GTOL, nu=nu, regularization_mode=cfg.REGULARIZATION_MODE,
+            regularization_options=options)
         restarts.append({'previous_message': previous['message'],
                          'previous_gradient_inf': float(np.max(np.abs(previous['final_gradient']))),
                          'restart_message': retried['message'],
@@ -503,6 +508,11 @@ def prepare_dic(cfg, output):
             f'0.5*sum(area_i*({component_weights[0]:g}*r_ux_i^2 + '
             f'{component_weights[1]:g}*r_uy_i^2)) + 0.5*gamma*integral(|grad(E)|^2); '
             'quadratic component coefficients; no modulus or noise normalization')
+    if cfg.REGULARIZATION_MODE == 'huber_tv':
+        summary['objective_definition'] = (
+            f'0.5*sum(area_i*({component_weights[0]:g}*r_ux_i^2 + '
+            f'{component_weights[1]:g}*r_uy_i^2)) + 0.5*gamma*integral(rho_delta(|grad(E)|)); '
+            f'Huber delta={cfg.TV_DELTA:g} MPa/mm; no modulus or noise normalization')
     if hasattr(cfg, 'MATERIAL_REGISTRATION'):
         summary['material_registration'] = cfg.MATERIAL_REGISTRATION
     if hasattr(cfg, 'FORCE_PAIRING_CSV') and any('force_N' not in i for i in cfg.PLATFORMS.values()):
@@ -844,7 +854,7 @@ def plot_saved_stage(output, prepared=None):
     if any(summary.get(key) != value for key, value in provenance.items()):
         raise ValueError('Saved stage must refer to the SAME frozen preparation')
     if workflow == 'dic_case_inverse':
-        plot_l_curve(output, pd.read_csv(output/'selection.csv'))
+        plot_l_curve(output, pd.read_csv(output/'selection.csv'), cfg.REGULARIZATION_MODE)
         if summary['status'].startswith('l_curve_'):
             write_stage_gallery(output, dict(summary, prepared_directory=str(prepared.resolve())),
                                 '③ L-curve 选参诊断（尚未生成模量结论）')

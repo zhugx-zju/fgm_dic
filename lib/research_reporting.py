@@ -59,7 +59,7 @@ def save_run(output, config, summary, arrays=None):
         np.savez_compressed(output / 'fields.npz', **arrays)
 
 
-def plot_l_curve(output, selection):
+def plot_l_curve(output, selection, regularization_mode='gradient'):
     """Replot saved scan norms and signed log-log curvature; never solve again."""
     output = Path(output)
     data = pd.DataFrame(selection).sort_values('gamma')
@@ -78,8 +78,10 @@ def plot_l_curve(output, selection):
         row = data[selected].iloc[0]
         ax.loglog(row.residual_norm, row.regularization_norm, '*', color='#c0392b',
                   markersize=13, label=f'Selected gamma={row.gamma:.3g}')
+    regularization_label = (r'Huber-TV norm $\sqrt{R}$ ($(\mathrm{MPa}\,\mathrm{mm})^{1/2}$)'
+                            if regularization_mode == 'huber_tv' else r'Tikhonov gradient norm $\eta$ (MPa)')
     ax.set(xlabel=r'Area-weighted residual norm $\rho$ (mm$^2$)',
-           ylabel=r'Tikhonov gradient norm $\eta$ (MPa)',
+           ylabel=regularization_label,
            title='L-curve' if selected.any() else 'L-curve: selection unresolved')
     ax.legend(fontsize=9)
     fig.tight_layout()

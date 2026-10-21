@@ -24,7 +24,7 @@ def main():
     record_path = output/'run_metadata.json' if args.plot_only else source/'run_metadata.json'
     saved = json.loads(record_path.read_text(encoding='utf-8'))['configuration']
     print(f"Saved solver settings: FTOL={saved['FTOL']:g}, GTOL={saved['GTOL']:g}; "
-          'objective=original gradient Tikhonov; gamma selection=L-curve')
+          f"regularization={saved['REGULARIZATION_MODE']}; gamma selection=L-curve")
     if args.resume:
         result = resume_l_curve(source, output)
     else:

@@ -11,6 +11,7 @@ from .regularization import (
     get_affine_detrended_regularization,
     get_tikhonov_gradient,
     get_tikhonov_regularization,
+    get_huber_tv_value_gradient,
 )
 
 
@@ -72,7 +73,7 @@ def get_stiffness_gradient(fem_info, lambda_vec, forw_U):
 
 def _evaluate_inverse_state(mesh_info, bc_info, U_measured, material_info, gamma,
                             E_vec, iteration, regularization_mode='gradient',
-                            observation_cases=None):
+                            observation_cases=None, regularization_options=None):
     """
     Evaluate the inverse objective, gradient, and reusable solver state.
 
@@ -122,6 +123,9 @@ def _evaluate_inverse_state(mesh_info, bc_info, U_measured, material_info, gamma
     elif regularization_mode == 'affine_detrended':
         reg_value = get_affine_detrended_regularization(mesh_info, material_info)
         reg_gradient = get_affine_detrended_gradient(mesh_info, material_info)
+    elif regularization_mode == 'huber_tv':
+        reg_value, reg_gradient = get_huber_tv_value_gradient(
+            mesh_info, material_info, **(regularization_options or {}))
     else:
         raise ValueError(f"Unknown regularization mode: {regularization_mode!r}")
     cost_reg = 0.5 * gamma * reg_value
@@ -156,7 +160,7 @@ def lbfgs_inverse_solver_scipy(mesh_info, bc_info=None, U_measured=None, E_init=
                                gamma=1e-6, E_min=0.001, E_max=1000.0,
                                max_iter=2000, ftol=1e-12, gtol=1e-8, nu=0.3,
                                regularization_mode='gradient', tgv_options=None,
-                               max_fun=15000, observation_cases=None):
+                               max_fun=15000, observation_cases=None, regularization_options=None):
     """
     Solve the inverse problem using SciPy's L-BFGS-B optimizer in m = ln(E) space.
 
@@ -172,7 +176,8 @@ def lbfgs_inverse_solver_scipy(mesh_info, bc_info=None, U_measured=None, E_init=
         ftol: Function tolerance
         gtol: Gradient tolerance in m space
         nu: Poisson's ratio
-        regularization_mode: 'gradient', 'affine_detrended' or 'tgv'
+        regularization_mode: 'gradient', 'affine_detrended', 'huber_tv' or 'tgv'
+        regularization_options: Options for Huber-TV, currently delta in MPa/mm
         tgv_options: Optional HuberTGV scale, ratio and smoothing settings
         max_fun: Common objective evaluation budget
 
@@ -204,7 +209,7 @@ def lbfgs_inverse_solver_scipy(mesh_info, bc_info=None, U_measured=None, E_init=
             observation_cases=observation_cases,
         )
 
-    if regularization_mode not in {'gradient', 'affine_detrended'}:
+    if regularization_mode not in {'gradient', 'affine_detrended', 'huber_tv'}:
         raise ValueError(f"Unknown regularization mode: {regularization_mode!r}")
 
     if mesh_info.M is None:
@@ -233,6 +238,7 @@ def lbfgs_inverse_solver_scipy(mesh_info, bc_info=None, U_measured=None, E_init=
         mesh_info, bc_info, U_measured, material_info, gamma, E_vec0,
         iteration=1, regularization_mode=regularization_mode,
         observation_cases=observation_cases,
+        regularization_options=regularization_options,
     )
     state_cache['state'] = initial_state
 
@@ -255,6 +261,7 @@ def lbfgs_inverse_solver_scipy(mesh_info, bc_info=None, U_measured=None, E_init=
             iteration=evaluation_counter[0] + 1,
             regularization_mode=regularization_mode,
             observation_cases=observation_cases,
+            regularization_options=regularization_options,
         )
         state_cache['m'] = np.array(m_vec_use, copy=True)
         state_cache['state'] = state
@@ -275,6 +282,7 @@ def lbfgs_inverse_solver_scipy(mesh_info, bc_info=None, U_measured=None, E_init=
                 iteration=evaluation_counter[0] + 1,
                 regularization_mode=regularization_mode,
                 observation_cases=observation_cases,
+                regularization_options=regularization_options,
             )
             state_cache['m'] = np.array(m_current, copy=True)
             state_cache['state'] = state
@@ -320,6 +328,7 @@ def lbfgs_inverse_solver_scipy(mesh_info, bc_info=None, U_measured=None, E_init=
             iteration=evaluation_counter[0] + 1,
             regularization_mode=regularization_mode,
             observation_cases=observation_cases,
+            regularization_options=regularization_options,
         )
 
     E_final = final_state['E_vec']

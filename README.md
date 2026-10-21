@@ -34,6 +34,8 @@ python -m script.step4_compare_results
 
 横向位移十倍权重对照使用`dic_uy10_config.py`及`results/dic_full/uy10/`，四步增加`--config dic_uy10_config`。`DISPLACEMENT_COMPONENT_WEIGHTS=(1.,10.)`表示面积加权的残差平方系数ux:uy=1:10；默认不设置时仍为1:1。协议及状态见[十倍横向权重](docs/dic_uy10_workflow_20261021.md)。
 
+正则对照使用`dic_tv_config.py`及`results/dic_full/tv/`；δ=10阈值对照为`dic_tv10_config.py`及其`delta10/`。四步指定相应`--config`，同一粗网格、等权重，Huber-TV与原H1分别选γ。δ=1未得到有效拐点，δ=10已完成但横向误差没有实质改善。定义、核验和状态见[Huber-TV对照](docs/dic_tv_workflow_20261021.md)。
+
 误差云图统一采用百分比：位移误差以对应平台 DIC 去除三个刚体分量后的分量 RMS 归一化，避免逐点除以过零位移；原始残差仍以 mm 保存。第 2 步直接展示正演与 DIC 的并排对照，无需等到第 4 步。
 
 等权重主线反演目标为 `0.5*r.T@W_area@r + 0.5*gamma*integral(|grad E|^2)`，不设置参考模量，不作模量或人为噪声尺度归一化。gamma 仅用识别平台的 L-curve 拐点选择，扫描范数、曲率、停止信息和 PNG/SVG 保存于第 3 步；无可辨识拐点时停止并保留诊断。求解容差来自第 1 步冻结配置，源配置修改后，需重新准备输入才能生效。
