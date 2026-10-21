@@ -5,7 +5,7 @@ from pathlib import Path
 PROJECT_ROOT = Path(__file__).resolve().parent
 
 # ==================== 常用选择：通常只修改这一段 ====================
-RUN_NAME = 'exact_tv_coarse_pd_20261021'  # 新计算换一个名称；结果保存在 results/dic_full/<RUN_NAME>/。
+RUN_NAME = 'exact_tv_refine_242x38_20261021'  # 新计算换一个名称；结果保存在 results/dic_full/<RUN_NAME>/。
 
 # 'dic'：实验DIC位移；'synthetic_layered'：分层正演生成位移；
 # 'synthetic_nodal'：节点Q4模量正演生成位移。三者使用下方同一组坐标和载荷。
@@ -14,7 +14,7 @@ DATA_MODE = 'dic'
 # 'dic_grid'：DIC点直接作为FE节点；'configured_grid'：指定FE单元数，
 # 仍保留全部DIC观测位置。当前原粗网格密度对应121×19单元。
 MESH_SOURCE = 'configured_grid'
-CONFIGURED_ELEMENTS = (121, 19)
+CONFIGURED_ELEMENTS = (242, 38)
 
 # 'gradient'：梯度平方；'huber_tv'：Huber平滑TV；'exact_tv'：不平滑的梯度幅值积分。
 REGULARIZATION_MODE = 'exact_tv'
@@ -23,7 +23,7 @@ TV_DELTA = 10.0  # 仅Huber-TV使用，单位MPa/mm。
 # MAX_FUN为每个γ/ν的总FE函数预算；原始—对偶法严格计数。
 # FTOL/GTOL只用于原H1/Huber求解器；max_inner/adapt_interval仅用于ADMM。
 EXACT_TV_SOLVER = 'primal_dual'  # 'admm'保留既有合成验证入口。
-EXACT_TV_PRIMAL_STEP, EXACT_TV_COUPLING = 2e8, .9  # 数值步长；不缩放目标函数。
+EXACT_TV_PRIMAL_STEP, EXACT_TV_COUPLING = 8e8, .9  # 单元面积减为1/4，数值步长×4；不缩放目标。
 EXACT_TV_OPTIONS = dict(max_outer=12000, max_inner=150, stationarity_atol=1e-9,
     stationarity_rtol=1e-3, primal_atol=1e-6, primal_rtol=1e-4,
     gap_atol=1e-9, gap_rtol=1e-4, adapt_interval=10)

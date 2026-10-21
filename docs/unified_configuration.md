@@ -17,7 +17,7 @@
 | `REGULARIZATION_MODE` | `'exact_tv'` | 不平滑的各向同性TV，目标中为`gamma*integral(sqrt(E_x**2+E_y**2))`，无1/2或Huber阈值 |
 | `EXACT_TV_OPTIONS` | 外/内迭代预算及四类停止证据阈值 | 仅精确TV使用；`MAX_FUN`为每个γ/ν的总FE函数计算预算 |
 | `EXACT_TV_SOLVER` | `'primal_dual'`或`'admm'` | 同一精确TV目标的两种数值求解器；本轮实验使用前者 |
-| `EXACT_TV_PRIMAL_STEP` / `EXACT_TV_COUPLING` | 2e8 / 0.9 | 原始—对偶法的数值步长与谱耦合系数，不进入目标函数 |
+| `EXACT_TV_PRIMAL_STEP` / `EXACT_TV_COUPLING` | 粗组2e8 / 0.9；加密组8e8 / 0.9 | 原始—对偶法的数值步长与谱耦合系数，不进入目标函数 |
 | `DISPLACEMENT_COMPONENT_WEIGHTS` | 如`(1.,10.)` | 轴向ux、横向uy的残差平方系数，不缩放位移 |
 | `PRIMARY_NU` / `NU_VALUES` | 当前允许0.24—0.33 | 实验模式的主泊松比与固定γ敏感性比较点 |
 | `SYNTHETIC_NU` | 如`.26` | 合成生成及反演共用的已知ν，自动冻结为单个比较值 |
@@ -65,6 +65,8 @@ python -m script.step4_compare_results --input results/dic_full/synthetic/layere
 显式`--input`表示有意使用该冻结运行，不与当前编辑中的配置混合；内核源码和上游准备身份仍核对。`--plot-only`不重新求解。原各专用`*_config.py`保留为既有结果的复现入口，日常选择不需要编辑它们。
 
 ## 当前层次
+
+当前配置指向242×38网格的`exact_tv_refine_242x38_20261021`。该组已完成准备、独立正演及固定粗网格γ的辅助诊断；尚未运行新的完整L-curve。诊断入口与复现命令见[真实TV网格加密](dic_tv_refinement_20261021.md)，不能把单γ诊断当作细网格已重新选参。
 
 `dic_case_config.py`负责用户选择；`script/step1_*.py`至`step4_*.py`负责分步执行；`lib/dic_case_workflow.py`负责准备、正反演和比较，`lib/synthetic_recovery.py`只生成合成观测及其核验；`fgm_asm/`保留共用有限元与伴随内核。H1与Huber-TV使用原L-BFGS求解器；精确TV使用`fgm_asm/exact_tv.py`的原始—对偶法或非线性ADMM，复用相同正演、观测和伴随数据梯度。
 
