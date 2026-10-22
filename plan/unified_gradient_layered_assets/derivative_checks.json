@@ -1,0 +1,34 @@
+{
+  "0.0001": {
+    "coefficient_adjoint": 2.76780446556132e-09,
+    "coefficient_finite_difference": 2.76780447491968e-09,
+    "coefficient_relative_error": 3.3811492312038565e-09,
+    "interface_adjoint": -2.9536918894385717e-09,
+    "interface_finite_difference": -2.953691817734538e-09,
+    "interface_relative_error": 2.4276070972704434e-08
+  },
+  "1e-05": {
+    "coefficient_adjoint": 2.76780446556132e-09,
+    "coefficient_finite_difference": 2.7678044630467944e-09,
+    "coefficient_relative_error": 9.084910787130625e-10,
+    "interface_adjoint": -2.9536918894385717e-09,
+    "interface_finite_difference": -2.953691887770886e-09,
+    "interface_relative_error": 5.646106386270215e-10
+  },
+  "equal_branches": {
+    "max_displacement_change": 6.505213034913027e-19,
+    "geometry_gradient": 0.0
+  },
+  "scope": "Discrete Q4 plane-stress forward and adjoint check of the proposed smooth two-region material map, including elimination of three rigid residual modes. No regularizer and no experimental inverse solve. E interpolates positive coefficients; it is not exp(interpolated log E). Fixed quadrature verifies the smooth discrete map only.",
+  "configuration": {
+    "mesh": [
+      4,
+      2
+    ],
+    "L": 4.0,
+    "H": 1.0,
+    "nu": 0.26,
+    "epsilon": 0.3,
+    "seed": 20261022
+  }
+}

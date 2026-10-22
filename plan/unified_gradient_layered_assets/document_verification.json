@@ -1,0 +1,24 @@
+{
+  "document": "unified_gradient_layered_inverse_plan",
+  "date": "2026-10-22",
+  "compiler": "XeTeX 0.999997 / TeX Live 2025",
+  "compile_command": "xelatex -interaction=nonstopmode -halt-on-error -file-line-error -output-directory=<isolated-build-directory> plan/unified_gradient_layered_inverse_plan.tex",
+  "successful_passes": 3,
+  "pages": 12,
+  "undefined_references": false,
+  "missing_citations": false,
+  "overfull_boxes": false,
+  "missing_glyphs": false,
+  "minor_typesetting_advisories": "One underfull hbox in the comparison table; visually checked, no clipping.",
+  "visual_review": "All 12 pages reviewed via contact sheet; representation figure page additionally inspected.",
+  "scope": "Documentation verification only. Imported representation and smooth-interface gradient probes remain preliminary; unified inversion has not been implemented or validated.",
+  "sha256": {
+    "plan/unified_gradient_layered_inverse_plan.tex": "2686a2330c50647492d719b6d9ccdd9086835c030c1cd93f4af77e037f37d759",
+    "plan/unified_gradient_layered_inverse_plan.pdf": "d92b5eceff096b192a95a61009d1b2219f287d0ae9da0bf61b2474a2e3107602",
+    "plan/unified_gradient_layered_assets/derivative_checks.json": "73970bd68dab7e308ada6c9d7e5f4c01dcda80dff9e9b2c2407a878e3597c2d4",
+    "plan/unified_gradient_layered_assets/representation_checks.json": "5b210b5dda3c949eb37b87533a377fe04523ea5ab18f6fcdf132427f4655641c",
+    "plan/unified_gradient_layered_assets/representation_examples.png": "b5ecb08930b942c5cfadf16e0dba8b10140641b9809efc3611bdd8433d08bf91",
+    "plan/unified_gradient_layered_assets/representation_examples.svg": "a9765c9ea8482f0cfe49d5d03811de8c7a96a1457f9bc3e45fbca89d23ee185d"
+  },
+  "svg_normalization": "Trailing line whitespace removed; normalized XML structure and attribute tokens verified unchanged."
+}

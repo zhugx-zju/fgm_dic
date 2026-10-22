@@ -1,0 +1,35 @@
+{
+  "121x19": {
+    "original_parameters": 2440,
+    "enriched_parameters": 2680,
+    "smooth_nesting_max_abs_MPa": 6.821210263296962e-13,
+    "layered_max_abs_MPa": 9.094947017729282e-13,
+    "mixed_2d_max_abs_MPa": 1.3642420526593924e-12,
+    "minimum_coeff_MPa": 1197.149860588655
+  },
+  "367x64": {
+    "original_parameters": 23920,
+    "enriched_parameters": 24700,
+    "smooth_nesting_max_abs_MPa": 4.547473508864641e-13,
+    "layered_max_abs_MPa": 4.547473508864641e-13,
+    "mixed_2d_max_abs_MPa": 9.094947017729282e-13,
+    "minimum_coeff_MPa": 1197.149860588655
+  },
+  "sharp_interface_quadrature_example": {
+    "interface_positions": [
+      0.3,
+      0.6
+    ],
+    "original_two_point_integrals": [
+      1500.0,
+      1500.0
+    ],
+    "exact_subdomain_integrals": [
+      1700.0,
+      1400.0
+    ]
+  },
+  "scope": "Representation-only numerical checks; no inverse solve and no experimental accuracy claim. Degree-one tensor B-splines, original physical grid plus each straight interface inserted twice. Seed=20261022.",
+  "numpy_version": "2.4.0",
+  "scipy_version": "1.17.1"
+}
