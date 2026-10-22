@@ -195,7 +195,7 @@ def _validate(cfg):
     if cfg.PRIMARY_NU not in cfg.NU_VALUES:
         raise ValueError('PRIMARY_NU must be fixed in NU_VALUES before comparison')
     if set(cfg.FIT_CASES) & set(cfg.PREDICT_CASES) or not cfg.FIT_CASES or not cfg.PREDICT_CASES:
-        raise ValueError('Need disjoint, nonempty fit and held-out case lists')
+        raise ValueError('Need disjoint, nonempty identification and cross-evaluation case lists')
     if set(cfg.FIT_CASES) | set(cfg.PREDICT_CASES) != set(cfg.PLATFORMS):
         raise ValueError('Every platform must be assigned to fit or prediction')
     if cfg.OUTSIDE_POINT_POLICY not in ('reject', 'crop_to_physical_roi'):
@@ -375,7 +375,7 @@ def extract_material_window(platforms, cfg):
 
 
 def resolve_dic_geometry(cfg, reference):
-    """Resolve ROI from fit data only, without scaling coordinates or material zones.
+    """Resolve ROI from fixed reference coordinates, without rescaling material zones.
 
     Material coordinates come from measured marks or a legacy center assumption.
     Extents are computed after the fixed direction transform, before translation.
@@ -506,7 +506,10 @@ def prepare_dic(cfg, output):
         records[name] = _force_record(cfg, name, item)
     platforms = extract_material_window(platforms, cfg)
     shared = check_platform_reference(platforms)
-    reference = platforms[cfg.FIT_CASES[0]]
+    geometry_platform = getattr(cfg, 'GEOMETRY_REFERENCE_PLATFORM', cfg.FIT_CASES[0])
+    if geometry_platform not in platforms:
+        raise ValueError('GEOMETRY_REFERENCE_PLATFORM must name an available reference platform')
+    reference = platforms[geometry_platform]
     cfg = resolve_dic_geometry(cfg, reference)
     _validate(cfg)
     calibration = load_calibration(Path(cfg.CALIBRATION_CSV), cfg.CALIBRATION_METHOD, cfg.REGION_INFILL_PERCENT)
@@ -525,7 +528,7 @@ def prepare_dic(cfg, output):
                'matrix': matrix, 'offset_mm': offset,
                'physical_model_mm': [cfg.GEO_L, cfg.GEO_H, cfg.THICKNESS],
                'domain_geometry': {'source': getattr(cfg, 'DOMAIN_SOURCE', 'configured_geometry'),
-                                   'source_platform': cfg.FIT_CASES[0],
+                                   'source_platform': geometry_platform,
                                    'load_section_width_mm': section_width,
                                    'lateral_boundary': getattr(cfg, 'INTERNAL_SIDE_BOUNDARY', 'physical_free_edges'),
                                    'material_position': (cfg.MATERIAL_REGISTRATION['method']
@@ -619,8 +622,13 @@ def prepare_dic(cfg, output):
     return summary
 
 
-def load_prepared(source):
-    """Downstream stages consume the frozen preparation, not changed raw inputs."""
+def load_prepared(source, *, saved_fields_only=False):
+    """Load frozen input, checking the kernels actually used by the operation.
+
+    Saved-field rendering never calls the optimizer or regularizer. Its mesh,
+    observation, rigid-registration and forward-field definitions must still
+    match the frozen run; new FE/inverse calculations check every kernel.
+    """
     source = Path(source)
     metadata = json.loads((source / 'run_metadata.json').read_text(encoding='utf-8'))
     if metadata['workflow'] != 'dic_case_preparation':
@@ -631,6 +639,9 @@ def load_prepared(source):
     recorded = {path.replace('\\', '/'): digest for path, digest in metadata['source_sha256'].items()}
     mechanics = MECHANICS_SOURCE_FILES + (('exact_tv.py',) if
         metadata['configuration']['REGULARIZATION_MODE'] == 'exact_tv' else ())
+    if saved_fields_only:
+        unused_solvers = {'inverse_solver.py', 'regularization.py', 'tgv.py', 'l_curve.py', 'exact_tv.py'}
+        mechanics = tuple(name for name in mechanics if name not in unused_solvers)
     for name in mechanics:
         path = f'fgm_asm/{name}'
         if path not in recorded or file_sha256(root / path) != recorded[path]:
@@ -793,7 +804,7 @@ def resume_l_curve(prepared, output):
 
 
 def inverse_dic(prepared, output):
-    """Stage 3: configured objective, fit-only L-curve, held-out prediction."""
+    """Stage 3: own-platform L-curve and E, then fixed-E cross-load evaluation."""
     if Path(output).exists():
         raise FileExistsError('Choose a new inverse output')
     cfg, mesh, cases, metadata, provenance = load_prepared(prepared)
@@ -935,7 +946,7 @@ def plot_saved_stage(output, prepared=None):
     if workflow not in ('dic_calibrated_forward', 'dic_case_inverse'):
         raise ValueError('Expected saved stage 1, 2 or 3 results')
     prepared = Path(prepared) if prepared is not None else output.parent/'01_prepared'
-    cfg, mesh, cases, metadata, provenance = load_prepared(prepared)
+    cfg, mesh, cases, metadata, provenance = load_prepared(prepared, saved_fields_only=True)
     if any(summary.get(key) != value for key, value in provenance.items()):
         raise ValueError('Saved stage must refer to the SAME frozen preparation')
     if workflow == 'dic_case_inverse':
@@ -968,9 +979,11 @@ def plot_saved_stage(output, prepared=None):
                 if field.shape != (mesh.n_nod,) or not np.isfinite(field).all() or np.any(field <= 0):
                     raise ValueError('Saved inverse must contain one finite positive modulus per node')
                 plot_grid_fields(destination, 'inverse_modulus', mesh.plot_x, mesh.plot_y,
-                                 [('E', field.reshape(mesh.nods_y, mesh.nods_x), f'Free 2D E, nu={nu:.2f}')],
+                                 [('E', field.reshape(mesh.nods_y, mesh.nods_x),
+                                   f'Identified E using {", ".join(cfg.FIT_CASES)} DIC, nu={nu:.2f}')],
                                  'jet', title_prefix='', unit='MPa', bounds=bounds)
-                save_x_profile(destination, mesh, field, reference)
+                save_x_profile(destination, mesh, field, reference,
+                               identified_using=', '.join(cfg.FIT_CASES))
             else:
                 np.testing.assert_allclose(fields['E_calibrated'], reference(mesh.X, mesh.Y), rtol=0, atol=0)
             states = []
@@ -995,7 +1008,7 @@ def compare_dic_results(prepared, forward, inverse, output, plots=True, plot_onl
         raise FileExistsError('Choose a new comparison output')
     if plot_only and not (Path(output)/'run_metadata.json').exists():
         raise ValueError('--plot-only requires existing stage 4 results')
-    cfg, mesh, cases, metadata, provenance = load_prepared(prepared)
+    cfg, mesh, cases, metadata, provenance = load_prepared(prepared, saved_fields_only=True)
     forward, inverse, output = Path(forward), Path(inverse), Path(output)
     sources = []
     for directory, workflow in ((forward, 'dic_calibrated_forward'), (inverse, 'dic_case_inverse')):
@@ -1066,8 +1079,10 @@ def compare_dic_results(prepared, forward, inverse, output, plots=True, plot_onl
         if plots:
             save_dic_comparison(destination, cases, {'forward': states[0], 'inverse': states[1]},
                                 cfg.FIT_CASES, grid_ids, nu=nu)
-            plot_modulus_comparison(destination, mesh, reference(mesh.X, mesh.Y), field)
-            save_x_profile(destination, mesh, field, reference)
+            plot_modulus_comparison(destination, mesh, reference(mesh.X, mesh.Y), field,
+                                    identified_using=', '.join(cfg.FIT_CASES))
+            save_x_profile(destination, mesh, field, reference,
+                           identified_using=', '.join(cfg.FIT_CASES))
     if not plot_only:
         metrics.to_csv(output/'comparison.csv', index=False)
         regions.to_csv(output/'regional_comparison.csv', index=False)

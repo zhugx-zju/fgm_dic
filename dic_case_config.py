@@ -5,7 +5,9 @@ from pathlib import Path
 PROJECT_ROOT = Path(__file__).resolve().parent
 
 # ==================== 常用选择：通常只修改这一段 ====================
-RUN_NAME = 'exact_tv_refine_242x38_20261021'  # 新计算换一个名称；结果保存在 results/dic_full/<RUN_NAME>/。
+RUN_NAME = 'h1_280N_independent_coarse_20261022'  # 每个识别平台、网格使用独立名称。
+IDENTIFICATION_PLATFORM = '280N'  # 本平台DIC独立选γ并反演E；其余平台仅作交叉回代。
+GEOMETRY_REFERENCE_PLATFORM = '180N'  # 固定共同参考网格，切换识别平台不改变几何。
 
 # 'dic'：实验DIC位移；'synthetic_layered'：分层正演生成位移；
 # 'synthetic_nodal'：节点Q4模量正演生成位移。三者使用下方同一组坐标和载荷。
@@ -14,10 +16,10 @@ DATA_MODE = 'dic'
 # 'dic_grid'：DIC点直接作为FE节点；'configured_grid'：指定FE单元数，
 # 仍保留全部DIC观测位置。当前原粗网格密度对应121×19单元。
 MESH_SOURCE = 'configured_grid'
-CONFIGURED_ELEMENTS = (242, 38)
+CONFIGURED_ELEMENTS = (121, 19)
 
 # 'gradient'：梯度平方；'huber_tv'：Huber平滑TV；'exact_tv'：不平滑的梯度幅值积分。
-REGULARIZATION_MODE = 'exact_tv'
+REGULARIZATION_MODE = 'gradient'
 TV_DELTA = 10.0  # 仅Huber-TV使用，单位MPa/mm。
 # 精确TV停止须同时满足驻点、分裂约束、对偶可行性和Fenchel间隙条件。
 # MAX_FUN为每个γ/ν的总FE函数预算；原始—对偶法严格计数。
@@ -82,7 +84,13 @@ REGISTRATION = {
     'note': 'all_region and region share the initial image and millimetre coordinates, as confirmed. Inherit the region mark-midpoint raw Y0=-21.50749765093 at manufacturing xi=6 mm. Retain material increase along raw -Y; same-point forward direction comparison saved in results/dic_full/direction_check. Select the continuous requested xi=[-56,56] window intersected with available data, preserving raw nodes and units.',
 }
 OUTSIDE_POINT_POLICY = 'reject'
-FIT_CASES, PREDICT_CASES = ('180N',), ('280N',)
+if IDENTIFICATION_PLATFORM not in PLATFORMS:
+    raise ValueError('IDENTIFICATION_PLATFORM必须是PLATFORMS中的一个平台')
+if GEOMETRY_REFERENCE_PLATFORM not in PLATFORMS:
+    raise ValueError('GEOMETRY_REFERENCE_PLATFORM必须是PLATFORMS中的一个平台')
+FIT_CASES = (IDENTIFICATION_PLATFORM,)
+# 保留旧接口字段名；此处表示另一平台的固定E跨载荷对照，不参与本次识别。
+PREDICT_CASES = tuple(name for name in PLATFORMS if name != IDENTIFICATION_PLATFORM)
 
 # ==================== 派生设置：通常不需要修改 ====================
 if (not RUN_NAME or RUN_NAME in ('.', '..') or

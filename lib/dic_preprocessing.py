@@ -162,7 +162,7 @@ def dic_relative_error_scale(case):
 
 
 def plot_dic_fe_components(output, name, x_grid, y_grid, fields, limits, model, title,
-                           observation_label='Processed DIC'):
+                           observation_label='DIC Data'):
     """Show both displacement components in one figure, in the DIC reference.
 
     ``fields`` contains d-mean(d) and HU+Rc-mean(d), already evaluated at
@@ -174,7 +174,9 @@ def plot_dic_fe_components(output, name, x_grid, y_grid, fields, limits, model, 
     fig.suptitle(title, fontsize=14)
     for column, component in enumerate(('ux', 'uy')):
         low, high = limits[f'dic_{component}']
-        for row, (key, label) in enumerate((('dic', observation_label), (model, 'Registered FE'))):
+        model_label = ('Displacement from Identified E' if model == 'inverse' else
+                       'Displacement from Calibrated E')
+        for row, (key, label) in enumerate((('dic', observation_label), (model, model_label))):
             ax = axes[row, column]
             image = ax.pcolormesh(x_grid, y_grid, np.ma.masked_invalid(fields[f'{key}_{component}']),
                                   shading='nearest', cmap='jet', vmin=low, vmax=high,
@@ -203,15 +205,18 @@ def save_dic_comparison(output, cases, model_states, fit_names, grid_ids=None, *
     import pandas as pd
 
     output = Path(output)
-    headings = {'forward': 'Independent calibration', 'inverse': 'Inverse back-substitution'}
+    headings = {'forward': 'Displacement from Calibrated E',
+                'inverse': 'Displacement from Identified E'}
     if not model_states or set(model_states)-headings.keys():
         raise ValueError('Expected forward and/or inverse saved model states')
     if any(len(states) != len(cases) for states in model_states.values()):
         raise ValueError('Each model must contain one state per DIC case')
     rows, relative_rows = [], []
     for index, case in enumerate(cases):
-        observation_label = 'Synthetic FE' if case.metadata.get('synthetic_observations') else 'DIC'
+        observation_label = 'Synthetic Data' if case.metadata.get('synthetic_observations') else 'DIC Data'
         condition = case.name if nu is None else f'{case.name}, nu={nu:.2f}'
+        identified_source = ', '.join(fit_names)
+        inverse_label = f'Displacement from Identified E ({identified_source} DIC)'
         xy = np.column_stack([case.observation.x_meas, case.observation.y_meas])
         observed = case.observation.u_measured.reshape(-1, 2)
         states = {model: values[index] for model, values in model_states.items()}
@@ -234,13 +239,16 @@ def save_dic_comparison(output, cases, model_states, fit_names, grid_ids=None, *
                      if np.isfinite(scale[component]) else 1.)
             for model, value in displayed.items():
                 key = f'{model}_{label}'
-                maps[key], titles[key] = value, f'{condition}\n{headings.get(model, observation_label)}: {label}'
+                heading = inverse_label if model == 'inverse' else headings.get(model, observation_label)
+                maps[key], titles[key] = value, f'{condition}\n{heading}: {label}'
                 limits[key] = (low, high)
                 point_table[f'{key}_mm'] = {'dic': observed, **predictions}[model][:, component]
             for model, error in errors.items():
                 key = f'{model}_error_{label}'
                 error_maps[key] = relative[model][:, component]
-                titles[key] = f'{condition}: {model} relative error, {label}\n{observation_label} deformation RMS = {scale[component]:.5g} mm'
+                heading = inverse_label if model == 'inverse' else headings[model]
+                titles[key] = (f'{condition}: {heading} relative error, {label}\n'
+                               f'{observation_label} deformation RMS = {scale[component]:.5g} mm')
                 limits[key] = (-bound, bound)
                 point_table[f'{key}_mm'] = error[:, component]
                 point_table[f'{model}_relative_error_{label}_percent'] = relative[model][:, component]
@@ -252,8 +260,9 @@ def save_dic_comparison(output, cases, model_states, fit_names, grid_ids=None, *
                          cmap='jet', limits=limits, title_prefix='', unit='mm')
         for model in states:
             label = headings[model]
-            if model == 'inverse' and case.name not in fit_names:
-                label = 'Inverse modulus: held-out prediction'
+            if model == 'inverse':
+                role = 'same-load reconstruction' if case.name in fit_names else 'cross-load evaluation'
+                label = f'E identified using {identified_source} DIC; {role}'
             plot_dic_fe_components(output/case.name, case.name, x_grid, y_grid,
                                    fields, limits, model, f'{condition} | {label}',
                                    observation_label=observation_label)

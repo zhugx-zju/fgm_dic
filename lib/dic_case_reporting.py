@@ -21,12 +21,23 @@ table{border-collapse:collapse;font-size:14px;display:block;overflow:auto}th,td{
 </style>'''
 
 COMPONENT_REFERENCE_TEXT = (
-    '四格位移图：上排为处理后的 DIC，下排为配准后的有限元；左列 ux（拉伸方向），'
+    '四格位移图：上排 DIC Data 为实测位移；下排 Displacement from Identified E 为识别模量计算的位移，'
+    'Displacement from Calibrated E 为独立标定模量计算的位移。左列 ux（拉伸方向），'
     '右列 uy（宽度方向），各列共用色标，单位 mm。DIC 显示 d−mean(d)，'
     '有限元显示 HU+Rc−mean(d)，其中 Rc 为已有残差配准的两平移和一微小转动。'
     '两者使用相同物理坐标和真实 DIC 测点，不直接将三个约束下的原始节点 U 与 DIC 对比。'
     '共同均值只改变绘图零点，不改变残差或伸长。坐标和位移采用同一个正交变换，位置平移不加到位移上。'
 )
+
+
+def _inverse_displacement_label(summary, case):
+    """Name the data used to identify E separately from the plotted load."""
+    fit = summary.get('configuration', {}).get('FIT_CASES')
+    if fit is None:
+        fit = (summary.get('initialization') or {}).get('fit_cases', [])
+    source = '、'.join(fit) if fit else '识别平台'
+    role = '本平台回代' if case in fit else '跨载荷对照'
+    return f'由{source}识别模量计算的位移（{role}）'
 
 
 def _synthetic_notice(summary):
@@ -286,14 +297,14 @@ def write_stage_gallery(output, summary, title):
             panel = parent/f'{case}_{model}_dic_components.png'
             if panel.exists():
                 grouped.add(panel)
-                label = ('反演模量预测' if model == 'inverse' and
-                         case not in summary['configuration']['FIT_CASES'] else model_title)
+                label = _inverse_displacement_label(summary, case) if model == 'inverse' else model_title
                 parts.append(f'<h3>DIC—{label}：ux、uy 四格对照</h3>')
-                parts.append(_field_figure(panel, '上排 DIC，下排有限元；左 ux，右 uy；每列共用色标（mm）', output))
+                parts.append(_field_figure(panel, f'上排 DIC，下排{label}；左 ux，右 uy；每列共用色标（mm）', output))
             for component, component_title in (('ux', '轴向 ux'), ('uy', '横向 uy')):
-                parts.append(f'<h3>{component_title}：DIC—{model_title}对照</h3><div class="fields">')
-                for key, caption in (('dic', 'DIC（mm）'), (model, f'{model_title}（mm）'),
-                                     (f'{model}_error', f'{model_title}相对误差（%）')):
+                label = _inverse_displacement_label(summary, case) if model == 'inverse' else model_title
+                parts.append(f'<h3>{component_title}：DIC—{label}对照</h3><div class="fields">')
+                for key, caption in (('dic', 'DIC（mm）'), (model, f'{label}（mm）'),
+                                     (f'{model}_error', f'{label}相对误差（%）')):
                     picture = parent/f'{case}_{key}_{component}.png'
                     grouped.add(picture)
                     parts.append(_field_figure(picture, caption, output))
@@ -328,12 +339,17 @@ def write_case_report(output, summary, metrics, regions, selection):
     status = summary['status']
     cover = pd.DataFrame(summary['coverage'])
     metric_table, region_table = pd.DataFrame(metrics), pd.DataFrame(regions)
+    role_labels = {'fit': '本平台识别/回代', 'prediction': '跨载荷对照'}
+    metric_table = metric_table.replace({'role': role_labels,
+                                         'model': {'forward': '独立标定正演', 'inverse': '识别模量正演'}})
     observation_description = (
         'DIC参考点直接作为有限元节点，H仅将节点位移置换到测点顺序，无测点插值。'
         if mesh.get('source') == 'dic_grid' else
         'DIC在原始测点参与比较，H在实际位置计算Q4插值。'
     )
     title = f"DIC 正反演对照：{summary['case_id']}"
+    fit_names = (summary.get('initialization') or {}).get('fit_cases', [])
+    identification = ('、'.join(fit_names) or '见冻结配置')
     overview = Path(summary.get('prepared_directory', output.parent/'01_prepared')).parent/'结果总览.html'
     lines = [f'# {title}', '', f'运行状态：`{status}`。物理坐标配准已核验：{verified}。', '',
              '## 几何、观测与统一网格', '',
@@ -341,21 +357,23 @@ def write_case_report(output, summary, metrics, regions, selection):
              f"独立标定正演与自由二维反演共用 {mesh['nel_x']}×{mesh['nel_y']} 单元，单元尺寸 {mesh['hx_mm']}×{mesh['hy_mm']} mm。{observation_description}", '',
              '有限元三点约束只固定数值刚体规范；DIC 与模型在观测空间通过同一两平移、一微小转动子空间配准。未删除仿射伸长或横向收缩。', '',
              '有效观测与采样间距见 `input_audit.csv`。', '',
-             '## 独立标定正演、DIC 与反演回代', '', RELATIVE_ERROR_DESCRIPTION, '',
+             '## 独立标定正演、DIC 与反演回代', '',
+             f'本组模量只用{identification}的DIC位移独立选γ并识别。其他载荷下的图使用本组固定模量正演；模量来源与当前绘图载荷分别标注。', '',
+             RELATIVE_ERROR_DESCRIPTION, '',
              '位移及原始残差 CSV 保留 mm；相对误差图与逐测点新增列使用 %，各 ν 的 `relative_error_summary.csv` 保存分母和汇总指标。', '']
     if not metric_table.empty:
         lines += ['| ν | 平台 | 用途 | 模型 | 双分量 RMS (mm) | 轴向 RMSE (mm) | 横向 RMSE (mm) |',
                   '| --- | --- | --- | --- | ---: | ---: | ---: |']
         for r in metrics:
-            lines.append(f"| {r['nu']:.2f} | {r['case']} | {r['role']} | {r['model']} | {r['rms_mm']:.7f} | {r['rmse_ux_mm']:.7f} | {r['rmse_uy_mm']:.7f} |")
+            lines.append(f"| {r['nu']:.2f} | {r['case']} | {role_labels.get(r['role'], r['role'])} | {r['model']} | {r['rms_mm']:.7f} | {r['rmse_ux_mm']:.7f} | {r['rmse_uy_mm']:.7f} |")
         lines += ['', '## 自由二维模量与独立标定', '',
                   '| ν | 填充率 | 标定均值±组内 SD (MPa) | 反演区域均值 (MPa) | 相对差异 |',
                   '| --- | --- | ---: | ---: | ---: |']
         for r in regions:
             lines.append(f"| {r['nu']:.2f} | {r['infill_percent']}% | {r['mean_E_MPa']:.1f}±{r['sd_E_MPa']:.1f} | {r['inverse_mean_E_MPa']:.1f} | {r['difference_percent']:+.2f}% |")
         lines += ['', '组内 SD 和反演场空间 SD 的含义不同，均不作为参数置信区间；分区统计限于当前计算域，并非完整制造区统计。', '',
-                  f"主泊松比预先指定为 {summary['primary_nu_prespecified']}；其他 ν 为同条件敏感性比较，不根据留出平台误差更换主值。", '',
-                  f"gamma={summary['selected_gamma']:g}，只按识别平台的 L-curve 最大正曲率拐点选择；状态：{summary['l_curve_status']}。不按预测平台误差或独立材料标定调参。"]
+                  f"主泊松比预先指定为 {summary['primary_nu_prespecified']}；其他 ν 为同条件敏感性比较，不根据跨载荷误差更换主值。", '',
+                  f"gamma={summary['selected_gamma']:g}，只按识别平台的 L-curve 最大正曲率拐点选择；状态：{summary['l_curve_status']}。不按另一平台误差或独立材料标定调参。"]
         settings = summary['inverse_settings']
         lines += ['', '## 反演选参与实际停止设置', '',
                   f"目标函数：`{summary['objective_definition']}`。", '', _objective_description(summary), '',
@@ -384,7 +402,7 @@ def write_case_report(output, summary, metrics, regions, selection):
         lines += ['本阶段仅完成输入核查；未生成正反演结论。']
     lines += ['', '## 结论范围与复现', '',
               '优化停止状态、物理配准状态和实验物理一致性分别记录。完整狗骨与截取矩形域的边界等效、绝对测量误差与材料标定转移仍需独立证据，本运行不自动宣告实验验证通过。', '',
-              '每次输出目录独立保存输入哈希、配置快照、软件环境、识别与预测分工、选择记录、二维数组、误差与区域统计。不得覆盖既有结果。', '',
+              '每次输出目录独立保存输入哈希、配置快照、软件环境、识别平台与跨载荷分工、选择记录、二维数组、误差与区域统计。不得覆盖既有结果。', '',
               '汇总文件：`comparison.csv`、`regional_comparison.csv`、`selection.csv`；每个 ν 子目录保存完整场及 PNG/SVG。']
     if _synthetic_notice(summary):
         lines.insert(2, _synthetic_notice(summary))
@@ -396,6 +414,7 @@ def write_case_report(output, summary, metrics, regions, selection):
              f'<p><a href="{_link(overview, output)}">返回实验结果总览</a> · <a href="comparison.csv">位移误差 CSV</a> · <a href="regional_comparison.csv">区域模量 CSV</a> · <a href="selection.csv">选参记录 CSV</a></p>',
              f'<p class="path">本页与图表保存于：{html.escape(str(output.resolve()))}</p>',
              '<p>DIC 云图沿用 post_DIC：规则网格、jet 色图、等比例坐标及独立单图。三个位移场采用相同色标；两幅相对误差采用相同对称百分比色标。显示时仅共同减去 DIC 分量均值，CSV 保留原参考态。</p>',
+             f'<p>本组模量识别数据：{html.escape(identification)} DIC；其他载荷仅使用本组固定模量进行跨载荷对照。</p>',
              f'<p>{COMPONENT_REFERENCE_TEXT}</p>',
              f'<p>{RELATIVE_ERROR_DESCRIPTION}</p>',
              f'<p>{_objective_description(summary)}</p>']
@@ -433,14 +452,17 @@ def write_case_report(output, summary, metrics, regions, selection):
                 parts += [f'<h3>{html.escape(case)} 位移场与残差</h3>',
                           f'<p><a href="{directory}/{case}/point_fields.csv">逐测点位移、残差（mm）与相对误差（%）CSV</a></p>'] if (output/directory/case/'point_fields.csv').exists() else []
                 for model, label in (('forward', '独立标定正演'), ('inverse', '反演模量回代或预测')):
+                    if model == 'inverse':
+                        label = _inverse_displacement_label(summary, case)
                     panel = output/directory/case/f'{case}_{model}_dic_components.png'
                     if panel.exists():
                         parts.append(_field_figure(panel, f'DIC—{label}四格图：上排 DIC，下排有限元；左 ux，右 uy；单位 mm', output))
                 for component, label in (('ux', '轴向 ux'), ('uy', '横向 uy')):
                     parts.append(f'<h4>{label}</h4><div class="fields">')
+                    inverse_label = _inverse_displacement_label(summary, case)
                     for key, title in (('dic', 'DIC 实测（mm）'), ('forward', '独立标定正演（mm）'),
-                                       ('inverse', '反演回代（mm）'), ('forward_error', '独立标定正演相对误差（%）'),
-                                       ('inverse_error', '反演回代相对误差（%）')):
+                                       ('inverse', f'{inverse_label}（mm）'), ('forward_error', '独立标定正演相对误差（%）'),
+                                       ('inverse_error', f'{inverse_label}相对误差（%）')):
                         if key == 'forward_error':
                             parts.append('</div><div class="clouds">')
                         stem = f'{directory}/{case}/{case}_{key}_{component}'

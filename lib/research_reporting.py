@@ -117,11 +117,13 @@ def plot_l_curve(output, selection, regularization_mode='gradient'):
     plt.close(fig)
 
 
-def plot_modulus_comparison(output, mesh, reference, reconstructed):
+def plot_modulus_comparison(output, mesh, reference, reconstructed, *, identified_using=None):
     fig, axes = plt.subplots(1, 3, figsize=(12, 3.4), constrained_layout=True)
     lo, hi = min(reference.min(), reconstructed.min()), max(reference.max(), reconstructed.max())
+    identified_title = ('Identified E (MPa)' if identified_using is None else
+                        f'E identified using {identified_using} DIC (MPa)')
     for index, (values, title) in enumerate(((reference, 'Calibrated E (MPa)'),
-                                             (reconstructed, 'Inverse E (MPa)'),
+                                             (reconstructed, identified_title),
                                              (100 * (reconstructed / reference - 1), 'Relative difference (%)'))):
         kwargs = {'vmin': lo, 'vmax': hi} if index < 2 else {}
         image = axes[index].pcolormesh(mesh.plot_x, mesh.plot_y,
@@ -136,7 +138,7 @@ def plot_modulus_comparison(output, mesh, reference, reconstructed):
     fig.savefig(Path(output) / 'modulus_comparison.svg')
     plt.close(fig)
 
-def save_x_profile(output, mesh, reconstructed, reference):
+def modulus_width_profile(mesh, reconstructed, reference):
     """Summarize a free 2D inverse without imposing equality between y rows.
 
     Width statistics use trapezoidal weights for the Q4 nodal field. Spatial
@@ -149,17 +151,27 @@ def save_x_profile(output, mesh, reconstructed, reference):
     spread = np.sqrt(np.average((field - mean)**2, axis=0, weights=weights))
     x = mesh.plot_x[0]
     expected = reference(x, np.zeros_like(x))
-    table = pd.DataFrame({'x_mm': x, 'reference_E_MPa': expected,
+    return pd.DataFrame({'x_mm': x, 'reference_E_MPa': expected,
                           'inverse_width_mean_E_MPa': mean,
                           'inverse_transverse_sd_MPa': spread,
                           'inverse_width_min_E_MPa': field.min(axis=0),
                           'inverse_width_max_E_MPa': field.max(axis=0)})
+
+
+def save_x_profile(output, mesh, reconstructed, reference, *, identified_using=None):
+    """Save the common width-profile definition and its two-panel figure."""
+    table = modulus_width_profile(mesh, reconstructed, reference)
+    x = table.x_mm.to_numpy()
+    mean = table.inverse_width_mean_E_MPa.to_numpy()
+    spread = table.inverse_transverse_sd_MPa.to_numpy()
     table.to_csv(Path(output) / 'x_profile.csv', index=False, encoding='utf-8-sig')
     fig, axes = plt.subplots(2, 1, figsize=(7., 5.), sharex=True, constrained_layout=True)
     dense_x = np.linspace(0., mesh.geo_l, 1401)
     axes[0].plot(dense_x, reference(dense_x, np.zeros_like(dense_x)), color='black',
                  linestyle='--', label='Independent calibration')
-    axes[0].plot(x, mean, color='#0072B2', label='2D inverse: width mean')
+    label = ('Identified E: width mean' if identified_using is None else
+             f'E from {identified_using} DIC: width mean')
+    axes[0].plot(x, mean, color='#0072B2', label=label)
     axes[0].fill_between(x, mean-spread, mean+spread, color='#0072B2', alpha=.18,
                          label='Transverse spatial SD')
     axes[0].set_ylabel('E (MPa)')

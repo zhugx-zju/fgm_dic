@@ -1,4 +1,4 @@
-"""Step 3: free 2D DIC inversion and held-out prediction; no calibrated forward fit."""
+"""Step 3: independent DIC inversion and fixed-E cross-load evaluation."""
 
 import argparse
 import json

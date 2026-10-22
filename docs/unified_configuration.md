@@ -7,6 +7,8 @@
 | 参数 | 可选值 | 含义 |
 | --- | --- | --- |
 | `RUN_NAME` | 如`run01` | 本次结果目录`results/dic_full/run01/`，重算使用新名称 |
+| `IDENTIFICATION_PLATFORM` | `'180N'`或`'280N'` | 仅用本平台DIC初始化、选γ和识别E；每个平台分别运行四步 |
+| `GEOMETRY_REFERENCE_PLATFORM` | 当前固定`'180N'` | 固定共同参考坐标和网格，切换识别平台不改变几何 |
 | `DATA_MODE` | `'dic'` | 读取实验DIC平均位移 |
 | `DATA_MODE` | `'synthetic_layered'` | 用同配置的几何、测点及载荷生成突变分层正演位移 |
 | `DATA_MODE` | `'synthetic_nodal'` | 用可由反演节点表示的Q4模量生成正演位移 |
@@ -66,9 +68,15 @@ python -m script.step4_compare_results --input results/dic_full/synthetic/layere
 
 ## 当前层次
 
-当前配置指向242×38网格的`exact_tv_refine_242x38_20261021`，四步及50点独立选参已完成，γ重新选得1.2648552168552957e-7；此前固定γ诊断另存。最弱点中断后以较小步长作2000次诊断重算、仍排除；关键邻点明确追加734次FE后通过。最终32/50点通过（8点非零TV），四个最终ν均通过；额外预算和中断计算量单列，不能声称相同总预算。新入口为该组`mesh_reselected/index.html`，协议、异常记录和复现命令见[真实TV网格加密](dic_tv_refinement_20261021.md)。重新选参后材料差异和280N预测仍几乎不变。
+当前主线为H1、180N和280N各自独立反演，粗网格121×19、细网格367×64。原180N两组反演保留；280N分别保存到`h1_280N_independent_coarse_20261022`和`h1_280N_independent_20261022`。切换平台时修改`IDENTIFICATION_PLATFORM`并给出新的`RUN_NAME`；切换网格时选择`configured_grid`及`(121,19)`，或`dic_grid`。每组独立扫描50个γ，再固定本平台γ比较四个ν。协议及实际状态见[两平台独立反演](dic_independent_platforms_20261022.md)。
+
+`FIT_CASES`和`PREDICT_CASES`保留既有数值接口字段名，分别由当前识别平台和其余平台自动得到；选择280N时，前者为280N，后者为180N。图表统一将后者显示为跨载荷对照，不把字段名称解释为280N固定只能作响应计算。
+
+此前242×38精确TV结果保留在`exact_tv_refine_242x38_20261021`，其原实验只用180N识别；不能将该历史280N响应改称280N独立反演。协议、异常记录和复现命令仍见[真实TV网格加密](dic_tv_refinement_20261021.md)。
 
 `dic_case_config.py`负责用户选择；`script/step1_*.py`至`step4_*.py`负责分步执行；`lib/dic_case_workflow.py`负责准备、正反演和比较，`lib/synthetic_recovery.py`只生成合成观测及其核验；`fgm_asm/`保留共用有限元与伴随内核。H1与Huber-TV使用原L-BFGS求解器；精确TV使用`fgm_asm/exact_tv.py`的原始—对偶法或非线性ADMM，复用相同正演、观测和伴随数据梯度。
+
+重绘历史保存场时，仍核对准备及上游身份、网格、正演/观测与刚体配准内核，并逐项复算保存位移的残差指标；不要求未被调用的当前优化器与正则器源码和历史版本相同。新正反演计算继续核对全部内核。`--plot-only`不改变冻结输入、模量场、选参表和原求解状态。
 
 精确TV的L-curve纵坐标为`TV(E)`本身（MPa·mm），不是`√TV(E)`；代价为`gamma*TV(E)`。满足局部KKT条件的均匀场保存为有效求解，但零TV或梯度未超过数值约束分辨阈值的场不参与对数曲率。每个γ和最终ν保存`tv_history.csv`、对偶场及分裂梯度；须同时满足驻点残差、Fenchel间隙和对偶可行性。原始—对偶法直接计算`z=GE`，约束残差恒为零；ADMM还需独立检查其约束残差。原`FTOL`、`GTOL`不决定精确TV的成功状态，`--resume`的旧L-BFGS异常线搜索恢复不用于TV。
 

@@ -2,6 +2,8 @@
 
 **统一用户入口为根目录`dic_case_config.py`。** 顶部选择数据模式、网格、正则、权重、泊松比和γ范围；下方保留输入路径与物理定义。日常不必切换专用配置文件，见[单文件配置](unified_configuration.md)。
 
+当前主线分别使用180N和280N的DIC独立选γ并反演E；粗网格121×19、细网格367×64分别运行四步。`IDENTIFICATION_PLATFORM`选择本次识别平台，`GEOMETRY_REFERENCE_PLATFORM='180N'`固定共同几何。另一载荷下的固定模量计算称为跨载荷对照，不能把280N本平台回代继续称为留出验证。图中统一使用`DIC Data`、`Displacement from Identified E`与`Displacement from Calibrated E`，并注明识别模量的数据来源。详见[两平台协议](dic_independent_platforms_20261022.md)。
+
 四步共用的物理坐标、位移基准、牵引边界和测点观测约定，见 [DIC—有限元参考一致性](dic_reference_consistency.md)。该说明分别定义原始位移、三个刚体分量拟合、绘图居中及真实端差，附当前代码对应与核对结果。
 
 ## 脚本及数据流
@@ -106,12 +108,12 @@ python -m script.step4_compare_results --config dic_case_sample3
 必须逐组明确的参数：
 
 - `RUN_NAME`：统一入口的运行身份与目录名，派生`CASE_ID`、`CASE_OUTPUT`；旧专用配置仍可直接指定后两者。
-- `PLATFORMS`：各载荷平台的数据目录、首末阶段、识别或预测用途。载荷可通过 `FORCE_PAIRING_CSV` 的 `run/setting_N` 配对，或显式提供 `force_N` 和 `force_note`；平台名称不直接作为实际拉力。
+- `PLATFORMS`：各载荷平台的数据目录、首末阶段；`IDENTIFICATION_PLATFORM`选择本次独立识别平台，其余用于跨载荷对照。载荷通过`FORCE_PAIRING_CSV`的`run/setting_N`配对，或显式给出`force_N`及`force_note`；平台名称不直接作为实际拉力。
 - `DIC_UNIT`、`DIC_COORDINATE_STATE`、位移与力的参考态：当前入口采用 mm、相对初始未加载图位移及相应实际拉力。坐标和位移必须共用长度单位；不自动识别单位或推断预载参考。
-- `DOMAIN_SOURCE`：默认 `dic_reference_bounds`，第一步从识别平台初始坐标解析 `GEO_L/GEO_H` 并冻结；预测平台不重新决定域。`THICKNESS/LOAD_SECTION_WIDTH` 来自试样定义，不能用内部 DIC 宽度替代真实承载宽度。`REGION_INFILL_PERCENT`按FEM x排列为100/90/80/70/60/50/40%，`REGISTRATION.material_x_sign=-1`控制材料方向，`REGION_BOUNDARIES_MANUFACTURING_X`保留制造界面位置，当前`material_coordinates`模式用原始坐标与制造坐标锚点传递位置；`MATERIAL_WINDOW_MM=(-56,56)`按目标坐标连续裁剪，保留真实测点边界。旧`specimen_marks`模式仍用于region的两条标线定位。旧配置缺少 `DOMAIN_SOURCE` 时仍按显式 `GEO_L/GEO_H` 处理。
+- `DOMAIN_SOURCE`：默认`dic_reference_bounds`，第一步从固定的`GEOMETRY_REFERENCE_PLATFORM`参考坐标解析`GEO_L/GEO_H`并冻结；切换识别平台不重新决定域。`THICKNESS/LOAD_SECTION_WIDTH`来自试样定义，不能用内部DIC宽度替代真实承载宽度。`REGION_INFILL_PERCENT`按FEM x排列为100/90/80/70/60/50/40%，`REGISTRATION.material_x_sign=-1`控制材料方向，`REGION_BOUNDARIES_MANUFACTURING_X`保留制造界面位置；当前`material_coordinates`模式用原始坐标与制造坐标锚点传递位置，`MATERIAL_WINDOW_MM=(-56,56)`连续裁剪并保留真实边界。旧`specimen_marks`模式保留；旧配置缺少几何参考平台时，沿用原识别平台坐标。
 - `REGISTRATION`：同一坐标变换用于全部平台，坐标和位移同步变换；平移只作用于坐标，不独立缩放坐标轴。
 - `MESH_SOURCE/NEL_X/NEL_Y`：默认`dic_grid`，由完整裁剪DIC点阵解析367×64个单元，保留实际参考坐标；显式`configured_grid`才使用给定单元数。正演、反演及回代共用此网格。
-- `NU_VALUES/PRIMARY_NU`：本组允许范围为 0.24—0.33，具体ν尚未独立确定；当前四步的0.24/0.26/0.28/0.33是预设比较点，0.26 是历史参考值，不是实测中点或已测定材料值。历史 [E—ν联合诊断](results_history.md) 保留旧输入。本轮四个ν共用新DIC网格和固定主γ，见 [全域七区报告](dic_full_workflow_20261020.md)，仅用180N识别，不以280N调参。
+- `NU_VALUES/PRIMARY_NU`：允许范围0.24—0.33，具体ν尚未独立确定；四个值为预设比较点，0.26为历史基线。每个平台仅在主ν下用自身数据选γ，再固定本平台γ比较四个ν；粗细网格分别执行。历史[E—ν联合诊断](results_history.md)保留旧输入。
 
 ## 物理域与坐标配准
 
@@ -145,7 +147,7 @@ python -m script.step4_compare_results --config dic_case_sample3
 
 分量系数改变时，W_area在数据项与下述ρ中均替换为实际W，重新执行整条L-curve；正则η定义不变。仅在 `FIT_CASES`、预设主 ν=0.26 下计算 L-curve：横轴 `rho=sqrt(r.T@W_area@r)`（mm²），纵轴 `eta=sqrt(integral(|grad E|^2))`（MPa），两轴取对数；eta 不乘 gamma。默认 gamma 从 10⁻¹² 到 10⁻⁴，共 50 个对数等距点，含两端点；log10 间距为 8/49，相邻值倍率约 1.45635。取消空间验证分割，不按拟合/留出误差或材料标定择优。
 
-扫描由大 gamma 到小 gamma 延续：首点使用识别平台位移拟合的均匀模量初值，后续只继承此前的收敛解。先用均匀1 MPa材料计算单位响应，再将公共位移尺度与每个平台的三个刚体分量一起作面积加权最小二乘，恢复初始E；本轮全域选区仅用180N得到约2004.7751 MPa。此值只用于初始化，后续23,920个节点全部独立；不读取独立材料标定或280N，不作为E_REF，不改变原目标及单位。初始数组、来源和逐γ延续来源均保存。原0.501 MPa冷启动的6个未收敛点已随同组初始化核验归档，不与新扫描混合。
+扫描由大gamma到小gamma延续：首点只用当前识别平台位移拟合均匀模量，后续只继承本平台此前的收敛解。均匀1 MPa单位响应与三个刚体分量一起作面积加权最小二乘，得到初始E；原180N约2004.7751 MPa，新增280N约1970.2618 MPa。此值只作初始化，后续所有节点独立；不读取独立标定或另一平台位移，不作为E_REF，不改变原目标及单位。初始数组、来源和逐γ延续来源均保存。原0.501 MPa冷启动核验保留其历史身份。
 
 根据递增 gamma 顺序计算有符号三点 Menger 曲率，取最大正曲率内部点；要求至少五个有效点，峰值两侧各有两个有效扫描点。未收敛点、非正范数、近重合点、非单调局部分支及近乎直线的三点不用于选参。数值阈值为 log 范数单调容许波动 10⁻⁵、最小三点边长 10⁻⁴、最小可分辨正曲率 10⁻⁶；近重合点的微小优化波动可能产生虚假大曲率，故先检查边长。这些阈值用于排除数值退化，不是实验一致性判据。
 
@@ -167,7 +169,7 @@ python -m script.step4_compare_results --config dic_case_sample3
 
 阶段间核对冻结输入的元数据/数组哈希，拒绝混用不同实验的正反演结果。数值兼容性核对平衡、材料、观测、正则、反演及 L-curve 所依赖的十一个算法文件哈希，缺少记录或数值内核变化均需重新准备；包导出及历史绘图、文件包装不参与力学兼容性判定。所有步骤调用同一正演、观测和伴随内核。
 
-本流程交付独立正演与 DIC、二维模量与独立标定、回代及预测三条比较证据。物理配准未完成、完整狗骨与矩形截取域边界等效未验证、误差预算不完整时，不自动宣告实验物理验证通过。
+本流程交付独立正演与DIC、两平台独立二维模量与材料标定、本平台回代及跨载荷对照三条比较证据。物理配准未完成、完整狗骨与矩形截取域边界等效未验证、误差预算不完整时，不自动宣告实验物理验证通过。
 
 实现核验使用临时解析牵引算例、原始 H1 正则的积分/矩阵等价性及常数零空间、伴随方向导数差分；最后一项的最小相对偏差约 3.0×10⁻⁹。独立的线性 Tikhonov 闭式解用于检查 L-curve 拐点、顺序不变性和退化曲线拒绝。
 
