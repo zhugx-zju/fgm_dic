@@ -15,12 +15,14 @@ from .experiment_data import file_sha256
 from .research_reporting import modulus_width_profile
 
 
-def plot_identification_workflow(stem: Path) -> None:
+def plot_identification_workflow(stem: Path, *, include_380: bool = False) -> None:
     """Document separate parameter selection and modulus recovery for each load."""
     stem = Path(stem)
     stem.parent.mkdir(parents=True, exist_ok=True)
-    fig, ax = plt.subplots(figsize=(13.5, 5.2))
-    ax.set(xlim=(0, 13.5), ylim=(0, 5.2))
+    height = 6.7 if include_380 else 5.2
+    shift = height-5.2
+    fig, ax = plt.subplots(figsize=(13.5, height))
+    ax.set(xlim=(0, 13.5), ylim=(0, height))
     ax.axis('off')
 
     def box(x, y, width, label, color):
@@ -33,21 +35,29 @@ def plot_identification_workflow(stem: Path) -> None:
         ax.annotate('', xy=end, xytext=start,
                     arrowprops=dict(arrowstyle='->', color=color, lw=1.4))
 
-    ax.text(6.75, 4.92, 'Independent inversion of 180N and 280N DIC data',
+    platforms = '180N, 280N and 380N' if include_380 else '180N and 280N'
+    ax.text(6.75, 4.92+shift, f'Independent inversion of {platforms} DIC data',
             ha='center', va='center', fontsize=17)
-    box(.15, 3.72, 4.9, 'Independent material calibration\nE for each region', '#555555')
-    box(5.7, 3.72, 7.15, 'Displacement from Calibrated E\ncompare with 180N and 280N DIC', '#555555')
-    arrow((5.13, 4.095), (5.62, 4.095))
-    for y, platform, color in ((2.38, '180N', '#0072b2'), (.97, '280N', '#d55e00')):
+    box(.15, 3.72+shift, 4.9, 'Independent material calibration\nE for each region', '#555555')
+    box(5.7, 3.72+shift, 7.15, f'Displacement from Calibrated E\ncompare with {platforms} DIC', '#555555')
+    arrow((5.13, 4.095+shift), (5.62, 4.095+shift))
+    branches = [(2.38+shift, '180N', '#0072b2'), (.97+shift, '280N', '#d55e00')]
+    if include_380:
+        branches.append((1.06, '380N', '#009e73'))
+    for y, platform, color in branches:
         box(.15, y, 1.75, f'{platform} DIC Data', color)
         box(2.55, y, 2.5, 'Own L-curve\nselect gamma', color)
         box(5.7, y, 2.4, f'Identify E(x,y)\nusing {platform} DIC', color)
         box(8.75, y, 4.1, f'Displacement from Identified E\ncompare with {platform} DIC', color)
         for start, end in ((1.98, 2.47), (5.13, 5.62), (8.18, 8.67)):
             arrow((start, y+.375), (end, y+.375), color)
-    ax.text(6.75, .25,
-            'Repeat independently on both meshes: coarse 121 x 19; fine 367 x 64.\n'
-            'Same 23,920 DIC points. Calibration is used for forward comparison and evaluation.',
+    footer = ('180N / 280N: coarse 121 x 19 and fine 367 x 64. '
+              '380N: coarse 121 x 19; assumed force 319.9 N.\n'
+              'Same 23,920 DIC points. Calibration is used for forward comparison and evaluation.'
+              if include_380 else
+              'Repeat independently on both meshes: coarse 121 x 19; fine 367 x 64.\n'
+              'Same 23,920 DIC points. Calibration is used for forward comparison and evaluation.')
+    ax.text(6.75, .25, footer,
             ha='center', va='center', fontsize=11)
     fig.tight_layout()
     for extension in ('png', 'svg', 'pdf'):
@@ -85,7 +95,8 @@ def _load_identification(root: Path, platform: str):
                 inverse=inverse, E=field, displacement=displacement, forward=forward)
 
 
-def _plot_mesh_comparison(output: Path, records: list[dict], *, modulus_limits=None) -> None:
+def _plot_mesh_comparison(output: Path, records: list[dict], *, modulus_limits=None,
+                          include_displacements=True, note=None) -> None:
     """Use a shared E range, and a common displacement scale per load/component."""
     output.mkdir(exist_ok=True, parents=True)
     mesh = records[0]['mesh']
@@ -97,9 +108,11 @@ def _plot_mesh_comparison(output: Path, records: list[dict], *, modulus_limits=N
     lo, hi = min(v.min() for v in values), max(v.max() for v in values)
     if modulus_limits is not None:
         lo, hi = modulus_limits
-    fig, axes = plt.subplots(3, 1, figsize=(12, 6), constrained_layout=True)
+    fig, axes = plt.subplots(len(values), 1, figsize=(12, 2*len(values)), constrained_layout=True)
+    if note:
+        fig.suptitle(note, fontsize=12)
     for ax, field, title in zip(axes, values,
-            ('Independent calibrated E', 'E identified using 180N DIC', 'E identified using 280N DIC')):
+            ['Independent calibrated E', *(f'E identified using {r["cfg"].FIT_CASES[0]} DIC' for r in records)]):
         im = ax.pcolormesh(mesh.plot_x, mesh.plot_y, field.reshape(mesh.nods_y, mesh.nods_x),
                            shading='auto', cmap='viridis', vmin=lo, vmax=hi, rasterized=True)
         ax.set(title=title, xlabel='x (mm)', ylabel='y (mm)', aspect='equal',
@@ -108,10 +121,13 @@ def _plot_mesh_comparison(output: Path, records: list[dict], *, modulus_limits=N
     _save_figure(fig, output, 'independent_modulus_fields')
 
     fig, axes = plt.subplots(2, 1, figsize=(10, 6), sharex=True, constrained_layout=True)
+    if note:
+        fig.suptitle(note, fontsize=12)
     profiles = []
-    for record, color in zip(records, ('#0072b2', '#d55e00')):
+    for record in records:
         platform = record['cfg'].FIT_CASES[0]
-        profile = modulus_width_profile(mesh, record['E'], reference)
+        color = {'180N': '#0072b2', '280N': '#d55e00', '380N': '#009e73'}[platform]
+        profile = modulus_width_profile(record['mesh'], record['E'], reference)
         x = profile.x_mm.to_numpy()
         mean = profile.inverse_width_mean_E_MPa.to_numpy()
         sd = profile.inverse_transverse_sd_MPa.to_numpy()
@@ -129,9 +145,13 @@ def _plot_mesh_comparison(output: Path, records: list[dict], *, modulus_limits=N
         ax.legend(fontsize=10)
     _save_figure(fig, output, 'independent_modulus_profiles')
     pd.DataFrame(profiles).to_csv(output/'width_profiles.csv', index=False)
+    if not include_displacements:
+        return
 
     from .dic_preprocessing import grid_fields_from_points
-    fig, axes = plt.subplots(3, 4, figsize=(17, 7), constrained_layout=True)
+    fig, axes = plt.subplots(3, 2*len(records), figsize=(max(9, 8.5*len(records)), 7), constrained_layout=True)
+    if note:
+        fig.suptitle(note, fontsize=12)
     for record_index, record in enumerate(records):
         case = record['case']
         xy = np.column_stack([case.observation.x_meas, case.observation.y_meas])
@@ -156,12 +176,13 @@ def _plot_mesh_comparison(output: Path, records: list[dict], *, modulus_limits=N
     _save_figure(fig, output, 'independent_displacement_comparison')
 
 
-def write_independent_comparison(runs: dict, output: Path, *, allow_incomplete: bool = False) -> dict:
-    """Render saved coarse/fine 180N/280N identifications; never launch solves."""
+def write_independent_comparison(runs: dict, output: Path, *, allow_incomplete: bool = False,
+                                 load380_root: Path | None = None) -> dict:
+    """Render saved 180N/280N and optional 380N identifications without solves."""
     mesh_labels = {'coarse': '粗网格', 'fine': '细网格', 'both': '粗、细网格'}
     output = Path(output).resolve()
     output.mkdir(exist_ok=True, parents=True)
-    plot_identification_workflow(output/'independent_platform_workflow')
+    plot_identification_workflow(output/'independent_platform_workflow', include_380=load380_root is not None)
     rows, sources, completed, mesh_records = [], {}, [], {}
     for label, platforms in runs.items():
         ready = all(all((Path(root)/'04_comparison'/name).exists() for name in
@@ -319,4 +340,134 @@ def write_independent_comparison(runs: dict, output: Path, *, allow_incomplete: 
         path = Path(item['path'])
         guide.append(f'| {mesh_labels.get(item["mesh"], item["mesh"])} | {item.get("platform", "两平台")} | {item["content"]} | [{path.name}]({path.as_posix()}) |')
     (output/'PPT图片清单.md').write_text('\n'.join(guide)+'\n', encoding='utf-8')
+    if load380_root is not None:
+        _append_load380_results(output, Path(load380_root), mesh_records, summary)
     return summary
+
+
+def _append_load380_results(output: Path, load_root: Path, mesh_records: dict, summary: dict) -> None:
+    """Include completed 380N results, retaining their assumed-force provenance."""
+    load_root = load_root.resolve()
+    methods = {'h1': 'H1等权重', 'h1_uy10': 'H1横向残差平方权重10',
+               'huber10': 'Huber-TV，δ=10 MPa/mm'}
+    records = {name: _load_identification(load_root/name, '380N') for name in methods}
+    selected = records['h1']
+    force = selected['metadata']['force_pairing']['380N']
+    if force.get('provenance') is None or force['mean_corrected_force_N'] != 319.9:
+        raise ValueError('380N inclusion requires the recorded assumed 319.9 N force provenance')
+    baseline = mesh_records['coarse']
+    for record in [*baseline, *records.values()]:
+        if (record['mesh'].nel_x, record['mesh'].nel_y) != (121, 19):
+            raise ValueError('The completed 380N identifications use the 121 x 19 mesh')
+        np.testing.assert_allclose(record['mesh'].coord, selected['mesh'].coord, rtol=0, atol=2e-8)
+        pd.testing.assert_frame_equal(pd.DataFrame(record['metadata']['calibration']),
+                                      pd.DataFrame(selected['metadata']['calibration']), check_exact=True)
+        if record['cfg'].PRIMARY_NU != selected['cfg'].PRIMARY_NU:
+            raise ValueError('Use the same primary nu for the three-platform comparison')
+    np.testing.assert_array_equal(getattr(selected['cfg'], 'DISPLACEMENT_COMPONENT_WEIGHTS', (1., 1.)), (1., 1.))
+    for name in ('180N', '280N'):
+        for key in ('mean_corrected_force_N', 'load_section_width_mm'):
+            if baseline[0]['metadata']['force_pairing'][name][key] != selected['metadata']['force_pairing'][name][key]:
+                raise ValueError(f'380N source changed the existing {name} force reference')
+        with np.load(baseline[0]['root']/'01_prepared/fields.npz') as old, np.load(selected['root']/'01_prepared/fields.npz') as new:
+            np.testing.assert_allclose(old[f'{name}_coordinates'], new[f'{name}_coordinates'], rtol=0, atol=2e-8)
+            np.testing.assert_allclose(old[f'{name}_observed'], new[f'{name}_observed'], rtol=1e-10, atol=1e-12)
+    limits = summary['modulus_color_limits_MPa']
+    if selected['E'].min() < limits[0] or selected['E'].max() > limits[1]:
+        raise ValueError('Expand the common modulus color range before including 380N')
+    note = f'H1, nu={selected["cfg"].PRIMARY_NU:.2f}, coarse 121 x 19 | 380N: assumed force 319.9 N'
+    _plot_mesh_comparison(output/'coarse_three_platforms', [*baseline, selected],
+                          modulus_limits=limits, include_displacements=False, note=note)
+    _plot_mesh_comparison(output/'380N', [selected], modulus_limits=limits, note=note)
+    sources = {}
+    for name, record in records.items():
+        root = record['root']
+        nu = record['cfg'].PRIMARY_NU
+        sources[name] = dict(root=str(root), method=methods[name], platform='380N',
+                            mesh_elements=[121, 19], nu=nu, gamma=record['inverse']['selected_gamma'],
+                            status=record['inverse']['status'], assumed_force_N=319.9,
+                            force_provenance=record['metadata']['force_pairing']['380N']['provenance'],
+                            component_weights=list(getattr(record['cfg'], 'DISPLACEMENT_COMPONENT_WEIGHTS', (1., 1.))),
+                            inverse_metadata_sha256=file_sha256(root/'03_inverse/run_metadata.json'),
+                            identified_fields_sha256=file_sha256(root/'03_inverse'/f'nu_{nu:.2f}'/'fields.npz'))
+    unavailable = {}
+    for name in ('huber1', 'exact_tv', 'exact_tv_fine'):
+        metadata = json.loads((load_root/name/'03_inverse/run_metadata.json').read_text(encoding='utf-8'))
+        if metadata.get('selected_gamma') is not None:
+            raise ValueError(f'Review newly available {name} results before updating the figure list')
+        unavailable[name] = metadata['status']
+    summary.update(included_platforms=['180N', '280N', '380N'], load380_root=str(load_root),
+                   additional_identifications=sources, unavailable_380N_identifications=unavailable)
+    (output/'run_metadata.json').write_text(json.dumps(summary, ensure_ascii=False, indent=2), encoding='utf-8')
+    note_zh = ('380N独立识别使用假定力319.9N（380−60.1），缺少同步实测平台力。'
+               '已完成的三组均为121×19网格；Huber-TV（δ=1）及精确TV粗细网格未选出有效γ。'
+               '其中242×38精确TV'
+               '没有正式最终场。不能将其标为已完成的380N细网格反演。')
+    link = Path(os.path.relpath(load_root/'index.html', output)).as_posix()
+    parts = ['<section id="load380"><h2>380N独立反演结果</h2>',
+             f'<p>{note_zh}</p><p><a href="{link}">380N各方案完整报告与求解状态 →</a></p>',
+             '<h3>同一粗网格的180N、280N、380N：H1模量对比</h3>']
+    status_rows = []
+    for name, record in records.items():
+        status_rows.append({'方案': methods[name], '网格': '121×19', 'ν': record['cfg'].PRIMARY_NU,
+                            'γ': record['inverse']['selected_gamma'],
+                            '残差平方权重': str(sources[name]['component_weights']),
+                            '最终停止': '函数下降' if all('RELATIVE REDUCTION' in s['message'] for s in record['inverse']['solvers'])
+                                       else record['inverse']['status']})
+    parts.append(pd.DataFrame(status_rows).to_html(index=False, border=0))
+    additions = []
+    for directory, stems in (
+            ('coarse_three_platforms', [('independent_modulus_fields', '三平台H1二维E与标定'),
+                                       ('independent_modulus_profiles', '三平台H1的E(x)与横向空间离散')]),
+            ('380N', [('independent_modulus_fields', '380N H1二维E与标定'),
+                      ('independent_modulus_profiles', '380N H1的E(x)与标定'),
+                      ('independent_displacement_comparison', '380N DIC、标定正演与本平台回代')])):
+        for stem, content in stems:
+            parts.append(f'<h3>{content}</h3><p><a href="{directory}/{stem}.svg">SVG</a></p><img src="{directory}/{stem}.png">')
+            additions.append(dict(mesh='coarse', platform='180N/280N/380N' if directory=='coarse_three_platforms' else '380N',
+                                  method='h1', content=content, path=str(output/directory/f'{stem}.png'),
+                                  assumed_force_N=319.9))
+    for name, record in records.items():
+        root = record['root']
+        nu = record['cfg'].PRIMARY_NU
+        target = Path(os.path.relpath(root/'04_comparison/打开查看结果.html', output)).as_posix()
+        parts.append(f'<details><summary>380N：{methods[name]}，121×19，ν={nu:.2f}</summary><p><a href="{target}">完整云图、残差和四个ν →</a></p>')
+        for relative, content in (
+                ('03_inverse/l_curve.png', 'L-curve'),
+                (f'03_inverse/nu_{nu:.2f}/inverse_modulus_E.png', '独立识别二维E'),
+                (f'04_comparison/nu_{nu:.2f}/380N/380N_forward_dic_components.png', 'DIC与标定正演'),
+                (f'04_comparison/nu_{nu:.2f}/380N/380N_inverse_dic_components.png', 'DIC与本平台识别模量回代'),
+                (f'04_comparison/nu_{nu:.2f}/380N/380N_inverse_error_ux.png', '轴向位移残差'),
+                (f'04_comparison/nu_{nu:.2f}/380N/380N_inverse_error_uy.png', '横向位移残差'),
+                (f'04_comparison/nu_{nu:.2f}/modulus_comparison.png', 'E与独立标定差异'),
+                (f'04_comparison/nu_{nu:.2f}/x_profile.png', '宽度平均E与横向离散')):
+            path = root/relative
+            if not path.exists() or not path.with_suffix('.svg').exists():
+                raise FileNotFoundError(f'Missing completed 380N figure: {path}')
+            href = Path(os.path.relpath(path, output)).as_posix()
+            parts.append(f'<p><a href="{href}">{content} PNG</a> · <a href="{Path(href).with_suffix(".svg").as_posix()}">SVG</a></p>')
+            additions.append(dict(mesh='coarse', platform='380N', method=name,
+                                  content=f'380N {methods[name]}：{content}', path=str(path), assumed_force_N=319.9))
+        parts.append('</details>')
+    parts.append('</section>')
+    page = (output/'index.html').read_text(encoding='utf-8')
+    page = page.replace('<title>两平台独立反演：粗细网格</title>', '<title>180N、280N、380N独立反演图件</title>')
+    page = page.replace('<h1>180N、280N 分别独立反演：粗细网格</h1>',
+                        '<h1>180N、280N、380N 独立反演图件</h1>')
+    page = page.replace('两平台均已参与各自识别，本页不将280N称为未使用的独立验证数据。',
+                        '各平台均已参与各自识别，本页不将这些响应称为未使用数据的独立验证。')
+    page = page.replace('<h2>主ν下的误差与各自所选γ</h2>', '<h2>180N、280N：主ν下的误差与各自所选γ</h2>')
+    (output/'index.html').write_text(page+'\n'+'\n'.join(parts), encoding='utf-8')
+    manifest = pd.read_csv(output/'ppt_image_manifest.csv')
+    manifest.loc[manifest.path == str(output/'independent_platform_workflow.png'), 'content'] = '三平台独立识别流程（380N粗网格、假定载荷）'
+    manifest = pd.concat([manifest, pd.DataFrame(additions)], ignore_index=True)
+    manifest.to_csv(output/'ppt_image_manifest.csv', index=False, encoding='utf-8-sig')
+    guide = (output/'PPT图片清单.md').read_text(encoding='utf-8')
+    guide = guide.replace('两平台独立识别流程', '三平台独立识别流程（380N粗网格、假定载荷）')
+    guide += '\n## 380N独立反演与三平台对比\n\n'+note_zh+'\n\n'
+    guide += '正文优先使用下表前五张H1图；横向加权和Huber-TV图用于方案对照或附录。\n\n'
+    guide += '| 网格 | 识别平台 | 内容 | 图片 |\n| --- | --- | --- | --- |\n'
+    for item in additions:
+        path = Path(item['path'])
+        guide += f'| 粗网格121×19 | {item["platform"]} | {item["content"]} | [{path.name}]({path.as_posix()}) |\n'
+    (output/'PPT图片清单.md').write_text(guide, encoding='utf-8')
