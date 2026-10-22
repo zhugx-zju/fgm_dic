@@ -2,6 +2,8 @@
 
 当前有效结果：1013 保留 `modulus_20261013_165808`；1016 和跨批次研究使用 `analysis_20261017`。
 
+- [大分层试样线性工作载荷估算](../docs/layered_linear_load_20261022.md)：局部标定窗口转移上端约343 N净拉力，暂定操作上限270 N；保留低应力段未全员通过及大试样尚未验证的限制。
+
 - [1016 单批分析报告](1016/analysis_results/analysis_20261017/analysis_report.md)：组均值、逐根相对偏差、各填充率原始曲线和拟合入口。
 - [1013–1016 桥接报告](analysis_results/analysis_20261017/batch_comparison_report.md)：60%/90%桥接、旧70%/80%诊断，以及三种选段口径的区别。
 - [混合批次模量—填充率分析](analysis_results/mixed_infill_20261017/linearity_report.md)：1013的40%、50%、60%、90%、100%与1016的70%、80%，比较线性近似、残差与逐根选段敏感性。
