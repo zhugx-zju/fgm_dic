@@ -158,6 +158,7 @@ def _plot_mesh_comparison(output: Path, records: list[dict], *, modulus_limits=N
 
 def write_independent_comparison(runs: dict, output: Path, *, allow_incomplete: bool = False) -> dict:
     """Render saved coarse/fine 180N/280N identifications; never launch solves."""
+    mesh_labels = {'coarse': '粗网格', 'fine': '细网格', 'both': '粗、细网格'}
     output = Path(output).resolve()
     output.mkdir(exist_ok=True, parents=True)
     plot_identification_workflow(output/'independent_platform_workflow')
@@ -256,10 +257,10 @@ def write_independent_comparison(runs: dict, output: Path, *, allow_incomplete: 
             '<h1>180N、280N 分别独立反演：粗细网格</h1>',
             '<p>每个平台只用自己的DIC位移初始化、扫描50个γ并识别自由二维E。主ν=0.26；四个ν为固定本平台γ后的敏感性比较。独立标定不进入目标或初值。</p>',
             '<p>同平台位移为回代；将识别模量用于另一载荷称为跨载荷对照。两平台均已参与各自识别，本页不将280N称为未使用的独立验证数据。</p>',
-            f'<p>状态：{summary["status"]}。完成网格：{html.escape("、".join(completed))}。</p>',
+            f'<p>汇总状态：{"已生成" if summary["status"] == "computed" else "计算进行中"}。完成网格：{html.escape("、".join(mesh_labels.get(label, label) for label in completed))}。</p>',
             '<img src="independent_platform_workflow.png">']
     for label, platforms in runs.items():
-        page.append(f'<h2>{html.escape(label)}</h2>')
+        page.append(f'<h2>{html.escape(mesh_labels.get(label, label))}</h2>')
         for platform, root in platforms.items():
             target = Path(root)/'04_comparison/打开查看结果.html'
             link = Path(os.path.relpath(target, output)).as_posix()
@@ -274,7 +275,8 @@ def write_independent_comparison(runs: dict, output: Path, *, allow_incomplete: 
         page.append('<h2>同平台的粗细网格宽度平均模量对照</h2>'
                     '<p><a href="mesh_comparison_profiles.svg">SVG</a></p><img src="mesh_comparison_profiles.png">')
     if not metrics.empty:
-        display = metrics.replace({'role': {'fit': '本平台识别/回代', 'prediction': '跨载荷对照',
+        display = metrics.replace({'mesh': mesh_labels,
+                                   'role': {'fit': '本平台识别/回代', 'prediction': '跨载荷对照',
                                             'calibration_reference': '独立标定参照'},
                                    'identified_using': {'independent_calibration': '独立标定'},
                                    'model': {'forward': '标定模量', 'inverse': '识别模量'},
@@ -310,9 +312,11 @@ def write_independent_comparison(runs: dict, output: Path, *, allow_incomplete: 
         manifest.append(dict(mesh='both', content='同平台粗细网格E(x)对照', path=str(output/'mesh_comparison_profiles.png')))
     pd.DataFrame(manifest).to_csv(output/'ppt_image_manifest.csv', index=False, encoding='utf-8-sig')
     guide = ['# PPT图片清单', '', '每张PNG同目录下均有同名SVG。模量来源与绘图载荷分别标注。', '',
+             '建议正文依次使用：独立识别流程图 → 粗、细网格的二维E和E(x) → DIC、独立标定正演与本平台回代位移 → 同平台粗细网格E(x)对照。L-curve及单个平台分图用于附录或放大展示。', '',
+             '清单默认主ν=0.26；其他ν及跨载荷对照见各组完整结果入口。', '',
              '| 网格 | 识别平台 | 内容 | 图片 |', '| --- | --- | --- | --- |']
     for item in manifest:
         path = Path(item['path'])
-        guide.append(f'| {item["mesh"]} | {item.get("platform", "两平台")} | {item["content"]} | [{path.name}]({path.as_posix()}) |')
+        guide.append(f'| {mesh_labels.get(item["mesh"], item["mesh"])} | {item.get("platform", "两平台")} | {item["content"]} | [{path.name}]({path.as_posix()}) |')
     (output/'PPT图片清单.md').write_text('\n'.join(guide)+'\n', encoding='utf-8')
     return summary
