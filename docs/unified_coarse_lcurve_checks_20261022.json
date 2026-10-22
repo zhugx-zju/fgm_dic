@@ -1,0 +1,7 @@
+{
+  "passed": true,
+  "compiled_full_gradient_relative": 5.923337190616318e-16,
+  "compiled_directional_fd_relative": 5.096602776381964e-10,
+  "warm_start_budget_preserves_accepted": true,
+  "constant_regularization_exactly_zero": true
+}

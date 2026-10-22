@@ -18,7 +18,8 @@ class EvaluationBudgetReached(RuntimeError):
 class UnifiedObjective:
     """One platform only; raw area-weighted cost plus gamma*R_intra/2."""
 
-    def __init__(self, parameter_map, case, *, nu=0.26, gamma=0., max_evaluations=None):
+    def __init__(self, parameter_map, case, *, nu=0.26, gamma=0., max_evaluations=None,
+                 progress=None):
         if not np.isfinite(gamma) or gamma < 0 or not 0.24 <= nu <= 0.33:
             raise ValueError('gamma must be nonnegative; nu must lie in [0.24, 0.33]')
         if case.observation.H.shape[1] != parameter_map.mesh.n_dof:
@@ -29,6 +30,7 @@ class UnifiedObjective:
         self.evaluations = 0
         self.last_state = None
         self.history = []
+        self.progress = progress
 
     def evaluate(self, theta):
         if self.max_evaluations is not None and self.evaluations >= self.max_evaluations:
@@ -52,6 +54,8 @@ class UnifiedObjective:
         self.history.append(dict(evaluation=self.evaluations, value=state['value'],
                                  data_cost=state['data_cost'], regularization=reg,
                                  gradient_inf=float(np.max(np.abs(gradient)))))
+        if self.progress is not None and self.evaluations % 100 == 0:
+            self.progress(self.history[-1])
         return state
 
     def __call__(self, theta):
@@ -80,7 +84,8 @@ def fit_uniform_initial_modulus(parameter_map, case, nu=0.26):
 
 def solve_unified(parameter_map, case, initial_modulus, *, nu=0.26, gamma=0.,
                   modulus_bounds=(100., 6000.), geometry_bounds=None,
-                  max_iterations=500, max_evaluations=800, ftol=1e-16, gtol=1e-10):
+                  max_iterations=500, max_evaluations=800, ftol=1e-16, gtol=1e-10,
+                  initial_parameters=None, progress=None):
     """Bounded L-BFGS-B with exact FE budget and independently reported evidence.
 
     Ordered disjoint control intervals are required for multiple moving
@@ -93,7 +98,9 @@ def solve_unified(parameter_map, case, initial_modulus, *, nu=0.26, gamma=0.,
         raise ValueError('Initial modulus must lie inside positive declared bounds')
     if max_iterations < 1 or max_evaluations < 1 or ftol < 0 or gtol <= 0:
         raise ValueError('Budgets and gtol must be positive; ftol must be nonnegative')
-    theta0 = parameter_map.initial_parameters(initial_modulus)
+    theta0 = (parameter_map.initial_parameters(initial_modulus) if initial_parameters is None
+              else np.asarray(initial_parameters, dtype=float).copy())
+    parameter_map.unpack(theta0)
     bounds = [(np.log(lower), np.log(upper))]*parameter_map.n_material
     if parameter_map.optimize_geometry:
         shape = parameter_map.interfaces.shape
@@ -111,7 +118,7 @@ def solve_unified(parameter_map, case, initial_modulus, *, nu=0.26, gamma=0.,
     if np.any(theta0 < b[:, 0]) or np.any(theta0 > b[:, 1]):
         raise ValueError('Initial parameters lie outside the declared bounds')
     objective = UnifiedObjective(parameter_map, case, nu=nu, gamma=gamma,
-                                 max_evaluations=max_evaluations)
+                                 max_evaluations=max_evaluations, progress=progress)
     accepted = objective.evaluate(theta0)
     initial_value = accepted['value']
     iterations = 0
