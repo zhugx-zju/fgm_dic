@@ -1,0 +1,92 @@
+{
+  "date": "2026-10-22",
+  "scope": "Analytical material-representation and figure consistency checks only; no finite-element forward solve or inverse reconstruction.",
+  "coordinates": {
+    "xi": "x/L",
+    "eta": "y/H",
+    "domain": "[0,1] x [0,1]",
+    "xi_points": 401,
+    "eta_points": 241
+  },
+  "construction": {
+    "E1_MPa": "10 + 10*xi + 4*eta + 2*xi*eta",
+    "E2_MPa": "30 + 6*xi - 3*eta + xi*eta",
+    "interface_x_over_L": "0.4 + 0.2*eta*(1-eta)",
+    "H": "1 if xi >= interface else 0",
+    "combined_E_MPa": "(1-H)*E1 + H*E2",
+    "Q4_corner_order": "lower-left, lower-right, upper-right, upper-left",
+    "branch1_corner_values_MPa": [
+      10.0,
+      20.0,
+      26.0,
+      14.0
+    ],
+    "branch2_corner_values_MPa": [
+      30.0,
+      36.0,
+      34.0,
+      27.0
+    ],
+    "geometry_Bspline": {
+      "degree": 2,
+      "knots": [
+        0,
+        0,
+        0,
+        1,
+        1,
+        1
+      ],
+      "coefficients_x_over_L": [
+        0.4,
+        0.5,
+        0.4
+      ]
+    }
+  },
+  "checks": {
+    "Q4_branch1_max_abs_error_MPa": 1.0658141036401503e-14,
+    "Q4_branch2_max_abs_error_MPa": 1.4210854715202004e-14,
+    "geometry_Bspline_max_abs_error_x_over_L": 1.1102230246251565e-16,
+    "combined_matches_piecewise_exactly": true,
+    "branch1_dE_dxi_MPa_range": [
+      10.0,
+      12.0
+    ],
+    "branch1_dE_deta_MPa_range": [
+      4.0,
+      6.0
+    ],
+    "branch2_dE_dxi_MPa_range": [
+      6.0,
+      7.0
+    ],
+    "branch2_dE_deta_MPa_range": [
+      -3.0,
+      -2.0
+    ],
+    "both_branches_vary_in_both_coordinates": true,
+    "left_region_E_y1_minus_y0_at_xi_0p2_MPa": 4.4,
+    "right_region_E_y1_minus_y0_at_xi_0p8_MPa": -2.2
+  },
+  "figure": {
+    "layout": "2x2",
+    "material_color_limits_MPa": [
+      10,
+      36
+    ],
+    "source": "analytical construction, not inverse or experimental results",
+    "files": [
+      "two_dimensional_construction.png",
+      "two_dimensional_construction.svg"
+    ]
+  },
+  "environment": {
+    "python": "3.13.2 | packaged by Anaconda, Inc. | (main, Feb  6 2025, 18:49:14) [MSC v.1929 64 bit (AMD64)]",
+    "platform": "Windows-11-10.0.26300-SP0",
+    "numpy": "2.4.0",
+    "scipy": "1.17.1",
+    "matplotlib": "3.10.9"
+  },
+  "generator_sha256": "fc7e0e722e81cb3b061ee58ea829788897f53c3d7138d3f767c03fd52d49dd07"
+}
