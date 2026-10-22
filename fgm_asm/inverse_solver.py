@@ -5,7 +5,8 @@ Inverse problem solver using SciPy L-BFGS-B with Tikhonov regularization.
 import numpy as np
 from scipy.optimize import minimize
 
-from .fem_forward import fem_assemble, forward_solver, solve_system
+from .fem_forward import (fem_assemble, forward_solver, solve_system,
+                          gauss_shape_values, gauss_stiffness_sensitivity)
 from .regularization import (
     get_affine_detrended_gradient,
     get_affine_detrended_regularization,
@@ -53,20 +54,11 @@ def get_stiffness_gradient(fem_info, lambda_vec, forw_U):
         grad: Gradient vector [n_nod]
     """
     mesh_info = fem_info.mesh_info
-    ele_dof_id = mesh_info.ele_dof_id
     ele_nods_id = mesh_info.ele_nods_id - 1
     id_list = ele_nods_id.T.ravel()
 
-    lambda_ele = lambda_vec[ele_dof_id]
-    forw_U_ele = forw_U[ele_dof_id]
-
-    # lambda_e.T B.T D0 B u_e = (B lambda_e).T D0 (B u_e).
-    # Contract the three strain components instead of rebuilding 8x8 matrices.
-    strain_u = np.einsum('geia,ea->gei', fem_info.B_gauss, forw_U_ele)
-    strain_lambda = np.einsum('geia,ea->gei', fem_info.B_gauss, lambda_ele)
-    directional = np.einsum('gei,ij,gej->ge', strain_lambda, fem_info.D0, strain_u)
-    weighted = directional * fem_info.det_j_gauss * mesh_info.gauss_w[:, None]
-    grad_E = np.einsum('ge,gn->en', weighted, mesh_info.gauss_N)
+    weighted = gauss_stiffness_sensitivity(fem_info, lambda_vec, forw_U)
+    grad_E = np.einsum('ge,gen->en', weighted, gauss_shape_values(mesh_info))
 
     return np.bincount(id_list, weights=grad_E.T.ravel(), minlength=mesh_info.n_nod)
 

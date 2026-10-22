@@ -66,6 +66,7 @@ all_region与region已确认共用参考图及毫米坐标系，沿用既定横�
 
 ## 资料与代码位置
 
+- [统一梯度／分层材料算法原型与 P0/P1 测试](docs/unified_gradient_layered_algorithm_tests.md)：独立配置、四个分步阶段及 `results/unified_gradient_layered/` 输出；当前未知界面仍有初值敏感和弱可辨识性，不替代主实验流程。
 - [实验方案](plan/dogbone_parallel_section_adjoint_plan.tex)、[验证方案](plan/validation_plan.md)、[拉伸数据与标定](post_tensile_test/README.md)。
 - `fgm_asm/`：共用有限元、观测与伴随内核；`lib/`：数据处理、四步流程及绘图；`script/`：四个入口。
 - [架构与接口](docs/architecture.md)、[坐标说明](docs/dic_coordinate_registration.md)。

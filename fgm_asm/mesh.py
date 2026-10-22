@@ -195,7 +195,10 @@ class MeshInfo:
             M: Sparse mass matrix [n_dof, n_dof]
         """
         weights = self.gauss_abs_det_j * self.gauss_w[:, None]
-        M_ele = np.einsum('gij,ge->eij', self.gauss_mass_local, weights)
+        if self.gauss_mass_local.ndim == 4:
+            M_ele = np.einsum('geij,ge->eij', self.gauss_mass_local, weights)
+        else:
+            M_ele = np.einsum('gij,ge->eij', self.gauss_mass_local, weights)
 
         M = csr_matrix(
             (M_ele.ravel(), (self.global_row_idx.ravel(), self.global_col_idx.ravel())),

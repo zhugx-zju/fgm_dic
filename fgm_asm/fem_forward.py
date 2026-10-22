@@ -40,16 +40,44 @@ class FEMInfo:
 
 def _get_gauss_modulus(mesh_info, material_info):
     """Interpolate the nodal modulus field to the Gauss points."""
+    if callable(getattr(material_info, 'gauss_modulus', None)):
+        values = np.asarray(material_info.gauss_modulus(mesh_info), dtype=float)
+        if values.shape != mesh_info.gauss_det_j.shape or not np.all(np.isfinite(values) & (values > 0)):
+            raise ValueError('Mapped material must return positive finite values of shape (quadrature, elements)')
+        return values
     if getattr(material_info, 'modulus_function', None) is not None:
-        x = np.einsum('en,gn->ge', mesh_info.x_ele, mesh_info.gauss_N)
-        y = np.einsum('en,gn->ge', mesh_info.y_ele, mesh_info.gauss_N)
+        N = gauss_shape_values(mesh_info)
+        x = np.einsum('en,gen->ge', mesh_info.x_ele, N)
+        y = np.einsum('en,gen->ge', mesh_info.y_ele, N)
         values = np.asarray(material_info.modulus_function(x, y), dtype=float)
         if values.shape != x.shape or not np.all(np.isfinite(values) & (values > 0)):
             raise ValueError('Forward modulus function must return positive finite Gauss values')
         return values
     E_vec = material_info.get_current_modulus()
     G_ele = E_vec[mesh_info.ele_nods_id - 1]
+    if mesh_info.gauss_N.ndim == 3:
+        return np.einsum('en,gen->ge', G_ele, mesh_info.gauss_N)
     return (G_ele @ mesh_info.gauss_N.T).T
+
+
+def gauss_shape_values(mesh_info):
+    """Q4 values as (quadrature, elements, nodes), including cut-cell rules."""
+    N = mesh_info.gauss_N
+    return N if N.ndim == 3 else np.broadcast_to(N[:, None, :], (*mesh_info.gauss_det_j.shape, 4))
+
+
+def gauss_stiffness_sensitivity(fem_info, adjoint, displacement):
+    """Return dJ/dE_q including physical quadrature weights, shape (q, e).
+
+    The caller uses K lambda = H.T W (d - prediction), matching the existing
+    adjoint sign. A material map applies its own Jacobian transpose to this
+    array; it must not include the integration weights a second time.
+    """
+    dofs = fem_info.mesh_info.ele_dof_id
+    strain_u = np.einsum('geia,ea->gei', fem_info.B_gauss, displacement[dofs])
+    strain_l = np.einsum('geia,ea->gei', fem_info.B_gauss, adjoint[dofs])
+    return (np.einsum('gei,ij,gej->ge', strain_l, fem_info.D0, strain_u)
+            * fem_info.det_j_gauss * fem_info.mesh_info.gauss_w[:, None])
 
 
 def get_fgm_ke(mesh_info, material_info, D0):
