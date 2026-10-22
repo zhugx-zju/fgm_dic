@@ -1,0 +1,328 @@
+{
+  "passed": true,
+  "scope": "Matched FORWARD comparisons only; no inverse optimization or regularization",
+  "baseline_commit": "64e3c2297e96a2b4cd83f388c9c4494eae68db13",
+  "baseline_source": "Unmodified mesh/material/fem_forward modules loaded from Git",
+  "baseline_composite_quadrature": "Independent parent-coordinate subcell rule; original shape/Jacobian/assembly/solver",
+  "configuration": {
+    "L_mm": 105.99508453657,
+    "H_mm": 18.48415643522,
+    "nel_x": 24,
+    "nel_y": 8,
+    "nu": 0.26,
+    "thickness_mm": 3.2,
+    "bearing_width_mm": 20.0,
+    "physical_force_N": 119.77617870327234,
+    "roi_force_N": 110.6980812182076,
+    "traction_MPa": 1.8715027922386303,
+    "epsilon_mm": 1.2,
+    "straight_interface_mm": 49.8176897321879,
+    "curved_interface_controls_mm": [
+      44.517935505359404,
+      50.34766515487075,
+      52.997542268285
+    ],
+    "display_grid": [
+      49,
+      241
+    ]
+  },
+  "source_sha256": {
+    "baseline/mesh": "409b5ce64d1ad70e4fa9109ba97d77a7f4d5626528af1acb894f0126767f6122",
+    "baseline/material": "36cdf97c98c67af7efb722ffa2a88345ea0d5db8b43b1ec2a8a5679e616603be",
+    "baseline/fem_forward": "2e4d0cb71de7d1f504de21400cbf331e843dbe2ef8ea9939b61a9d56598055f2",
+    "current/mesh": "93679579da36a6273fa262eff14e708d5ba206236d86e4c3f73b6faa6e53561e",
+    "current/material": "7982752e658a7d722f76209fc978e2a8930dcf0f22ed121617cb2ada04805cbc",
+    "current/fem_forward": "5b1371bd4a97c80601b2df690ae405f8a4e6fa4a5f321cf45a813e0f073b4828",
+    "current/integration": "f01301ad83eccdbee6bf2d70d8d7d7b9ea877ed1a787a35c81a3a74b9a25b20f",
+    "current/unified_material": "66be3a3ae1cbd16cdf8a27302118ca32631704bf54fb1e88f31632131cd14530",
+    "current/observation": "a9f8b7bcdf48e627933b3e6bcae1ad8f087cfa19d4daf7970f1c0f1c997eede7"
+  },
+  "records": [
+    {
+      "case": "uniform",
+      "rule": "2x2",
+      "material_gauss_max_difference_MPa": 9.094947017729282e-13,
+      "stiffness_relative": 2.811284605276307e-16,
+      "displacement_relative": 1.0882829460008026e-13,
+      "displacement_max_mm": 9.006684287271582e-15,
+      "ux_rmse_mm": 3.7607140584955724e-15,
+      "uy_rmse_mm": 6.507378822419331e-15,
+      "new_free_equilibrium_relative": 3.055010139749796e-14,
+      "original_free_equilibrium_relative": 3.073300915405106e-14,
+      "new_uniform_analytic_max_mm": 7.924216838262055e-15,
+      "original_uniform_analytic_max_mm": 1.3961054534661343e-14
+    },
+    {
+      "case": "uniform",
+      "rule": "composite_3x3_sub2",
+      "material_gauss_max_difference_MPa": 1.3642420526593924e-12,
+      "stiffness_relative": 7.175986462162831e-16,
+      "displacement_relative": 1.984586614177907e-13,
+      "displacement_max_mm": 1.6778245459647678e-14,
+      "ux_rmse_mm": 6.664976405082072e-15,
+      "uy_rmse_mm": 1.1987001004932162e-14,
+      "new_free_equilibrium_relative": 3.08716785977492e-14,
+      "original_free_equilibrium_relative": 2.9891467309930147e-14,
+      "new_uniform_analytic_max_mm": 3.702767259472495e-14,
+      "original_uniform_analytic_max_mm": 2.038256716185849e-14
+    },
+    {
+      "case": "linear_x",
+      "rule": "2x2",
+      "material_gauss_max_difference_MPa": 9.094947017729282e-13,
+      "stiffness_relative": 2.342413771196571e-16,
+      "displacement_relative": 2.2695416664859795e-13,
+      "displacement_max_mm": 1.8261434031607848e-14,
+      "ux_rmse_mm": 1.0900339040061519e-14,
+      "uy_rmse_mm": 1.3327069481807388e-14,
+      "new_free_equilibrium_relative": 3.1867560794795876e-14,
+      "original_free_equilibrium_relative": 3.239023800408181e-14
+    },
+    {
+      "case": "linear_x",
+      "rule": "composite_3x3_sub2",
+      "material_gauss_max_difference_MPa": 1.8189894035458565e-12,
+      "stiffness_relative": 7.028407416609411e-16,
+      "displacement_relative": 7.457551918354229e-14,
+      "displacement_max_mm": 6.161737786669619e-15,
+      "ux_rmse_mm": 4.461332762181749e-15,
+      "uy_rmse_mm": 3.443025346751028e-15,
+      "new_free_equilibrium_relative": 3.720047274602156e-14,
+      "original_free_equilibrium_relative": 3.6695951375980556e-14
+    },
+    {
+      "case": "bilinear_xy",
+      "rule": "2x2",
+      "material_gauss_max_difference_MPa": 9.094947017729282e-13,
+      "stiffness_relative": 1.7757408691056116e-16,
+      "displacement_relative": 3.506076886232659e-14,
+      "displacement_max_mm": 3.0773994463828558e-15,
+      "ux_rmse_mm": 1.764315089209902e-15,
+      "uy_rmse_mm": 2.1816051458779892e-15,
+      "new_free_equilibrium_relative": 3.642983487412395e-14,
+      "original_free_equilibrium_relative": 4.0366782791112435e-14
+    },
+    {
+      "case": "bilinear_xy",
+      "rule": "composite_3x3_sub2",
+      "material_gauss_max_difference_MPa": 1.3642420526593924e-12,
+      "stiffness_relative": 6.983814617866938e-16,
+      "displacement_relative": 1.8941765335151024e-13,
+      "displacement_max_mm": 1.4960255256823984e-14,
+      "ux_rmse_mm": 1.0975708442522882e-14,
+      "uy_rmse_mm": 1.0418001952765027e-14,
+      "new_free_equilibrium_relative": 3.4679415077228026e-14,
+      "original_free_equilibrium_relative": 3.357290600454493e-14
+    },
+    {
+      "case": "arbitrary_nodal",
+      "rule": "2x2",
+      "material_gauss_max_difference_MPa": 1.1368683772161603e-12,
+      "stiffness_relative": 1.981437685127138e-16,
+      "displacement_relative": 7.288498364860567e-14,
+      "displacement_max_mm": 5.162537064506978e-15,
+      "ux_rmse_mm": 3.4773929813087015e-15,
+      "uy_rmse_mm": 3.376238675657853e-15,
+      "new_free_equilibrium_relative": 2.706155733686394e-14,
+      "original_free_equilibrium_relative": 2.73927436369665e-14
+    },
+    {
+      "case": "arbitrary_nodal",
+      "rule": "composite_3x3_sub2",
+      "material_gauss_max_difference_MPa": 1.3642420526593924e-12,
+      "stiffness_relative": 6.67966575320962e-16,
+      "displacement_relative": 1.9117237716867386e-13,
+      "displacement_max_mm": 1.3447576385772209e-14,
+      "ux_rmse_mm": 8.912527508119134e-15,
+      "uy_rmse_mm": 9.077895420015583e-15,
+      "new_free_equilibrium_relative": 2.9575027962500636e-14,
+      "original_free_equilibrium_relative": 2.90446796219176e-14
+    },
+    {
+      "case": "smooth_layered",
+      "rule": "2x2",
+      "material_gauss_max_difference_MPa": 1.3642420526593924e-12,
+      "stiffness_relative": 3.6662581429056385e-16,
+      "displacement_relative": 3.6241227968090897e-14,
+      "displacement_max_mm": 3.776926688070503e-15,
+      "ux_rmse_mm": 4.3318680821584954e-16,
+      "uy_rmse_mm": 2.7393308784647928e-15,
+      "new_free_equilibrium_relative": 3.9741516942011435e-14,
+      "original_free_equilibrium_relative": 4.365072028564304e-14
+    },
+    {
+      "case": "smooth_layered",
+      "rule": "composite_3x3_sub2",
+      "material_gauss_max_difference_MPa": 1.3642420526593924e-12,
+      "stiffness_relative": 8.624461283645634e-16,
+      "displacement_relative": 3.955509197461269e-13,
+      "displacement_max_mm": 3.277933480205775e-14,
+      "ux_rmse_mm": 2.4299517286342094e-14,
+      "uy_rmse_mm": 1.7460259779477903e-14,
+      "new_free_equilibrium_relative": 3.978920122926721e-14,
+      "original_free_equilibrium_relative": 3.917151263543874e-14
+    },
+    {
+      "case": "smooth_mixed",
+      "rule": "2x2",
+      "material_gauss_max_difference_MPa": 4.320099833421409e-12,
+      "stiffness_relative": 1.7301489098846464e-16,
+      "displacement_relative": 2.8867198740091417e-14,
+      "displacement_max_mm": 2.5396351688300456e-15,
+      "ux_rmse_mm": 1.7610893866897076e-15,
+      "uy_rmse_mm": 1.4504827558408746e-15,
+      "new_free_equilibrium_relative": 4.417425903735768e-14,
+      "original_free_equilibrium_relative": 3.8325446045022796e-14
+    },
+    {
+      "case": "smooth_mixed",
+      "rule": "composite_3x3_sub2",
+      "material_gauss_max_difference_MPa": 5.002220859751105e-12,
+      "stiffness_relative": 7.948433922943685e-16,
+      "displacement_relative": 3.933958238401299e-14,
+      "displacement_max_mm": 3.2612801348363973e-15,
+      "ux_rmse_mm": 2.522605963125853e-15,
+      "uy_rmse_mm": 1.801878621996385e-15,
+      "new_free_equilibrium_relative": 4.043159199968978e-14,
+      "original_free_equilibrium_relative": 4.2278706475570524e-14
+    },
+    {
+      "case": "sharp_layered",
+      "rule": "cut_3x3",
+      "material_gauss_max_difference_MPa": 1.3642420526593924e-12,
+      "stiffness_relative": 8.355067065634797e-16,
+      "displacement_relative": 2.498086614940879e-13,
+      "displacement_max_mm": 1.9484414082171497e-14,
+      "ux_rmse_mm": 1.4359593791747138e-14,
+      "uy_rmse_mm": 1.2344859113246029e-14,
+      "new_free_equilibrium_relative": 3.7950887285090604e-14,
+      "original_free_equilibrium_relative": 4.402085286926014e-14
+    },
+    {
+      "case": "sharp_mixed",
+      "rule": "cut_3x3",
+      "material_gauss_max_difference_MPa": 1.8189894035458565e-12,
+      "stiffness_relative": 7.592223030445241e-16,
+      "displacement_relative": 5.086062768013728e-14,
+      "displacement_max_mm": 4.121702978920894e-15,
+      "ux_rmse_mm": 3.276821397666991e-15,
+      "uy_rmse_mm": 2.4525887321591692e-15,
+      "new_free_equilibrium_relative": 3.8594670428637754e-14,
+      "original_free_equilibrium_relative": 4.141478135195523e-14
+    }
+  ],
+  "integration_sensitivity": [
+    {
+      "case": "smooth_layered",
+      "original_2x2_vs_reference_K": 0.0028950924570029114,
+      "composite_vs_reference_K": 1.626541810271484e-05,
+      "original_2x2_vs_reference_U": 0.0006980130404724306,
+      "composite_vs_reference_U": 1.5222366828281827e-06
+    },
+    {
+      "case": "smooth_mixed",
+      "original_2x2_vs_reference_K": 0.0017018327813586535,
+      "composite_vs_reference_K": 7.287240797675168e-06,
+      "original_2x2_vs_reference_U": 0.0005177738073982238,
+      "composite_vs_reference_U": 1.7040012048903672e-06
+    }
+  ],
+  "previous_plot_diagnosis": {
+    "case": "mixed_2d/unified_q4/unknown_start_0.35",
+    "central_row_slope_reversals_identified": 5,
+    "central_row_slope_reversals_truth": 0,
+    "preparation_display_shape": [
+      4,
+      7
+    ],
+    "comparison_display_shape": [
+      41,
+      121
+    ],
+    "conclusion": "Inverse field oscillations are present in the saved values; preparation plots also show sparse nodal blocks."
+  },
+  "thresholds": {
+    "material_max_MPa": 1e-08,
+    "stiffness_relative": 1e-11,
+    "displacement_relative": 1e-08,
+    "equilibrium_relative": 1e-09
+  },
+  "environment": {
+    "python": "3.13.2 | packaged by Anaconda, Inc. | (main, Feb  6 2025, 18:49:14) [MSC v.1929 64 bit (AMD64)]",
+    "numpy": "2.4.0",
+    "scipy": "1.17.1",
+    "matplotlib": "3.10.9",
+    "platform": "Windows-11-10.0.26300-SP0"
+  },
+  "caveats": [
+    "Continuous nodal IGFE cannot represent a sharp jump; sharp reference uses its existing physical-point material function with consistent cut integration.",
+    "Dense display evaluates the same FE field; it does not add measurements or solve a refined mesh.",
+    "Difference color limits have stated floors to avoid magnifying roundoff.",
+    "Matched forward consistency does not establish inverse identifiability or experimental validity."
+  ],
+  "previous_p1_replay": [
+    {
+      "case": "continuous_2d",
+      "domain_mm": [
+        6,
+        2
+      ],
+      "elements": [
+        6,
+        3
+      ],
+      "rule": "3x3_sub2",
+      "stiffness_relative": 2.5810269774308976e-16,
+      "displacement_relative": 1.8143493872340384e-15,
+      "displacement_max_mm": 7.806255641895632e-18,
+      "saved_previous_forward_max_difference_mm": 7.806255641895632e-18
+    },
+    {
+      "case": "layered",
+      "domain_mm": [
+        6,
+        2
+      ],
+      "elements": [
+        6,
+        3
+      ],
+      "rule": "3x3_sub2",
+      "stiffness_relative": 3.920221872631605e-16,
+      "displacement_relative": 7.650250640058527e-15,
+      "displacement_max_mm": 3.209238430557093e-17,
+      "saved_previous_forward_max_difference_mm": 3.209238430557093e-17
+    },
+    {
+      "case": "mixed_2d",
+      "domain_mm": [
+        6,
+        2
+      ],
+      "elements": [
+        6,
+        3
+      ],
+      "rule": "3x3_sub2",
+      "stiffness_relative": 2.2467570669356063e-16,
+      "displacement_relative": 1.2232557356466058e-14,
+      "displacement_max_mm": 5.0306980803327406e-17,
+      "saved_previous_forward_max_difference_mm": 5.0306980803327406e-17
+    }
+  ],
+  "forward_evaluation_counts": {
+    "matched_main_pairs": 28,
+    "previous_input_replay": 6,
+    "integration_reference_comparisons": 6,
+    "formal_record_total": 40,
+    "preliminary_nodal_path_sanity": 12,
+    "turn_total": 52
+  },
+  "rendering": {
+    "common_comparison_limits": true,
+    "difference_color_floor_MPa": 1e-08,
+    "difference_color_floor_mm": 1e-11,
+    "interpolation_only_no_new_solve": true
+  }
+}
