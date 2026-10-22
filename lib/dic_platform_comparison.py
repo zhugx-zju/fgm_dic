@@ -85,7 +85,7 @@ def _load_identification(root: Path, platform: str):
                 inverse=inverse, E=field, displacement=displacement, forward=forward)
 
 
-def _plot_mesh_comparison(output: Path, records: list[dict]) -> None:
+def _plot_mesh_comparison(output: Path, records: list[dict], *, modulus_limits=None) -> None:
     """Use a shared E range, and a common displacement scale per load/component."""
     output.mkdir(exist_ok=True, parents=True)
     mesh = records[0]['mesh']
@@ -95,6 +95,8 @@ def _plot_mesh_comparison(output: Path, records: list[dict]) -> None:
     reference_values = reference(mesh.X, mesh.Y)
     values = [reference_values, *(r['E'] for r in records)]
     lo, hi = min(v.min() for v in values), max(v.max() for v in values)
+    if modulus_limits is not None:
+        lo, hi = modulus_limits
     fig, axes = plt.subplots(3, 1, figsize=(12, 6), constrained_layout=True)
     for ax, field, title in zip(axes, values,
             ('Independent calibrated E', 'E identified using 180N DIC', 'E identified using 280N DIC')):
@@ -159,7 +161,7 @@ def write_independent_comparison(runs: dict, output: Path, *, allow_incomplete: 
     output = Path(output).resolve()
     output.mkdir(exist_ok=True, parents=True)
     plot_identification_workflow(output/'independent_platform_workflow')
-    rows, sources, completed = [], {}, []
+    rows, sources, completed, mesh_records = [], {}, [], {}
     for label, platforms in runs.items():
         ready = all(all((Path(root)/'04_comparison'/name).exists() for name in
                         ('run_metadata.json', 'comparison.csv', '打开查看结果.html'))
@@ -182,6 +184,12 @@ def write_independent_comparison(runs: dict, output: Path, *, allow_incomplete: 
                 if left['metadata']['force_pairing'][platform][key] != right['metadata']['force_pairing'][platform][key]:
                     raise ValueError(f'{label}: inconsistent {platform} {key}')
         np.testing.assert_array_equal(left['mesh'].coord, right['mesh'].coord)
+        nu_directory = f'nu_{left["cfg"].PRIMARY_NU:.2f}'
+        with np.load(left['root']/'02_forward'/nu_directory/'fields.npz') as calibrated:
+            for record in records:
+                platform = record['case'].name
+                np.testing.assert_allclose(record['forward'], calibrated[f'{platform}_prediction'].reshape(-1, 2),
+                                           rtol=1e-8, atol=1e-10)
         with np.load(left['root']/'01_prepared/fields.npz') as a, np.load(right['root']/'01_prepared/fields.npz') as b:
             if set(a.files) != set(b.files):
                 raise ValueError('Independent runs must preserve the same prepared arrays')
@@ -191,9 +199,17 @@ def write_independent_comparison(runs: dict, output: Path, *, allow_incomplete: 
             platform = record['cfg'].FIT_CASES[0]
             metrics = pd.read_csv(record['root']/'04_comparison/comparison.csv')
             for metric in metrics[metrics.nu == record['cfg'].PRIMARY_NU].to_dict(orient='records'):
-                metric.update(mesh=label, identified_using=platform,
-                              evaluation='same_load' if metric['case'] == platform else 'cross_load',
-                              selected_gamma=record['inverse']['selected_gamma'])
+                # Calibration is one fixed reference, independent of either identification.
+                inverse_model = metric['model'] == 'inverse'
+                if not inverse_model and platform != '180N':
+                    continue
+                metric.update(mesh=label,
+                              identified_using=platform if inverse_model else 'independent_calibration',
+                              evaluation=('same_load' if metric['case'] == platform else 'cross_load')
+                                         if inverse_model else 'calibration_forward',
+                              selected_gamma=record['inverse']['selected_gamma'] if inverse_model else None)
+                if not inverse_model:
+                    metric['role'] = 'calibration_reference'
                 rows.append(metric)
             source = record['root']/'03_inverse/run_metadata.json'
             sources[f'{label}/{platform}'] = dict(root=str(record['root']), sha256=file_sha256(source),
@@ -202,10 +218,21 @@ def write_independent_comparison(runs: dict, output: Path, *, allow_incomplete: 
                 forward_fields_sha256=file_sha256(record['root']/'02_forward'/f'nu_{record["cfg"].PRIMARY_NU:.2f}'/'fields.npz'),
                 nu=record['cfg'].PRIMARY_NU,
                 gamma=record['inverse']['selected_gamma'], status=record['inverse']['status'])
-        _plot_mesh_comparison(output/label, records)
+        mesh_records[label] = records
         completed.append(label)
+    color_limits = None
+    if mesh_records:
+        all_records = [record for records in mesh_records.values() for record in records]
+        color_limits = (
+            min(min(float(record['E'].min()), min(r['mean_E_MPa'] for r in record['metadata']['calibration']))
+                for record in all_records),
+            max(max(float(record['E'].max()), max(r['mean_E_MPa'] for r in record['metadata']['calibration']))
+                for record in all_records))
+        for label, records in mesh_records.items():
+            _plot_mesh_comparison(output/label, records, modulus_limits=color_limits)
     summary = dict(status='computed' if len(completed) == len(runs) else 'running',
                    protocol='independent_platform_identification', completed_meshes=completed,
+                   modulus_color_limits_MPa=color_limits,
                    renderer_sha256=file_sha256(Path(__file__)),
                    sources=sources, runs={k: {p: str(Path(v).resolve()) for p, v in platforms.items()}
                                           for k, platforms in runs.items()})
@@ -236,7 +263,8 @@ def write_independent_comparison(runs: dict, output: Path, *, allow_incomplete: 
         for platform, root in platforms.items():
             target = Path(root)/'04_comparison/打开查看结果.html'
             link = Path(os.path.relpath(target, output)).as_posix()
-            page.append(f'<p><a href="{link}">{platform} 独立反演完整结果</a></p>')
+            page.append(f'<p><a href="{link}">{platform} 独立反演完整结果</a></p>' if target.exists()
+                        else f'<p>{platform} 独立反演：计算进行中。</p>')
         if label not in completed:
             page.append('<p>计算进行中，尚未生成本网格的双平台比较结论。</p>')
             continue
@@ -246,9 +274,17 @@ def write_independent_comparison(runs: dict, output: Path, *, allow_incomplete: 
         page.append('<h2>同平台的粗细网格宽度平均模量对照</h2>'
                     '<p><a href="mesh_comparison_profiles.svg">SVG</a></p><img src="mesh_comparison_profiles.png">')
     if not metrics.empty:
-        display = metrics.replace({'role': {'fit': '本平台识别/回代', 'prediction': '跨载荷对照'},
-                                   'evaluation': {'same_load': '本平台', 'cross_load': '跨载荷'}})
-        page.append('<h2>主ν下的误差与各自所选γ</h2>'+display.to_html(index=False, border=0))
+        display = metrics.replace({'role': {'fit': '本平台识别/回代', 'prediction': '跨载荷对照',
+                                            'calibration_reference': '独立标定参照'},
+                                   'identified_using': {'independent_calibration': '独立标定'},
+                                   'model': {'forward': '标定模量', 'inverse': '识别模量'},
+                                   'evaluation': {'same_load': '本平台回代', 'cross_load': '跨载荷对照',
+                                                  'calibration_forward': '独立标定正演'}})
+        display = display.rename(columns={'mesh': '网格', 'case': '位移载荷', 'model': '正演模量',
+                                          'identified_using': 'E来源', 'role': '用途',
+                                          'evaluation': '位移比较类型', 'selected_gamma': 'γ',
+                                          'rmse_ux_mm': '轴向RMSE(mm)', 'rmse_uy_mm': '横向RMSE(mm)'})
+        page.append('<h2>主ν下的误差与各自所选γ</h2>'+display.to_html(index=False, border=0, na_rep='—'))
     page.append('<p>优化停止、材料一致性与物理验证分别评价。几何配准、截断边界和跨批标定转移限制沿用原记录。</p>')
     (output/'index.html').write_text('\n'.join(page), encoding='utf-8')
     manifest = [dict(mesh='both', content='两平台独立识别流程', path=str(output/'independent_platform_workflow.png'))]
