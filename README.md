@@ -71,6 +71,7 @@ all_region与region已确认共用参考图及毫米坐标系，沿用既定横�
 - [粗网格仿真扫描结果与诊断](docs/unified_coarse_lcurve_results_20261023.md)：150 点已完成，三类算例均未取得有效选参，仿真进入条件未通过。
 - [380N统一材料模型实验诊断协议](docs/unified_380n_protocol_20261023.md)：固定界面、区内正则、380N自身选γ，沿用319.9 N假设净力。
 - [380N统一模型扫描结果](docs/unified_380n_results_20261023.md)：50点均达到迭代上限，未选定γ；保留未收敛场、回代误差和振荡诊断。
+- [局部支撑与预条件试验](docs/unified_support_pilot_results_20261023.md)：实际2680系数，均值／起伏预条件在强、中γ显著减少求解FE，弱γ仍失败；含完整对照与索引说明校正。
 - [实验方案](plan/dogbone_parallel_section_adjoint_plan.tex)、[验证方案](plan/validation_plan.md)、[拉伸数据与标定](post_tensile_test/README.md)。
 - `fgm_asm/`：共用有限元、观测与伴随内核；`lib/`：数据处理、四步流程及绘图；`script/`：四个入口。
 - [架构与接口](docs/architecture.md)、[坐标说明](docs/dic_coordinate_registration.md)。

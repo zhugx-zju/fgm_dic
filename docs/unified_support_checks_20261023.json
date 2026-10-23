@@ -77,6 +77,35 @@
       "final_is_accepted_iterate": true,
       "descent_fallback_count": 0,
       "active_bounds": 2
-    }
+    },
+    "evaluation_counter_scope": "Synthetic quadratic objective calls; no actual FE or adjoint solves in the quadratic stub"
+  },
+  "random_seed": 20261023,
+  "small_case": {
+    "length_mm": 6.0,
+    "height_mm": 2.0,
+    "elements": [
+      6,
+      3
+    ],
+    "interfaces_mm": [
+      2.25
+    ],
+    "nu": 0.26,
+    "true_uniform_E_MPa": 2000.0,
+    "initial_region_E_MPa": [
+      1700.0,
+      1900.0
+    ],
+    "log_coefficient_perturbation_std": 0.04,
+    "observation_grid": [
+      13,
+      7
+    ]
+  },
+  "environment": {
+    "python": "3.13.2",
+    "numpy": "2.4.0",
+    "scipy": "1.17.1"
   }
 }
