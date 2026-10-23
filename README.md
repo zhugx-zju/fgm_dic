@@ -69,6 +69,7 @@ all_region与region已确认共用参考图及毫米坐标系，沿用既定横�
 - [统一梯度／分层材料算法原型与 P0/P1 测试](docs/unified_gradient_layered_algorithm_tests.md)：独立配置、四个分步阶段及 `results/unified_gradient_layered/` 输出；当前未知界面仍有初值敏感和弱可辨识性，不替代主实验流程。
 - [121×19 粗网格区内正则与 L-curve 协议](docs/unified_coarse_lcurve_protocol_20261022.md)：独立仿真生成、单参数选参及实验进入条件。
 - [粗网格仿真扫描结果与诊断](docs/unified_coarse_lcurve_results_20261023.md)：150 点已完成，三类算例均未取得有效选参，实验反演尚未启动。
+- [380N统一材料模型实验诊断协议](docs/unified_380n_protocol_20261023.md)：固定界面、区内正则、380N自身选γ，沿用319.9 N假设净力。
 - [实验方案](plan/dogbone_parallel_section_adjoint_plan.tex)、[验证方案](plan/validation_plan.md)、[拉伸数据与标定](post_tensile_test/README.md)。
 - `fgm_asm/`：共用有限元、观测与伴随内核；`lib/`：数据处理、四步流程及绘图；`script/`：四个入口。
 - [架构与接口](docs/architecture.md)、[坐标说明](docs/dic_coordinate_registration.md)。

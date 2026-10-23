@@ -1,0 +1,23 @@
+{
+  "passed": true,
+  "platform": "380N",
+  "uniform_initial_modulus_MPa": 1866.8839067360518,
+  "directional_fd_step": 0.0001,
+  "directional_fd_relative_error": 3.852441441427977e-09,
+  "smoke_evidence": {
+    "solver_success": false,
+    "message": "STOP: TOTAL NO. OF ITERATIONS REACHED LIMIT",
+    "first_order_passed": false,
+    "gradient_inf": 0.0018562676319472458,
+    "projected_gradient_inf": 0.0018562676319469062,
+    "iterations": 3,
+    "forward_evaluations": 5,
+    "adjoint_evaluations": 5,
+    "initial_value": 0.1310818898730219,
+    "final_value": 0.099853426599022,
+    "elapsed_seconds": 0.18327989999670535,
+    "final_is_accepted_iterate": true,
+    "active_bounds": 0
+  },
+  "scope": "Actual 121x19 geometry/all observations; bounded solver smoke, not full convergence"
+}
