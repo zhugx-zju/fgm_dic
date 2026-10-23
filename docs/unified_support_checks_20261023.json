@@ -1,0 +1,82 @@
+{
+  "passed": true,
+  "small_full_parameters": 56,
+  "small_local_parameters": 36,
+  "actual_local_parameters": 2680,
+  "objective_relative_difference": 1.3322676295501878e-15,
+  "gradient_relative_difference": 1.1659676394953662e-15,
+  "directional_fd_steps": [
+    0.0001,
+    1e-05,
+    1e-06
+  ],
+  "directional_fd_errors": [
+    2.7199652316736065e-09,
+    4.7482922134971837e-11,
+    7.950203455606437e-11
+  ],
+  "mean_metric_setup": {
+    "setup_forward_evaluations": 4,
+    "setup_adjoint_evaluations": 4,
+    "elapsed_seconds": 0.005464599991682917,
+    "data_mean_hessian_eigenvalues": [
+      3.008135210560465e-10,
+      1.539827408631574e-09
+    ],
+    "data_mean_hessian_condition": 5.118876981412943,
+    "auxiliary_row_sum_correction_max": 2.1094237467877974e-15,
+    "mean_definition": "Physical area-weighted regional coefficient-field mean; fluctuations have zero mean",
+    "objective_changed": false,
+    "original_log_box_and_projected_gradient_retained": true
+  },
+  "uniform_recovery": {
+    "solver_success": true,
+    "first_order_passed": true,
+    "message": "Original log-coordinate projected gradient passed",
+    "gradient_inf": 5.750126345187407e-11,
+    "projected_gradient_inf": 5.750155906980581e-11,
+    "iterations": 6,
+    "forward_evaluations": 7,
+    "adjoint_evaluations": 7,
+    "initial_value": 3.788421894461917e-05,
+    "final_value": 1.924957003420834e-17,
+    "elapsed_seconds": 0.0040580999921076,
+    "final_is_accepted_iterate": true,
+    "descent_fallback_count": 0,
+    "active_bounds": 0
+  },
+  "budget_keeps_accepted_state": true,
+  "quadrature_raw_points": 144,
+  "quadrature_compact_points": 54,
+  "quadrature_K_relative_difference": 0.0,
+  "quadrature_U_max_difference_mm": 0.0,
+  "bound_quadratic_check": {
+    "passed": true,
+    "solution": [
+      4.605170185988092,
+      8.699514748210191,
+      6.1
+    ],
+    "expected": [
+      4.605170185988092,
+      8.699514748210191,
+      6.1
+    ],
+    "evidence": {
+      "solver_success": true,
+      "first_order_passed": true,
+      "message": "Original log-coordinate projected gradient passed",
+      "gradient_inf": 13.004852517898087,
+      "projected_gradient_inf": 0.0,
+      "iterations": 3,
+      "forward_evaluations": 4,
+      "adjoint_evaluations": 4,
+      "initial_value": 170.30061379586624,
+      "final_value": 19.06010567157081,
+      "elapsed_seconds": 0.00022839999292045832,
+      "final_is_accepted_iterate": true,
+      "descent_fallback_count": 0,
+      "active_bounds": 2
+    }
+  }
+}
