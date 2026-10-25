@@ -1,0 +1,17 @@
+﻿run,platform,method,status,selected_gamma
+results\dic_full,180N,H1 · 367×64,computed,3.906939937054621e-09
+results\dic_full\coarse,180N,H1 · 121×19,computed,3.906939937054621e-09
+results\dic_full\exact_tv_coarse_20261021,180N,精确 TV · 121×19,interrupted_for_solver_diagnosis,
+results\dic_full\exact_tv_coarse_pd_20261021,180N,精确 TV · 121×19,computed,1.2648552168552957e-07
+results\dic_full\exact_tv_refine_242x38_20261021,180N,精确 TV · 242×38,computed,1.2648552168552957e-07
+results\dic_full\h1_280N_independent_20261022,280N,H1 · 367×64,computed,1.757510624854793e-08
+results\dic_full\h1_280N_independent_coarse_20261022,280N,H1 · 121×19,computed,1.757510624854793e-08
+results\dic_full\load380_20261022\exact_tv,380N,精确 TV · 121×19,l_curve_insufficient_corner_support,
+results\dic_full\load380_20261022\exact_tv_fine,380N,精确 TV · 242×38,l_curve_insufficient_valid_points,
+results\dic_full\load380_20261022\h1,380N,H1 · 121×19,computed,3.7275937203149377e-08
+results\dic_full\load380_20261022\h1_uy10,380N,H1（横向平方残差权重10） · 121×19,computed,7.906043210907701e-08
+results\dic_full\load380_20261022\huber1,380N,Huber-TV δ=1 · 121×19,l_curve_no_resolved_corner,
+results\dic_full\load380_20261022\huber10,380N,Huber-TV δ=10 · 121×19,computed,2.5595479226995334e-06
+results\dic_full\tv,180N,Huber-TV δ=1 · 121×19,l_curve_no_resolved_corner,
+results\dic_full\tv\delta10,180N,Huber-TV δ=10 · 121×19,computed,1.2648552168552957e-07
+results\dic_full\uy10,180N,H1（横向平方残差权重10） · 121×19,computed,8.286427728546861e-09

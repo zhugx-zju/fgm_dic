@@ -21,6 +21,7 @@ from .dic_exact_tv_report import _audit_field, _profile
 from .dic_tv_refinement import _context, _read, prolong_field
 from .dic_tv_refinement_report import _common_integration
 from .experiment_data import file_sha256
+from .calibration_trend import add_calibration_trend
 
 
 def report(root, coarse):
@@ -156,6 +157,7 @@ def report(root, coarse):
     ax = axes[1, 0]
     ax.stairs(calibration.mean_E_MPa, edges, baseline=None, color='black', linestyle='--',
               label='独立标定均值（仅事后比较）')
+    add_calibration_trend(ax, calibration, cfg.REGION_BOUNDARIES_X, cfg.GEO_L, output=output)
     ax.fill_between(np.repeat(edges, 2)[1:-1], np.repeat(calibration.mean_E_MPa-calibration.sd_E_MPa, 2),
         np.repeat(calibration.mean_E_MPa+calibration.sd_E_MPa, 2), color='gray', alpha=.15)
     for profile, label, c, line in zip(profiles, labels, color, ('-', '-', '--')):

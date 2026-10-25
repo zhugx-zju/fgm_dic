@@ -13,6 +13,7 @@ import pandas as pd
 from .dic_case_workflow import load_prepared
 from .experiment_data import file_sha256
 from .research_reporting import modulus_width_profile
+from .calibration_trend import add_calibration_trend
 
 
 def plot_identification_workflow(stem: Path, *, include_380: bool = False) -> None:
@@ -138,6 +139,8 @@ def _plot_mesh_comparison(output: Path, records: list[dict], *, modulus_limits=N
                         for a, b, c in zip(x, mean, sd))
     dense_x = np.linspace(0, mesh.geo_l, 2400)
     axes[0].plot(dense_x, reference(dense_x, np.zeros_like(dense_x)), 'k--', label='Independent calibration')
+    add_calibration_trend(axes[0], calibration, records[0]['cfg'].REGION_BOUNDARIES_X,
+                          mesh.geo_l, output=output, english=True)
     axes[0].set(ylabel='Width-mean E (MPa)')
     axes[1].set(xlabel='x (mm)', ylabel='Transverse spatial SD (MPa)')
     for ax in axes:
@@ -270,6 +273,9 @@ def write_independent_comparison(runs: dict, output: Path, *, allow_incomplete: 
                 ax.plot(group.x_mm, group.mean_E_MPa, color=color, linestyle=linestyle,
                         label=f'{platform} DIC: {label}')
         for ax in axes:
+            add_calibration_trend(ax, all_records[0]['metadata']['calibration'],
+                                  all_records[0]['cfg'].REGION_BOUNDARIES_X,
+                                  all_records[0]['mesh'].geo_l, english=True)
             ax.set(xlabel='x (mm)', ylabel='Width-mean E (MPa)')
             ax.legend(fontsize=10)
         _save_figure(fig, output, 'mesh_comparison_profiles')

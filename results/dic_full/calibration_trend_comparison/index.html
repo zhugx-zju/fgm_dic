@@ -1,0 +1,141 @@
+<!doctype html><html lang="zh-CN"><meta charset="utf-8"><title>反演与分层标定趋势对比</title>
+<style>body{max-width:1300px;margin:30px auto;padding:20px;font:16px/1.7 Microsoft YaHei}img{max-width:100%}table{border-collapse:collapse}td,th{padding:6px;border-bottom:1px solid #ddd}</style>
+<h1>各算法反演与分层标定趋势对比</h1><p>紫色点划线：七组独立标定均值等权线性趋势，仅作事后参照；不是连续材料实测真值，不用于反演、初值、选γ或修改独立标定正演。阶梯与灰带仍表示实际分层标定均值及试样间SD。</p>
+<p>趋势沿用既有混合批次 independent 口径：七组均值等权拟合 E=a+b p。p(x) 由原六个材料界面与相邻填充率中值确定；不按 ROI 两端重新等分，不在 40%—100%以外外推。该连续坐标只是趋势比较约定，不代表试样实际连续制造。跨批桥接、物理配准和边界近似限制仍保留。</p>
+<p>按识别载荷分别展示，ν=0.26；γ 均保留原选参结果。色带为横向空间离散，不能作为置信区间。380N 使用假定净力319.9 N；不同方法的网格、权重和预算见图例及原结果，不能据此作严格同条件排名。</p>
+<h2>180N</h2><img src="180N_method_trends.png">
+<p><a href="180N_method_trends.svg">矢量图 SVG</a></p>
+<h2>280N</h2><img src="280N_method_trends.png">
+<p><a href="280N_method_trends.svg">矢量图 SVG</a></p>
+<h2>380N</h2><img src="380N_method_trends.png">
+<p><a href="380N_method_trends.svg">矢量图 SVG</a></p>
+<h2>全部实验方案的保存状态</h2>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>run</th>
+      <th>platform</th>
+      <th>method</th>
+      <th>status</th>
+      <th>selected_gamma</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>results\dic_full</td>
+      <td>180N</td>
+      <td>H1 · 367×64</td>
+      <td>computed</td>
+      <td>3.906940e-09</td>
+    </tr>
+    <tr>
+      <td>results\dic_full\coarse</td>
+      <td>180N</td>
+      <td>H1 · 121×19</td>
+      <td>computed</td>
+      <td>3.906940e-09</td>
+    </tr>
+    <tr>
+      <td>results\dic_full\exact_tv_coarse_20261021</td>
+      <td>180N</td>
+      <td>精确 TV · 121×19</td>
+      <td>interrupted_for_solver_diagnosis</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <td>results\dic_full\exact_tv_coarse_pd_20261021</td>
+      <td>180N</td>
+      <td>精确 TV · 121×19</td>
+      <td>computed</td>
+      <td>1.264855e-07</td>
+    </tr>
+    <tr>
+      <td>results\dic_full\exact_tv_refine_242x38_20261021</td>
+      <td>180N</td>
+      <td>精确 TV · 242×38</td>
+      <td>computed</td>
+      <td>1.264855e-07</td>
+    </tr>
+    <tr>
+      <td>results\dic_full\h1_280N_independent_20261022</td>
+      <td>280N</td>
+      <td>H1 · 367×64</td>
+      <td>computed</td>
+      <td>1.757511e-08</td>
+    </tr>
+    <tr>
+      <td>results\dic_full\h1_280N_independent_coarse_20261022</td>
+      <td>280N</td>
+      <td>H1 · 121×19</td>
+      <td>computed</td>
+      <td>1.757511e-08</td>
+    </tr>
+    <tr>
+      <td>results\dic_full\load380_20261022\exact_tv</td>
+      <td>380N</td>
+      <td>精确 TV · 121×19</td>
+      <td>l_curve_insufficient_corner_support</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <td>results\dic_full\load380_20261022\exact_tv_fine</td>
+      <td>380N</td>
+      <td>精确 TV · 242×38</td>
+      <td>l_curve_insufficient_valid_points</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <td>results\dic_full\load380_20261022\h1</td>
+      <td>380N</td>
+      <td>H1 · 121×19</td>
+      <td>computed</td>
+      <td>3.727594e-08</td>
+    </tr>
+    <tr>
+      <td>results\dic_full\load380_20261022\h1_uy10</td>
+      <td>380N</td>
+      <td>H1（横向平方残差权重10） · 121×19</td>
+      <td>computed</td>
+      <td>7.906043e-08</td>
+    </tr>
+    <tr>
+      <td>results\dic_full\load380_20261022\huber1</td>
+      <td>380N</td>
+      <td>Huber-TV δ=1 · 121×19</td>
+      <td>l_curve_no_resolved_corner</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <td>results\dic_full\load380_20261022\huber10</td>
+      <td>380N</td>
+      <td>Huber-TV δ=10 · 121×19</td>
+      <td>computed</td>
+      <td>2.559548e-06</td>
+    </tr>
+    <tr>
+      <td>results\dic_full\tv</td>
+      <td>180N</td>
+      <td>Huber-TV δ=1 · 121×19</td>
+      <td>l_curve_no_resolved_corner</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <td>results\dic_full\tv\delta10</td>
+      <td>180N</td>
+      <td>Huber-TV δ=10 · 121×19</td>
+      <td>computed</td>
+      <td>1.264855e-07</td>
+    </tr>
+    <tr>
+      <td>results\dic_full\uy10</td>
+      <td>180N</td>
+      <td>H1（横向平方残差权重10） · 121×19</td>
+      <td>computed</td>
+      <td>8.286428e-09</td>
+    </tr>
+  </tbody>
+</table>
+<p>无有效 γ 的方案未补指定正式识别曲线。合成真值测试与历史不同域结果未混入本实验趋势比较。</p>
+<h2>节点／单元模量与测试函数的五方法对照</h2><p>42×8位移单元；180N和380N分别扫描选参。失败方案保留原注记，P0曲线保持单元常值。</p><img src="../load380_20261022/comparison/space_profiles.png"><p><a href="../load380_20261022/comparison/space_profiles.svg">矢量图 SVG</a> · <a href="../load380_20261022/index.html">完整380N方法与状态</a></p><h2>统一分区算法：未选参诊断</h2><p>以下三条均为预先指定的失败诊断，不与已选参结果作精度排名；不改变仿真进入条件未通过的结论。</p>
+<img src="unified_unselected_diagnostics.png">
+<p><a href="verification.json">数值文件身份核验</a> · <a href="calibration_trend.json">趋势定义与系数</a> · <a href="calibration_trend_anchors.csv">标定来源、样本数、SD 与残差</a></p></html>

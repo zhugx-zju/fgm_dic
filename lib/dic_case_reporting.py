@@ -471,6 +471,9 @@ def write_case_report(output, summary, metrics, regions, selection):
                     parts.append('</div>')
             for name in ('modulus_comparison.png', 'x_profile.png'):
                 if (output/directory/name).exists():
+                    if name == 'x_profile.png' and (output/directory/'calibration_trend.json').exists():
+                        from .calibration_trend import TREND_NOTE
+                        parts.append('<p>'+html.escape(TREND_NOTE)+'</p>')
                     parts.append(f'<img src="{directory}/{name}">')
     parts += ['<details><summary>物理域内的有效观测与 DIC 采样</summary>', cover.to_html(index=False, border=0), '</details>',
               '<details><summary>完整报告与适用范围</summary><pre>'+html.escape('\n'.join(lines))+'</pre></details>']

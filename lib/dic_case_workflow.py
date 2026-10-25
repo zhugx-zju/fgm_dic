@@ -983,7 +983,10 @@ def plot_saved_stage(output, prepared=None):
                                    f'Identified E using {", ".join(cfg.FIT_CASES)} DIC, nu={nu:.2f}')],
                                  'jet', title_prefix='', unit='MPa', bounds=bounds)
                 save_x_profile(destination, mesh, field, reference,
-                               identified_using=', '.join(cfg.FIT_CASES))
+                               identified_using=', '.join(cfg.FIT_CASES),
+                               calibration=(metadata['calibration'] if getattr(cfg, 'DATA_MODE', 'dic') == 'dic'
+                                            and not getattr(cfg, 'SYNTHETIC_REPRESENTATION', None) else None),
+                               region_boundaries=cfg.REGION_BOUNDARIES_X)
             else:
                 np.testing.assert_allclose(fields['E_calibrated'], reference(mesh.X, mesh.Y), rtol=0, atol=0)
             states = []
@@ -1082,7 +1085,10 @@ def compare_dic_results(prepared, forward, inverse, output, plots=True, plot_onl
             plot_modulus_comparison(destination, mesh, reference(mesh.X, mesh.Y), field,
                                     identified_using=', '.join(cfg.FIT_CASES))
             save_x_profile(destination, mesh, field, reference,
-                           identified_using=', '.join(cfg.FIT_CASES))
+                           identified_using=', '.join(cfg.FIT_CASES),
+                           calibration=(metadata['calibration'] if getattr(cfg, 'DATA_MODE', 'dic') == 'dic'
+                                        and not getattr(cfg, 'SYNTHETIC_REPRESENTATION', None) else None),
+                           region_boundaries=cfg.REGION_BOUNDARIES_X)
     if not plot_only:
         metrics.to_csv(output/'comparison.csv', index=False)
         regions.to_csv(output/'regional_comparison.csv', index=False)

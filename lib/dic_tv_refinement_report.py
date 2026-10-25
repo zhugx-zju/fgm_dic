@@ -14,6 +14,7 @@ from fgm_asm.exact_tv import QuadratureGradient
 from .dic_exact_tv_report import _audit_field, _profile
 from .dic_tv_refinement import _context
 from .experiment_data import file_sha256
+from .calibration_trend import add_calibration_trend
 
 
 def _common_integration(meshes, fields, calibration, boundaries):
@@ -122,6 +123,7 @@ def report(root):
     edges = np.r_[0., cfg.REGION_BOUNDARIES_X, cfg.GEO_L]
     ax = axes[1, 0]
     ax.stairs(calibration.mean_E_MPa, edges, baseline=None, color='black', linestyle='--', label='独立标定均值（仅事后对照）')
+    add_calibration_trend(ax, calibration, cfg.REGION_BOUNDARIES_X, cfg.GEO_L, output=output)
     ax.fill_between(np.repeat(edges,2)[1:-1], np.repeat(calibration.mean_E_MPa-calibration.sd_E_MPa,2),
                     np.repeat(calibration.mean_E_MPa+calibration.sd_E_MPa,2), color='gray', alpha=.18)
     for profile, color, label in zip(profiles, colors, labels):

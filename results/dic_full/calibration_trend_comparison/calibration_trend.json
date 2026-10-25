@@ -1,0 +1,22 @@
+{
+  "definition": "equal-group OLS E=a+b*p; p(x) from physical interfaces",
+  "role": "postprocessing_only_not_material_truth",
+  "intercept_MPa": 473.97089114042745,
+  "slope_MPa_per_infill_percent": 18.406514434781588,
+  "infill_at_x_zero_percent": 104.84204688716878,
+  "infill_slope_percent_per_mm": -0.6250000000000004,
+  "slope_MPa_per_mm": -11.504071521738501,
+  "calibrated_infill_range_percent": [
+    40.0,
+    100.0
+  ],
+  "trend_support_x_mm": [
+    7.747275019470038,
+    103.74727501946997
+  ],
+  "group_fit_r_squared": 0.9740596985777783,
+  "group_fit_rmse_MPa": 60.075344932756146,
+  "extrapolation": false,
+  "inverse_or_selection_use": false,
+  "note": "紫色点划线：七组独立标定均值等权线性趋势，仅作事后参照；不是连续材料实测真值，不用于反演、初值、选γ或修改独立标定正演。阶梯与灰带仍表示实际分层标定均值及试样间SD。"
+}

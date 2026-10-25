@@ -9,6 +9,7 @@ from fgm_asm.mesh import MeshInfo
 from lib.dic_exact_tv_report import _profile
 from lib.experiment_data import file_sha256
 from lib.dic_380n_spaces import profile,p
+from lib.calibration_trend import add_calibration_trend
 
 ROOT=Path(__file__).resolve().parents[1]
 OUTPUT=ROOT/'results/dic_full/load380_20261022'
@@ -106,8 +107,9 @@ def refresh_case_navigation():
         (root/'结果目录.json').write_text(json.dumps(catalog,ensure_ascii=False,indent=2),encoding='utf-8')
         (root/'结果总览.html').write_text(''.join(page)+'</ul></html>',encoding='utf-8')
 
-def report():
-    refresh_case_navigation()
+def report(*, plot_only=False):
+    if not plot_only:
+        refresh_case_navigation()
     destination=OUTPUT/'comparison';destination.mkdir(exist_ok=True)
     plt.rcParams.update({'font.family':'Microsoft YaHei','font.size':10,'axes.unicode_minus':False,'svg.fonttype':'none'})
     prepared=read(OUTPUT/'h1/01_prepared/run_metadata.json')
@@ -122,6 +124,7 @@ def report():
     fig,axes=plt.subplots(3,2,figsize=(14,11),sharex=True,sharey=True,layout='constrained')
     for ax,method,row in zip(axes.flat,METHODS,summaries):
         ax.stairs(truth,edges,baseline=None,color='black',linestyle=':',label='独立标定均值（灰带±试样间SD，仅事后对照）')
+        add_calibration_trend(ax, prepared['calibration'], cfg['REGION_BOUNDARIES_X'], cfg['GEO_L'], output=destination)
         ax.fill_between(np.repeat(edges,2)[1:-1],np.repeat(truth-calibration_sd,2),np.repeat(truth+calibration_sd,2),color='gray',alpha=.12)
         old,oldmesh,oldE=baselines[method]
         if oldE is not None:
@@ -156,6 +159,7 @@ def report():
         fig,axes=plt.subplots(3,2,figsize=(14,11),sharex=True,sharey=True,layout='constrained')
         for ax,entry in zip(axes.flat,space_rows):
             method=entry['method'];ax.stairs(truth,edges,baseline=None,color='black',linestyle=':',label='独立标定均值（灰带±试样间SD，仅事后对照）')
+            add_calibration_trend(ax, prepared['calibration'], cfg['REGION_BOUNDARIES_X'], cfg['GEO_L'])
             ax.fill_between(np.repeat(edges,2)[1:-1],np.repeat(truth-calibration_sd,2),np.repeat(truth+calibration_sd,2),color='gray',alpha=.12)
             for folder,row,color,line,load in [('spaces_180N_recovered' if (OUTPUT/'spaces_180N_recovered'/method/'selected.npz').exists() else 'spaces_180N_control',entry['control'],'#0072B2','--','180N'),('spaces',entry['current'],'#D55E00','-','380N，假定319.9N')]:
                 if row.get('status')!='selected':continue
@@ -168,6 +172,8 @@ def report():
         axes.flat[-1].axis('off');axes.flat[-1].text(.03,.85,'共同条件：42×8位移单元；所有y行模量独立\n节点387个模量 / 单元336个模量\nν=0.26；两种载荷均独立扫描50个γ\nb=(1−s²)(1−t²)\n修改测试函数方案是bubble-PG，未采用SUPG',transform=axes.flat[-1].transAxes,va='top',fontsize=11)
         fig.suptitle('42×8单元：模量空间与测试函数对照；ν=0.26\n180N和380N均重扫50点γ；380N暂取319.9N',fontsize=12)
         savefig(fig,destination/'space_profiles')
+    if plot_only:
+        return
     material_rows=[];metric_rows=[];status_rows=[]
     for row in summaries:
         method=row['method'];old=baselines[method][0]

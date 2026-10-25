@@ -18,6 +18,7 @@ from fgm_asm.load_case import evaluate_observation
 from fgm_asm.research import solve_forward
 from .dic_case_workflow import load_prepared, _metrics, _regional_comparison
 from .experiment_data import file_sha256
+from .calibration_trend import add_calibration_trend
 
 
 def _read(path):
@@ -135,6 +136,7 @@ def report(root, baseline):
     edges = np.r_[0., cfg.REGION_BOUNDARIES_X, cfg.GEO_L]
     axis = axes[1, 0]
     axis.stairs(calibration.mean_E_MPa, edges, baseline=None, color='black', linestyle='--', label='独立标定均值（仅事后对照）')
+    add_calibration_trend(axis, calibration, cfg.REGION_BOUNDARIES_X, cfg.GEO_L, output=output)
     axis.fill_between(np.repeat(edges, 2)[1:-1], np.repeat(calibration.mean_E_MPa-calibration.sd_E_MPa, 2),
                       np.repeat(calibration.mean_E_MPa+calibration.sd_E_MPa, 2), color='gray', alpha=.18)
     profiles = {'x_mm': mesh.plot_x[0]}

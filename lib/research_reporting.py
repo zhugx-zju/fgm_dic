@@ -158,7 +158,8 @@ def modulus_width_profile(mesh, reconstructed, reference):
                           'inverse_width_max_E_MPa': field.max(axis=0)})
 
 
-def save_x_profile(output, mesh, reconstructed, reference, *, identified_using=None):
+def save_x_profile(output, mesh, reconstructed, reference, *, identified_using=None,
+                   calibration=None, region_boundaries=None):
     """Save the common width-profile definition and its two-panel figure."""
     table = modulus_width_profile(mesh, reconstructed, reference)
     x = table.x_mm.to_numpy()
@@ -169,6 +170,16 @@ def save_x_profile(output, mesh, reconstructed, reference, *, identified_using=N
     dense_x = np.linspace(0., mesh.geo_l, 1401)
     axes[0].plot(dense_x, reference(dense_x, np.zeros_like(dense_x)), color='black',
                  linestyle='--', label='Independent calibration')
+    if calibration is not None:
+        from .calibration_trend import add_calibration_trend
+        groups = pd.DataFrame(calibration)
+        edges = np.r_[0., region_boundaries, mesh.geo_l]
+        axes[0].fill_between(np.repeat(edges, 2)[1:-1],
+                             np.repeat(groups.mean_E_MPa-groups.sd_E_MPa, 2),
+                             np.repeat(groups.mean_E_MPa+groups.sd_E_MPa, 2),
+                             color='gray', alpha=.14, label='Calibration specimen SD')
+        add_calibration_trend(axes[0], calibration, region_boundaries, mesh.geo_l,
+                              output=output, english=True)
     label = ('Identified E: width mean' if identified_using is None else
              f'E from {identified_using} DIC: width mean')
     axes[0].plot(x, mean, color='#0072B2', label=label)
