@@ -340,6 +340,8 @@ def build(*, refresh_existing=False):
              '<a href="calibration_trend.json">趋势定义与系数</a> · '
              '<a href="calibration_trend_anchors.csv">标定来源、样本数、SD 与残差</a></p></html>']
     (OUTPUT/'index.html').write_text('\n'.join(page), encoding='utf-8')
+    from .calibration_trend_error import build_relative_errors
+    build_relative_errors()
     project_page = ROOT/'results/index.html'
     text = project_page.read_text(encoding='utf-8')
     if 'id="calibration-trend-comparison"' not in text:
@@ -353,4 +355,10 @@ def build(*, refresh_existing=False):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--refresh-existing', action='store_true', help='Refresh saved modulus/profile figures only')
-    build(refresh_existing=parser.parse_args().refresh_existing)
+    parser.add_argument('--relative-errors-only', action='store_true', help='Add relative-difference figures from the saved profiles')
+    args = parser.parse_args()
+    if args.relative_errors_only:
+        from .calibration_trend_error import build_relative_errors
+        build_relative_errors()
+    else:
+        build(refresh_existing=args.refresh_existing)
