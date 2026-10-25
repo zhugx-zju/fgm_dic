@@ -61,6 +61,9 @@ def _objective_description(summary):
                        'L-curve纵坐标直接取该积分（不含γ、不再开平方，单位MPa·mm）。'
                        '模量为连续Q4插值 E=ΣNᵢEᵢ，每个节点Eᵢ独立，各y行不绑定；'
                        '位移试函数和测试函数仍取原Q4的Nᵢ，不使用SUPG，也不输入分区界面或层数。')
+    if summary.get('material_parameterization') == 'axial':
+        regularizer += (f" 本组限定E=E(x)，各y行共用{summary['inverse_parameter_count']}个轴向节点模量；"
+                        '二维位移正演和全部DIC观测不变，正则保留完整面积积分，未使用已知分层界面。')
     return (f"位移失配使用面积权重 × 分量系数：ux={weights['ux']:g}、uy={weights['uy']:g}。"
             '系数乘在残差平方上；同一权重用于刚体配准、初值、伴随梯度和 L-curve，不缩放原始位移。'
             '不设参考模量，不作模量或噪声尺度归一化。双分量 RMS 随权重定义改变，跨权重比较应分别看两个分量的 mm 误差。'
@@ -357,11 +360,12 @@ def write_case_report(output, summary, metrics, regions, selection):
     title = f"DIC 正反演对照：{summary['case_id']}"
     fit_names = (summary.get('initialization') or {}).get('fit_cases', [])
     identification = ('、'.join(fit_names) or '见冻结配置')
+    material_label = '轴向E(x)约束' if summary.get('material_parameterization') == 'axial' else '自由二维'
     overview = Path(summary.get('prepared_directory', output.parent/'01_prepared')).parent/'结果总览.html'
     lines = [f'# {title}', '', f'运行状态：`{status}`。物理坐标配准已核验：{verified}。', '',
              '## 几何、观测与统一网格', '',
              _geometry_description(summary), '',
-             f"独立标定正演与自由二维反演共用 {mesh['nel_x']}×{mesh['nel_y']} 单元，单元尺寸 {mesh['hx_mm']}×{mesh['hy_mm']} mm。{observation_description}", '',
+             f"独立标定正演与{material_label}反演共用 {mesh['nel_x']}×{mesh['nel_y']} 单元，单元尺寸 {mesh['hx_mm']}×{mesh['hy_mm']} mm。{observation_description}", '',
              '有限元三点约束只固定数值刚体规范；DIC 与模型在观测空间通过同一两平移、一微小转动子空间配准。未删除仿射伸长或横向收缩。', '',
              '有效观测与采样间距见 `input_audit.csv`。', '',
              '## 独立标定正演、DIC 与反演回代', '',
@@ -373,7 +377,7 @@ def write_case_report(output, summary, metrics, regions, selection):
                   '| --- | --- | --- | --- | ---: | ---: | ---: |']
         for r in metrics:
             lines.append(f"| {r['nu']:.2f} | {r['case']} | {role_labels.get(r['role'], r['role'])} | {r['model']} | {r['rms_mm']:.7f} | {r['rmse_ux_mm']:.7f} | {r['rmse_uy_mm']:.7f} |")
-        lines += ['', '## 自由二维模量与独立标定', '',
+        lines += ['', f'## {material_label}模量与独立标定', '',
                   '| ν | 填充率 | 标定均值±组内 SD (MPa) | 反演区域均值 (MPa) | 相对差异 |',
                   '| --- | --- | ---: | ---: | ---: |']
         for r in regions:

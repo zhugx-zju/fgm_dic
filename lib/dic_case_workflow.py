@@ -39,7 +39,9 @@ def _solver_summary(result):
                                           'residual_norm', 'regularization_norm')}
     summary['final_gradient_inf'] = float(np.max(np.abs(result['final_gradient'])))
     summary['line_search_restarts'] = result.get('line_search_restarts', [])
-    for key in ('tv_certificate', 'solution_method', 'regularization_resolved'):
+    for key in ('tv_certificate', 'solution_method', 'regularization_resolved',
+                'material_parameterization', 'inverse_parameter_count',
+                'gradient_coordinates', 'full_nodal_gradient_inf'):
         if key in result:
             summary[key] = result[key]
     return summary
@@ -194,8 +196,8 @@ def _validate(cfg):
         raise ValueError('Supply a nonempty list of physical Poisson ratios')
     if cfg.PRIMARY_NU not in cfg.NU_VALUES:
         raise ValueError('PRIMARY_NU must be fixed in NU_VALUES before comparison')
-    if set(cfg.FIT_CASES) & set(cfg.PREDICT_CASES) or not cfg.FIT_CASES or not cfg.PREDICT_CASES:
-        raise ValueError('Need disjoint, nonempty identification and cross-evaluation case lists')
+    if set(cfg.FIT_CASES) & set(cfg.PREDICT_CASES) or not cfg.FIT_CASES:
+        raise ValueError('Need nonempty identification cases and disjoint optional cross-evaluation cases')
     if set(cfg.FIT_CASES) | set(cfg.PREDICT_CASES) != set(cfg.PLATFORMS):
         raise ValueError('Every platform must be assigned to fit or prediction')
     if cfg.OUTSIDE_POINT_POLICY not in ('reject', 'crop_to_physical_roi'):
@@ -205,6 +207,11 @@ def _validate(cfg):
         raise ValueError('L-curve requires at least five distinct positive finite gamma candidates')
     if cfg.REGULARIZATION_MODE not in ('gradient', 'huber_tv', 'exact_tv'):
         raise ValueError('Choose gradient, huber_tv or exact_tv on the free nodal E field')
+    parameterization = getattr(cfg, 'MATERIAL_PARAMETERIZATION', 'nodal_2d')
+    if parameterization not in ('nodal_2d', 'axial'):
+        raise ValueError('MATERIAL_PARAMETERIZATION must be nodal_2d or axial')
+    if parameterization == 'axial' and cfg.REGULARIZATION_MODE != 'gradient':
+        raise ValueError('The axial diagnostic currently supports original H1 only')
     if cfg.REGULARIZATION_MODE == 'exact_tv':
         ExactTVOptions(**cfg.EXACT_TV_OPTIONS, max_evaluations=cfg.MAX_FUN)
         if getattr(cfg, 'EXACT_TV_SOLVER', 'admm') not in ('admm', 'primal_dual'):
@@ -236,7 +243,11 @@ def _optimize(cfg, mesh, cases, gamma, nu, initial=None, initial_dual=None):
             primal_step=getattr(cfg, 'EXACT_TV_PRIMAL_STEP', 2e8),
             coupling=getattr(cfg, 'EXACT_TV_COUPLING', .9))
     options = {'delta': cfg.TV_DELTA} if cfg.REGULARIZATION_MODE == 'huber_tv' else None
-    result = lbfgs_inverse_solver_scipy(
+    solver = lbfgs_inverse_solver_scipy
+    if getattr(cfg, 'MATERIAL_PARAMETERIZATION', 'nodal_2d') == 'axial':
+        from fgm_asm.axial_inverse import axial_h1_inverse_solver
+        solver = axial_h1_inverse_solver
+    result = solver(
         mesh, observation_cases=cases, E_init=initial,
         gamma=gamma, max_iter=cfg.MAX_ITER, max_fun=cfg.MAX_FUN,
         ftol=cfg.FTOL, gtol=cfg.GTOL, nu=nu,
@@ -252,7 +263,7 @@ def _optimize(cfg, mesh, cases, gamma, nu, initial=None, initial_dual=None):
         if min(remaining_iterations, remaining_evaluations) <= 0:
             break
         previous = result
-        retried = lbfgs_inverse_solver_scipy(
+        retried = solver(
             mesh, observation_cases=cases, E_init=previous['E_final'], gamma=gamma,
             max_iter=remaining_iterations, max_fun=remaining_evaluations,
             ftol=cfg.FTOL, gtol=cfg.GTOL, nu=nu, regularization_mode=cfg.REGULARIZATION_MODE,
@@ -549,6 +560,12 @@ def prepare_dic(cfg, output):
                'physical_validation_status': 'not_established; geometry registration and boundary-equivalence evidence are distinct',
                'scope': 'registered comparison' if verified else 'conditional comparison under explicit registration assumptions'}
     component_weights = displacement_component_weights(cfg)
+    if getattr(cfg, 'MATERIAL_PARAMETERIZATION', 'nodal_2d') == 'axial':
+        summary['material_parameterization'] = 'axial'
+        summary['inverse_parameter_count'] = cfg.NEL_X+1
+        summary['material_parameterization_note'] = (
+            'E=E(x), identical nodal moduli across y; two-dimensional displacement FE; '
+            'H1 keeps full area integral H*integral(E_x^2 dx); no known-layer prior')
     summary['displacement_component_weights'] = dict(zip(('ux', 'uy'), component_weights.tolist()))
     if not np.array_equal(component_weights, [1., 1.]):
         summary['objective_definition'] = (
@@ -639,8 +656,11 @@ def load_prepared(source, *, saved_fields_only=False):
     recorded = {path.replace('\\', '/'): digest for path, digest in metadata['source_sha256'].items()}
     mechanics = MECHANICS_SOURCE_FILES + (('exact_tv.py',) if
         metadata['configuration']['REGULARIZATION_MODE'] == 'exact_tv' else ())
+    if metadata['configuration'].get('MATERIAL_PARAMETERIZATION') == 'axial':
+        mechanics += ('axial_inverse.py',)
     if saved_fields_only:
-        unused_solvers = {'inverse_solver.py', 'regularization.py', 'tgv.py', 'l_curve.py', 'exact_tv.py'}
+        unused_solvers = {'inverse_solver.py', 'regularization.py', 'tgv.py', 'l_curve.py',
+                          'exact_tv.py', 'axial_inverse.py'}
         mechanics = tuple(name for name in mechanics if name not in unused_solvers)
     for name in mechanics:
         path = f'fgm_asm/{name}'
@@ -685,6 +705,9 @@ def _stage_summary(prepared, provenance, stage):
                                               'coverage', 'force_pairing', 'scope', 'primary_nu_prespecified',
                                               'objective_definition')}
     summary.update(provenance, workflow=stage, status='running')
+    for key in ('material_parameterization', 'inverse_parameter_count', 'material_parameterization_note'):
+        if key in prepared:
+            summary[key] = prepared[key]
     if 'domain_geometry' in prepared:
         summary['domain_geometry'] = prepared['domain_geometry']
     if 'material_registration' in prepared:
@@ -908,7 +931,7 @@ def _finish_dic_inverse(cfg, mesh, cases, metadata, summary, selection, prepared
                                      __file__=getattr(cfg, '__file__', None))
         run_config.NU, run_config.GAMMA = nu, gamma
         save_run(destination, run_config, dict(summary, solver=_solver_summary(result), nu=nu,
-                                               inverse_parameter_count=mesh.n_nod), fields)
+                                               inverse_parameter_count=result.get('inverse_parameter_count', mesh.n_nod)), fields)
         _save_tv_evidence(destination, result)
         regions.to_csv(destination / 'regional_modulus_comparison.csv', index=False)
         pd.DataFrame(all_metrics).to_csv(output / 'comparison.csv', index=False)

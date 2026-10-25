@@ -1,0 +1,187 @@
+{
+  "comparison": {
+    "status": "computed",
+    "fit_only": "380N",
+    "force_N": 319.9,
+    "force_is_assumed": true,
+    "nu": 0.26,
+    "mesh": [
+      121,
+      19
+    ],
+    "observations": 23920,
+    "selected_axial_gamma": 5.42867543932386e-08,
+    "scan_points": 50,
+    "solver_successful_scan_points": 49,
+    "gtol_scan_points": 0,
+    "scan_FE_evaluations": 15215,
+    "comparisons": [
+      {
+        "method": "free_2d",
+        "label": "原自由二维H1",
+        "parameters": 2440,
+        "gamma": 3.7275937203149377e-08,
+        "regional_mean_absolute_difference_percent": 7.726564257372087,
+        "regional_max_absolute_difference_percent": 17.446614893991395,
+        "trend_max_absolute_difference_percent": 11.836537401788448,
+        "ux_rmse_um": 2.5597529207275844,
+        "uy_rmse_um": 3.3555408819206587,
+        "solver_converged": true,
+        "stop_message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+        "gradient_inf": 2.5622055468916887e-09,
+        "gradient_tolerance_satisfied": false,
+        "mean_signed_difference_percent": 6.554017844172417,
+        "mean_absolute_difference_percent": 7.671279779441862,
+        "rms_relative_difference_percent": 8.666131905195355,
+        "support_start_x_mm": 7.747275019470038,
+        "support_end_x_mm": 103.74727501946997
+      },
+      {
+        "method": "axial",
+        "label": "轴向E(x) H1（独立选γ）",
+        "parameters": 122,
+        "gamma": 5.42867543932386e-08,
+        "regional_mean_absolute_difference_percent": 7.300015808936698,
+        "regional_max_absolute_difference_percent": 17.429607264702042,
+        "trend_max_absolute_difference_percent": 11.202877442240322,
+        "ux_rmse_um": 2.721505629018263,
+        "uy_rmse_um": 3.9419267532765367,
+        "solver_converged": true,
+        "stop_message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+        "gradient_inf": 1.0584996366319968e-07,
+        "gradient_tolerance_satisfied": false,
+        "mean_signed_difference_percent": 6.403853517746685,
+        "mean_absolute_difference_percent": 7.181367401550497,
+        "rms_relative_difference_percent": 8.191428363932937,
+        "support_start_x_mm": 7.747275019470038,
+        "support_end_x_mm": 103.74727501946997
+      },
+      {
+        "method": "axial_fixed_gamma",
+        "label": "轴向E(x)（固定原二维γ）",
+        "parameters": 122,
+        "gamma": 3.7275937203149377e-08,
+        "regional_mean_absolute_difference_percent": 7.72487086448718,
+        "regional_max_absolute_difference_percent": 17.462880909221525,
+        "trend_max_absolute_difference_percent": 11.856400674586773,
+        "ux_rmse_um": 2.6038205709601483,
+        "uy_rmse_um": 3.9440812245818293,
+        "solver_converged": true,
+        "stop_message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+        "gradient_inf": 2.793348812188943e-07,
+        "gradient_tolerance_satisfied": false,
+        "mean_signed_difference_percent": 6.555116197998889,
+        "mean_absolute_difference_percent": 7.667843175882013,
+        "rms_relative_difference_percent": 8.6665289311891,
+        "support_start_x_mm": 7.747275019470038,
+        "support_end_x_mm": 103.74727501946997
+      }
+    ],
+    "independent_recomputation": [
+      {
+        "method": "free_2d",
+        "objective_recomputed": true,
+        "gradient_recomputed": true,
+        "width_tying_exact": false
+      },
+      {
+        "method": "axial",
+        "objective_recomputed": true,
+        "gradient_recomputed": true,
+        "width_tying_exact": true
+      },
+      {
+        "method": "axial_fixed_gamma",
+        "objective_recomputed": true,
+        "gradient_recomputed": true,
+        "width_tying_exact": true
+      }
+    ],
+    "exact_region_integration_verified_by_independent_clipped_Q4_cells": true,
+    "historical_region_CSV_native_Gauss_grouping_reproduced": true,
+    "input_arrays_bitwise_equal": true,
+    "source_sha256": {
+      "results\\dic_full\\load380_20261022\\h1\\03_inverse\\nu_0.26\\fields.npz": "560d78411b23b7a138a648625efa0ca4a4420c4551cb15a69ed5aed2e0d2558f",
+      "results\\dic_full\\load380_20261022\\h1\\03_inverse\\nu_0.26\\run_metadata.json": "f1cb1d6d4f79b17624a798776d8ea6de6c0c4663098a0216d2174d3366cc187b",
+      "results\\dic_full\\h1_380N_axial_20261025\\03_inverse\\nu_0.26\\fields.npz": "adde470639dd08513dcd73a848d624cba7355a3fbe55a2e966f1574d8250142e",
+      "results\\dic_full\\h1_380N_axial_20261025\\03_inverse\\nu_0.26\\run_metadata.json": "90b089d9c32d56d1dea2c80bdb051968217a326ec023af9644d6777118374777",
+      "results\\dic_full\\h1_380N_axial_20261025\\fixed_original_gamma\\fields.npz": "c1865c01a890ce1204c1da9c428d8555a35a0ca5e412a897b34f5c826ec65b42",
+      "results\\dic_full\\h1_380N_axial_20261025\\fixed_original_gamma\\run_metadata.json": "23934c3e26d6ce424f8aabd3792466f5eb7c68f18d9bb7184dd0417e1f32ef4c"
+    },
+    "regularization": "gamma/2 * H * integral(E_x^2 dx); H not dropped",
+    "evaluation": "exact physical region clipping; fixed existing trend support; calibration post hoc only",
+    "scope": "E(x) prior imposed; 2D spatial recovery not tested; original force/coordinate/boundary/calibration transfer limitations retained"
+  },
+  "implementation_verification": {
+    "passed": true,
+    "seed": 20261025,
+    "frozen_380N_input_arrays_identical_to_baseline": {
+      "380N_raw_reference_coordinates": true,
+      "380N_raw_mean_displacement": true,
+      "380N_raw_grid_ids": true,
+      "380N_coordinates": true,
+      "380N_observed": true,
+      "380N_point_area_mm2": true,
+      "380N_grid_ids": true
+    },
+    "baseline_2D_prediction_recompute_max_difference_mm": 0.0,
+    "baseline_2D_recomputed_rmse_um": [
+      2.5597529207275844,
+      3.3555408819206587
+    ],
+    "real_380N_small_mesh_gradient_checks": [
+      {
+        "gamma": 1e-12,
+        "directional_relative_errors": [
+          3.685164136518401e-08,
+          2.6796518103822845e-10,
+          1.0295774742965798e-09
+        ],
+        "area_H1_vs_1D_relative_error": 1.6653345369377348e-15
+      },
+      {
+        "gamma": 3.7275937203149377e-08,
+        "directional_relative_errors": [
+          8.720333762389003e-07,
+          9.23191661690604e-09,
+          9.395303958842002e-10
+        ],
+        "area_H1_vs_1D_relative_error": 1.6653345369377348e-15
+      },
+      {
+        "gamma": 0.0001,
+        "directional_relative_errors": [
+          4.552763121783638e-06,
+          4.552987156673541e-08,
+          4.885436725561745e-10
+        ],
+        "area_H1_vs_1D_relative_error": 1.6653345369377348e-15
+      }
+    ],
+    "uniform_analytical_max_residual_mm": 1.513739740573915e-15,
+    "noiseless_relative_rms": 6.981219078747141e-08,
+    "noiseless_solver_message": "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL",
+    "noiseless_reduced_gradient_inf": 5.551434572803201e-13,
+    "historical_kernel_note": "Original preparation hashes differ from pre-existing current mesh/fem/inverse kernels. New case prepared afresh; original frozen arrays match bitwise and original saved-field forward prediction independently reproduced."
+  },
+  "scan_verification": {
+    "passed": true,
+    "scan_norms_gradients_y_tying_and_budget_checked": 50,
+    "initial_scan_successes": 47,
+    "after_recovery_successes": 49,
+    "original_FE_evaluations": 15005,
+    "after_recovery_FE_evaluations": 15215,
+    "all_50_raw_trials_preserved": true,
+    "L_curve_selection_independently_reproduced": true,
+    "gamma": 5.42867543932386e-08,
+    "failed_points": [
+      {
+        "gamma": 1.389495494373136e-11,
+        "iterations": 46,
+        "evaluations": 212,
+        "final_gradient_inf": 4.697575680984341e-09,
+        "stop_message": "ABNORMAL: "
+      }
+    ]
+  }
+}
