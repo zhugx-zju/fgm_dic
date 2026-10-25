@@ -108,6 +108,13 @@ def _scan_completion_description(summary):
     record = summary.get('scan_completion')
     if not record:
         return ''
+    if record.get('changed_solver_or_budget') is False:
+        return (f"γ={record['initial_exception_gamma']:g}的原尝试因数值步长下溢中断，未返回可核验场；"
+                f"日志给出{record['initial_exception_FE_lower_bound']}—"
+                f"{record['initial_exception_FE_upper_bound']}次FE的计数区间。该点未重试，明确排除选参；"
+                '只从上一通过场计算其余候选，保持冻结步长、单点预算和一阶条件。'
+                '后续无返回场的数值异常同样保留并排除。表中该中断点按上界计账，'
+                '精确值及上下界标记见selection.csv；不将无返回场称为已核验收敛场。')
     return (f"γ={record['interrupted_gamma']:g}的原尝试因正模量步长下溢中断，最后状态未保存；"
             f"日志确认至少{record['interrupted_FE_lower_bound']}次FE，配置上限为"
             f"{record['interrupted_FE_upper_bound']}次，确数不可恢复。随后用较小数值步长"

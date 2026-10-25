@@ -30,10 +30,26 @@ def verify(method, root=None):
     corner=select_l_curve_corner(scan.gamma,scan.residual_norm,scan.regularization_norm,
         scan.converged & scan.get('regularization_resolved',True))
     assert corner['selected_gamma']==inverse.get('selected_gamma')
-    fit=[c for c in cases if c.name=='380N'];audits=[]
+    fit=[c for c in cases if c.name=='380N'];audits=[];missing_fields=[]
     for row in scan.itertuples():
         directory=getattr(row,'solution_directory',None)
         directory=root/'03_inverse'/directory if isinstance(directory,str) else root/'03_inverse/l_curve'/f'gamma_{row.gamma:g}'
+        if row.stop_message == 'numerical_error_no_returned_field':
+            failure=json.loads((directory/'exception.json').read_text(encoding='utf-8'))
+            assert not row.converged and failure['excluded_from_selection']
+            assert not failure['returned_field_available'] and not (directory/'fields.npz').exists()
+            np.testing.assert_allclose(failure['gamma'],row.gamma,rtol=1e-14,atol=0)
+            assert 0 < failure['FE_lower_bound'] <= failure['FE_upper_bound'] <= cfg.MAX_FUN
+            if 'original_log_sha256' in failure:
+                assert file_sha256(root/'step3.log') == failure['original_log_sha256']
+            else:
+                trace=pd.read_csv(directory/'history_until_exception.csv')
+                assert int(trace.evaluations.iloc[-1]) == failure['FE_lower_bound'] == failure['FE_upper_bound']
+            missing_fields.append(dict(failure))
+            audits.append(dict(gamma=row.gamma,saved_converged=False,
+                returned_field_available=False,numerical_failure_record_audited=True,
+                norms_and_gradient_reproduced=False))
+            continue
         with np.load(directory/'fields.npz') as z:
             E=z['E_inverse'].copy()
             assert np.isfinite(E).all() and (E>0).all()
@@ -89,7 +105,9 @@ def verify(method, root=None):
                     role='fit' if case.name=='380N' else 'previously_inspected_cross_load_diagnostic',
                     **_metrics(state)))
     pd.DataFrame(common).to_csv(destination/'common_equal_weight_metrics.csv',index=False)
-    summary=dict(method=method,scan_points=50,scan_reproduced=True,selected_gamma=inverse.get('selected_gamma'),
+    summary=dict(method=method,scan_points=50,scan_reproduced=not missing_fields,
+        scan_outcomes_audited=True,missing_field_numerical_exceptions=missing_fields,
+        saved_field_certificates_reproduced=True,selected_gamma=inverse.get('selected_gamma'),
         final_kkt_audits=checks,final_gradient_audits=gradient_checks,
         all_saved_predictions_reproduced=True if common else None,
         prepared_metadata_sha256=file_sha256(root/'01_prepared/run_metadata.json'),
