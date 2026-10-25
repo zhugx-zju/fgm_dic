@@ -4,6 +4,9 @@
 
 - [完整投稿分析与最小补强方案](../output/literature-survey/graded-modulus-h1-380n-20261025/synthesis.md)
 - [相近工作的能力、证据及差异比较](../output/literature-survey/graded-modulus-h1-380n-20261025/comparison.md)
+- [Hajhashemkhani 2018实验方案细读](../output/literature-survey/graded-modulus-h1-380n-20261025/paper_notes/hajhashemkhani-2018.md)
 - [结构化论文目录与阅读层级](../output/literature-survey/graded-modulus-h1-380n-20261025/paper_catalog.jsonl)
 
 检索及修订日期2026-10-25。直接比较已限定为真实实验数据参与反演的工作，纯数值论文及仅做实验正演验证的工作不进入比较。完整独立闭环与实测场自洽拟合分别标注。团队IJMS 2026前篇的归属由用户确认，不当作外部竞争文章；新实验闭环的贡献与已有算法背景分开评价。原数值、γ、标定和物理验证状态均未修改。
+
+比较进一步区分研究目的：夹杂刚度重构和损伤识别不作为梯度材料高通量表征的等效工作。Taç 2026的连续高斯材料场来自仿真；其Fig. 7则采用真实打印试样与DIC，并有均匀材料试验参照，须按具体算例判断数据来源。
