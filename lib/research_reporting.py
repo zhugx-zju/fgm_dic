@@ -178,8 +178,12 @@ def save_x_profile(output, mesh, reconstructed, reference, *, identified_using=N
                              np.repeat(groups.mean_E_MPa-groups.sd_E_MPa, 2),
                              np.repeat(groups.mean_E_MPa+groups.sd_E_MPa, 2),
                              color='gray', alpha=.14, label='Calibration specimen SD')
-        add_calibration_trend(axes[0], calibration, region_boundaries, mesh.geo_l,
-                              output=output, english=True)
+        # The auxiliary trend is defined by all seven original groups. Cropped
+        # experiments retain their independent step reference and SD; fitting a
+        # new line to a selected subset would change the comparison convention.
+        if len(groups) == 7:
+            add_calibration_trend(axes[0], calibration, region_boundaries, mesh.geo_l,
+                                  output=output, english=True)
     label = ('Identified E: width mean' if identified_using is None else
              f'E from {identified_using} DIC: width mean')
     axes[0].plot(x, mean, color='#0072B2', label=label)

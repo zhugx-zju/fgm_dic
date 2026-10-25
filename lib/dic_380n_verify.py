@@ -19,8 +19,8 @@ from lib.experiment_data import file_sha256
 ROOT=Path(__file__).resolve().parents[1]
 OUTPUT=ROOT/'results/dic_full/load380_20261022'
 
-def verify(method):
-    root=OUTPUT/method
+def verify(method, root=None):
+    root=Path(root) if root is not None else OUTPUT/method
     cfg,mesh,cases,prepared,_=load_prepared(root/'01_prepared')
     inverse=json.loads((root/'03_inverse/run_metadata.json').read_text(encoding='utf-8'))
     scan=pd.read_csv(root/'03_inverse/selection.csv',float_precision='round_trip')
@@ -55,7 +55,7 @@ def verify(method):
         audits.append(record)
     destination=root/'verification';destination.mkdir(exist_ok=True)
     pd.DataFrame(audits).to_csv(destination/'scan_audit.csv',index=False)
-    common=[];checks=[]
+    common=[];checks=[];gradient_checks=[]
     if inverse.get('selected_gamma') is not None and 'solvers' in inverse:
         saved_metrics=pd.read_csv(root/'03_inverse/comparison.csv')
         for solver in inverse['solvers']:
@@ -65,6 +65,17 @@ def verify(method):
             if cfg.REGULARIZATION_MODE=='exact_tv':
                 result=_audit_field(mesh,fit,cfg,QuadratureGradient(mesh),directory,inverse['selected_gamma'],nu,solver['converged'])
                 assert result['certificate_reproduced'];checks.append(result)
+            else:
+                state=_evaluate_inverse_state(mesh,fit[0].bc_info,None,MaterialInfo(nu=nu),
+                    inverse['selected_gamma'],E,0,regularization_mode=cfg.REGULARIZATION_MODE,
+                    observation_cases=fit,
+                    regularization_options={'delta':cfg.TV_DELTA} if cfg.REGULARIZATION_MODE=='huber_tv' else None)
+                np.testing.assert_allclose(state['grad_m'],stored['final_gradient'],rtol=1e-5,atol=2e-11)
+                np.testing.assert_allclose(state['residual_norm'],solver['residual_norm'],rtol=1e-8,atol=1e-12)
+                np.testing.assert_allclose(state['regularization_norm'],solver['regularization_norm'],rtol=1e-10,atol=1e-9)
+                gradient_checks.append(dict(nu=nu,gradient_inf=float(np.max(abs(state['grad_m']))),
+                    gradient_tolerance_satisfied=bool(np.max(abs(state['grad_m']))<=cfg.GTOL),
+                    norms_and_gradient_reproduced=True))
             for case in cases:
                 u,_=solve_forward(mesh,case.bc_info['tensile_end_force'],cfg.THICKNESS,nu,E)
                 fresh=evaluate_observation(case,u)
@@ -79,7 +90,8 @@ def verify(method):
                     **_metrics(state)))
     pd.DataFrame(common).to_csv(destination/'common_equal_weight_metrics.csv',index=False)
     summary=dict(method=method,scan_points=50,scan_reproduced=True,selected_gamma=inverse.get('selected_gamma'),
-        final_kkt_audits=checks,all_saved_predictions_reproduced=True if common else None,
+        final_kkt_audits=checks,final_gradient_audits=gradient_checks,
+        all_saved_predictions_reproduced=True if common else None,
         prepared_metadata_sha256=file_sha256(root/'01_prepared/run_metadata.json'),
         scan_csv_sha256=file_sha256(root/'03_inverse/selection.csv'),
         source_sha256=file_sha256(Path(__file__)))
@@ -87,4 +99,8 @@ def verify(method):
     print(json.dumps(summary,ensure_ascii=False),flush=True)
 
 if __name__=='__main__':
-    parser=argparse.ArgumentParser();parser.add_argument('method');verify(parser.parse_args().method)
+    parser=argparse.ArgumentParser()
+    parser.add_argument('method')
+    parser.add_argument('--root', type=Path, help='Explicit four-step case root for a cropped 380N run')
+    args=parser.parse_args()
+    verify(args.method, args.root)
