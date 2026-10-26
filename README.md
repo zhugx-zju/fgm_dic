@@ -4,6 +4,8 @@
 
 1026均匀60%试样的三次独立H1反演已完成，见[均匀性报告](post_tensile_test/1026/60sample/analysis_results/h1_uniformity_20261026_final/report.md)：主ν=0.26时空间CV分别20.58%、8.54%、4.18%。第3次最接近均匀，但三次均保留横向位移拟合与力参考对应的限制；这不是独立物理验证。当前根配置停留在第3次，全部原始数值结果和逐次配置在results/dic_full/60sample_1026_run*_h1_20261026。
 
+[标定模量对照](post_tensile_test/1026/60sample/analysis_results/h1_calibration_comparison_20261026/report.md)补充绝对水平核验：相对60%默认独立标定1173.52 MPa，三次反演均值分别偏高79.56%、44.31%、24.96%。第3次空间较均匀仍不代表与标定一致；约束选段1276.05 MPa另作明确标注的对照，不据此调γ或载荷。
+
 当前材料参数见[1023拉伸标定报告](post_tensile_test/1023/analysis_results/modulus_20261026_28_final/analysis_report.md)及[分组参数表](post_tensile_test/1023/analysis_results/modulus_20261026_28_final/group_summary.csv)。只使用本次试样的独立标定，不进行不同批次的填充率结果比较。
 
 按逐根线性段重新分析，并检查组内单根偏差≤3%、组均值随填充率不减的要求，见[逐根与约束选段报告](post_tensile_test/1023/analysis_results/individual_3pct_monotone_20261026_final/analysis_report.md)。其中3%一致性和单调性作为显式选段约束，不是独立验证结论；原独立标定和默认配置保留。

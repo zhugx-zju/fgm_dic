@@ -1,0 +1,46 @@
+{
+  "input_sha256": {
+    "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1026\\60sample\\analysis_results\\h1_uniformity_20261026_final\\uniformity_summary.csv": "544b1cd533e6711a2f7fccda968b944fcb7896cd71c54e03d9cac2a0a9089529",
+    "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1026\\60sample\\analysis_results\\h1_uniformity_20261026_final\\axial_profiles.csv": "807286050fa124c8cc6da5d3871c14b1f07037c207f38fc7ca02982c5d77639e",
+    "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1026\\60sample\\analysis_results\\h1_uniformity_20261026_final\\input_audit.json": "519d9d7e1ea858c60eb42d44abd3c1e3582e2f79fd63c2e0c84b86066e4feb98",
+    "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1023\\analysis_results\\modulus_20261026_28_final\\group_summary.csv": "8e67f28122cfc9ae1710f5c9081179c92ac21c85e63d1b56de5fad641bb60898",
+    "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1023\\analysis_results\\individual_3pct_monotone_20261026_final\\group_summary.csv": "c64cee0989da7bfb41b6726fded2dae74e1ccf58da16251f50ab31c8a0789b35"
+  },
+  "command": [
+    "D:\\MyProject\\uniform_pressure_experiment_1023\\lib\\uniform_calibration_comparison.py",
+    "--summary",
+    "post_tensile_test/1026/60sample/analysis_results/h1_uniformity_20261026_final/uniformity_summary.csv",
+    "--profiles",
+    "post_tensile_test/1026/60sample/analysis_results/h1_uniformity_20261026_final/axial_profiles.csv",
+    "--audit",
+    "post_tensile_test/1026/60sample/analysis_results/h1_uniformity_20261026_final/input_audit.json",
+    "--calibration",
+    "post_tensile_test/1023/analysis_results/modulus_20261026_28_final/group_summary.csv",
+    "--secondary-calibration",
+    "post_tensile_test/1023/analysis_results/individual_3pct_monotone_20261026_final/group_summary.csv",
+    "--output",
+    "post_tensile_test/1026/60sample/analysis_results/h1_calibration_comparison_20261026"
+  ],
+  "code_sha256": "95e68dff76bd8c4f2becacc6f90029862b3397367f8a2ce34136b2d720b3465f",
+  "primary_reference": {
+    "infill_percent": 60,
+    "batch": 1023,
+    "fit_method": "common_stress_window_OLS",
+    "n_input": 4,
+    "n_excluded": 0,
+    "n": 4,
+    "mean_E_MPa": 1173.51874116734,
+    "sd_E_MPa": 61.86564442499001,
+    "cv_percent": 5.271807109228617
+  },
+  "secondary_reference": {
+    "infill_percent": 60,
+    "batch": 1023,
+    "fit_method": "individual_window_joint_3pct_monotone",
+    "n_input": 4,
+    "n": 4,
+    "mean_E_MPa": 1276.0479512463494,
+    "sd_E_MPa": 30.423667556175324,
+    "max_absolute_specimen_deviation_percent": 2.9935372712374897
+  }
+}
