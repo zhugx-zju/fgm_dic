@@ -1,0 +1,25 @@
+{
+  "passed": true,
+  "compiled_without_writing_bytecode": true,
+  "unchanged_core_modules": 13,
+  "protected_files_verified": 101,
+  "entry_help_passed": [
+    "step1_prepare_dic",
+    "step2_forward_calibrated",
+    "step3_inverse_dic",
+    "step4_compare_results"
+  ],
+  "unconfigured_input_rejected_without_output": true,
+  "html_links_verified": 37,
+  "historical_snapshot_hashes_verified": 50,
+  "no_inverse_computation_started": true,
+  "target": "D:\\MyProject\\uniform_pressure_experiment_1023",
+  "application_passed": true,
+  "changed_or_added_files": 66,
+  "removed_active_files": 105,
+  "recovery_archive_sha256": "5623267d5b429e68b39f874c76e1077ad29ec14cedeb8435b8ff6040c3449589",
+  "unrelated_existing_files_unchanged": true,
+  "raw_data_and_print_files_unchanged": true,
+  "existing_user_deletions_not_restored": true,
+  "default_result_index_intentionally_replaced": true
+}

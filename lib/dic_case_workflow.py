@@ -488,6 +488,8 @@ def resolve_dic_geometry(cfg, reference):
 
 def prepare_dic(cfg, output):
     """Stage 1: freeze experimental inputs, or explicitly generated FE data."""
+    if not getattr(cfg, 'INPUTS_CONFIGURED', True):
+        raise ValueError('1023输入尚未配置：请先按docs/input_setup.md核对DIC逐帧CSV、力配对、独立标定和材料坐标，再设置INPUTS_CONFIGURED=True。')
     if hasattr(cfg, 'SYNTHETIC_SOURCE_PREPARED'):
         from .synthetic_recovery import prepare_synthetic
         return prepare_synthetic(cfg, output)
