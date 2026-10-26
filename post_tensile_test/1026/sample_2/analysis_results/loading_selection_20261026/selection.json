@@ -1,0 +1,1139 @@
+{
+  "specimen": "sample_2",
+  "scope": "Maximum recorded load separately for all three runs.",
+  "fps_user_confirmed": 5.0,
+  "first_stage_user_confirmed": 0,
+  "selection_rule": "ceil(5*(final_DIC_hold_entry_s+6)) through start+14; within entry+6 to entry+9 s.",
+  "source_sha256": {
+    "1/disp.csv": "bfd2919e1aa8f3f795521e2550d821d40b4fb015e0e5ee36d76bff0780a8fd14",
+    "1/force.xlsb": "1ae3265e27fb28e304af3b7a91e1702bd76fabb3d2a3c7bb5e927f169e0ba9de",
+    "2/disp.csv": "8eea925595db46946bcf299dcc71780fa4c2ad5c24bd6aea41402a9f0888d850",
+    "2/force.xlsb": "6443b5bf426f5537eb4149e29b27b64b9bfe76fc415b50603815e4db058f637c",
+    "3/disp.csv": "79a29c9480108a1595e6cdc911ae89918256d23a59a83f6a9216075d375b6cc9",
+    "3/force.xlsb": "eafd444954aea4bb0d33e3d3ee676c12b59452e117037729aad0a1cb5bc87034"
+  },
+  "runs": {
+    "1": {
+      "run": 1,
+      "raw_peak_N": 279.5304,
+      "peak_machine_time_s": 107.2,
+      "peak_workbook_row": 5361,
+      "peak_is_last_machine_row": true,
+      "dic_last_stage": 739,
+      "machine_time_offset_s": -5.11,
+      "event_offset_range_s": [
+        -5.25,
+        -4.889999999999999
+      ],
+      "events": [
+        {
+          "machine": {
+            "time_s": 10.21,
+            "sse": 2.7909126450822927e-05,
+            "sample_count": 601,
+            "slope_before_mm_s": 0.008331692834138489,
+            "slope_after_mm_s": 0.0006615858975605356,
+            "jump_mm": -0.00047631848845732904,
+            "model": "independent_two_lines",
+            "fit_interval_s": [
+              7,
+              19
+            ],
+            "search_interval_s": [
+              9,
+              15
+            ]
+          },
+          "dic_point_blocks_and_mean": [
+            {
+              "time_s": 15.1,
+              "sse": 8.544043306473469e-05,
+              "sample_count": 76,
+              "slope_before_mm_s": 0.0075339876277948584,
+              "slope_after_mm_s": 0.0004832917669003725,
+              "jump_mm": 0.00041633462221614826,
+              "model": "independent_two_lines",
+              "fit_interval_s": [
+                10,
+                25
+              ],
+              "search_interval_s": [
+                12,
+                20
+              ]
+            },
+            {
+              "time_s": 15.1,
+              "sse": 8.529196356025538e-05,
+              "sample_count": 76,
+              "slope_before_mm_s": 0.007541699105384605,
+              "slope_after_mm_s": 0.0004236089866674784,
+              "jump_mm": 6.232892241650424e-05,
+              "model": "independent_two_lines",
+              "fit_interval_s": [
+                10,
+                25
+              ],
+              "search_interval_s": [
+                12,
+                20
+              ]
+            },
+            {
+              "time_s": 15.1,
+              "sse": 8.187425087683299e-05,
+              "sample_count": 76,
+              "slope_before_mm_s": 0.007537843366589724,
+              "slope_after_mm_s": 0.00045345037678392805,
+              "jump_mm": 0.0002393317723163171,
+              "model": "independent_two_lines",
+              "fit_interval_s": [
+                10,
+                25
+              ],
+              "search_interval_s": [
+                12,
+                20
+              ]
+            }
+          ],
+          "offsets_s": [
+            -4.889999999999999,
+            -4.889999999999999,
+            -4.889999999999999
+          ]
+        },
+        {
+          "machine": {
+            "time_s": 20.25,
+            "sse": 6.426428469109708e-07,
+            "sample_count": 601,
+            "slope_before_mm_s": 0.00040536103213795107,
+            "slope_after_mm_s": 0.008330555507753589,
+            "jump_mm": 0.00022821481828394117,
+            "model": "independent_two_lines",
+            "fit_interval_s": [
+              17,
+              29
+            ],
+            "search_interval_s": [
+              19,
+              25
+            ]
+          },
+          "dic_point_blocks_and_mean": [
+            {
+              "time_s": 25.5,
+              "sse": 4.650529333846035e-05,
+              "sample_count": 71,
+              "slope_before_mm_s": 8.94550836069534e-06,
+              "slope_after_mm_s": 0.006936057689716091,
+              "jump_mm": 0.0038362210287427334,
+              "model": "independent_two_lines",
+              "fit_interval_s": [
+                20,
+                34
+              ],
+              "search_interval_s": [
+                24,
+                30
+              ]
+            },
+            {
+              "time_s": 25.5,
+              "sse": 5.058050893119302e-05,
+              "sample_count": 71,
+              "slope_before_mm_s": -0.00013340054553915865,
+              "slope_after_mm_s": 0.006806399160789788,
+              "jump_mm": 0.004119476891777951,
+              "model": "independent_two_lines",
+              "fit_interval_s": [
+                20,
+                34
+              ],
+              "search_interval_s": [
+                24,
+                30
+              ]
+            },
+            {
+              "time_s": 25.5,
+              "sse": 4.572644039348528e-05,
+              "sample_count": 71,
+              "slope_before_mm_s": -6.222751858923296e-05,
+              "slope_after_mm_s": 0.006871228425252931,
+              "jump_mm": 0.003977848960260337,
+              "model": "independent_two_lines",
+              "fit_interval_s": [
+                20,
+                34
+              ],
+              "search_interval_s": [
+                24,
+                30
+              ]
+            }
+          ],
+          "offsets_s": [
+            -5.25,
+            -5.25,
+            -5.25
+          ]
+        },
+        {
+          "machine": {
+            "time_s": 59.59,
+            "sse": 1.5257438207847873e-05,
+            "sample_count": 651,
+            "slope_before_mm_s": 0.00832781877118837,
+            "slope_after_mm_s": 0.0019011439165263627,
+            "jump_mm": -0.0015529499860734005,
+            "model": "independent_two_lines",
+            "fit_interval_s": [
+              53,
+              66
+            ],
+            "search_interval_s": [
+              57,
+              63
+            ]
+          },
+          "dic_point_blocks_and_mean": [
+            {
+              "time_s": 64.69999999999999,
+              "sse": 2.075361961069819e-05,
+              "sample_count": 71,
+              "slope_before_mm_s": 0.006351127979352196,
+              "slope_after_mm_s": 0.0011372762333211233,
+              "jump_mm": -0.0029602721271587158,
+              "model": "independent_two_lines",
+              "fit_interval_s": [
+                57,
+                71
+              ],
+              "search_interval_s": [
+                61,
+                67
+              ]
+            },
+            {
+              "time_s": 64.69999999999999,
+              "sse": 3.1695614571562864e-05,
+              "sample_count": 71,
+              "slope_before_mm_s": 0.00618992733471657,
+              "slope_after_mm_s": 0.0010387604412573585,
+              "jump_mm": -0.002031698874709725,
+              "model": "independent_two_lines",
+              "fit_interval_s": [
+                57,
+                71
+              ],
+              "search_interval_s": [
+                61,
+                67
+              ]
+            },
+            {
+              "time_s": 64.69999999999999,
+              "sse": 2.2491249951526482e-05,
+              "sample_count": 71,
+              "slope_before_mm_s": 0.0062705276570344005,
+              "slope_after_mm_s": 0.0010880183372892205,
+              "jump_mm": -0.002495985500934269,
+              "model": "independent_two_lines",
+              "fit_interval_s": [
+                57,
+                71
+              ],
+              "search_interval_s": [
+                61,
+                67
+              ]
+            }
+          ],
+          "offsets_s": [
+            -5.109999999999985,
+            -5.109999999999985,
+            -5.109999999999985
+          ]
+        },
+        {
+          "machine": {
+            "time_s": 69.44999999999999,
+            "sse": 5.3542153684262865e-06,
+            "sample_count": 651,
+            "slope_before_mm_s": 0.0014844964234992306,
+            "slope_after_mm_s": 0.008331253709745213,
+            "jump_mm": -0.0006659864201619715,
+            "model": "independent_two_lines",
+            "fit_interval_s": [
+              64,
+              77
+            ],
+            "search_interval_s": [
+              66,
+              73
+            ]
+          },
+          "dic_point_blocks_and_mean": [
+            {
+              "time_s": 74.69999999999999,
+              "sse": 3.3864171405914e-05,
+              "sample_count": 71,
+              "slope_before_mm_s": 0.0010364392284412764,
+              "slope_after_mm_s": 0.006570837941990447,
+              "jump_mm": 0.002488650899917876,
+              "model": "independent_two_lines",
+              "fit_interval_s": [
+                67,
+                81
+              ],
+              "search_interval_s": [
+                70,
+                77
+              ]
+            },
+            {
+              "time_s": 74.5,
+              "sse": 2.737744179944427e-05,
+              "sample_count": 71,
+              "slope_before_mm_s": 0.0009616923769559622,
+              "slope_after_mm_s": 0.006795609073863551,
+              "jump_mm": 5.9628842796850584e-05,
+              "model": "independent_two_lines",
+              "fit_interval_s": [
+                67,
+                81
+              ],
+              "search_interval_s": [
+                70,
+                77
+              ]
+            },
+            {
+              "time_s": 74.69999999999999,
+              "sse": 2.7716743312602337e-05,
+              "sample_count": 71,
+              "slope_before_mm_s": 0.001004068460627519,
+              "slope_after_mm_s": 0.006681367498533696,
+              "jump_mm": 0.0018392080709852242,
+              "model": "independent_two_lines",
+              "fit_interval_s": [
+                67,
+                81
+              ],
+              "search_interval_s": [
+                70,
+                77
+              ]
+            }
+          ],
+          "offsets_s": [
+            -5.25,
+            -5.050000000000011,
+            -5.25
+          ]
+        }
+      ],
+      "tail_fit": {
+        "time_s": 112.10000000000159,
+        "sse": 6.132052806528924e-05,
+        "sample_count": 101,
+        "slope_before_mm_s": 0.006227318136791917,
+        "slope_after_mm_s": 0.0009457698147554055,
+        "jump_mm": 0.0,
+        "model": "continuous_broken_line",
+        "fit_interval_s": [
+          105,
+          125
+        ],
+        "search_interval_s": [
+          109,
+          119
+        ]
+      },
+      "tail_entry_sensitivity_s": [
+        112.00000000000153,
+        112.1300000000016
+      ],
+      "stage_first": 591,
+      "stage_last": 605,
+      "frame_count": 15,
+      "midpoint_stage": 598,
+      "camera_window_s": [
+        118.2,
+        121.0
+      ],
+      "estimated_machine_window_s": [
+        113.09,
+        115.89
+      ],
+      "peak_approximate_stage": 561.55,
+      "peak_stage_range_from_events": [
+        560.45,
+        562.25
+      ],
+      "force_coverage_count": 0,
+      "status": "candidate_DIC_end_hold_missing_contemporaneous_force",
+      "force_mean_N": null,
+      "point_labels": [
+        "阶段点 0-DY",
+        "阶段点 1-DY"
+      ]
+    },
+    "2": {
+      "run": 2,
+      "raw_peak_N": 379.49921,
+      "peak_machine_time_s": 113.62,
+      "peak_workbook_row": 5683,
+      "peak_is_last_machine_row": true,
+      "dic_last_stage": 684,
+      "machine_time_offset_s": -4.21,
+      "event_offset_range_s": [
+        -4.590000000000003,
+        -3.789999999999992
+      ],
+      "events": [
+        {
+          "machine": {
+            "time_s": 40.19,
+            "sse": 2.3951971544382642e-05,
+            "sample_count": 651,
+            "slope_before_mm_s": 0.008326445913135727,
+            "slope_after_mm_s": 0.0003777546764964501,
+            "jump_mm": -0.0016292724051397503,
+            "model": "independent_two_lines",
+            "fit_interval_s": [
+              34,
+              47
+            ],
+            "search_interval_s": [
+              37,
+              44
+            ]
+          },
+          "dic_point_blocks_and_mean": [
+            {
+              "time_s": 44.5,
+              "sse": 3.876834095527665e-05,
+              "sample_count": 71,
+              "slope_before_mm_s": 0.007475396942391767,
+              "slope_after_mm_s": 0.00019637922153429698,
+              "jump_mm": -0.0020911049335703546,
+              "model": "independent_two_lines",
+              "fit_interval_s": [
+                39,
+                53
+              ],
+              "search_interval_s": [
+                42,
+                50
+              ]
+            },
+            {
+              "time_s": 44.5,
+              "sse": 4.055921467957384e-05,
+              "sample_count": 71,
+              "slope_before_mm_s": 0.007360983334291064,
+              "slope_after_mm_s": 0.00021851109045608035,
+              "jump_mm": -0.0020530534365211196,
+              "model": "independent_two_lines",
+              "fit_interval_s": [
+                39,
+                53
+              ],
+              "search_interval_s": [
+                42,
+                50
+              ]
+            },
+            {
+              "time_s": 44.5,
+              "sse": 3.438512354228045e-05,
+              "sample_count": 71,
+              "slope_before_mm_s": 0.007418190138341381,
+              "slope_after_mm_s": 0.0002074451559951852,
+              "jump_mm": -0.0020720791850457297,
+              "model": "independent_two_lines",
+              "fit_interval_s": [
+                39,
+                53
+              ],
+              "search_interval_s": [
+                42,
+                50
+              ]
+            }
+          ],
+          "offsets_s": [
+            -4.310000000000002,
+            -4.310000000000002,
+            -4.310000000000002
+          ]
+        },
+        {
+          "machine": {
+            "time_s": 50.19,
+            "sse": 8.163958036030964e-07,
+            "sample_count": 651,
+            "slope_before_mm_s": 0.00021530661013402595,
+            "slope_after_mm_s": 0.008330135766681186,
+            "jump_mm": 0.00044441278827637184,
+            "model": "independent_two_lines",
+            "fit_interval_s": [
+              45,
+              58
+            ],
+            "search_interval_s": [
+              48,
+              55
+            ]
+          },
+          "dic_point_blocks_and_mean": [
+            {
+              "time_s": 54.3,
+              "sse": 5.816905868796606e-05,
+              "sample_count": 76,
+              "slope_before_mm_s": 0.00014934452380950362,
+              "slope_after_mm_s": 0.007042346296173465,
+              "jump_mm": -0.0008729729298592461,
+              "model": "independent_two_lines",
+              "fit_interval_s": [
+                49,
+                64
+              ],
+              "search_interval_s": [
+                53,
+                60
+              ]
+            },
+            {
+              "time_s": 54.5,
+              "sse": 5.207358595528125e-05,
+              "sample_count": 76,
+              "slope_before_mm_s": 5.26898791734726e-05,
+              "slope_after_mm_s": 0.007027210130292017,
+              "jump_mm": 0.0006772876251148224,
+              "model": "independent_two_lines",
+              "fit_interval_s": [
+                49,
+                64
+              ],
+              "search_interval_s": [
+                53,
+                60
+              ]
+            },
+            {
+              "time_s": 54.3,
+              "sse": 4.995319972024544e-05,
+              "sample_count": 76,
+              "slope_before_mm_s": 9.821293513427934e-05,
+              "slope_after_mm_s": 0.007033851249566314,
+              "jump_mm": -0.0007792057327339368,
+              "model": "independent_two_lines",
+              "fit_interval_s": [
+                49,
+                64
+              ],
+              "search_interval_s": [
+                53,
+                60
+              ]
+            }
+          ],
+          "offsets_s": [
+            -4.109999999999999,
+            -4.310000000000002,
+            -4.109999999999999
+          ]
+        },
+        {
+          "machine": {
+            "time_s": 76.28999999999999,
+            "sse": 1.871527051298048e-05,
+            "sample_count": 651,
+            "slope_before_mm_s": 0.008329789770077263,
+            "slope_after_mm_s": 0.0005890960131011615,
+            "jump_mm": -0.0014775204357584826,
+            "model": "independent_two_lines",
+            "fit_interval_s": [
+              69,
+              82
+            ],
+            "search_interval_s": [
+              72,
+              79
+            ]
+          },
+          "dic_point_blocks_and_mean": [
+            {
+              "time_s": 80.5,
+              "sse": 0.0001885745850706569,
+              "sample_count": 71,
+              "slope_before_mm_s": 0.006566077151340744,
+              "slope_after_mm_s": 0.00048334472334634476,
+              "jump_mm": -0.009083401689792044,
+              "model": "independent_two_lines",
+              "fit_interval_s": [
+                75,
+                89
+              ],
+              "search_interval_s": [
+                78,
+                85
+              ]
+            },
+            {
+              "time_s": 80.5,
+              "sse": 0.00016477359097957298,
+              "sample_count": 71,
+              "slope_before_mm_s": 0.006597671205391172,
+              "slope_after_mm_s": 0.0005037507686498797,
+              "jump_mm": -0.009147435406619268,
+              "model": "independent_two_lines",
+              "fit_interval_s": [
+                75,
+                89
+              ],
+              "search_interval_s": [
+                78,
+                85
+              ]
+            },
+            {
+              "time_s": 80.5,
+              "sse": 0.00017265234103039763,
+              "sample_count": 71,
+              "slope_before_mm_s": 0.006581874178365973,
+              "slope_after_mm_s": 0.000493547745998117,
+              "jump_mm": -0.009115418548205696,
+              "model": "independent_two_lines",
+              "fit_interval_s": [
+                75,
+                89
+              ],
+              "search_interval_s": [
+                78,
+                85
+              ]
+            }
+          ],
+          "offsets_s": [
+            -4.210000000000008,
+            -4.210000000000008,
+            -4.210000000000008
+          ]
+        },
+        {
+          "machine": {
+            "time_s": 86.31,
+            "sse": 1.626742184010179e-06,
+            "sample_count": 651,
+            "slope_before_mm_s": 0.00040426133716631694,
+            "slope_after_mm_s": 0.00832890131251369,
+            "jump_mm": 0.0004618741390535637,
+            "model": "independent_two_lines",
+            "fit_interval_s": [
+              80,
+              93
+            ],
+            "search_interval_s": [
+              83,
+              90
+            ]
+          },
+          "dic_point_blocks_and_mean": [
+            {
+              "time_s": 90.9,
+              "sse": 0.00011697933803064438,
+              "sample_count": 76,
+              "slope_before_mm_s": 0.001955936097886582,
+              "slope_after_mm_s": 0.006781727359081077,
+              "jump_mm": 0.002599089455002159,
+              "model": "independent_two_lines",
+              "fit_interval_s": [
+                85,
+                100
+              ],
+              "search_interval_s": [
+                88,
+                96
+              ]
+            },
+            {
+              "time_s": 90.1,
+              "sse": 0.00010020691912787976,
+              "sample_count": 76,
+              "slope_before_mm_s": 0.0019219325683760289,
+              "slope_after_mm_s": 0.006811782832509013,
+              "jump_mm": -0.0012587831007843295,
+              "model": "independent_two_lines",
+              "fit_interval_s": [
+                85,
+                100
+              ],
+              "search_interval_s": [
+                88,
+                96
+              ]
+            },
+            {
+              "time_s": 90.1,
+              "sse": 0.00010485436144653597,
+              "sample_count": 76,
+              "slope_before_mm_s": 0.0019225816451281606,
+              "slope_after_mm_s": 0.006808364607370955,
+              "jump_mm": -0.0012886647937265547,
+              "model": "independent_two_lines",
+              "fit_interval_s": [
+                85,
+                100
+              ],
+              "search_interval_s": [
+                88,
+                96
+              ]
+            }
+          ],
+          "offsets_s": [
+            -4.590000000000003,
+            -3.789999999999992,
+            -3.789999999999992
+          ]
+        }
+      ],
+      "tail_fit": {
+        "time_s": 118.86000000000146,
+        "sse": 7.449110787995302e-05,
+        "sample_count": 96,
+        "slope_before_mm_s": 0.006859934391690392,
+        "slope_after_mm_s": 0.0004322219513949628,
+        "jump_mm": 0.0,
+        "model": "continuous_broken_line",
+        "fit_interval_s": [
+          112,
+          131
+        ],
+        "search_interval_s": [
+          116,
+          126
+        ]
+      },
+      "tail_entry_sensitivity_s": [
+        118.82000000000144,
+        118.96000000000151
+      ],
+      "stage_first": 625,
+      "stage_last": 639,
+      "frame_count": 15,
+      "midpoint_stage": 632,
+      "camera_window_s": [
+        125.0,
+        127.8
+      ],
+      "estimated_machine_window_s": [
+        120.79,
+        123.59
+      ],
+      "peak_approximate_stage": 589.15,
+      "peak_stage_range_from_events": [
+        587.05,
+        591.0500000000001
+      ],
+      "force_coverage_count": 0,
+      "status": "candidate_DIC_end_hold_missing_contemporaneous_force",
+      "force_mean_N": null,
+      "point_labels": [
+        "阶段点 0-DY",
+        "阶段点 1-DY"
+      ]
+    },
+    "3": {
+      "run": 3,
+      "raw_peak_N": 479.88321,
+      "peak_machine_time_s": 127.68,
+      "peak_workbook_row": 6384,
+      "peak_is_last_machine_row": true,
+      "dic_last_stage": 745,
+      "machine_time_offset_s": -4.15,
+      "event_offset_range_s": [
+        -4.57,
+        -4.010000000000005
+      ],
+      "events": [
+        {
+          "machine": {
+            "time_s": 25.93,
+            "sse": 2.6106695527652684e-05,
+            "sample_count": 651,
+            "slope_before_mm_s": 0.008323781988211269,
+            "slope_after_mm_s": 0.00036629179214143527,
+            "jump_mm": -0.0017413320427885964,
+            "model": "independent_two_lines",
+            "fit_interval_s": [
+              20,
+              33
+            ],
+            "search_interval_s": [
+              23,
+              30
+            ]
+          },
+          "dic_point_blocks_and_mean": [
+            {
+              "time_s": 30.5,
+              "sse": 2.521142054964635e-05,
+              "sample_count": 71,
+              "slope_before_mm_s": 0.007189705638536053,
+              "slope_after_mm_s": 0.00022570857500824049,
+              "jump_mm": -0.002740108519951473,
+              "model": "independent_two_lines",
+              "fit_interval_s": [
+                24,
+                38
+              ],
+              "search_interval_s": [
+                27,
+                34
+              ]
+            },
+            {
+              "time_s": 30.5,
+              "sse": 2.0951630687347362e-05,
+              "sample_count": 71,
+              "slope_before_mm_s": 0.007155048439338194,
+              "slope_after_mm_s": 0.00021153136683446736,
+              "jump_mm": -0.002366908667311674,
+              "model": "independent_two_lines",
+              "fit_interval_s": [
+                24,
+                38
+              ],
+              "search_interval_s": [
+                27,
+                34
+              ]
+            },
+            {
+              "time_s": 30.5,
+              "sse": 2.077784516572894e-05,
+              "sample_count": 71,
+              "slope_before_mm_s": 0.007172377038937116,
+              "slope_after_mm_s": 0.00021861997092135262,
+              "jump_mm": -0.002553508593631567,
+              "model": "independent_two_lines",
+              "fit_interval_s": [
+                24,
+                38
+              ],
+              "search_interval_s": [
+                27,
+                34
+              ]
+            }
+          ],
+          "offsets_s": [
+            -4.57,
+            -4.57,
+            -4.57
+          ]
+        },
+        {
+          "machine": {
+            "time_s": 35.95,
+            "sse": 1.0768500542113778e-06,
+            "sample_count": 651,
+            "slope_before_mm_s": 0.00021009478687889892,
+            "slope_after_mm_s": 0.008331863579676736,
+            "jump_mm": 0.0005922805088945657,
+            "model": "independent_two_lines",
+            "fit_interval_s": [
+              31,
+              44
+            ],
+            "search_interval_s": [
+              34,
+              41
+            ]
+          },
+          "dic_point_blocks_and_mean": [
+            {
+              "time_s": 40.1,
+              "sse": 2.9506011587166687e-05,
+              "sample_count": 71,
+              "slope_before_mm_s": 2.1116399999627014e-06,
+              "slope_after_mm_s": 0.007455963919104068,
+              "jump_mm": 0.0004006719089205942,
+              "model": "independent_two_lines",
+              "fit_interval_s": [
+                35,
+                49
+              ],
+              "search_interval_s": [
+                38,
+                45
+              ]
+            },
+            {
+              "time_s": 40.1,
+              "sse": 2.2837466531031785e-05,
+              "sample_count": 71,
+              "slope_before_mm_s": 9.232519846146241e-05,
+              "slope_after_mm_s": 0.007450747256455842,
+              "jump_mm": -7.768058552135612e-05,
+              "model": "independent_two_lines",
+              "fit_interval_s": [
+                35,
+                49
+              ],
+              "search_interval_s": [
+                38,
+                45
+              ]
+            },
+            {
+              "time_s": 40.1,
+              "sse": 2.3260886009115512e-05,
+              "sample_count": 71,
+              "slope_before_mm_s": 4.721841923072904e-05,
+              "slope_after_mm_s": 0.007453355587779943,
+              "jump_mm": 0.00016149566169960017,
+              "model": "independent_two_lines",
+              "fit_interval_s": [
+                35,
+                49
+              ],
+              "search_interval_s": [
+                38,
+                45
+              ]
+            }
+          ],
+          "offsets_s": [
+            -4.149999999999999,
+            -4.149999999999999,
+            -4.149999999999999
+          ]
+        },
+        {
+          "machine": {
+            "time_s": 88.89,
+            "sse": 1.8080143737546188e-05,
+            "sample_count": 701,
+            "slope_before_mm_s": 0.008331339805734205,
+            "slope_after_mm_s": 0.0007540655299275896,
+            "jump_mm": -0.000344469290813045,
+            "model": "independent_two_lines",
+            "fit_interval_s": [
+              83,
+              97
+            ],
+            "search_interval_s": [
+              87,
+              94
+            ]
+          },
+          "dic_point_blocks_and_mean": [
+            {
+              "time_s": 92.9,
+              "sse": 0.00026292893233422144,
+              "sample_count": 76,
+              "slope_before_mm_s": 0.007356527715239187,
+              "slope_after_mm_s": 0.00014880129278446036,
+              "jump_mm": -0.012480282524844831,
+              "model": "independent_two_lines",
+              "fit_interval_s": [
+                87,
+                102
+              ],
+              "search_interval_s": [
+                91,
+                98
+              ]
+            },
+            {
+              "time_s": 92.9,
+              "sse": 0.00024134003459247975,
+              "sample_count": 76,
+              "slope_before_mm_s": 0.007442958426696393,
+              "slope_after_mm_s": 0.00018304126904097277,
+              "jump_mm": -0.013252604188547235,
+              "model": "independent_two_lines",
+              "fit_interval_s": [
+                87,
+                102
+              ],
+              "search_interval_s": [
+                91,
+                98
+              ]
+            },
+            {
+              "time_s": 92.9,
+              "sse": 0.000249016251370057,
+              "sample_count": 76,
+              "slope_before_mm_s": 0.0073997430709678135,
+              "slope_after_mm_s": 0.00016592128091270312,
+              "jump_mm": -0.012866443356696082,
+              "model": "independent_two_lines",
+              "fit_interval_s": [
+                87,
+                102
+              ],
+              "search_interval_s": [
+                91,
+                98
+              ]
+            }
+          ],
+          "offsets_s": [
+            -4.010000000000005,
+            -4.010000000000005,
+            -4.010000000000005
+          ]
+        },
+        {
+          "machine": {
+            "time_s": 98.94999999999999,
+            "sse": 8.629314806151937e-07,
+            "sample_count": 701,
+            "slope_before_mm_s": 0.000520645334373797,
+            "slope_after_mm_s": 0.008332254258060588,
+            "jump_mm": 0.0004808073430857165,
+            "model": "independent_two_lines",
+            "fit_interval_s": [
+              94,
+              108
+            ],
+            "search_interval_s": [
+              97,
+              104
+            ]
+          },
+          "dic_point_blocks_and_mean": [
+            {
+              "time_s": 103.1,
+              "sse": 0.00010558718434077683,
+              "sample_count": 76,
+              "slope_before_mm_s": -0.0006619149810256145,
+              "slope_after_mm_s": 0.007257891131524606,
+              "jump_mm": 0.018469474106120518,
+              "model": "independent_two_lines",
+              "fit_interval_s": [
+                98,
+                113
+              ],
+              "search_interval_s": [
+                101,
+                109
+              ]
+            },
+            {
+              "time_s": 103.1,
+              "sse": 9.87393935602614e-05,
+              "sample_count": 76,
+              "slope_before_mm_s": -0.0006255440188035616,
+              "slope_after_mm_s": 0.007243747913133232,
+              "jump_mm": 0.019041571266607316,
+              "model": "independent_two_lines",
+              "fit_interval_s": [
+                98,
+                113
+              ],
+              "search_interval_s": [
+                101,
+                109
+              ]
+            },
+            {
+              "time_s": 103.1,
+              "sse": 9.823668907711175e-05,
+              "sample_count": 76,
+              "slope_before_mm_s": -0.0006437294999145603,
+              "slope_after_mm_s": 0.007250819522328922,
+              "jump_mm": 0.018755522686363744,
+              "model": "independent_two_lines",
+              "fit_interval_s": [
+                98,
+                113
+              ],
+              "search_interval_s": [
+                101,
+                109
+              ]
+            }
+          ],
+          "offsets_s": [
+            -4.150000000000006,
+            -4.150000000000006,
+            -4.150000000000006
+          ]
+        }
+      ],
+      "tail_fit": {
+        "time_s": 131.65999999999667,
+        "sse": 0.00012535753088180915,
+        "sample_count": 106,
+        "slope_before_mm_s": 0.007152461742095379,
+        "slope_after_mm_s": 0.0002738349513848222,
+        "jump_mm": 0.0,
+        "model": "continuous_broken_line",
+        "fit_interval_s": [
+          123,
+          144
+        ],
+        "search_interval_s": [
+          128,
+          138
+        ]
+      },
+      "tail_entry_sensitivity_s": [
+        131.44999999999686,
+        131.7499999999966
+      ],
+      "stage_first": 689,
+      "stage_last": 703,
+      "frame_count": 15,
+      "midpoint_stage": 696,
+      "camera_window_s": [
+        137.8,
+        140.6
+      ],
+      "estimated_machine_window_s": [
+        133.65,
+        136.45
+      ],
+      "peak_approximate_stage": 659.1500000000001,
+      "peak_stage_range_from_events": [
+        658.45,
+        661.25
+      ],
+      "force_coverage_count": 0,
+      "status": "candidate_DIC_end_hold_missing_contemporaneous_force",
+      "force_mean_N": null,
+      "point_labels": [
+        "阶段点 1-DY",
+        "阶段点 0-DY"
+      ]
+    }
+  },
+  "environment": {
+    "python": "3.13.2",
+    "numpy": "2.4.0",
+    "matplotlib": "3.10.9"
+  },
+  "implementation_sha256": {
+    "post_tensile_test\\1026\\sample_2\\analysis_results\\loading_selection_20261026\\analyze_and_plot.py": "88d7f6dcd94fbd200cfd6a139d9d9c3be970e53fc86811408ea3c1f932fa7d75",
+    "lib\\dic_frame_selection.py": "6ee5b336463b2d46ad325c827cf73a84492ca19182f4300fd2b3ca7b31a4c10d"
+  },
+  "interpretation": "DIC end holds are export candidates, not verified constant-force platforms. No force offset subtraction or extrapolation.",
+  "synchronization": "Median of independent intermediate hold entry/exit events; jump-aware local fits accommodate DIC transients. Event ranges are sensitivity, not confidence intervals.",
+  "reference": "Keep stage_00000 independently for each run; reference load not automatically zero.",
+  "material_direction_note": "填充率大的在位移大的那头",
+  "limitations": [
+    "No full-field quality check before export.",
+    "CSV row-index mapping does not independently establish no dropped camera images.",
+    "Two-point motion is a timing signal, not strain or constant-force evidence."
+  ]
+}
