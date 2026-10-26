@@ -1,0 +1,115 @@
+{
+  "scope": "Only the highest raw recorded load level across these three runs; no modulus estimation.",
+  "source_root": "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1026\\60sample",
+  "sources": [
+    {
+      "relative_path": "1/force.xlsb",
+      "sha256": "0743c003a8d20c4dc12270077cbef280ac29f778fee219b7bd51a2fe9a32ac34"
+    },
+    {
+      "relative_path": "1/disp.csv",
+      "sha256": "d51f4337f57dfb99345cd7957b0f148b45c10c7c19b576cc141ee1d97d8af0ec"
+    },
+    {
+      "relative_path": "2/force.xlsb",
+      "sha256": "31fdb5be1f4e2b1c5fc222b5b0ea24c5b0e2da02c6bc0cef22eee0c1cc514ee9"
+    },
+    {
+      "relative_path": "2/disp.csv",
+      "sha256": "d2f01d6d02df55eec19d5a6f20ad7e2d02e731c1dc1adf393a0d55f7dee548e6"
+    },
+    {
+      "relative_path": "3/force.xlsb",
+      "sha256": "af61940bb09cd97f8d1b0ae5ffd9b18b5a4b718eaa2f7e2e82b64207a5eb16cf"
+    },
+    {
+      "relative_path": "3/disp.csv",
+      "sha256": "a19f7801806b5993c0d8724161329e275c96f4a1f615ad310a3bb532de575608"
+    }
+  ],
+  "fps_user_confirmed": 5.0,
+  "first_stage_user_confirmed": 0,
+  "dic_export_time_note": "Runs 1/2 time column is row index in seconds; use stage/5. Run 3 time column agrees within 0.0031 s.",
+  "machine_time_equals_camera_time_plus_s": -3.44,
+  "machine_knot": {
+    "time_s": 40.55999999999969,
+    "sse": 2.104843003361975e-05,
+    "slope_before_mm_s": 0.008335864148041952,
+    "slope_after_mm_s": 0.0008233835981964685
+  },
+  "dic_mean_knot": {
+    "time_s": 43.9999999999996,
+    "sse": 0.00013573986393294288,
+    "slope_before_mm_s": 0.005454720466577952,
+    "slope_after_mm_s": 0.0007529401299723624
+  },
+  "dic_point_knots": [
+    {
+      "time_s": 43.929999999999616,
+      "sse": 0.0001307975115307385,
+      "slope_before_mm_s": 0.0055352336895796595,
+      "slope_after_mm_s": 0.0007472242364038612
+    },
+    {
+      "time_s": 44.06999999999959,
+      "sse": 0.00014893067181820954,
+      "slope_before_mm_s": 0.005380218795067198,
+      "slope_after_mm_s": 0.0007565293587414486
+    }
+  ],
+  "offset_sensitivity_s": [
+    -3.6599999999998687,
+    -3.2299999999999542
+  ],
+  "sensitivity_fit_count": 81,
+  "peaks": {
+    "1": {
+      "raw_peak_N": 379.81281,
+      "machine_time_s": 179.72,
+      "workbook_row": 8986,
+      "dic_last_stage": 799,
+      "dic_end_camera_s": 159.8
+    },
+    "2": {
+      "raw_peak_N": 279.4928,
+      "machine_time_s": 84.36,
+      "workbook_row": 4219,
+      "dic_last_stage": 548,
+      "dic_end_camera_s": 109.6
+    },
+    "3": {
+      "raw_peak_N": 380.008,
+      "machine_time_s": 41.1,
+      "workbook_row": 2057,
+      "dic_last_stage": 273,
+      "dic_end_camera_s": 54.6
+    }
+  },
+  "selected_run": 3,
+  "stage_first": 235,
+  "stage_last": 249,
+  "frame_count": 15,
+  "camera_time_s": [
+    47.0,
+    49.8
+  ],
+  "paired_machine_time_s": [
+    43.56,
+    46.36
+  ],
+  "raw_force_mean_N": 379.6495966666667,
+  "raw_force_sd_N": 0.056434984674739126,
+  "raw_force_min_N": 379.55679,
+  "raw_force_max_N": 379.73041,
+  "full_force_coverage_at_nominal_and_sensitivity_offsets": true,
+  "instantaneous_peak_approximate_stage": 222.7,
+  "reference_stage": 0,
+  "reference_force_status": "Not covered by force record after timing alignment; do not assign zero load or subtract first recorded force automatically.",
+  "versions": {
+    "python": "3.13.2",
+    "numpy": "2.4.0",
+    "matplotlib": "3.10.9",
+    "pyxlsb": "1.0.10"
+  },
+  "python_executable": "D:\\miniconda3\\python.exe"
+}
