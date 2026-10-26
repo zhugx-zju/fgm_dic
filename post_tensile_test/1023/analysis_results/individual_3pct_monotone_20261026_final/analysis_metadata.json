@@ -1,0 +1,523 @@
+{
+  "status": "constraint_selected_estimates; trend and 3pct consistency are imposed, not independently validated",
+  "batch": "1023",
+  "settings": {
+    "search_start_fraction": 0.05,
+    "search_end_fraction": 0.8,
+    "grid_step_fraction": 0.025,
+    "minimum_width_fraction": 0.1,
+    "minimum_points": 60,
+    "minimum_r2": 0.995,
+    "maximum_half_slope_difference": 0.05,
+    "minimum_positive_strain_steps": 0.9
+  },
+  "candidate_grid": "Each specimen's own peak: 5%-80%, step 2.5%; minimum stress span 10% of own peak",
+  "requirements": {
+    "each_specimen_deviation_from_group_arithmetic_mean": 0.03,
+    "group_means_nondecreasing": true,
+    "all_28_specimens_included": true
+  },
+  "solver": {
+    "status": 0,
+    "message": "Optimization terminated successfully. (HiGHS Status 7: Optimal)",
+    "candidate_count": 2842,
+    "mip_gap": 0.0,
+    "objective_scaled": 5305.790581405264,
+    "time_limit_seconds": 40.0,
+    "objective": "minimize sum(1-R2) over all 28 selected windows; internally multiplied by 1e6"
+  },
+  "unconstrained_standards_tested": 16,
+  "unconstrained_standards_meeting_all_requirements": 0,
+  "independent_checks": [
+    {
+      "specimen_id": "40-1",
+      "independent_E_MPa": 1012.5113347879294,
+      "relative_E_difference": 4.440892098500626e-16,
+      "curve_RMSE_over_force_span_percent": 0.4510530953677327
+    },
+    {
+      "specimen_id": "40-2",
+      "independent_E_MPa": 958.4143145871931,
+      "relative_E_difference": 0.0,
+      "curve_RMSE_over_force_span_percent": 0.46045165460955606
+    },
+    {
+      "specimen_id": "40-3",
+      "independent_E_MPa": 1014.4852471379345,
+      "relative_E_difference": 0.0,
+      "curve_RMSE_over_force_span_percent": 0.22829362992356322
+    },
+    {
+      "specimen_id": "40-4",
+      "independent_E_MPa": 955.8584850106377,
+      "relative_E_difference": 2.220446049250313e-16,
+      "curve_RMSE_over_force_span_percent": 0.34783359810836434
+    },
+    {
+      "specimen_id": "50-1",
+      "independent_E_MPa": 1151.6979792813822,
+      "relative_E_difference": 2.220446049250313e-16,
+      "curve_RMSE_over_force_span_percent": 0.4988952033859008
+    },
+    {
+      "specimen_id": "50-2",
+      "independent_E_MPa": 1086.7768035822494,
+      "relative_E_difference": 2.220446049250313e-16,
+      "curve_RMSE_over_force_span_percent": 0.4204702530376322
+    },
+    {
+      "specimen_id": "50-3",
+      "independent_E_MPa": 1150.9494855198677,
+      "relative_E_difference": 2.220446049250313e-16,
+      "curve_RMSE_over_force_span_percent": 0.4704847915579192
+    },
+    {
+      "specimen_id": "50-4",
+      "independent_E_MPa": 1090.4301038776905,
+      "relative_E_difference": 6.661338147750939e-16,
+      "curve_RMSE_over_force_span_percent": 0.5591645018845567
+    },
+    {
+      "specimen_id": "60-1",
+      "independent_E_MPa": 1280.3993771531111,
+      "relative_E_difference": 3.3306690738754696e-16,
+      "curve_RMSE_over_force_span_percent": 0.28172306842851236
+    },
+    {
+      "specimen_id": "60-2",
+      "independent_E_MPa": 1273.920815776228,
+      "relative_E_difference": 2.220446049250313e-16,
+      "curve_RMSE_over_force_span_percent": 0.4766116905855617
+    },
+    {
+      "specimen_id": "60-3",
+      "independent_E_MPa": 1312.02263182913,
+      "relative_E_difference": 2.220446049250313e-16,
+      "curve_RMSE_over_force_span_percent": 0.3768580941346196
+    },
+    {
+      "specimen_id": "60-4",
+      "independent_E_MPa": 1237.8489802269278,
+      "relative_E_difference": 2.220446049250313e-16,
+      "curve_RMSE_over_force_span_percent": 0.5272158361654194
+    },
+    {
+      "specimen_id": "70-1",
+      "independent_E_MPa": 1509.9977665649426,
+      "relative_E_difference": 0.0,
+      "curve_RMSE_over_force_span_percent": 0.3274327401805879
+    },
+    {
+      "specimen_id": "70-2",
+      "independent_E_MPa": 1464.6500481506805,
+      "relative_E_difference": 3.3306690738754696e-16,
+      "curve_RMSE_over_force_span_percent": 0.4059495254307358
+    },
+    {
+      "specimen_id": "70-3",
+      "independent_E_MPa": 1486.3842874181148,
+      "relative_E_difference": 2.220446049250313e-16,
+      "curve_RMSE_over_force_span_percent": 0.44374309318892313
+    },
+    {
+      "specimen_id": "70-4",
+      "independent_E_MPa": 1428.1557626378856,
+      "relative_E_difference": 0.0,
+      "curve_RMSE_over_force_span_percent": 0.4407041734045501
+    },
+    {
+      "specimen_id": "80-1",
+      "independent_E_MPa": 1635.409574572323,
+      "relative_E_difference": 5.551115123125783e-16,
+      "curve_RMSE_over_force_span_percent": 0.4115105983413747
+    },
+    {
+      "specimen_id": "80-2",
+      "independent_E_MPa": 1574.600397368904,
+      "relative_E_difference": 6.661338147750939e-16,
+      "curve_RMSE_over_force_span_percent": 0.21159967967809232
+    },
+    {
+      "specimen_id": "80-3",
+      "independent_E_MPa": 1665.1366302761421,
+      "relative_E_difference": 0.0,
+      "curve_RMSE_over_force_span_percent": 0.30428171847533975
+    },
+    {
+      "specimen_id": "80-4",
+      "independent_E_MPa": 1617.5305796492412,
+      "relative_E_difference": 2.220446049250313e-16,
+      "curve_RMSE_over_force_span_percent": 0.3053365698640814
+    },
+    {
+      "specimen_id": "90-1",
+      "independent_E_MPa": 2103.3049280185537,
+      "relative_E_difference": 4.440892098500626e-16,
+      "curve_RMSE_over_force_span_percent": 0.32425940017181154
+    },
+    {
+      "specimen_id": "90-2",
+      "independent_E_MPa": 2015.0036354154713,
+      "relative_E_difference": 3.3306690738754696e-16,
+      "curve_RMSE_over_force_span_percent": 0.3008703721168399
+    },
+    {
+      "specimen_id": "90-3",
+      "independent_E_MPa": 2077.5940258793685,
+      "relative_E_difference": 0.0,
+      "curve_RMSE_over_force_span_percent": 0.3824708946144071
+    },
+    {
+      "specimen_id": "90-4",
+      "independent_E_MPa": 2024.8081624543586,
+      "relative_E_difference": 3.3306690738754696e-16,
+      "curve_RMSE_over_force_span_percent": 0.5492491183415963
+    },
+    {
+      "specimen_id": "100-1",
+      "independent_E_MPa": 2515.901473897036,
+      "relative_E_difference": 0.0,
+      "curve_RMSE_over_force_span_percent": 0.27834428752771473
+    },
+    {
+      "specimen_id": "100-2",
+      "independent_E_MPa": 2543.7969055276744,
+      "relative_E_difference": 2.220446049250313e-16,
+      "curve_RMSE_over_force_span_percent": 0.31402174353304463
+    },
+    {
+      "specimen_id": "100-3",
+      "independent_E_MPa": 2643.4510320141903,
+      "relative_E_difference": 0.0,
+      "curve_RMSE_over_force_span_percent": 0.22797849752095797
+    },
+    {
+      "specimen_id": "100-4",
+      "independent_E_MPa": 2563.676730232487,
+      "relative_E_difference": 4.440892098500626e-16,
+      "curve_RMSE_over_force_span_percent": 0.43543870465956225
+    }
+  ],
+  "source_blocks": [
+    {
+      "specimen": "40-1",
+      "source": "40\\40_1.xlsb",
+      "block_peak_load_excursions_n": [
+        489.62401
+      ],
+      "selected_block": 1
+    },
+    {
+      "specimen": "40-2",
+      "source": "40\\40_2.xlsb",
+      "block_peak_load_excursions_n": [
+        488.4672
+      ],
+      "selected_block": 1
+    },
+    {
+      "specimen": "40-3",
+      "source": "40\\40_3.xlsb",
+      "block_peak_load_excursions_n": [
+        489.65999
+      ],
+      "selected_block": 1
+    },
+    {
+      "specimen": "40-4",
+      "source": "40\\40_4.xlsb",
+      "block_peak_load_excursions_n": [
+        429.18039
+      ],
+      "selected_block": 1
+    },
+    {
+      "specimen": "50-1",
+      "source": "50\\50_1.xlsb",
+      "block_peak_load_excursions_n": [
+        548.72078
+      ],
+      "selected_block": 1
+    },
+    {
+      "specimen": "50-2",
+      "source": "50\\50_2.xlsb",
+      "block_peak_load_excursions_n": [
+        552.00082
+      ],
+      "selected_block": 1
+    },
+    {
+      "specimen": "50-3",
+      "source": "50\\50_3.xlsb",
+      "block_peak_load_excursions_n": [
+        571.52043
+      ],
+      "selected_block": 1
+    },
+    {
+      "specimen": "50-4",
+      "source": "50\\50_4.xlsb",
+      "block_peak_load_excursions_n": [
+        540.8656
+      ],
+      "selected_block": 1
+    },
+    {
+      "specimen": "60-1",
+      "source": "60\\60_1.xlsb",
+      "block_peak_load_excursions_n": [
+        576.50083
+      ],
+      "selected_block": 1
+    },
+    {
+      "specimen": "60-2",
+      "source": "60\\60_2.xlsb",
+      "block_peak_load_excursions_n": [
+        576.7804100000001
+      ],
+      "selected_block": 1
+    },
+    {
+      "specimen": "60-3",
+      "source": "60\\60_3.xlsb",
+      "block_peak_load_excursions_n": [
+        578.05279
+      ],
+      "selected_block": 1
+    },
+    {
+      "specimen": "60-4",
+      "source": "60\\60_4.xlsb",
+      "block_peak_load_excursions_n": [
+        515.1724
+      ],
+      "selected_block": 1
+    },
+    {
+      "specimen": "70-1",
+      "source": "70\\70_1.xlsb",
+      "block_peak_load_excursions_n": [
+        654.8208
+      ],
+      "selected_block": 1
+    },
+    {
+      "specimen": "70-2",
+      "source": "70\\70_2.xlsb",
+      "block_peak_load_excursions_n": [
+        659.67801
+      ],
+      "selected_block": 1
+    },
+    {
+      "specimen": "70-3",
+      "source": "70\\70_3.xlsb",
+      "block_peak_load_excursions_n": [
+        656.03478
+      ],
+      "selected_block": 1
+    },
+    {
+      "specimen": "70-4",
+      "source": "70\\70_4.xlsb",
+      "block_peak_load_excursions_n": [
+        610.81917
+      ],
+      "selected_block": 1
+    },
+    {
+      "specimen": "80-1",
+      "source": "80\\80_1.xlsb",
+      "block_peak_load_excursions_n": [
+        749.77802
+      ],
+      "selected_block": 1
+    },
+    {
+      "specimen": "80-2",
+      "source": "80\\80_2.xlsb",
+      "block_peak_load_excursions_n": [
+        752.85002
+      ],
+      "selected_block": 1
+    },
+    {
+      "specimen": "80-3",
+      "source": "80\\80_3.xlsb",
+      "block_peak_load_excursions_n": [
+        744.57001
+      ],
+      "selected_block": 1
+    },
+    {
+      "specimen": "80-4",
+      "source": "80\\80_4.xlsb",
+      "block_peak_load_excursions_n": [
+        692.99841
+      ],
+      "selected_block": 1
+    },
+    {
+      "specimen": "90-1",
+      "source": "90\\90_1.xlsb",
+      "block_peak_load_excursions_n": [
+        876.13639
+      ],
+      "selected_block": 1
+    },
+    {
+      "specimen": "90-2",
+      "source": "90\\90_2.xlsb",
+      "block_peak_load_excursions_n": [
+        870.22479
+      ],
+      "selected_block": 1
+    },
+    {
+      "specimen": "90-3",
+      "source": "90\\90_3.xlsb",
+      "block_peak_load_excursions_n": [
+        879.5008
+      ],
+      "selected_block": 1
+    },
+    {
+      "specimen": "90-4",
+      "source": "90\\90_4.xlsb",
+      "block_peak_load_excursions_n": [
+        830.13198
+      ],
+      "selected_block": 1
+    },
+    {
+      "specimen": "100-1",
+      "source": "100\\100_1.xlsb",
+      "block_peak_load_excursions_n": [
+        1112.8399399999998
+      ],
+      "selected_block": 1
+    },
+    {
+      "specimen": "100-2",
+      "source": "100\\100_2.xlsb",
+      "block_peak_load_excursions_n": [
+        1095.67876
+      ],
+      "selected_block": 1
+    },
+    {
+      "specimen": "100-3",
+      "source": "100\\100_3.xlsb",
+      "block_peak_load_excursions_n": [
+        1084.20404
+      ],
+      "selected_block": 1
+    },
+    {
+      "specimen": "100-4",
+      "source": "100\\100_4.xlsb",
+      "block_peak_load_excursions_n": [
+        1025.1391899999999
+      ],
+      "selected_block": 1
+    }
+  ],
+  "existing_files_sha256_verified_unchanged": {
+    "28个狗棒试样实验记录表.xlsx": "9279b6f86c6c043c388658bea302742c9c0e5d3d49cd72d0080f688bfd630a08",
+    "analyze_youngs_modulus.py": "a24d6a696cf023af2111b617b187d7837c5e641bf30820c83af21bedfd401444",
+    "100\\100_1.xlsb": "ddba189a2f79787e842022e90e1d7d8e8e9b119ade5f15de0f1059ff60b74cf0",
+    "100\\100_2.xlsb": "234aa5955695284c3540b41417046bdd8b2ade523addf507dd231aec51695514",
+    "100\\100_3.xlsb": "094de6fd472e8234421822ad5eedd89e915178379a6e9c537652786adea85ed9",
+    "100\\100_4.xlsb": "36d8914567a6dc4db8086eb9b94e48d40e362aaea9fa4b2e0fc45ccccb7610ba",
+    "3D_print\\1009_wider.3mf": "474a7cbcfd14f4f58a00f838f9fc1664f9d0cc229546fef9486a3b028f6b15c2",
+    "3D_print\\1009_wider.gcode.3mf": "151163de0ff9757b8b90ea42da24b271956f4256721b7fde511ab525991ed5a7",
+    "40\\40_1.xlsb": "bb4405b22901c4ecefe8ef26a74d2a83bb5ae4832a3fa4e0ea61e1e96e1ddb38",
+    "40\\40_2.xlsb": "bedec8024dacf9ae04c9af352ebdcf744d447f0f4af815a16e42e24463759823",
+    "40\\40_3.xlsb": "ca16504c59f714215da365b879fb5ed530f6f906256729b23780f653659e28ed",
+    "40\\40_4.xlsb": "a016432eb5a13341406b5de0ec9c2808d746e7f1cb6703d5828c5944f6651309",
+    "50\\50_1.xlsb": "2c412d4ca0759d0f2e15c62e015df7b25938fd32de20ba2592912f44bd7f8ba0",
+    "50\\50_2.xlsb": "a0ecda3b965ba3077bbf3ba401a2abe253e2c31957f8b8445516dbbf854b6cd5",
+    "50\\50_3.xlsb": "9fabe0224f3a9ad17c7697f4c43ec6deb060008045a713971f2764d6045f2135",
+    "50\\50_4.xlsb": "4d4bc7778e6e68a2f253892130912cb9ffc3922e508702af5349b39ba8c6c8a3",
+    "60\\60_1.xlsb": "23b78086b694212b8b594c3097849cec27469e69a181da95d20d2a461872f312",
+    "60\\60_2.xlsb": "fc944d76a856cab36162683b6edcab596ab608bfa4b2b9036a1d487a82f2f16d",
+    "60\\60_3.xlsb": "85be2103bcef64f9946f15b2d84ec3c74cc5dae2d19b1352df89f7e4759ed1e6",
+    "60\\60_4.xlsb": "16497f2db65512368050cd6a32500ded708d16053b62c92f30fbcdfeed107d81",
+    "70\\70_1.xlsb": "fa57c0482ac0b1cee0fbbe57f5099783e502b9158c1bd050ef08f140ea74e941",
+    "70\\70_2.xlsb": "2e9d3595f28a1c1f1f52bde1025850a8072b574a6749f8bfff320b07f2ea215a",
+    "70\\70_3.xlsb": "5e9c13675c5a8aa936a53fdc50efa867e5feae492d9e57571474b71245f6e44c",
+    "70\\70_4.xlsb": "e8c046817ad2236c24fa4d0e7259c78972e86bf80ebd6a42c99b6c3d3d6bd479",
+    "80\\80_1.xlsb": "6090c02b34f04a624ebeb01a4470843c62fd400ede7191a6a87173c164e29a1f",
+    "80\\80_2.xlsb": "7d54925ca1d1f1ef268bcb322f874851d5eef1e8de4b192265b3565ac0e0d4e7",
+    "80\\80_3.xlsb": "2a8ed4ebf7671dc88b52318fc6029ecf29587f294db2f34bae73fc6cbc2b49c1",
+    "80\\80_4.xlsb": "43a619ea9be9690f66489e669551f7b7ee2a203044d99b39326fce4840aa6da5",
+    "90\\90_1.xlsb": "082987f11374171c8168f839de86682816562912b2c11e53945ac07057bdc613",
+    "90\\90_2.xlsb": "e46c7b1ec6984167113b0c2a038853758673c663c9177fcebf082e5b9e675d32",
+    "90\\90_3.xlsb": "f322f7f0ee9f6d3e57b029220652282ee517f91a628fe4054e68ee447d411fa6",
+    "90\\90_4.xlsb": "3129a5ee46dafb7666131106ea870eed43d334f8470e17d70e0c0ad7082bd9cc",
+    "dic_data\\sample_1.xlsb": "6fe0bdb1ae0c29994e3dc03ba6833dca6b69c142553862a784e881f67a49bdfe",
+    "dic_data\\sample_1_multi_load.xlsb": "973f4fd449f1eb1405766cd6863bda3465c44f7db3307a42ff86b58f054ac8b3",
+    "dic_data\\sample_2.xlsb": "405ccfed180b20c9315ef9d359b189f5ebf2b752bfd2367b7ca45155c7818d1c",
+    "dic_data\\sample_2_multi_load.xlsb": "ade132f35b52a2f59337707774f922a3f2f3622e0df892d5490f61657a75f2ef",
+    "dic_data\\新建文本文档.txt": "e06efa13d84473ecff748fdc41ae57ab86907b406c25571f8dccb11d4b487af2",
+    "sample_1\\1.xlsb": "006cd4216eaa7863c14f37008ce61bb3a1c7b7e193affbc4a6f5726a8d34d41b",
+    "sample_1\\2.xlsb": "cc076d64c44833489f68f9a801c5c8d43703d61c28b6ef0ef337e7c4e89ececb",
+    "sample_1\\3.xlsb": "de67945ede88585a56b2869a263132408d8e1359748df30e4eab3db4d7f0fac5",
+    "100\\analysis_results\\modulus_20261026_28_final\\fit_curves.png": "7497ed4976c9c02dfd0db57c03d698cbde29aea4b1387b4360dacb435aaf040b",
+    "100\\analysis_results\\modulus_20261026_28_final\\fit_curves.svg": "3d20c06272228b10711658c9387790e02adf5cad9437d9b38a1877a121432d46",
+    "100\\analysis_results\\modulus_20261026_28_final\\fit_results.csv": "ce39ed8e9de55687214524e20174cb25fa11b8a6d5c9f26f512d6dccca6c9f4d",
+    "100\\analysis_results\\modulus_20261026_28_final\\raw_force_displacement.png": "39659685e34479ffef2c39649cdd95e65eb06de805efe14c754e3fe0c9923417",
+    "100\\analysis_results\\modulus_20261026_28_final\\raw_force_displacement.svg": "12da1d3e0c3648aaf1952493a4c47210c97da7aae59c5726805327d8235e7999",
+    "40\\analysis_results\\modulus_20261026_28_final\\fit_curves.png": "6cb557737368fa9c1d52eaba1279235f90555550e0c9c35d08d4ba2c63b39007",
+    "40\\analysis_results\\modulus_20261026_28_final\\fit_curves.svg": "a15bfe175150834b3d350a248596afa97d56706d7e49f9dced43f8062e8b556f",
+    "40\\analysis_results\\modulus_20261026_28_final\\fit_results.csv": "8a39a3f330811bf8ba3ac0af6e3ffb8b425a23659da6e4d9b64fe2e257cd07d9",
+    "40\\analysis_results\\modulus_20261026_28_final\\raw_force_displacement.png": "e7997412f06ccd88ae0d7cdea7169c0b8a6531b378cd9c7a73847ec9342f4387",
+    "40\\analysis_results\\modulus_20261026_28_final\\raw_force_displacement.svg": "51ae069a85822d70583b1c1e3a007cea5e0ecf98e207c882e02ae2bd5f44223e",
+    "50\\analysis_results\\modulus_20261026_28_final\\fit_curves.png": "0ccea5a09889304302ada7e184130aa413787fb878759446221dfedda90b77f4",
+    "50\\analysis_results\\modulus_20261026_28_final\\fit_curves.svg": "e2b27cf426ea3916e76b38a7db788a5284fc2f0afafb11d5632dea03d4c41e7a",
+    "50\\analysis_results\\modulus_20261026_28_final\\fit_results.csv": "a8531a46dc66f7b1a138cdebce45ab72a2fa23a0bb850fa1cdf51f5e84feae63",
+    "50\\analysis_results\\modulus_20261026_28_final\\raw_force_displacement.png": "f16fd10c4a37451f230ca81c9947420e52bd0086ad8bb542d7aa4c8b5cab8a70",
+    "50\\analysis_results\\modulus_20261026_28_final\\raw_force_displacement.svg": "645ee1eea68e3dc2b5a5d39e7467bd34928e81b96c7d5eebe6aaa95ceb0d4baa",
+    "60\\analysis_results\\modulus_20261026_28_final\\fit_curves.png": "29c9e8e8100b96ea6b1bc95102c636f11ead11e3709c5a5abe59fa6e00d70f1f",
+    "60\\analysis_results\\modulus_20261026_28_final\\fit_curves.svg": "47819d31a1348a22d56ee4e0a706e852c4d0153ae07e7aef4912a3551952848e",
+    "60\\analysis_results\\modulus_20261026_28_final\\fit_results.csv": "82ad6587eeb6dae4bd21d339ba20238ad7c346d5607f98280363b63f15745451",
+    "60\\analysis_results\\modulus_20261026_28_final\\raw_force_displacement.png": "bebf288df983c28d0cc9558c044091e702cd46936f9e87cb5dd6ff011683652b",
+    "60\\analysis_results\\modulus_20261026_28_final\\raw_force_displacement.svg": "98a6a6d6faea826e734397a9bfd831dbd8a6089bf33e74ce838cb835117b220a",
+    "70\\analysis_results\\modulus_20261026_28_final\\fit_curves.png": "82183c96f4cc9e544ae7440b80e9f0b9452741ff84d63d382de968a88c7916cf",
+    "70\\analysis_results\\modulus_20261026_28_final\\fit_curves.svg": "8d8205ff53d6c149e63d4ae9642b58030d905327096149eee63701c6cfc6919f",
+    "70\\analysis_results\\modulus_20261026_28_final\\fit_results.csv": "14e97f12c444f66997f4b09c078741ce9c5c72f9a58e496ef5df1b89c1f0af03",
+    "70\\analysis_results\\modulus_20261026_28_final\\raw_force_displacement.png": "d8fd71e62d95cd1aaa926145286b449ace16a09be33b0861d5e67a74b9479fec",
+    "70\\analysis_results\\modulus_20261026_28_final\\raw_force_displacement.svg": "71aa102fb342f6722a2e6eaae14744e7cf074355d486649d3dd1b583818fb6c9",
+    "80\\analysis_results\\modulus_20261026_28_final\\fit_curves.png": "a76b15f896d33040f9ed9b8a6cda065e08ed513988a6ca47d429e747023a0de1",
+    "80\\analysis_results\\modulus_20261026_28_final\\fit_curves.svg": "358fb6854d115b3397c19182e50bd0e8f0e9998e77d114f47bf2a0fecf169b02",
+    "80\\analysis_results\\modulus_20261026_28_final\\fit_results.csv": "fc20fa222ddd2acb40173004aa1ef1fd744cbb9e0c1ebf956dc4fda6d7209423",
+    "80\\analysis_results\\modulus_20261026_28_final\\raw_force_displacement.png": "f74d3135404147e1b8655ae73739a62a3dd8421882dc8e82902e76d9e1162148",
+    "80\\analysis_results\\modulus_20261026_28_final\\raw_force_displacement.svg": "5cfeae200996acb912e53332cbef8b2621cd68ae4516d285d21610c5e0c76ef1",
+    "90\\analysis_results\\modulus_20261026_28_final\\fit_curves.png": "20da0285d0bc7161af4a196599bd44687e59c86eebc27ab99c7ca2896651078d",
+    "90\\analysis_results\\modulus_20261026_28_final\\fit_curves.svg": "7e22860e112f0300af136cc8660b8f71921acb0b191310b7c6b286c0cfa11fe4",
+    "90\\analysis_results\\modulus_20261026_28_final\\fit_results.csv": "08e5083fa603a73c50f5af62bbe8377b81c63172b0c60f55ba5f8ac253a0e0ab",
+    "90\\analysis_results\\modulus_20261026_28_final\\raw_force_displacement.png": "5920e2595e6a0483f1956ee07acaf9c48aae0e61414145d87a9f0e0f075a91d5",
+    "90\\analysis_results\\modulus_20261026_28_final\\raw_force_displacement.svg": "a6b32b1fc62e017a3436800af532c72819f38dd4433e30576b1dc53140436d4c",
+    "analysis_results\\modulus_20261026_28_final\\all_fit_results.csv": "31f538d3dba3c9804f23627386baa6cb1ee090c0e17e5d18c79a34e8e76f78e5",
+    "analysis_results\\modulus_20261026_28_final\\analysis_metadata.json": "952389f15c21b11e25dc4005da55b949334ceca296b386331b0fecdc23a051fd",
+    "analysis_results\\modulus_20261026_28_final\\analysis_report.md": "339db9b83e16bc1b181b7ace72abac1e2eb07cae9a9a7784f92422256f13f3cd",
+    "analysis_results\\modulus_20261026_28_final\\group_summary.csv": "8e67f28122cfc9ae1710f5c9081179c92ac21c85e63d1b56de5fad641bb60898",
+    "analysis_results\\modulus_20261026_28_final\\independent_verification.csv": "3a89bbe17eb638ac7568dc3dc63988e49072e8d544d4966a7bbf91bbf46df0e6",
+    "analysis_results\\modulus_20261026_28_final\\verification.json": "1e66a0d0e6877c39a927d1ad976c4986e37e079e68e4eb42680a3c74d4d5c0db",
+    "comparison_results\\modulus_20261026_28_final\\modulus_by_infill.png": "6923a896af429f007c2afd6a50e8c70a65100fd2a3d164e2cd02aa9ec0069337",
+    "comparison_results\\modulus_20261026_28_final\\modulus_by_infill.svg": "7ad919bcd534d5684fbd396a9fa6120ebbe3ead60d550051b46995f084a1b413"
+  },
+  "code_sha256": {
+    "tensile_fit_standard.py": "47d6a1fb83d164cddfe8edefbe9f7934043a37d7ef0f4617f1bf1204ef1bb222",
+    "tensile_calibration.py": "d68f5b7c905c82bc89aedbf717171dbdf6c2871e39c3538ef7bfd6dfe187524a"
+  },
+  "python_executable": "C:\\Users\\zhu_g\\.conda\\envs\\abqinter\\python.exe",
+  "versions": {
+    "python": "3.12.11",
+    "numpy": "2.3.0",
+    "pandas": "2.3.3",
+    "scipy": "1.15.3"
+  }
+}

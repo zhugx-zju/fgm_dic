@@ -11,3 +11,5 @@
 5. 核对真实承载宽、厚、制造界面、ROI边界近似与ν范围；再设置INPUTS_CONFIGURED=True并使用新的RUN_NAME。
 
 合成模式也需要真实几何／观测位置及明确载荷输入；只替换位移，不从标定误差选择γ。默认提示是输入状态检查，不是要求为每次计算重新申请许可。
+
+逐根／约束选段研究另存于post_tensile_test/1023/analysis_results/individual_3pct_monotone_20261026_final。其fit_method为individual_window_joint_3pct_monotone，组内3%和随填充率不减是显式先验，不能混称为独立逐根最优拟合或独立验证。本次保留默认独立标定路径，约束结果与同条件无约束对照见该目录报告。

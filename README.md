@@ -4,6 +4,8 @@
 
 当前材料参数见[1023拉伸标定报告](post_tensile_test/1023/analysis_results/modulus_20261026_28_final/analysis_report.md)及[分组参数表](post_tensile_test/1023/analysis_results/modulus_20261026_28_final/group_summary.csv)。只使用本次试样的独立标定，不进行不同批次的填充率结果比较。
 
+按逐根线性段重新分析，并检查组内单根偏差≤3%、组均值随填充率不减的要求，见[逐根与约束选段报告](post_tensile_test/1023/analysis_results/individual_3pct_monotone_20261026_final/analysis_report.md)。其中3%一致性和单调性作为显式选段约束，不是独立验证结论；原独立标定和默认配置保留。
+
 ## 日常入口
 
 只修改[dic_case_config.py](dic_case_config.py)。默认H1、121×19单元；Huber-TV与精确TV在同一文件选择，不再切换多份旧配置。安装requirements.txt后，分别执行四步：
@@ -21,7 +23,7 @@ python -B -m script.step4_compare_results
 
 - `fgm_asm/`：共用有限元、观测、伴随、H1／Huber-TV／精确TV内核。
 - `lib/`：四步流程、数据读取、冻结输入、合成恢复及绘图；`script/`只保留四个入口。
-- `post_tensile_test/1023/`：当前原始试验资料及`modulus_20261026_28_final`标定结果；旧日期与重复首轮拉伸输出已移除。
+- `post_tensile_test/1023/`：当前原始试验资料、基础标定及本次逐根／约束选段结果；旧日期与重复首轮拉伸输出已移除。
 - `3D_print/`：原样保留的制造资料。
 - `docs/`、`plan/validation_plan.md`：当前方法定位、输入和验证要求。
 - `archive/legacy_20261026.zip`：旧配置、探索代码、历史说明和被替换文件的完整原件；路径与哈希见[整理清单](docs/slimming_manifest.json)。
