@@ -44,8 +44,8 @@ REGION_INFILL_PERCENT = (100, 90, 80, 70, 60, 50, 40)
 REGION_BOUNDARIES_MANUFACTURING_X = (-40., -24., -8., 8., 24., 40.)
 MATERIAL_WINDOW_MM = None
 REGION_BOUNDARIES_X = None
-CALIBRATION_CSV = SAMPLE_ROOT / 'calibration_for_inverse.csv'
-CALIBRATION_METHOD = 'independent'
+CALIBRATION_CSV = SAMPLE_ROOT / 'analysis_results' / 'modulus_20261026_28_final' / 'group_summary.csv'
+CALIBRATION_METHOD = 'common_stress_window_OLS'
 REGISTRATION = {'mode': 'pending', 'note': '当前试样的方向、毫米尺度及材料位置尚未确认。'}
 OUTSIDE_POINT_POLICY = 'reject'
 
