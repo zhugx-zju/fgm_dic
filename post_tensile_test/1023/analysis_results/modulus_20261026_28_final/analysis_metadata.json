@@ -1,0 +1,893 @@
+{
+  "method": "OLS stress on extensometer strain within a selected pre-peak stress interval",
+  "meaning": "effective/apparent modulus using outer cross-sectional area",
+  "strain_zero": "zero-stress intercept extrapolated from each selected linear fit",
+  "force_range": "raw instrument force, including initial offset",
+  "crosshead_diagnostic": "150–400 N raw force versus machine displacement stiffness; not a Young's modulus",
+  "geometry_source": "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1023\\28个狗棒试样实验记录表.xlsx",
+  "batch": "1023",
+  "batch_note": "User identified these as the current printed specimens; batch is the supplied directory label, not a verified calendar date.",
+  "units": {
+    "force": "N",
+    "extension": "mm",
+    "dimensions": "mm",
+    "modulus": "MPa"
+  },
+  "unit_note": "Dimensions and 50 mm gauge are recorded in the geometry workbook; instrument force and deformation channels are interpreted in the existing project units N and mm.",
+  "baseline_rule": "Median of first 10 force samples per selected run, not inherited from a previous batch. A constant force offset does not affect the OLS slope with intercept, but can affect window selection.",
+  "settings": {
+    "search_start_fraction": 0.05,
+    "search_end_fraction": 0.8,
+    "grid_step_fraction": 0.025,
+    "minimum_width_fraction": 0.15,
+    "minimum_points": 60,
+    "minimum_r2": 0.995,
+    "maximum_half_slope_difference": 0.05,
+    "minimum_positive_strain_steps": 0.9
+  },
+  "groups": [
+    {
+      "infill_percent": 40,
+      "common_stress_interval_mpa": [
+        0.9993706455999603,
+        4.996853227999802
+      ],
+      "common_interval_accepted": 4,
+      "specimen_count": 4,
+      "exceptions": [],
+      "window_sensitivity_percent": {
+        "left_10pct_width": {
+          "40-1": 0.874,
+          "40-2": 1.068,
+          "40-3": 0.857,
+          "40-4": 0.84
+        },
+        "right_10pct_width": {
+          "40-1": -0.829,
+          "40-2": -1.093,
+          "40-3": -0.513,
+          "40-4": -0.784
+        },
+        "trim_15pct_each_end": {
+          "40-1": -0.076,
+          "40-2": 0.19,
+          "40-3": -0.931,
+          "40-4": -0.087
+        }
+      },
+      "relaxed_10pct_half_slope_mean_E_MPa": 1029.9053059785767,
+      "relaxed_10pct_vs_primary_mean_change_percent": -1.3664913608036788
+    },
+    {
+      "infill_percent": 50,
+      "common_stress_interval_mpa": [
+        1.6792479074041877,
+        6.297179652765705
+      ],
+      "common_interval_accepted": 3,
+      "specimen_count": 4,
+      "exceptions": [
+        {
+          "specimen": "50-4",
+          "reason": "no acceptable linear interval"
+        }
+      ],
+      "window_sensitivity_percent": {
+        "left_10pct_width": {
+          "50-1": 0.89,
+          "50-2": 0.742,
+          "50-3": 0.327
+        },
+        "right_10pct_width": {
+          "50-1": -0.991,
+          "50-2": -0.771,
+          "50-3": -0.266
+        },
+        "trim_15pct_each_end": {
+          "50-1": 0.112,
+          "50-2": 0.147,
+          "50-3": 0.05
+        }
+      },
+      "relaxed_10pct_half_slope_mean_E_MPa": 1089.6367069119324,
+      "relaxed_10pct_vs_primary_mean_change_percent": -12.638581370065804
+    },
+    {
+      "infill_percent": 60,
+      "common_stress_interval_mpa": [
+        5.985922104480388,
+        8.779352419904571
+      ],
+      "common_interval_accepted": 4,
+      "specimen_count": 4,
+      "exceptions": [],
+      "window_sensitivity_percent": {
+        "left_10pct_width": {
+          "60-1": 0.727,
+          "60-2": 0.776,
+          "60-3": 0.858,
+          "60-4": 0.999
+        },
+        "right_10pct_width": {
+          "60-1": -0.712,
+          "60-2": -0.752,
+          "60-3": -0.885,
+          "60-4": -0.927
+        },
+        "trim_15pct_each_end": {
+          "60-1": 0.102,
+          "60-2": -0.015,
+          "60-3": 0.215,
+          "60-4": 0.089
+        }
+      },
+      "relaxed_10pct_half_slope_mean_E_MPa": 1165.123677516007,
+      "relaxed_10pct_vs_primary_mean_change_percent": -0.7153753371660798
+    },
+    {
+      "infill_percent": 70,
+      "common_stress_interval_mpa": [
+        1.8829661952205978,
+        6.590381683272093
+      ],
+      "common_interval_accepted": 4,
+      "specimen_count": 4,
+      "exceptions": [],
+      "window_sensitivity_percent": {
+        "left_10pct_width": {
+          "70-1": 0.525,
+          "70-2": 0.914,
+          "70-3": 0.959,
+          "70-4": 0.897
+        },
+        "right_10pct_width": {
+          "70-1": -0.566,
+          "70-2": -0.874,
+          "70-3": -1.073,
+          "70-4": -0.859
+        },
+        "trim_15pct_each_end": {
+          "70-1": 0.322,
+          "70-2": -0.089,
+          "70-3": 0.043,
+          "70-4": 0.032
+        }
+      },
+      "relaxed_10pct_half_slope_mean_E_MPa": 1447.5736799878223,
+      "relaxed_10pct_vs_primary_mean_change_percent": -1.7105274263489179
+    },
+    {
+      "infill_percent": 80,
+      "common_stress_interval_mpa": [
+        1.0542144487039067,
+        8.433715589631253
+      ],
+      "common_interval_accepted": 4,
+      "specimen_count": 4,
+      "exceptions": [],
+      "window_sensitivity_percent": {
+        "left_10pct_width": {
+          "80-1": 1.004,
+          "80-2": 0.583,
+          "80-3": 0.857,
+          "80-4": 0.876
+        },
+        "right_10pct_width": {
+          "80-1": -1.004,
+          "80-2": -0.348,
+          "80-3": -0.705,
+          "80-4": -1.13
+        },
+        "trim_15pct_each_end": {
+          "80-1": 0.206,
+          "80-2": -0.048,
+          "80-3": 0.179,
+          "80-4": 0.413
+        }
+      },
+      "relaxed_10pct_half_slope_mean_E_MPa": 1597.200388463551,
+      "relaxed_10pct_vs_primary_mean_change_percent": -1.84352811813715
+    },
+    {
+      "infill_percent": 90,
+      "common_stress_interval_mpa": [
+        8.167226505739613,
+        11.93671566223482
+      ],
+      "common_interval_accepted": 4,
+      "specimen_count": 4,
+      "exceptions": [],
+      "window_sensitivity_percent": {
+        "left_10pct_width": {
+          "90-1": 0.754,
+          "90-2": 0.775,
+          "90-3": 0.826,
+          "90-4": 0.861
+        },
+        "right_10pct_width": {
+          "90-1": -0.867,
+          "90-2": -0.84,
+          "90-3": -0.832,
+          "90-4": -0.913
+        },
+        "trim_15pct_each_end": {
+          "90-1": -0.048,
+          "90-2": 0.281,
+          "90-3": -0.07,
+          "90-4": -0.08
+        }
+      },
+      "relaxed_10pct_half_slope_mean_E_MPa": 1912.3156222066802,
+      "relaxed_10pct_vs_primary_mean_change_percent": -0.3277388324881447
+    },
+    {
+      "infill_percent": 100,
+      "common_stress_interval_mpa": [
+        4.798801585964123,
+        15.996005286547081
+      ],
+      "common_interval_accepted": 4,
+      "specimen_count": 4,
+      "exceptions": [],
+      "window_sensitivity_percent": {
+        "left_10pct_width": {
+          "100-1": 1.021,
+          "100-2": 0.181,
+          "100-3": 0.646,
+          "100-4": 1.129
+        },
+        "right_10pct_width": {
+          "100-1": -0.916,
+          "100-2": -0.706,
+          "100-3": -0.911,
+          "100-4": -1.088
+        },
+        "trim_15pct_each_end": {
+          "100-1": -0.436,
+          "100-2": 0.556,
+          "100-3": 0.329,
+          "100-4": 0.052
+        }
+      },
+      "relaxed_10pct_half_slope_mean_E_MPa": 2511.641112077656,
+      "relaxed_10pct_vs_primary_mean_change_percent": -0.9467640210275685
+    }
+  ],
+  "source_blocks": [
+    {
+      "specimen": "40-1",
+      "source": "40\\40_1.xlsb",
+      "block_peak_load_excursions_n": [
+        489.62401
+      ],
+      "selected_block": 1
+    },
+    {
+      "specimen": "40-2",
+      "source": "40\\40_2.xlsb",
+      "block_peak_load_excursions_n": [
+        488.4672
+      ],
+      "selected_block": 1
+    },
+    {
+      "specimen": "40-3",
+      "source": "40\\40_3.xlsb",
+      "block_peak_load_excursions_n": [
+        489.65999
+      ],
+      "selected_block": 1
+    },
+    {
+      "specimen": "40-4",
+      "source": "40\\40_4.xlsb",
+      "block_peak_load_excursions_n": [
+        429.18039
+      ],
+      "selected_block": 1
+    },
+    {
+      "specimen": "50-1",
+      "source": "50\\50_1.xlsb",
+      "block_peak_load_excursions_n": [
+        548.72078
+      ],
+      "selected_block": 1
+    },
+    {
+      "specimen": "50-2",
+      "source": "50\\50_2.xlsb",
+      "block_peak_load_excursions_n": [
+        552.00082
+      ],
+      "selected_block": 1
+    },
+    {
+      "specimen": "50-3",
+      "source": "50\\50_3.xlsb",
+      "block_peak_load_excursions_n": [
+        571.52043
+      ],
+      "selected_block": 1
+    },
+    {
+      "specimen": "50-4",
+      "source": "50\\50_4.xlsb",
+      "block_peak_load_excursions_n": [
+        540.8656
+      ],
+      "selected_block": 1
+    },
+    {
+      "specimen": "60-1",
+      "source": "60\\60_1.xlsb",
+      "block_peak_load_excursions_n": [
+        576.50083
+      ],
+      "selected_block": 1
+    },
+    {
+      "specimen": "60-2",
+      "source": "60\\60_2.xlsb",
+      "block_peak_load_excursions_n": [
+        576.7804100000001
+      ],
+      "selected_block": 1
+    },
+    {
+      "specimen": "60-3",
+      "source": "60\\60_3.xlsb",
+      "block_peak_load_excursions_n": [
+        578.05279
+      ],
+      "selected_block": 1
+    },
+    {
+      "specimen": "60-4",
+      "source": "60\\60_4.xlsb",
+      "block_peak_load_excursions_n": [
+        515.1724
+      ],
+      "selected_block": 1
+    },
+    {
+      "specimen": "70-1",
+      "source": "70\\70_1.xlsb",
+      "block_peak_load_excursions_n": [
+        654.8208
+      ],
+      "selected_block": 1
+    },
+    {
+      "specimen": "70-2",
+      "source": "70\\70_2.xlsb",
+      "block_peak_load_excursions_n": [
+        659.67801
+      ],
+      "selected_block": 1
+    },
+    {
+      "specimen": "70-3",
+      "source": "70\\70_3.xlsb",
+      "block_peak_load_excursions_n": [
+        656.03478
+      ],
+      "selected_block": 1
+    },
+    {
+      "specimen": "70-4",
+      "source": "70\\70_4.xlsb",
+      "block_peak_load_excursions_n": [
+        610.81917
+      ],
+      "selected_block": 1
+    },
+    {
+      "specimen": "80-1",
+      "source": "80\\80_1.xlsb",
+      "block_peak_load_excursions_n": [
+        749.77802
+      ],
+      "selected_block": 1
+    },
+    {
+      "specimen": "80-2",
+      "source": "80\\80_2.xlsb",
+      "block_peak_load_excursions_n": [
+        752.85002
+      ],
+      "selected_block": 1
+    },
+    {
+      "specimen": "80-3",
+      "source": "80\\80_3.xlsb",
+      "block_peak_load_excursions_n": [
+        744.57001
+      ],
+      "selected_block": 1
+    },
+    {
+      "specimen": "80-4",
+      "source": "80\\80_4.xlsb",
+      "block_peak_load_excursions_n": [
+        692.99841
+      ],
+      "selected_block": 1
+    },
+    {
+      "specimen": "90-1",
+      "source": "90\\90_1.xlsb",
+      "block_peak_load_excursions_n": [
+        876.13639
+      ],
+      "selected_block": 1
+    },
+    {
+      "specimen": "90-2",
+      "source": "90\\90_2.xlsb",
+      "block_peak_load_excursions_n": [
+        870.22479
+      ],
+      "selected_block": 1
+    },
+    {
+      "specimen": "90-3",
+      "source": "90\\90_3.xlsb",
+      "block_peak_load_excursions_n": [
+        879.5008
+      ],
+      "selected_block": 1
+    },
+    {
+      "specimen": "90-4",
+      "source": "90\\90_4.xlsb",
+      "block_peak_load_excursions_n": [
+        830.13198
+      ],
+      "selected_block": 1
+    },
+    {
+      "specimen": "100-1",
+      "source": "100\\100_1.xlsb",
+      "block_peak_load_excursions_n": [
+        1112.8399399999998
+      ],
+      "selected_block": 1
+    },
+    {
+      "specimen": "100-2",
+      "source": "100\\100_2.xlsb",
+      "block_peak_load_excursions_n": [
+        1095.67876
+      ],
+      "selected_block": 1
+    },
+    {
+      "specimen": "100-3",
+      "source": "100\\100_3.xlsb",
+      "block_peak_load_excursions_n": [
+        1084.20404
+      ],
+      "selected_block": 1
+    },
+    {
+      "specimen": "100-4",
+      "source": "100\\100_4.xlsb",
+      "block_peak_load_excursions_n": [
+        1025.1391899999999
+      ],
+      "selected_block": 1
+    }
+  ],
+  "specimen_diagnostics": [
+    {
+      "specimen": "40-1",
+      "fit_available": true,
+      "fit_start_fraction_of_peak_raw_force": -0.01074247905467422,
+      "pre_fit_extension_drawdown_mm": 0.00022999999999999995,
+      "pre_fit_displacement_drawdown_mm": 0.0,
+      "crosshead_force_displacement_R2_within_fit": 0.9997952464012512,
+      "crosshead_stiffness_150_400N_N_per_mm": 199.11890264265475,
+      "crosshead_stiffness_150_400N_R2": 0.9990864377026332,
+      "peak_raw_force_n": 452.48401,
+      "fit_half_slope_difference": 0.03817621306705232,
+      "fit_point_count": 935
+    },
+    {
+      "specimen": "40-2",
+      "fit_available": true,
+      "fit_start_fraction_of_peak_raw_force": -0.010054425310868946,
+      "pre_fit_extension_drawdown_mm": 3.0000000000000512e-05,
+      "pre_fit_displacement_drawdown_mm": 0.0,
+      "crosshead_force_displacement_R2_within_fit": 0.9996642702482865,
+      "crosshead_stiffness_150_400N_N_per_mm": 200.3882805681967,
+      "crosshead_stiffness_150_400N_R2": 0.9991945955805577,
+      "peak_raw_force_n": 451.7016,
+      "fit_half_slope_difference": 0.04773604825608743,
+      "fit_point_count": 957
+    },
+    {
+      "specimen": "40-3",
+      "fit_available": true,
+      "fit_start_fraction_of_peak_raw_force": -0.009958579735725382,
+      "pre_fit_extension_drawdown_mm": 0.01757,
+      "pre_fit_displacement_drawdown_mm": 0.0,
+      "crosshead_force_displacement_R2_within_fit": 0.9994348222517873,
+      "crosshead_stiffness_150_400N_N_per_mm": 198.1779382390707,
+      "crosshead_stiffness_150_400N_R2": 0.999298457349566,
+      "peak_raw_force_n": 452.91599,
+      "fit_half_slope_difference": 0.021899894603783655,
+      "fit_point_count": 948
+    },
+    {
+      "specimen": "40-4",
+      "fit_available": true,
+      "fit_start_fraction_of_peak_raw_force": -0.009584664780546407,
+      "pre_fit_extension_drawdown_mm": 2.0000000000000052e-05,
+      "pre_fit_displacement_drawdown_mm": 0.0,
+      "crosshead_force_displacement_R2_within_fit": 0.9994556598132328,
+      "crosshead_stiffness_150_400N_N_per_mm": 120.39931915660647,
+      "crosshead_stiffness_150_400N_R2": 0.9226451220495174,
+      "peak_raw_force_n": 393.12799,
+      "fit_half_slope_difference": 0.03513300497924706,
+      "fit_point_count": 1007
+    },
+    {
+      "specimen": "50-1",
+      "fit_available": true,
+      "fit_start_fraction_of_peak_raw_force": 0.03490987960762433,
+      "pre_fit_extension_drawdown_mm": 9.000000000000002e-05,
+      "pre_fit_displacement_drawdown_mm": 0.0,
+      "crosshead_force_displacement_R2_within_fit": 0.9995271450036028,
+      "crosshead_stiffness_150_400N_N_per_mm": 228.33822993151782,
+      "crosshead_stiffness_150_400N_R2": 0.9997445345991417,
+      "peak_raw_force_n": 512.10718,
+      "fit_half_slope_difference": 0.04896544609414665,
+      "fit_point_count": 1030
+    },
+    {
+      "specimen": "50-2",
+      "fit_available": true,
+      "fit_start_fraction_of_peak_raw_force": 0.03415944044958201,
+      "pre_fit_extension_drawdown_mm": 0.0002599999999999998,
+      "pre_fit_displacement_drawdown_mm": 0.0,
+      "crosshead_force_displacement_R2_within_fit": 0.9996917454267815,
+      "crosshead_stiffness_150_400N_N_per_mm": 231.05273301391168,
+      "crosshead_stiffness_150_400N_R2": 0.9999174201724644,
+      "peak_raw_force_n": 515.34802,
+      "fit_half_slope_difference": 0.03549623371978517,
+      "fit_point_count": 1035
+    },
+    {
+      "specimen": "50-3",
+      "fit_available": true,
+      "fit_start_fraction_of_peak_raw_force": 0.03133487882749426,
+      "pre_fit_extension_drawdown_mm": 0.00022,
+      "pre_fit_displacement_drawdown_mm": 0.0,
+      "crosshead_force_displacement_R2_within_fit": 0.9997710181834856,
+      "crosshead_stiffness_150_400N_N_per_mm": 229.64096264917683,
+      "crosshead_stiffness_150_400N_R2": 0.9999707916091684,
+      "peak_raw_force_n": 534.28003,
+      "fit_half_slope_difference": 0.003573703524245272,
+      "fit_point_count": 1045
+    },
+    {
+      "specimen": "50-4",
+      "fit_available": false
+    },
+    {
+      "specimen": "60-1",
+      "fit_available": true,
+      "fit_start_fraction_of_peak_raw_force": 0.29089559583873664,
+      "pre_fit_extension_drawdown_mm": 2.9999999999999997e-05,
+      "pre_fit_displacement_drawdown_mm": 0.0,
+      "crosshead_force_displacement_R2_within_fit": 0.999980596550758,
+      "crosshead_stiffness_150_400N_N_per_mm": 241.7332581458241,
+      "crosshead_stiffness_150_400N_R2": 0.9999025726532884,
+      "peak_raw_force_n": 539.56403,
+      "fit_half_slope_difference": 0.03316987619560665,
+      "fit_point_count": 556
+    },
+    {
+      "specimen": "60-2",
+      "fit_available": true,
+      "fit_start_fraction_of_peak_raw_force": 0.28948059022842015,
+      "pre_fit_extension_drawdown_mm": 0.05094,
+      "pre_fit_displacement_drawdown_mm": 0.0,
+      "crosshead_force_displacement_R2_within_fit": 0.9999439166854838,
+      "crosshead_stiffness_150_400N_N_per_mm": 245.64389131119006,
+      "crosshead_stiffness_150_400N_R2": 0.9999742780114929,
+      "peak_raw_force_n": 539.15601,
+      "fit_half_slope_difference": 0.040192461188461426,
+      "fit_point_count": 555
+    },
+    {
+      "specimen": "60-3",
+      "fit_available": true,
+      "fit_start_fraction_of_peak_raw_force": 0.28871342028568353,
+      "pre_fit_extension_drawdown_mm": 0.03783,
+      "pre_fit_displacement_drawdown_mm": 0.0,
+      "crosshead_force_displacement_R2_within_fit": 0.9999718248464472,
+      "crosshead_stiffness_150_400N_N_per_mm": 244.65941386423697,
+      "crosshead_stiffness_150_400N_R2": 0.9999731118490517,
+      "peak_raw_force_n": 541.06799,
+      "fit_half_slope_difference": 0.04095051583066907,
+      "fit_point_count": 561
+    },
+    {
+      "specimen": "60-4",
+      "fit_available": true,
+      "fit_start_fraction_of_peak_raw_force": 0.32928613809241275,
+      "pre_fit_extension_drawdown_mm": 0.02349,
+      "pre_fit_displacement_drawdown_mm": 0.0,
+      "crosshead_force_displacement_R2_within_fit": 0.9999721777478917,
+      "crosshead_stiffness_150_400N_N_per_mm": 217.66410628689403,
+      "crosshead_stiffness_150_400N_R2": 0.9997784028514584,
+      "peak_raw_force_n": 480.0032,
+      "fit_half_slope_difference": 0.04943980518955472,
+      "fit_point_count": 616
+    },
+    {
+      "specimen": "70-1",
+      "fit_available": true,
+      "fit_start_fraction_of_peak_raw_force": 0.040494045449492956,
+      "pre_fit_extension_drawdown_mm": 5.000000000000002e-05,
+      "pre_fit_displacement_drawdown_mm": 0.0,
+      "crosshead_force_displacement_R2_within_fit": 0.9996607799667653,
+      "crosshead_stiffness_150_400N_N_per_mm": 279.0152028032794,
+      "crosshead_stiffness_150_400N_R2": 0.9999762108884697,
+      "peak_raw_force_n": 618.9552,
+      "fit_half_slope_difference": 0.025039781837502172,
+      "fit_point_count": 895
+    },
+    {
+      "specimen": "70-2",
+      "fit_available": true,
+      "fit_start_fraction_of_peak_raw_force": 0.038701282399828875,
+      "pre_fit_extension_drawdown_mm": 0.00013000000000000002,
+      "pre_fit_displacement_drawdown_mm": 0.0,
+      "crosshead_force_displacement_R2_within_fit": 0.9993352716039398,
+      "crosshead_stiffness_150_400N_N_per_mm": 271.6444082181798,
+      "crosshead_stiffness_150_400N_R2": 0.9999889009702346,
+      "peak_raw_force_n": 622.84241,
+      "fit_half_slope_difference": 0.03803623050787747,
+      "fit_point_count": 922
+    },
+    {
+      "specimen": "70-3",
+      "fit_available": true,
+      "fit_start_fraction_of_peak_raw_force": 0.039265968610026375,
+      "pre_fit_extension_drawdown_mm": 5.000000000000002e-05,
+      "pre_fit_displacement_drawdown_mm": 0.0,
+      "crosshead_force_displacement_R2_within_fit": 0.9997209465953716,
+      "crosshead_stiffness_150_400N_N_per_mm": 274.6330935453151,
+      "crosshead_stiffness_150_400N_R2": 0.9999804093458475,
+      "peak_raw_force_n": 619.26398,
+      "fit_half_slope_difference": 0.047529368981939456,
+      "fit_point_count": 902
+    },
+    {
+      "specimen": "70-4",
+      "fit_available": true,
+      "fit_start_fraction_of_peak_raw_force": 0.03903970073340401,
+      "pre_fit_extension_drawdown_mm": 0.021249999999999998,
+      "pre_fit_displacement_drawdown_mm": 0.0,
+      "crosshead_force_displacement_R2_within_fit": 0.9947866596791067,
+      "crosshead_stiffness_150_400N_N_per_mm": 253.32671007484743,
+      "crosshead_stiffness_150_400N_R2": 0.9999793873930932,
+      "peak_raw_force_n": 571.78717,
+      "fit_half_slope_difference": 0.04405733571387289,
+      "fit_point_count": 704
+    },
+    {
+      "specimen": "80-1",
+      "fit_available": true,
+      "fit_start_fraction_of_peak_raw_force": -0.0030874623021105436,
+      "pre_fit_extension_drawdown_mm": 0.0001699999999999999,
+      "pre_fit_displacement_drawdown_mm": 0.0,
+      "crosshead_force_displacement_R2_within_fit": 0.9991895298929656,
+      "crosshead_stiffness_150_400N_N_per_mm": 306.65697781922603,
+      "crosshead_stiffness_150_400N_R2": 0.999897097917067,
+      "peak_raw_force_n": 712.81842,
+      "fit_half_slope_difference": 0.04995118433324311,
+      "fit_point_count": 1297
+    },
+    {
+      "specimen": "80-2",
+      "fit_available": true,
+      "fit_start_fraction_of_peak_raw_force": -0.0029467472651025757,
+      "pre_fit_extension_drawdown_mm": 7.999999999999999e-05,
+      "pre_fit_displacement_drawdown_mm": 0.0,
+      "crosshead_force_displacement_R2_within_fit": 0.9989343993657497,
+      "crosshead_stiffness_150_400N_N_per_mm": 299.07153867764384,
+      "crosshead_stiffness_150_400N_R2": 0.99985431082327,
+      "peak_raw_force_n": 715.90802,
+      "fit_half_slope_difference": 0.011362568223006271,
+      "fit_point_count": 1343
+    },
+    {
+      "specimen": "80-3",
+      "fit_available": true,
+      "fit_start_fraction_of_peak_raw_force": -0.0007928809777237524,
+      "pre_fit_extension_drawdown_mm": 1.9999999999999944e-05,
+      "pre_fit_displacement_drawdown_mm": 0.0,
+      "crosshead_force_displacement_R2_within_fit": 0.999081568709878,
+      "crosshead_stiffness_150_400N_N_per_mm": 304.9390208973186,
+      "crosshead_stiffness_150_400N_R2": 0.9998263660150952,
+      "peak_raw_force_n": 709.31201,
+      "fit_half_slope_difference": 0.0346523815332691,
+      "fit_point_count": 1303
+    },
+    {
+      "specimen": "80-4",
+      "fit_available": true,
+      "fit_start_fraction_of_peak_raw_force": -0.001787094665694376,
+      "pre_fit_extension_drawdown_mm": 1.9999999999999998e-05,
+      "pre_fit_displacement_drawdown_mm": 0.0,
+      "crosshead_force_displacement_R2_within_fit": 0.9993952445985277,
+      "crosshead_stiffness_150_400N_N_per_mm": 279.14629670139436,
+      "crosshead_stiffness_150_400N_R2": 0.999824915974912,
+      "peak_raw_force_n": 657.15601,
+      "fit_half_slope_difference": 0.04615625348297951,
+      "fit_point_count": 1409
+    },
+    {
+      "specimen": "90-1",
+      "fit_available": true,
+      "fit_start_fraction_of_peak_raw_force": 0.2757824115548819,
+      "pre_fit_extension_drawdown_mm": 3.0000000000000024e-05,
+      "pre_fit_displacement_drawdown_mm": 0.0,
+      "crosshead_force_displacement_R2_within_fit": 0.9999536205714431,
+      "crosshead_stiffness_150_400N_N_per_mm": 354.9510702984573,
+      "crosshead_stiffness_150_400N_R2": 0.9997651902720722,
+      "peak_raw_force_n": 839.07599,
+      "fit_half_slope_difference": 0.03856996031305379,
+      "fit_point_count": 518
+    },
+    {
+      "specimen": "90-2",
+      "fit_available": true,
+      "fit_start_fraction_of_peak_raw_force": 0.28075608969112503,
+      "pre_fit_extension_drawdown_mm": 5.000000000000002e-05,
+      "pre_fit_displacement_drawdown_mm": 0.0,
+      "crosshead_force_displacement_R2_within_fit": 0.9999584266551292,
+      "crosshead_stiffness_150_400N_N_per_mm": 352.284270554241,
+      "crosshead_stiffness_150_400N_R2": 0.9996889041124664,
+      "peak_raw_force_n": 833.34399,
+      "fit_half_slope_difference": 0.033195831498728935,
+      "fit_point_count": 523
+    },
+    {
+      "specimen": "90-3",
+      "fit_available": true,
+      "fit_start_fraction_of_peak_raw_force": 0.27614878717031105,
+      "pre_fit_extension_drawdown_mm": 2.9999999999999984e-05,
+      "pre_fit_displacement_drawdown_mm": 0.0,
+      "crosshead_force_displacement_R2_within_fit": 0.9999256596127648,
+      "crosshead_stiffness_150_400N_N_per_mm": 345.12890400868537,
+      "crosshead_stiffness_150_400N_R2": 0.999620239349975,
+      "peak_raw_force_n": 842.0968,
+      "fit_half_slope_difference": 0.04090798395583672,
+      "fit_point_count": 532
+    },
+    {
+      "specimen": "90-4",
+      "fit_available": true,
+      "fit_start_fraction_of_peak_raw_force": 0.2942711190201292,
+      "pre_fit_extension_drawdown_mm": 0.09894,
+      "pre_fit_displacement_drawdown_mm": 0.0,
+      "crosshead_force_displacement_R2_within_fit": 0.9999622305582176,
+      "crosshead_stiffness_150_400N_N_per_mm": 326.90534688135216,
+      "crosshead_stiffness_150_400N_R2": 0.9996517598858033,
+      "peak_raw_force_n": 793.59198,
+      "fit_half_slope_difference": 0.03935370393082009,
+      "fit_point_count": 561
+    },
+    {
+      "specimen": "100-1",
+      "fit_available": true,
+      "fit_start_fraction_of_peak_raw_force": 0.1094574993388013,
+      "pre_fit_extension_drawdown_mm": 0.0,
+      "pre_fit_displacement_drawdown_mm": 0.0,
+      "crosshead_force_displacement_R2_within_fit": 0.9985476543426939,
+      "crosshead_stiffness_150_400N_N_per_mm": 399.3717466791842,
+      "crosshead_stiffness_150_400N_R2": 0.9991897543132962,
+      "peak_raw_force_n": 1077.66394,
+      "fit_half_slope_difference": 0.03738466447150514,
+      "fit_point_count": 1336
+    },
+    {
+      "specimen": "100-2",
+      "fit_available": true,
+      "fit_start_fraction_of_peak_raw_force": 0.11001924082477559,
+      "pre_fit_extension_drawdown_mm": 0.00012,
+      "pre_fit_displacement_drawdown_mm": 0.0,
+      "crosshead_force_displacement_R2_within_fit": 0.998500021990481,
+      "crosshead_stiffness_150_400N_N_per_mm": 387.2597100013098,
+      "crosshead_stiffness_150_400N_R2": 0.9991536253520766,
+      "peak_raw_force_n": 1058.81116,
+      "fit_half_slope_difference": 0.03599804340019233,
+      "fit_point_count": 1386
+    },
+    {
+      "specimen": "100-3",
+      "fit_available": true,
+      "fit_start_fraction_of_peak_raw_force": 0.11110533331657306,
+      "pre_fit_extension_drawdown_mm": 0.00018,
+      "pre_fit_displacement_drawdown_mm": 0.0,
+      "crosshead_force_displacement_R2_within_fit": 0.9983870110758177,
+      "crosshead_stiffness_150_400N_N_per_mm": 392.4384571687185,
+      "crosshead_stiffness_150_400N_R2": 0.9990329064520395,
+      "peak_raw_force_n": 1046.92004,
+      "fit_half_slope_difference": 0.04350288589691003,
+      "fit_point_count": 1358
+    },
+    {
+      "specimen": "100-4",
+      "fit_available": true,
+      "fit_start_fraction_of_peak_raw_force": 0.1185102825303386,
+      "pre_fit_extension_drawdown_mm": 0.0001300000000000051,
+      "pre_fit_displacement_drawdown_mm": 0.0,
+      "crosshead_force_displacement_R2_within_fit": 0.9988458822768137,
+      "crosshead_stiffness_150_400N_N_per_mm": 367.01052747536437,
+      "crosshead_stiffness_150_400N_R2": 0.9993466989293746,
+      "peak_raw_force_n": 988.47119,
+      "fit_half_slope_difference": 0.04942539373962847,
+      "fit_point_count": 1455
+    }
+  ],
+  "missing_specimens": [],
+  "output_layout": {
+    "group_results": {
+      "40": "40\\analysis_results\\modulus_20261026_28_final",
+      "50": "50\\analysis_results\\modulus_20261026_28_final",
+      "60": "60\\analysis_results\\modulus_20261026_28_final",
+      "70": "70\\analysis_results\\modulus_20261026_28_final",
+      "80": "80\\analysis_results\\modulus_20261026_28_final",
+      "90": "90\\analysis_results\\modulus_20261026_28_final",
+      "100": "100\\analysis_results\\modulus_20261026_28_final"
+    },
+    "comparison": "comparison_results\\modulus_20261026_28_final",
+    "summary_and_metadata": "analysis_results\\modulus_20261026_28_final"
+  },
+  "source_sha256": {
+    "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1023\\28个狗棒试样实验记录表.xlsx": "9279b6f86c6c043c388658bea302742c9c0e5d3d49cd72d0080f688bfd630a08",
+    "40\\40_1.xlsb": "bb4405b22901c4ecefe8ef26a74d2a83bb5ae4832a3fa4e0ea61e1e96e1ddb38",
+    "40\\40_2.xlsb": "bedec8024dacf9ae04c9af352ebdcf744d447f0f4af815a16e42e24463759823",
+    "40\\40_3.xlsb": "ca16504c59f714215da365b879fb5ed530f6f906256729b23780f653659e28ed",
+    "40\\40_4.xlsb": "a016432eb5a13341406b5de0ec9c2808d746e7f1cb6703d5828c5944f6651309",
+    "50\\50_1.xlsb": "2c412d4ca0759d0f2e15c62e015df7b25938fd32de20ba2592912f44bd7f8ba0",
+    "50\\50_2.xlsb": "a0ecda3b965ba3077bbf3ba401a2abe253e2c31957f8b8445516dbbf854b6cd5",
+    "50\\50_3.xlsb": "9fabe0224f3a9ad17c7697f4c43ec6deb060008045a713971f2764d6045f2135",
+    "50\\50_4.xlsb": "4d4bc7778e6e68a2f253892130912cb9ffc3922e508702af5349b39ba8c6c8a3",
+    "60\\60_1.xlsb": "23b78086b694212b8b594c3097849cec27469e69a181da95d20d2a461872f312",
+    "60\\60_2.xlsb": "fc944d76a856cab36162683b6edcab596ab608bfa4b2b9036a1d487a82f2f16d",
+    "60\\60_3.xlsb": "85be2103bcef64f9946f15b2d84ec3c74cc5dae2d19b1352df89f7e4759ed1e6",
+    "60\\60_4.xlsb": "16497f2db65512368050cd6a32500ded708d16053b62c92f30fbcdfeed107d81",
+    "70\\70_1.xlsb": "fa57c0482ac0b1cee0fbbe57f5099783e502b9158c1bd050ef08f140ea74e941",
+    "70\\70_2.xlsb": "2e9d3595f28a1c1f1f52bde1025850a8072b574a6749f8bfff320b07f2ea215a",
+    "70\\70_3.xlsb": "5e9c13675c5a8aa936a53fdc50efa867e5feae492d9e57571474b71245f6e44c",
+    "70\\70_4.xlsb": "e8c046817ad2236c24fa4d0e7259c78972e86bf80ebd6a42c99b6c3d3d6bd479",
+    "80\\80_1.xlsb": "6090c02b34f04a624ebeb01a4470843c62fd400ede7191a6a87173c164e29a1f",
+    "80\\80_2.xlsb": "7d54925ca1d1f1ef268bcb322f874851d5eef1e8de4b192265b3565ac0e0d4e7",
+    "80\\80_3.xlsb": "2a8ed4ebf7671dc88b52318fc6029ecf29587f294db2f34bae73fc6cbc2b49c1",
+    "80\\80_4.xlsb": "43a619ea9be9690f66489e669551f7b7ee2a203044d99b39326fce4840aa6da5",
+    "90\\90_1.xlsb": "082987f11374171c8168f839de86682816562912b2c11e53945ac07057bdc613",
+    "90\\90_2.xlsb": "e46c7b1ec6984167113b0c2a038853758673c663c9177fcebf082e5b9e675d32",
+    "90\\90_3.xlsb": "f322f7f0ee9f6d3e57b029220652282ee517f91a628fe4054e68ee447d411fa6",
+    "90\\90_4.xlsb": "3129a5ee46dafb7666131106ea870eed43d334f8470e17d70e0c0ad7082bd9cc",
+    "100\\100_1.xlsb": "ddba189a2f79787e842022e90e1d7d8e8e9b119ade5f15de0f1059ff60b74cf0",
+    "100\\100_2.xlsb": "234aa5955695284c3540b41417046bdd8b2ade523addf507dd231aec51695514",
+    "100\\100_3.xlsb": "094de6fd472e8234421822ad5eedd89e915178379a6e9c537652786adea85ed9",
+    "100\\100_4.xlsb": "36d8914567a6dc4db8086eb9b94e48d40e362aaea9fa4b2e0fc45ccccb7610ba"
+  },
+  "script_sha256": "d68f5b7c905c82bc89aedbf717171dbdf6c2871e39c3538ef7bfd6dfe187524a",
+  "versions": {
+    "python": "3.12.11",
+    "numpy": "2.3.0",
+    "pandas": "2.3.3",
+    "matplotlib": "3.10.3",
+    "openpyxl": "3.1.5",
+    "pyxlsb": "1.0.10"
+  }
+}
