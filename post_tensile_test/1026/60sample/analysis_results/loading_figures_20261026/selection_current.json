@@ -1,0 +1,378 @@
+{
+  "scope": "Each run separately: maximum recorded load and available DIC export requests.",
+  "fps_user_confirmed": 5,
+  "first_stage_user_confirmed": 0,
+  "prior_analysis_scope_superseded": "Prior report selected only the global maximum; this report includes all three runs.",
+  "sources": [
+    {
+      "relative_path": "1/disp.csv",
+      "sha256": "bfe4cc46a556394df5f909b0f2dd78cd3deb0b83f2d0423799b0a6047422cef3"
+    },
+    {
+      "relative_path": "1/force.xlsb",
+      "sha256": "0743c003a8d20c4dc12270077cbef280ac29f778fee219b7bd51a2fe9a32ac34"
+    },
+    {
+      "relative_path": "2/disp.csv",
+      "sha256": "d2f01d6d02df55eec19d5a6f20ad7e2d02e731c1dc1adf393a0d55f7dee548e6"
+    },
+    {
+      "relative_path": "2/force.xlsb",
+      "sha256": "31fdb5be1f4e2b1c5fc222b5b0ea24c5b0e2da02c6bc0cef22eee0c1cc514ee9"
+    },
+    {
+      "relative_path": "3/disp.csv",
+      "sha256": "a19f7801806b5993c0d8724161329e275c96f4a1f615ad310a3bb532de575608"
+    },
+    {
+      "relative_path": "3/force.xlsb",
+      "sha256": "af61940bb09cd97f8d1b0ae5ffd9b18b5a4b718eaa2f7e2e82b64207a5eb16cf"
+    }
+  ],
+  "helper_sha256": "3c49b507a49d0df3239af074e8eb44f8ce770d5cd52f7b982e842fba5c796aaf",
+  "runs": {
+    "1": {
+      "raw_peak_N": 379.81281,
+      "peak_machine_time_s": 179.72,
+      "peak_workbook_row": 8986,
+      "approximate_peak_stage": 919.85,
+      "peak_stage_range_from_event_offsets": [
+        918.1499999999913,
+        920.8999999999763
+      ],
+      "dic_last_stage": 999,
+      "stage_first": 945,
+      "stage_last": 959,
+      "frame_count": 15,
+      "selection_role": "late_DIC_hold_candidate_force_not_recorded",
+      "machine_time_offset_s": -4.25,
+      "offset_sensitivity_s": [
+        -4.4599999999952615,
+        -3.909999999998263
+      ],
+      "events": [
+        {
+          "machine": {
+            "time_s": 130.68000000000188,
+            "sse": 2.492016257800545e-05,
+            "slope_before_mm_s": 0.008335166727639372,
+            "slope_after_mm_s": 0.0016396099785408813
+          },
+          "dic_points_and_mean": [
+            {
+              "time_s": 134.9799999999973,
+              "sse": 7.089779176399201e-05,
+              "slope_before_mm_s": 0.0060182399280404985,
+              "slope_after_mm_s": 0.0007129245794046833
+            },
+            {
+              "time_s": 135.13999999999714,
+              "sse": 7.761172543140174e-05,
+              "slope_before_mm_s": 0.0054435635946019165,
+              "slope_after_mm_s": 0.0009474740937041861
+            },
+            {
+              "time_s": 135.05999999999722,
+              "sse": 6.496433184210124e-05,
+              "slope_before_mm_s": 0.005727031184519225,
+              "slope_after_mm_s": 0.0008272429736931337
+            }
+          ],
+          "offsets_s": [
+            -4.299999999995407,
+            -4.4599999999952615,
+            -4.379999999995334
+          ],
+          "machine_window": [
+            124,
+            138
+          ],
+          "machine_search": [
+            127,
+            134
+          ],
+          "dic_window": [
+            128,
+            142
+          ],
+          "dic_search": [
+            132,
+            138
+          ]
+        },
+        {
+          "machine": {
+            "time_s": 140.84999999999923,
+            "sse": 5.354433370822144e-07,
+            "slope_before_mm_s": 0.001291426936890455,
+            "slope_after_mm_s": 0.008333312620360111
+          },
+          "dic_points_and_mean": [
+            {
+              "time_s": 144.7599999999975,
+              "sse": 0.00010766658978806418,
+              "slope_before_mm_s": 0.0008385256048286747,
+              "slope_after_mm_s": 0.005660820956024689
+            },
+            {
+              "time_s": 145.05999999999722,
+              "sse": 0.00011780784286255558,
+              "slope_before_mm_s": 0.0012666960193330884,
+              "slope_after_mm_s": 0.005736891911924964
+            },
+            {
+              "time_s": 144.87999999999738,
+              "sse": 7.992337191387037e-05,
+              "slope_before_mm_s": 0.0010338102692292114,
+              "slope_after_mm_s": 0.00569051896405382
+            }
+          ],
+          "offsets_s": [
+            -3.909999999998263,
+            -4.20999999999799,
+            -4.029999999998154
+          ],
+          "machine_window": [
+            138,
+            151
+          ],
+          "machine_search": [
+            140,
+            146
+          ],
+          "dic_window": [
+            140,
+            154
+          ],
+          "dic_search": [
+            142,
+            150
+          ]
+        }
+      ],
+      "paired_machine_time_s": [
+        184.75,
+        187.55
+      ],
+      "force_record_coverage_count": 0,
+      "force_mean_N": null,
+      "force_range_N": null,
+      "updated_DIC_hold_entry": {
+        "time_s": 183.64999999999668,
+        "sse": 7.486208084069564e-05,
+        "slope_before_mm_s": 0.0058776185349856186,
+        "slope_after_mm_s": 0.0008216524776793292
+      }
+    },
+    "2": {
+      "raw_peak_N": 279.4928,
+      "peak_machine_time_s": 84.36,
+      "peak_workbook_row": 4219,
+      "approximate_peak_stage": 445.55,
+      "peak_stage_range_from_event_offsets": [
+        444.7999999999984,
+        446.10000000000014
+      ],
+      "dic_last_stage": 548,
+      "stage_first": 465,
+      "stage_last": 479,
+      "frame_count": 15,
+      "selection_role": "late_DIC_hold_candidate_force_not_recorded",
+      "machine_time_offset_s": -4.75,
+      "offset_sensitivity_s": [
+        -4.860000000000028,
+        -4.599999999999682
+      ],
+      "events": [
+        {
+          "machine": {
+            "time_s": 43.94999999999981,
+            "sse": 2.7034103859032847e-05,
+            "slope_before_mm_s": 0.008327057906368562,
+            "slope_after_mm_s": 0.0004834430734661638
+          },
+          "dic_points_and_mean": [
+            {
+              "time_s": 48.54999999999949,
+              "sse": 3.493984300040174e-05,
+              "slope_before_mm_s": 0.006605038236089537,
+              "slope_after_mm_s": 0.0003017129169494972
+            },
+            {
+              "time_s": 48.62999999999948,
+              "sse": 3.041629736107114e-05,
+              "slope_before_mm_s": 0.006523952365003896,
+              "slope_after_mm_s": 0.00026539179785168166
+            },
+            {
+              "time_s": 48.55999999999949,
+              "sse": 3.141746141191323e-05,
+              "slope_before_mm_s": 0.006588676564230216,
+              "slope_after_mm_s": 0.0003096173684189558
+            }
+          ],
+          "offsets_s": [
+            -4.599999999999682,
+            -4.679999999999666,
+            -4.60999999999968
+          ],
+          "machine_window": [
+            39,
+            50
+          ],
+          "machine_search": [
+            43,
+            47
+          ],
+          "dic_window": [
+            43,
+            54
+          ],
+          "dic_search": [
+            46,
+            51
+          ]
+        },
+        {
+          "machine": {
+            "time_s": 54.06999999999939,
+            "sse": 2.403134622251901e-06,
+            "slope_before_mm_s": 0.0003382333507248999,
+            "slope_after_mm_s": 0.008334899965901789
+          },
+          "dic_points_and_mean": [
+            {
+              "time_s": 58.889999999999425,
+              "sse": 3.4739418725541274e-05,
+              "slope_before_mm_s": 4.369290818021301e-06,
+              "slope_after_mm_s": 0.0065489623661852325
+            },
+            {
+              "time_s": 58.92999999999942,
+              "sse": 4.2465242016466594e-05,
+              "slope_before_mm_s": 1.037842362998538e-06,
+              "slope_after_mm_s": 0.006467622070421194
+            },
+            {
+              "time_s": 58.90999999999942,
+              "sse": 3.733882105273329e-05,
+              "slope_before_mm_s": 2.794609885154939e-06,
+              "slope_after_mm_s": 0.006508392789186545
+            }
+          ],
+          "offsets_s": [
+            -4.820000000000036,
+            -4.860000000000028,
+            -4.840000000000032
+          ],
+          "machine_window": [
+            49,
+            61
+          ],
+          "machine_search": [
+            51,
+            58
+          ],
+          "dic_window": [
+            53,
+            65
+          ],
+          "dic_search": [
+            56,
+            61
+          ]
+        }
+      ],
+      "paired_machine_time_s": [
+        88.25,
+        91.05
+      ],
+      "force_record_coverage_count": 0,
+      "force_mean_N": null,
+      "force_range_N": null
+    },
+    "3": {
+      "raw_peak_N": 380.008,
+      "peak_machine_time_s": 41.1,
+      "peak_workbook_row": 2057,
+      "approximate_peak_stage": 222.7,
+      "peak_stage_range_from_event_offsets": [
+        221.64999999999978,
+        223.79999999999936
+      ],
+      "dic_last_stage": 273,
+      "stage_first": 235,
+      "stage_last": 249,
+      "frame_count": 15,
+      "selection_role": "maximum_load_hold_force_fully_recorded",
+      "machine_time_offset_s": -3.44,
+      "offset_sensitivity_s": [
+        -3.6599999999998687,
+        -3.2299999999999542
+      ],
+      "events": [
+        {
+          "machine": {
+            "time_s": 40.55999999999969,
+            "sse": 2.104843003361975e-05,
+            "slope_before_mm_s": 0.008335864148041952,
+            "slope_after_mm_s": 0.0008233835981964685
+          },
+          "dic_points_and_mean": [
+            {
+              "time_s": 43.929999999999616,
+              "sse": 0.0001307975115307385,
+              "slope_before_mm_s": 0.0055352336895796595,
+              "slope_after_mm_s": 0.0007472242364038612
+            },
+            {
+              "time_s": 44.06999999999959,
+              "sse": 0.00014893067181820954,
+              "slope_before_mm_s": 0.005380218795067198,
+              "slope_after_mm_s": 0.0007565293587414486
+            },
+            {
+              "time_s": 43.9999999999996,
+              "sse": 0.00013573986393294288,
+              "slope_before_mm_s": 0.005454720466577952,
+              "slope_after_mm_s": 0.0007529401299723624
+            }
+          ],
+          "offsets_s": [
+            -3.3699999999999264,
+            -3.5099999999998985,
+            -3.4399999999999125
+          ],
+          "machine_window": [
+            35,
+            47
+          ],
+          "machine_search": [
+            39,
+            43
+          ],
+          "dic_window": [
+            38,
+            53
+          ],
+          "dic_search": [
+            42,
+            47
+          ]
+        }
+      ],
+      "paired_machine_time_s": [
+        43.56,
+        46.36
+      ],
+      "force_record_coverage_count": 15,
+      "force_mean_N": 379.6495966666667,
+      "force_range_N": [
+        379.55679,
+        379.73041
+      ]
+    }
+  },
+  "reference_stage_each_run": 0,
+  "uncertainty_note": "Event offsets are empirical alignment sensitivity, not a confidence interval or hardware trigger measurement."
+}

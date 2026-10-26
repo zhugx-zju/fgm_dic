@@ -1,0 +1,157 @@
+{
+  "scope": "Use historical plot style; update run 1 window for newly extended DIC. Retain runs 2/3.",
+  "style_reference": {
+    "git_commit": "cff0d76f9484d21485f4031240c500abd6d14d25",
+    "path": "results/dic/loading_figure_20261021/plot_loading_selection.py",
+    "sha256": "de9e93519ac4c3243a9ff03ac29e14720606363c30aa1f243e1810144d48d4f8"
+  },
+  "source_sha256": {
+    "post_tensile_test\\1026\\60sample\\analysis_results\\per_run_max_load_frames_20261026\\selection.json": "effe67b7c366f7d54fa9bdd77432eeb292494ded2d35711020b33903aa17b137",
+    "post_tensile_test\\1026\\60sample\\analysis_results\\per_run_max_load_frames_20261026\\export_requests.csv": "5786514c81926230b446e42c34bce14645dbd88b3aa0d2f61459655948d747bf",
+    "post_tensile_test\\1026\\60sample\\analysis_results\\max_load_frames_20261026\\analyze_frames.py": "3c49b507a49d0df3239af074e8eb44f8ce770d5cd52f7b982e842fba5c796aaf"
+  },
+  "raw_sources_verified": [
+    {
+      "relative_path": "1/disp.csv",
+      "sha256": "bfe4cc46a556394df5f909b0f2dd78cd3deb0b83f2d0423799b0a6047422cef3"
+    },
+    {
+      "relative_path": "1/force.xlsb",
+      "sha256": "0743c003a8d20c4dc12270077cbef280ac29f778fee219b7bd51a2fe9a32ac34"
+    },
+    {
+      "relative_path": "2/disp.csv",
+      "sha256": "d2f01d6d02df55eec19d5a6f20ad7e2d02e731c1dc1adf393a0d55f7dee548e6"
+    },
+    {
+      "relative_path": "2/force.xlsb",
+      "sha256": "31fdb5be1f4e2b1c5fc222b5b0ea24c5b0e2da02c6bc0cef22eee0c1cc514ee9"
+    },
+    {
+      "relative_path": "3/disp.csv",
+      "sha256": "a19f7801806b5993c0d8724161329e275c96f4a1f615ad310a3bb532de575608"
+    },
+    {
+      "relative_path": "3/force.xlsb",
+      "sha256": "af61940bb09cd97f8d1b0ae5ffd9b18b5a4b718eaa2f7e2e82b64207a5eb16cf"
+    }
+  ],
+  "verification": [
+    {
+      "run": 1,
+      "language": "zh",
+      "stage_first": 945,
+      "stage_last": 959,
+      "midpoint_stage": 952,
+      "selected_force_coverage_count": 0,
+      "plotted_time_range_s": [
+        0,
+        200.43875
+      ],
+      "png_pixels": [
+        4800,
+        2700
+      ]
+    },
+    {
+      "run": 1,
+      "language": "en",
+      "stage_first": 945,
+      "stage_last": 959,
+      "midpoint_stage": 952,
+      "selected_force_coverage_count": 0,
+      "plotted_time_range_s": [
+        0,
+        200.43875
+      ],
+      "png_pixels": [
+        4800,
+        2700
+      ]
+    },
+    {
+      "run": 2,
+      "language": "zh",
+      "stage_first": 465,
+      "stage_last": 479,
+      "midpoint_stage": 472,
+      "selected_force_coverage_count": 0,
+      "plotted_time_range_s": [
+        0,
+        107.47124999999998
+      ],
+      "png_pixels": [
+        4800,
+        2700
+      ]
+    },
+    {
+      "run": 2,
+      "language": "en",
+      "stage_first": 465,
+      "stage_last": 479,
+      "midpoint_stage": 472,
+      "selected_force_coverage_count": 0,
+      "plotted_time_range_s": [
+        0,
+        107.47124999999998
+      ],
+      "png_pixels": [
+        4800,
+        2700
+      ]
+    },
+    {
+      "run": 3,
+      "language": "zh",
+      "stage_first": 235,
+      "stage_last": 249,
+      "midpoint_stage": 242,
+      "selected_force_coverage_count": 15,
+      "plotted_time_range_s": [
+        0,
+        52.439
+      ],
+      "png_pixels": [
+        4800,
+        2700
+      ]
+    },
+    {
+      "run": 3,
+      "language": "en",
+      "stage_first": 235,
+      "stage_last": 249,
+      "midpoint_stage": 242,
+      "selected_force_coverage_count": 15,
+      "plotted_time_range_s": [
+        0,
+        52.439
+      ],
+      "png_pixels": [
+        4800,
+        2700
+      ]
+    }
+  ],
+  "input_updates": [
+    {
+      "relative_path": "1/disp.csv",
+      "previous_sha256": "d51f4337f57dfb99345cd7957b0f148b45c10c7c19b576cc141ee1d97d8af0ec",
+      "current_sha256": "bfe4cc46a556394df5f909b0f2dd78cd3deb0b83f2d0423799b0a6047422cef3",
+      "reason": "DIC extended from 800 to 1000 stages; block order reversed."
+    }
+  ],
+  "environment": {
+    "python": "3.13.2",
+    "numpy": "2.4.0",
+    "matplotlib": "3.10.9"
+  },
+  "script_sha256": "2b84c1ec600985efe0f522677b5289167ce60e164c82f2e8a6f4e9089b6bd75b",
+  "limitations": [
+    "No full-field quality check; fields not exported yet.",
+    "Synchronization inferred from events; no hardware timestamp verification.",
+    "Runs 1/2 candidate holds have no recorded contemporaneous force.",
+    "Two-point displacement is a timing signal, not specimen strain."
+  ]
+}
