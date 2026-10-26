@@ -1,8 +1,9 @@
-"""唯一日常配置：1026均匀60%试样，逐次独立H1反演。"""
+"""唯一日常配置：1026 sample_2七区试样，逐次独立自由二维H1反演。"""
 from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).resolve().parent
-RUN_NAME = '60sample_1026_run3_h1_20261026'
+SAMPLE_RUN = 3  # 1/2/3分别执行四个入口；参考图不合并。
+RUN_NAME = f'sample2_1026_run{SAMPLE_RUN}_h1_20261026'
 INPUTS_CONFIGURED = True
 DATA_MODE = 'dic'  # dic / synthetic_layered / synthetic_nodal
 MESH_SOURCE = 'configured_grid'  # configured_grid / dic_grid
@@ -24,28 +25,54 @@ EXACT_TV_OPTIONS = dict(max_outer=12000, max_inner=150, stationarity_atol=1e-9,
     stationarity_rtol=1e-3, primal_atol=1e-6, primal_rtol=1e-4,
     gap_atol=1e-9, gap_rtol=1e-4, adapt_interval=10)
 
-# 三次各自使用DIC参考坐标和用户指定的始末载荷差；不合并参考图。
-SAMPLE_ROOT = PROJECT_ROOT / 'post_tensile_test' / '1026' / '60sample'
-PLATFORMS = {'run3': {'folder': 'D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1026\\60sample\\3\\380N', 'stages': (235, 249), 'run': 3, 'setting_N': 380, 'force_N': 129.05999999999997, 'force_note': 'User-defined end-minus-start force: end 379.78479000 N minus record-start 250.72479000 N. End force last measured record; plateau mean differs by 0.135 N. DIC reference/force-start coincidence unverified.'}}
-FIT_CASES, PREDICT_CASES = ('run3',), ()
+# 用户确认：厚度、DIC跨度作为几何/承载宽度、名义末载及起载参考均为假设。
+# 标线各距端部53 mm；沿原+Y位移较大一端为高填充率。制造界面不缩放。
+SAMPLE_ROOT = PROJECT_ROOT / 'post_tensile_test' / '1026' / 'sample_2'
+_runs = {
+    1: dict(stages=(591, 605), setting_N=280, start_N=50.7776, width_mm=18.43550794901),
+    2: dict(stages=(625, 639), setting_N=380, start_N=70.6192, width_mm=18.4636725353),
+    3: dict(stages=(689, 703), setting_N=480, start_N=82.2848, width_mm=19.3018040506),
+}
+_run = _runs[SAMPLE_RUN]
+_name = f'run{SAMPLE_RUN}'
+_delta_force = round(_run['setting_N']-_run['start_N'], 8)
+FORCE_REFERENCE_NOTE = (
+    f"用户明确接受假设：第{SAMPLE_RUN}次名义末载{_run['setting_N']} N减去记录首载"
+    f"{_run['start_N']:.8f} N，增量{_delta_force:.8f} N。候选窗口无同期载荷；"
+    '假定末端保持名义载荷及记录起载对应DIC参考图，二者均未同步验证。'
+)
+PLATFORMS = {_name: {
+    'folder': str(SAMPLE_ROOT/str(SAMPLE_RUN)/f"{_run['setting_N']}N"),
+    'stages': _run['stages'], 'run': SAMPLE_RUN, 'setting_N': _run['setting_N'],
+    'force_N': _delta_force, 'force_note': FORCE_REFERENCE_NOTE,
+}}
+FIT_CASES, PREDICT_CASES = (_name,), ()
 FORCE_PAIRING_CSV = SAMPLE_ROOT / 'selected_dic_windows.csv'
 FORCE_REFERENCE = 'force_increment_from_record_start'
-FORCE_REFERENCE_NOTE = '用户指定始末载荷差值。第3次：379.78479000 - 250.72479000 = 129.06000000 N。末载为载荷文件最后一条记录，窗口内均值为379.6495967 N。载荷记录起点与DIC第0帧未同步核实；绝对模量是此参考对应假设下的条件性结果。'
-FORCE_ASSUMED = False
+FORCE_ASSUMED = True
 DIC_UNIT = 'mm'
 DIC_COORDINATE_STATE = 'deformed'
 DISPLACEMENT_REFERENCE = 'initial_reference_image'
 DOMAIN_SOURCE = 'dic_reference_bounds'
 GEO_L, GEO_H, THICKNESS = None, None, 3.2
-LOAD_SECTION_WIDTH = 18.36575062254
+LOAD_SECTION_WIDTH = _run['width_mm']
 INTERNAL_SIDE_BOUNDARY = 'traction_free_approximation'
-REGION_INFILL_PERCENT = (60,)
-REGION_BOUNDARIES_MANUFACTURING_X = ()
+REGION_INFILL_PERCENT = (40, 50, 60, 70, 80, 90, 100)
+REGION_BOUNDARIES_MANUFACTURING_X = (-40., -24., -8., 8., 24., 40.)
 REGION_BOUNDARIES_X = ()
 REGION_BOUNDARIES_CENTERED_X = ()
 CALIBRATION_CSV = PROJECT_ROOT / 'post_tensile_test' / '1023' / 'analysis_results' / 'modulus_20261026_28_final' / 'group_summary.csv'
 CALIBRATION_METHOD = 'common_stress_window_OLS'
-REGISTRATION = {'mode': 'assumed_center', 'matrix': [[0.0, 1.0], [1.0, 0.0]], 'note': '均匀试样无材料分区；DIC原Y作为拉伸轴x，原X作为横向y；坐标与位移共用换轴，保持毫米长度。参考点云居中仅确定原点，不缩放。DIC覆盖宽度按用户要求作为承载宽度，厚度近似3.2 mm。'}
+REGISTRATION = {
+    'mode': 'specimen_marks', 'matrix': [[0., 1.], [1., 0.]],
+    'mark_reference': 'roi_axial_extrema', 'length_scale_source': 'independent_dic_calibration',
+    'specimen_length_mm': 220., 'low_infill_mark_end_distance_mm': 53.,
+    'high_infill_mark_end_distance_mm': 53., 'material_x_sign': 1,
+    'note': '用户确认导出ROI在两条标线之间，各标线距端部53 mm；制造文件给出220 mm总长和七区界面。'
+            '高填充率在位移较大端，本次原+Y端DY较大，FEM x沿原+Y，填充率沿x为40至100%。'
+            '软件毫米尺度作为独立于标线间距的长度来源，尺度本身按用户口径假设有效；'
+            '两标线中点对齐，不缩放DIC实际跨度为名义114 mm。DIC覆盖宽度假定为承载宽度，厚度约3.2 mm。',
+}
 OUTSIDE_POINT_POLICY = 'reject'
 
 if not RUN_NAME or RUN_NAME in ('.', '..') or any(c in RUN_NAME for c in '<>:"/\\|?*'):

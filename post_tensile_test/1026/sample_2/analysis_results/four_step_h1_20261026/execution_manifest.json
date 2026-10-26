@@ -1,0 +1,99 @@
+{
+  "runs": {
+    "1": {
+      "configuration_snapshot": "results\\dic_full\\sample2_1026_run1_h1_20261026\\01_prepared\\configuration_snapshot.py",
+      "steps": [
+        "python -B -m script.step1_prepare_dic",
+        "python -B -m script.step2_forward_calibrated",
+        "python -B -m script.step3_inverse_dic",
+        "python -B -m script.step4_compare_results --input results/dic_full/sample2_1026_run1_h1_20261026/01_prepared"
+      ],
+      "statuses": [
+        {
+          "stage": "01_prepared",
+          "status": "prepared",
+          "metadata_sha256": "81fb14102385ece42aa3938840753f5dfad11b6c5d81251e7c0f6af70dc40508"
+        },
+        {
+          "stage": "02_forward",
+          "status": "computed",
+          "metadata_sha256": "77e9985bfcd67f046ec8c68e9f0d320462ae97314810867d337a091fa165c160"
+        },
+        {
+          "stage": "03_inverse",
+          "status": "computed",
+          "metadata_sha256": "d42b1c527278990f69cddbfdac3c08aa1fc2a33b7f17da31949394cc1f225236"
+        },
+        {
+          "stage": "04_comparison",
+          "status": "computed",
+          "metadata_sha256": "bbea467a4f080d63687772ebdbca733a330203554f026b15ec387b5f975eca1e"
+        }
+      ]
+    },
+    "2": {
+      "configuration_snapshot": "results\\dic_full\\sample2_1026_run2_h1_20261026\\01_prepared\\configuration_snapshot.py",
+      "steps": [
+        "python -B -m script.step1_prepare_dic",
+        "python -B -m script.step2_forward_calibrated",
+        "python -B -m script.step3_inverse_dic",
+        "python -B -m script.step4_compare_results --input results/dic_full/sample2_1026_run2_h1_20261026/01_prepared"
+      ],
+      "statuses": [
+        {
+          "stage": "01_prepared",
+          "status": "prepared",
+          "metadata_sha256": "b7851ca5ce5acf24b91e164b4231c1dda58b097228816ed6515a9a7b7541a233"
+        },
+        {
+          "stage": "02_forward",
+          "status": "computed",
+          "metadata_sha256": "73dfa1331a2be48edc2e595e08d5155d0a23ce79b4fb6a4bbe0530642ca7b853"
+        },
+        {
+          "stage": "03_inverse",
+          "status": "computed",
+          "metadata_sha256": "0bb35498406d3e5be03dfcab315e0b448fe9495b3eda9c2b08463d07cae4ff0b"
+        },
+        {
+          "stage": "04_comparison",
+          "status": "computed",
+          "metadata_sha256": "63ce629eb1a79f52393a942cea8831ee46e211cb50106c46847bbcaddf1212e5"
+        }
+      ]
+    },
+    "3": {
+      "configuration_snapshot": "results\\dic_full\\sample2_1026_run3_h1_20261026\\01_prepared\\configuration_snapshot.py",
+      "steps": [
+        "python -B -m script.step1_prepare_dic",
+        "python -B -m script.step2_forward_calibrated",
+        "python -B -m script.step3_inverse_dic",
+        "python -B -m script.step4_compare_results --input results/dic_full/sample2_1026_run3_h1_20261026/01_prepared"
+      ],
+      "statuses": [
+        {
+          "stage": "01_prepared",
+          "status": "prepared",
+          "metadata_sha256": "db57c57223312859a8639dda303e6c46ec1594bd3faa42dd71d72195ce085c3a"
+        },
+        {
+          "stage": "02_forward",
+          "status": "computed",
+          "metadata_sha256": "ce7f3aa608340d1a9bd20acb1eb84cfd8b133550e8be69cc70871e90c1ad9d12"
+        },
+        {
+          "stage": "03_inverse",
+          "status": "computed",
+          "metadata_sha256": "ffc8871dcc4d749c92a0ddd1f75108f6d9ebb3ffcf711b06e3069fd3e9dfe0c3"
+        },
+        {
+          "stage": "04_comparison",
+          "status": "computed",
+          "metadata_sha256": "4cd0ee4158e0436bd2c5c796b9075c3db8ee7ec2933ef266d5c78cab746675fc"
+        }
+      ]
+    }
+  },
+  "postprocess_source_sha256": "e561fba00f97457f1852646841b0f88b7858385a636e2cc97464bc63c59fb586",
+  "notes": "Four steps executed separately for each independently frozen reference; SAMPLE_RUN changed only between preparations. No resume or numerical budget increase."
+}

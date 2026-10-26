@@ -1,0 +1,134 @@
+[
+  {
+    "run": 1,
+    "root": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run1_h1_20261026",
+    "prepared_metadata_sha256": "81fb14102385ece42aa3938840753f5dfad11b6c5d81251e7c0f6af70dc40508",
+    "inverse_metadata_sha256": "d42b1c527278990f69cddbfdac3c08aa1fc2a33b7f17da31949394cc1f225236",
+    "comparison_metadata_sha256": "bbea467a4f080d63687772ebdbca733a330203554f026b15ec387b5f975eca1e",
+    "inverse_fields_sha256": "2647459d96fa5216648ea777656077ad9d12e90da65080b71c48a457dd197576",
+    "forward_fields_sha256": "713bc5ea9cec67f54f1c4073f67dc0ff650f5776a04a855fd1daba462395cede",
+    "saved_inverse_replay_verified": true,
+    "all_input_hashes_verified": true,
+    "material_registration": {
+      "method": "confirmed_marks_midpoint_unit_scale",
+      "manufacturing_x_offset_mm": -52.963027063,
+      "manufacturing_x_fem_coefficient": 1,
+      "manufacturing_x_relation": "manufacturing_x = 1 * FEM_x + -52.963027063 mm",
+      "infill_order_along_fem_x": [
+        40,
+        50,
+        60,
+        70,
+        80,
+        90,
+        100
+      ],
+      "manufacturing_mark_x_mm": [
+        -57.0,
+        57.0
+      ],
+      "manufacturing_roi_x_mm": [
+        -52.963027063,
+        52.963027063
+      ],
+      "nominal_mark_gap_mm": 114.0,
+      "dic_span_mm": 105.926054126,
+      "dic_minus_nominal_mark_gap_mm": -8.073945874000003,
+      "endpoint_discrepancy_mm": [
+        4.036972937000002,
+        -4.036972937000002
+      ],
+      "length_scale_factor": 1.0,
+      "direction_note": "用户确认导出ROI在两条标线之间，各标线距端部53 mm；制造文件给出220 mm总长和七区界面。高填充率在位移较大端，本次原+Y端DY较大，FEM x沿原+Y，填充率沿x为40至100%。软件毫米尺度作为独立于标线间距的长度来源，尺度本身按用户口径假设有效；两标线中点对齐，不缩放DIC实际跨度为名义114 mm。DIC覆盖宽度假定为承载宽度，厚度约3.2 mm。",
+      "transverse_location": "internal DIC ROI bounds; no measured specimen edge registration"
+    }
+  },
+  {
+    "run": 2,
+    "root": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run2_h1_20261026",
+    "prepared_metadata_sha256": "b7851ca5ce5acf24b91e164b4231c1dda58b097228816ed6515a9a7b7541a233",
+    "inverse_metadata_sha256": "0bb35498406d3e5be03dfcab315e0b448fe9495b3eda9c2b08463d07cae4ff0b",
+    "comparison_metadata_sha256": "63ce629eb1a79f52393a942cea8831ee46e211cb50106c46847bbcaddf1212e5",
+    "inverse_fields_sha256": "97b27bd8450d1be69867d43103a01d7aaa33b9dab6c4c31e74769ad0ce0e40ee",
+    "forward_fields_sha256": "c108732c661fd79effbafc4ce843fd5f3598ddeebabc08af151a8a57fbc9508c",
+    "saved_inverse_replay_verified": true,
+    "all_input_hashes_verified": true,
+    "material_registration": {
+      "method": "confirmed_marks_midpoint_unit_scale",
+      "manufacturing_x_offset_mm": -52.887468776800006,
+      "manufacturing_x_fem_coefficient": 1,
+      "manufacturing_x_relation": "manufacturing_x = 1 * FEM_x + -52.8874687768 mm",
+      "infill_order_along_fem_x": [
+        40,
+        50,
+        60,
+        70,
+        80,
+        90,
+        100
+      ],
+      "manufacturing_mark_x_mm": [
+        -57.0,
+        57.0
+      ],
+      "manufacturing_roi_x_mm": [
+        -52.887468776800006,
+        52.887468776800006
+      ],
+      "nominal_mark_gap_mm": 114.0,
+      "dic_span_mm": 105.77493755360001,
+      "dic_minus_nominal_mark_gap_mm": -8.225062446399988,
+      "endpoint_discrepancy_mm": [
+        4.112531223199994,
+        -4.112531223199994
+      ],
+      "length_scale_factor": 1.0,
+      "direction_note": "用户确认导出ROI在两条标线之间，各标线距端部53 mm；制造文件给出220 mm总长和七区界面。高填充率在位移较大端，本次原+Y端DY较大，FEM x沿原+Y，填充率沿x为40至100%。软件毫米尺度作为独立于标线间距的长度来源，尺度本身按用户口径假设有效；两标线中点对齐，不缩放DIC实际跨度为名义114 mm。DIC覆盖宽度假定为承载宽度，厚度约3.2 mm。",
+      "transverse_location": "internal DIC ROI bounds; no measured specimen edge registration"
+    }
+  },
+  {
+    "run": 3,
+    "root": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run3_h1_20261026",
+    "prepared_metadata_sha256": "db57c57223312859a8639dda303e6c46ec1594bd3faa42dd71d72195ce085c3a",
+    "inverse_metadata_sha256": "ffc8871dcc4d749c92a0ddd1f75108f6d9ebb3ffcf711b06e3069fd3e9dfe0c3",
+    "comparison_metadata_sha256": "4cd0ee4158e0436bd2c5c796b9075c3db8ee7ec2933ef266d5c78cab746675fc",
+    "inverse_fields_sha256": "3414f044bb519994e7d7f779aa37d7bc4c6ea1c2d25dbb127c96ce593d6f03e0",
+    "forward_fields_sha256": "017e8bd6b946fb5df33fdab2b5a2cc84c5b4409f933420f88e5cfb257fb524fe",
+    "saved_inverse_replay_verified": true,
+    "all_input_hashes_verified": true,
+    "material_registration": {
+      "method": "confirmed_marks_midpoint_unit_scale",
+      "manufacturing_x_offset_mm": -54.52759643245,
+      "manufacturing_x_fem_coefficient": 1,
+      "manufacturing_x_relation": "manufacturing_x = 1 * FEM_x + -54.5275964324 mm",
+      "infill_order_along_fem_x": [
+        40,
+        50,
+        60,
+        70,
+        80,
+        90,
+        100
+      ],
+      "manufacturing_mark_x_mm": [
+        -57.0,
+        57.0
+      ],
+      "manufacturing_roi_x_mm": [
+        -54.52759643245,
+        54.52759643245
+      ],
+      "nominal_mark_gap_mm": 114.0,
+      "dic_span_mm": 109.0551928649,
+      "dic_minus_nominal_mark_gap_mm": -4.944807135100007,
+      "endpoint_discrepancy_mm": [
+        2.4724035675500033,
+        -2.4724035675500033
+      ],
+      "length_scale_factor": 1.0,
+      "direction_note": "用户确认导出ROI在两条标线之间，各标线距端部53 mm；制造文件给出220 mm总长和七区界面。高填充率在位移较大端，本次原+Y端DY较大，FEM x沿原+Y，填充率沿x为40至100%。软件毫米尺度作为独立于标线间距的长度来源，尺度本身按用户口径假设有效；两标线中点对齐，不缩放DIC实际跨度为名义114 mm。DIC覆盖宽度假定为承载宽度，厚度约3.2 mm。",
+      "transverse_location": "internal DIC ROI bounds; no measured specimen edge registration"
+    }
+  }
+]
