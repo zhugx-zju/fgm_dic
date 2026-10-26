@@ -1,0 +1,275 @@
+{
+  "user_confirmed": {
+    "frequency_Hz": 5,
+    "dic_starts_before_machine": true
+  },
+  "method": "Select maximum-platform DIC stages; do not infer unrecorded forces.\n\nRun with bundled Python from any directory. User confirms all acquisitions at\n5 Hz and DIC starts before the machine. Stage numbers are zero based, not image\nfilenames. Two exported point signals locate motion events, not axial strain.\n",
+  "records": {
+    "1": {
+      "stages": 379,
+      "point_labels": [
+        "阶段点 1-DY",
+        "阶段点 0-DY"
+      ],
+      "confirmed_Hz": 5.0,
+      "force_rows": 7325,
+      "machine_end_s": 146.52,
+      "maximum_recorded_force_N": 379.81519,
+      "maximum_recorded_force_time_s": 146.52,
+      "initial_machine_force_median_N": 53.428,
+      "initial_force_is_confirmed_fixture_offset": false,
+      "maximum_platform_measured_force_N": null,
+      "status": "no identifiable final maximum-load dwell; no selection"
+    },
+    "2": {
+      "stages": 736,
+      "point_labels": [
+        "阶段点 0-DY",
+        "阶段点 1-DY"
+      ],
+      "confirmed_Hz": 5.0,
+      "force_rows": 6301,
+      "machine_end_s": 126.02,
+      "maximum_recorded_force_N": 379.72079,
+      "maximum_recorded_force_time_s": 126.02,
+      "initial_machine_force_median_N": 46.3272,
+      "initial_force_is_confirmed_fixture_offset": false,
+      "maximum_platform_measured_force_N": null,
+      "machine_events": {
+        "180": {
+          "knots": [
+            53.2617442298733,
+            63.22739600107741
+          ],
+          "slopes": [
+            3.976534255463732,
+            0.01522656067629713,
+            3.997727047011703
+          ],
+          "rmse": 0.16348388999062227
+        },
+        "280": {
+          "knots": [
+            88.94987353392668,
+            98.89650039592168
+          ],
+          "slopes": [
+            3.792300735864877,
+            0.013121393577288032,
+            3.8263340170058635
+          ],
+          "rmse": 0.172930895949731
+        }
+      },
+      "dic_events": {
+        "180": {
+          "knots": [
+            285.9380659302506,
+            336.40338527402054
+          ],
+          "slopes": [
+            0.0011767195247455377,
+            4.2612854603619674e-05,
+            0.0011581873162038972
+          ],
+          "rmse": 0.0008235026569141478
+        },
+        "280": {
+          "knots": [
+            466.820670641424,
+            516.4008749472014
+          ],
+          "slopes": [
+            0.0011089953438282781,
+            9.162720203751795e-05,
+            0.0011299869760836192
+          ],
+          "rmse": 0.0009348962995344702
+        }
+      },
+      "offset_candidates_s": [
+        3.9258689561768207,
+        4.053281053726693,
+        4.414260594358126,
+        4.383674593518592
+      ],
+      "offset_median_s": 4.218477823622642,
+      "offset_range_s": 0.48839163818130515,
+      "event_regression_effective_Hz": 5.054986685782091,
+      "effective_Hz_is_diagnostic_not_acquisition_setting": true,
+      "event_regression_residual_stages": [
+        -0.08709818814264736,
+        0.001984137049760193,
+        0.3924880505712167,
+        -0.30737399947861377
+      ],
+      "timing_status": "approximately consistent at 5 Hz",
+      "final_displacement_event": {
+        "knots": [
+          649.3969241072621
+        ],
+        "slopes": [
+          0.0010907274956514735,
+          0.00012770329391124816
+        ],
+        "rmse": 0.0012345230012795164
+      },
+      "entry_sensitivity_range_stage": [
+        649.1513928982441,
+        650.2757079000476
+      ],
+      "selected_window": {
+        "first": 680,
+        "last": 694,
+        "count": 15,
+        "single_stage": 687,
+        "selection": "6 to 9 seconds after fitted final displacement-platform entry",
+        "mean_signal_std_um": 0.5364794229447838,
+        "fitted_total_drift_um": 1.3695374175000068,
+        "detrended_rms_um": 0.29998522824752427,
+        "point_total_drift_um": [
+          1.4664053800000414,
+          1.2726694549998667
+        ],
+        "force_N": null,
+        "load_level": "candidate final 380 N setting; not verified by synchronous force",
+        "estimated_machine_time_s": [
+          131.78152217637736,
+          134.58152217637738
+        ],
+        "all_offset_candidates_exceed_machine_end": true
+      }
+    },
+    "3": {
+      "stages": 939,
+      "point_labels": [
+        "阶段点 1-DY",
+        "阶段点 0-DY"
+      ],
+      "confirmed_Hz": 5.0,
+      "force_rows": 5609,
+      "machine_end_s": 112.2,
+      "maximum_recorded_force_N": 379.81281,
+      "maximum_recorded_force_time_s": 112.2,
+      "initial_machine_force_median_N": 54.6128,
+      "initial_force_is_confirmed_fixture_offset": false,
+      "maximum_platform_measured_force_N": null,
+      "machine_events": {
+        "180": {
+          "knots": [
+            41.262804767103006,
+            51.25305714305095
+          ],
+          "slopes": [
+            4.097752623881272,
+            0.003580795255880176,
+            4.0778356666804765
+          ],
+          "rmse": 0.15470536072041965
+        },
+        "280": {
+          "knots": [
+            76.19585610962298,
+            86.19449370381903
+          ],
+          "slopes": [
+            3.95574634159732,
+            0.008475756939602341,
+            4.022842292022325
+          ],
+          "rmse": 0.1459996531220221
+        }
+      },
+      "dic_events": {
+        "180": {
+          "knots": [
+            323.26809017074163,
+            394.8404444365106
+          ],
+          "slopes": [
+            0.000828578192133544,
+            3.5213483653264875e-05,
+            0.0008494135593204504
+          ],
+          "rmse": 0.0005868567748372128
+        },
+        "280": {
+          "knots": [
+            570.9354907259428,
+            640.8233430803641
+          ],
+          "slopes": [
+            0.0008131089865311606,
+            5.5455683832803145e-05,
+            0.0007757622903951388
+          ],
+          "rmse": 0.0007100374884283583
+        }
+      },
+      "offset_candidates_s": [
+        23.390813267045317,
+        27.715031744251164,
+        37.99124203556559,
+        41.97017491225378
+      ],
+      "offset_median_s": 32.85313688990838,
+      "offset_range_s": 18.579361645208465,
+      "event_regression_effective_Hz": 7.0657291336304064,
+      "effective_Hz_is_diagnostic_not_acquisition_setting": true,
+      "event_regression_residual_stages": [
+        -0.4759920811782763,
+        0.5079449195349071,
+        0.3639298765726835,
+        -0.3958827149293711
+      ],
+      "timing_status": "inconsistent at confirmed 5 Hz",
+      "final_displacement_event": {
+        "knots": [
+          822.1172601029424
+        ],
+        "slopes": [
+          0.0007923197028341755,
+          5.81617261985434e-05
+        ],
+        "rmse": 0.0013237278607990336
+      },
+      "entry_sensitivity_range_stage": [
+        821.4545787131461,
+        823.094689469159
+      ],
+      "selected_window": {
+        "first": 853,
+        "last": 867,
+        "count": 15,
+        "single_stage": 860,
+        "selection": "6 to 9 seconds after fitted final displacement-platform entry",
+        "mean_signal_std_um": 0.3459199429595834,
+        "fitted_total_drift_um": 0.5088552899998707,
+        "detrended_rms_um": 0.2949964070520811,
+        "point_total_drift_um": [
+          0.2651765799998448,
+          0.7525339999999182
+        ],
+        "force_N": null,
+        "load_level": "candidate final 380 N setting; not verified by synchronous force"
+      }
+    }
+  },
+  "source_sha256": {
+    "post_tensile_test\\1016\\sample_1\\1\\disp.csv": "9d7ddbd09315cd6c14443bbe3e7c7dad85ccb8b0a4d28e664971b001b1585042",
+    "post_tensile_test\\1016\\sample_1\\1\\force.xlsb": "006cd4216eaa7863c14f37008ce61bb3a1c7b7e193affbc4a6f5726a8d34d41b",
+    "post_tensile_test\\1016\\sample_1\\2\\disp.csv": "6488dc358dde3e151bc9ed158107c9755cbedd649c4cec12f542c8d1858b85dc",
+    "post_tensile_test\\1016\\sample_1\\2\\force.xlsb": "cc076d64c44833489f68f9a801c5c8d43703d61c28b6ef0ef337e7c4e89ececb",
+    "post_tensile_test\\1016\\sample_1\\3\\disp.csv": "c7205107ae22d0f950662634755ecca8974150199ad8634f07b00ad1b818a741",
+    "post_tensile_test\\1016\\sample_1\\3\\force.xlsb": "de67945ede88585a56b2869a263132408d8e1359748df30e4eab3db4d7f0fac5"
+  },
+  "environment": {
+    "python": "3.12.14 (main, Aug 25 2026, 14:01:42) [MSC v.1944 64 bit (AMD64)]",
+    "numpy": "2.3.5",
+    "scipy": "1.15.3",
+    "matplotlib": "3.10.3",
+    "executable": "C:\\Users\\zhu_g\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe"
+  },
+  "code_sha256": "b8a31574f482ff87b04a9fb515d4b510557bbe8d8d1000dadfd6eb8ffb512b40",
+  "git_head": "f7d3dfc29f8dd7991e71171115aa7db9f41fbc95"
+}
