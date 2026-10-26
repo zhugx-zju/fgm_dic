@@ -63,10 +63,11 @@
 
 此次仅使用两次最高平台，各次分别识别；两次来自同一试样的不同加载记录，不作为独立试样重复。不依据标定选择γ或ν，不把ν敏感性中误差最小者解释为实测ν。方向比较只评价本数据和近似划线定位条件下的相容性。独立标定沿用mixed_infill_20261017的independent口径，保留各区原始组均值、试样标准差、样本数和批次；跨批桥接及向本试样转移的限制仍保留，未通过调整标定降低误差。两组载荷、较早DIC参考态、毫米坐标标定、横向自由侧边近似及截取边界等效仍有物理验证限制。尤其第3次时序不一致不能由模量反演修复。优化停止或位移拟合改善不等于实验物理验证通过。
 
-运行入口为dic_sample1_run2_380n_config.py、dic_sample1_run3_380n_config.py；调用原script.step1_prepare_dic至step4_compare_results，均带对应--config。第2次完成四步，第3次止于第3步，未调用第4步生成最终对照。已有结果重绘使用--plot-only，不重新求解。复核与双方向后处理：
+运行配置为dic_sample1_run2_380n_config.py、dic_sample1_run3_380n_config.py；均调用原script.step1_prepare_dic至step4_compare_results，带对应--config。配置只指定数据、载荷、坐标和计算参数。第2次完成四步，第3次止于第3步，未调用第4步生成最终对照。已有结果通过冻结输入重绘：
 
 ```powershell
-python -X utf8 -B -m lib.sample1_inverse_report
+python -m script.step4_compare_results --input results/dic_full/sample1_run2_380n_h1_20261026/01_prepared --plot-only
+python -m script.step3_inverse_dic --input results/dic_full/sample1_run3_380n_h1_20261026/01_prepared --plot-only
 ```
 
-逐帧输入哈希、原始单位/参考坐标、力假定、配准和网格保存在各01_prepared；逐γ场与停止信息保存在03_inverse。小规模解析与有限差分检查保存在汇总目录input_audit。本报告生成时重新计算了保存E的FE回代、两分量误差、目标函数及伴随梯度；方向B独立正演复用同一FE内核，不调整标定模量。
+逐帧输入哈希、原始单位/参考坐标、力假定、配准和网格保存在各01_prepared；逐γ场与停止信息保存在03_inverse。小规模解析与有限差分检查保存在汇总目录input_audit。本报告生成时重新计算了保存E的FE回代、两分量误差、目标函数及伴随梯度；方向B独立正演复用同一FE内核，不调整标定模量。双方向对照数值表及核验记录保存在results/dic_full/sample1_380n_20261026/的direction_*.csv与summary.json中。
