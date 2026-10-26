@@ -1,0 +1,617 @@
+{
+  "1": {
+    "run": 1,
+    "folder": "post_tensile_test\\1026\\60sample\\1\\380N",
+    "stages": [
+      945,
+      959
+    ],
+    "length_mm": 111.4434841626,
+    "width_mm": 18.004796888200005,
+    "thickness_mm": 3.2,
+    "start_force_N": 46.0744,
+    "last_record_force_N": 379.81281,
+    "end_force_N": 380.0,
+    "end_force_assumed": true,
+    "force_source_sha256": "0743c003a8d20c4dc12270077cbef280ac29f778fee219b7bd51a2fe9a32ac34",
+    "disp_source_sha256": "bfe4cc46a556394df5f909b0f2dd78cd3deb0b83f2d0423799b0a6047422cef3",
+    "affine_DX_DY_coefficients": [
+      [
+        -0.1970160627021188,
+        0.7083239157174884
+      ],
+      [
+        -0.002950070165544942,
+        -0.000807252716216914
+      ],
+      [
+        0.0007174462697453198,
+        0.0027654643244380364
+      ]
+    ],
+    "temporal_SD_rms_mm": [
+      0.0006674596202618851,
+      0.001458698572223205
+    ],
+    "sources": [
+      {
+        "path": "post_tensile_test\\1026\\60sample\\1\\380N\\stage_00945.comdat_comdata.csv",
+        "stage": 945,
+        "sha256": "3e62c58a93f078d28b6b897b424094f89ff70c7169435c9bd6eb8a32248f3f9a",
+        "raw_rows": 21240,
+        "valid_rows": 21240,
+        "duplicates_removed": 0
+      },
+      {
+        "path": "post_tensile_test\\1026\\60sample\\1\\380N\\stage_00946.comdat_comdata.csv",
+        "stage": 946,
+        "sha256": "c9f63f518c0d47a02395b888d157273dbd61ecc931e5256eaae2e133c2620237",
+        "raw_rows": 21240,
+        "valid_rows": 21240,
+        "duplicates_removed": 0
+      },
+      {
+        "path": "post_tensile_test\\1026\\60sample\\1\\380N\\stage_00947.comdat_comdata.csv",
+        "stage": 947,
+        "sha256": "a72b0a890d000ea40d54a46cdf68b9ab39f9c244c7bcbb521d3ec01458ea2316",
+        "raw_rows": 21240,
+        "valid_rows": 21240,
+        "duplicates_removed": 0
+      },
+      {
+        "path": "post_tensile_test\\1026\\60sample\\1\\380N\\stage_00948.comdat_comdata.csv",
+        "stage": 948,
+        "sha256": "86d65a26c982d0565ca87b026913e6a36461b34f8e4811d98213a002ceeb6054",
+        "raw_rows": 21240,
+        "valid_rows": 21240,
+        "duplicates_removed": 0
+      },
+      {
+        "path": "post_tensile_test\\1026\\60sample\\1\\380N\\stage_00949.comdat_comdata.csv",
+        "stage": 949,
+        "sha256": "fb67865570a9db88be56ec09237916c20ca992209dc5d3600bc2f527c5223ef7",
+        "raw_rows": 21240,
+        "valid_rows": 21240,
+        "duplicates_removed": 0
+      },
+      {
+        "path": "post_tensile_test\\1026\\60sample\\1\\380N\\stage_00950.comdat_comdata.csv",
+        "stage": 950,
+        "sha256": "7e375725dc16e9bd3de637fd789c64977854b041e4133075c566e25fa3b60855",
+        "raw_rows": 21240,
+        "valid_rows": 21240,
+        "duplicates_removed": 0
+      },
+      {
+        "path": "post_tensile_test\\1026\\60sample\\1\\380N\\stage_00951.comdat_comdata.csv",
+        "stage": 951,
+        "sha256": "ea7feb99371982b3713aa04cac121fdba7941da12a454613da9344f324528a52",
+        "raw_rows": 21240,
+        "valid_rows": 21240,
+        "duplicates_removed": 0
+      },
+      {
+        "path": "post_tensile_test\\1026\\60sample\\1\\380N\\stage_00952.comdat_comdata.csv",
+        "stage": 952,
+        "sha256": "2019274e89ea88035a936fb149896cc489785938df1872fb4de27328af9c72c1",
+        "raw_rows": 21240,
+        "valid_rows": 21240,
+        "duplicates_removed": 0
+      },
+      {
+        "path": "post_tensile_test\\1026\\60sample\\1\\380N\\stage_00953.comdat_comdata.csv",
+        "stage": 953,
+        "sha256": "eaaa6ad50809349c69bd9a02ebe67c41b5a3cf30677331c12d4d11e0523af34e",
+        "raw_rows": 21240,
+        "valid_rows": 21240,
+        "duplicates_removed": 0
+      },
+      {
+        "path": "post_tensile_test\\1026\\60sample\\1\\380N\\stage_00954.comdat_comdata.csv",
+        "stage": 954,
+        "sha256": "892c55bf8a3765143d1615c84b0b6194803f09c13bf11c6777412e6fd82aa75e",
+        "raw_rows": 21240,
+        "valid_rows": 21240,
+        "duplicates_removed": 0
+      },
+      {
+        "path": "post_tensile_test\\1026\\60sample\\1\\380N\\stage_00955.comdat_comdata.csv",
+        "stage": 955,
+        "sha256": "8ea62a37330ee093684d12a25585bf2957fa0126dbcb0cc698dda67965821820",
+        "raw_rows": 21240,
+        "valid_rows": 21240,
+        "duplicates_removed": 0
+      },
+      {
+        "path": "post_tensile_test\\1026\\60sample\\1\\380N\\stage_00956.comdat_comdata.csv",
+        "stage": 956,
+        "sha256": "4942dc6d0b0bc77b1f7a42f42646b051655fc4df41c7d060d6996d56c45e51fa",
+        "raw_rows": 21240,
+        "valid_rows": 21240,
+        "duplicates_removed": 0
+      },
+      {
+        "path": "post_tensile_test\\1026\\60sample\\1\\380N\\stage_00957.comdat_comdata.csv",
+        "stage": 957,
+        "sha256": "7ab981f26d00abd96a0724197b1135b27bd97a83ebfe2077345c3e2ca8131e40",
+        "raw_rows": 21240,
+        "valid_rows": 21240,
+        "duplicates_removed": 0
+      },
+      {
+        "path": "post_tensile_test\\1026\\60sample\\1\\380N\\stage_00958.comdat_comdata.csv",
+        "stage": 958,
+        "sha256": "e7567694c13437837318cd99bc7dfc1eff513b878d3477aaa8c61f3935a8b786",
+        "raw_rows": 21240,
+        "valid_rows": 21240,
+        "duplicates_removed": 0
+      },
+      {
+        "path": "post_tensile_test\\1026\\60sample\\1\\380N\\stage_00959.comdat_comdata.csv",
+        "stage": 959,
+        "sha256": "d9d892239fe7612d686c62bb174499ebdf994ea9b179270835d6d1a93c2a4eb3",
+        "raw_rows": 21240,
+        "valid_rows": 21240,
+        "duplicates_removed": 0
+      }
+    ],
+    "frame_count": 15,
+    "common_points": 21240,
+    "valid_points_per_frame": [
+      21240,
+      21240,
+      21240,
+      21240,
+      21240,
+      21240,
+      21240,
+      21240,
+      21240,
+      21240,
+      21240,
+      21240,
+      21240,
+      21240,
+      21240
+    ],
+    "reference_bounds": [
+      [
+        9.268479182999998,
+        -50.0231795213
+      ],
+      [
+        27.2732760712,
+        61.4203046413
+      ]
+    ],
+    "reference_span": [
+      18.004796888200005,
+      111.4434841626
+    ],
+    "displacement_reference": "initial_unloaded_image",
+    "csv_coordinate_state": "deformed",
+    "reference_coordinate_rule": "[X-DX,Y-DY]",
+    "noise_note": "Temporal SD is diagnostic; frames are not assumed independent.",
+    "delta_force_N": 333.92560000000003,
+    "registration_matrix": [
+      [
+        0,
+        1
+      ],
+      [
+        1,
+        0
+      ]
+    ]
+  },
+  "2": {
+    "run": 2,
+    "folder": "post_tensile_test\\1026\\60sample\\2\\280N",
+    "stages": [
+      465,
+      479
+    ],
+    "length_mm": 111.34233297579999,
+    "width_mm": 17.6783091394,
+    "thickness_mm": 3.2,
+    "start_force_N": 68.7656,
+    "last_record_force_N": 279.4928,
+    "end_force_N": 280.0,
+    "end_force_assumed": true,
+    "force_source_sha256": "31fdb5be1f4e2b1c5fc222b5b0ea24c5b0e2da02c6bc0cef22eee0c1cc514ee9",
+    "disp_source_sha256": "d2f01d6d02df55eec19d5a6f20ad7e2d02e731c1dc1adf393a0d55f7dee548e6",
+    "affine_DX_DY_coefficients": [
+      [
+        -0.13288216259211255,
+        0.2487678643066632
+      ],
+      [
+        -0.0014202385299649579,
+        -0.0006175993747771176
+      ],
+      [
+        0.0006909435489454378,
+        0.002199803851344038
+      ]
+    ],
+    "temporal_SD_rms_mm": [
+      0.000655930881372062,
+      0.0006048605351172587
+    ],
+    "sources": [
+      {
+        "path": "post_tensile_test\\1026\\60sample\\2\\280N\\stage_00465.comdat_comdata.csv",
+        "stage": 465,
+        "sha256": "8c5acc11f12d911dc0cef304e9f2826e1dc6c6bee789aae56ce898fc68943806",
+        "raw_rows": 20880,
+        "valid_rows": 20880,
+        "duplicates_removed": 0
+      },
+      {
+        "path": "post_tensile_test\\1026\\60sample\\2\\280N\\stage_00466.comdat_comdata.csv",
+        "stage": 466,
+        "sha256": "bcdf8f356d8f96b065e7e346d27d8b81025dd59d029859f21ee28b5d349d56c7",
+        "raw_rows": 20880,
+        "valid_rows": 20880,
+        "duplicates_removed": 0
+      },
+      {
+        "path": "post_tensile_test\\1026\\60sample\\2\\280N\\stage_00467.comdat_comdata.csv",
+        "stage": 467,
+        "sha256": "185ea144c228fcf12e21fa63f2a1c18dbe69f214fdcad17319a2400bcbb02d4c",
+        "raw_rows": 20880,
+        "valid_rows": 20880,
+        "duplicates_removed": 0
+      },
+      {
+        "path": "post_tensile_test\\1026\\60sample\\2\\280N\\stage_00468.comdat_comdata.csv",
+        "stage": 468,
+        "sha256": "d5a6f4442d7411b7382c6a900d12eae433d6e025bf1dfd7baf048b1478c7e7eb",
+        "raw_rows": 20880,
+        "valid_rows": 20880,
+        "duplicates_removed": 0
+      },
+      {
+        "path": "post_tensile_test\\1026\\60sample\\2\\280N\\stage_00469.comdat_comdata.csv",
+        "stage": 469,
+        "sha256": "edbe0f3608adf982197654204d8ae832c4e671f275503824bc41720747534475",
+        "raw_rows": 20880,
+        "valid_rows": 20880,
+        "duplicates_removed": 0
+      },
+      {
+        "path": "post_tensile_test\\1026\\60sample\\2\\280N\\stage_00470.comdat_comdata.csv",
+        "stage": 470,
+        "sha256": "21ab33bd9c6d3198e4da3ec5fe9f45e2f8eb0a2ff521f51543500c5938e4f40f",
+        "raw_rows": 20880,
+        "valid_rows": 20880,
+        "duplicates_removed": 0
+      },
+      {
+        "path": "post_tensile_test\\1026\\60sample\\2\\280N\\stage_00471.comdat_comdata.csv",
+        "stage": 471,
+        "sha256": "8b9562c66d76681d8f017dcff4a88b8ae29ad3e09f9c6845d0316f9df26e92a4",
+        "raw_rows": 20880,
+        "valid_rows": 20880,
+        "duplicates_removed": 0
+      },
+      {
+        "path": "post_tensile_test\\1026\\60sample\\2\\280N\\stage_00472.comdat_comdata.csv",
+        "stage": 472,
+        "sha256": "82420f86f7a8f5976d6c7a6fdc6bc922f58b282e892a862c193dd73247f0c70c",
+        "raw_rows": 20880,
+        "valid_rows": 20880,
+        "duplicates_removed": 0
+      },
+      {
+        "path": "post_tensile_test\\1026\\60sample\\2\\280N\\stage_00473.comdat_comdata.csv",
+        "stage": 473,
+        "sha256": "9f84fd00d80920bfeb94545dc2617ba221326bacaa541b32c5a9dc6746a97739",
+        "raw_rows": 20880,
+        "valid_rows": 20880,
+        "duplicates_removed": 0
+      },
+      {
+        "path": "post_tensile_test\\1026\\60sample\\2\\280N\\stage_00474.comdat_comdata.csv",
+        "stage": 474,
+        "sha256": "97e54086b959a143738576d08bcb5d0551846a4a9ac6405dda833fb8e9894877",
+        "raw_rows": 20880,
+        "valid_rows": 20880,
+        "duplicates_removed": 0
+      },
+      {
+        "path": "post_tensile_test\\1026\\60sample\\2\\280N\\stage_00475.comdat_comdata.csv",
+        "stage": 475,
+        "sha256": "4e688f975ed7e6717ae9dee38ffb1d8e63576a52b8474afe351f0f12f3635e24",
+        "raw_rows": 20880,
+        "valid_rows": 20880,
+        "duplicates_removed": 0
+      },
+      {
+        "path": "post_tensile_test\\1026\\60sample\\2\\280N\\stage_00476.comdat_comdata.csv",
+        "stage": 476,
+        "sha256": "3536433537c302ff2c35769840bdebb629253f992c2731ca256f2784a2d0c46a",
+        "raw_rows": 20880,
+        "valid_rows": 20880,
+        "duplicates_removed": 0
+      },
+      {
+        "path": "post_tensile_test\\1026\\60sample\\2\\280N\\stage_00477.comdat_comdata.csv",
+        "stage": 477,
+        "sha256": "f4ecca5811010a7de961ea60f27ea0c4e97f15c10ebbed1c75e77cf9593d9fc9",
+        "raw_rows": 20880,
+        "valid_rows": 20880,
+        "duplicates_removed": 0
+      },
+      {
+        "path": "post_tensile_test\\1026\\60sample\\2\\280N\\stage_00478.comdat_comdata.csv",
+        "stage": 478,
+        "sha256": "f5ab52204d315b0822426a37800780522f058fccda45b1fff00ad87370c4f25e",
+        "raw_rows": 20880,
+        "valid_rows": 20880,
+        "duplicates_removed": 0
+      },
+      {
+        "path": "post_tensile_test\\1026\\60sample\\2\\280N\\stage_00479.comdat_comdata.csv",
+        "stage": 479,
+        "sha256": "583e21fef4a7030ef2bca197ffe6dd534f83515bca3bf9fe93c2d233d344e56b",
+        "raw_rows": 20880,
+        "valid_rows": 20880,
+        "duplicates_removed": 0
+      }
+    ],
+    "frame_count": 15,
+    "common_points": 20880,
+    "valid_points_per_frame": [
+      20880,
+      20880,
+      20880,
+      20880,
+      20880,
+      20880,
+      20880,
+      20880,
+      20880,
+      20880,
+      20880,
+      20880,
+      20880,
+      20880,
+      20880
+    ],
+    "reference_bounds": [
+      [
+        -3.8989754486,
+        -50.0663892813
+      ],
+      [
+        13.7793336908,
+        61.27594369449999
+      ]
+    ],
+    "reference_span": [
+      17.6783091394,
+      111.34233297579999
+    ],
+    "displacement_reference": "initial_unloaded_image",
+    "csv_coordinate_state": "deformed",
+    "reference_coordinate_rule": "[X-DX,Y-DY]",
+    "noise_note": "Temporal SD is diagnostic; frames are not assumed independent.",
+    "delta_force_N": 211.2344,
+    "registration_matrix": [
+      [
+        0,
+        1
+      ],
+      [
+        1,
+        0
+      ]
+    ]
+  },
+  "3": {
+    "run": 3,
+    "folder": "post_tensile_test\\1026\\60sample\\3\\380N",
+    "stages": [
+      235,
+      249
+    ],
+    "length_mm": 112.72771069394,
+    "width_mm": 18.36575062254,
+    "thickness_mm": 3.2,
+    "start_force_N": 250.72479,
+    "last_record_force_N": 379.78479,
+    "end_force_N": 379.78479,
+    "end_force_assumed": false,
+    "force_source_sha256": "af61940bb09cd97f8d1b0ae5ffd9b18b5a4b718eaa2f7e2e82b64207a5eb16cf",
+    "disp_source_sha256": "a19f7801806b5993c0d8724161329e275c96f4a1f615ad310a3bb532de575608",
+    "affine_DX_DY_coefficients": [
+      [
+        -0.05508637060891208,
+        0.15006070180271797
+      ],
+      [
+        -0.0007686086196517552,
+        -0.00029026943143569523
+      ],
+      [
+        0.0003668624394964547,
+        0.0014880284834657173
+      ]
+    ],
+    "temporal_SD_rms_mm": [
+      0.0010017430061610042,
+      0.0009217435055684548
+    ],
+    "sources": [
+      {
+        "path": "post_tensile_test\\1026\\60sample\\3\\380N\\stage_00235.comdat_comdata.csv",
+        "stage": 235,
+        "sha256": "d61cf7248e59fea5ce711a9b8e0824f3da66e4a61e395fc715fff7c92c5251cd",
+        "raw_rows": 21063,
+        "valid_rows": 21063,
+        "duplicates_removed": 0
+      },
+      {
+        "path": "post_tensile_test\\1026\\60sample\\3\\380N\\stage_00236.comdat_comdata.csv",
+        "stage": 236,
+        "sha256": "f8147c50ba59793d21343675543ba481682ff19e4f7f4cf2816cf8edd5efb8f3",
+        "raw_rows": 21063,
+        "valid_rows": 21063,
+        "duplicates_removed": 0
+      },
+      {
+        "path": "post_tensile_test\\1026\\60sample\\3\\380N\\stage_00237.comdat_comdata.csv",
+        "stage": 237,
+        "sha256": "746953c076e2ace13af6183ce6da93a5fe0fce0adc0b7464e6ae46458eb253ea",
+        "raw_rows": 21063,
+        "valid_rows": 21063,
+        "duplicates_removed": 0
+      },
+      {
+        "path": "post_tensile_test\\1026\\60sample\\3\\380N\\stage_00238.comdat_comdata.csv",
+        "stage": 238,
+        "sha256": "e3a480b7041961ce11c6b786198e9d56761500d83c33fbf47233aa734a820f0b",
+        "raw_rows": 21063,
+        "valid_rows": 21063,
+        "duplicates_removed": 0
+      },
+      {
+        "path": "post_tensile_test\\1026\\60sample\\3\\380N\\stage_00239.comdat_comdata.csv",
+        "stage": 239,
+        "sha256": "89722c4d70613e99be8ea42f56286d45089e68eaa09af0047cfb99742840443f",
+        "raw_rows": 21063,
+        "valid_rows": 21063,
+        "duplicates_removed": 0
+      },
+      {
+        "path": "post_tensile_test\\1026\\60sample\\3\\380N\\stage_00240.comdat_comdata.csv",
+        "stage": 240,
+        "sha256": "f7667093c2a9a5d9fafb18736f90220da18f59bd4b94f50598bacb063cf3ca56",
+        "raw_rows": 21063,
+        "valid_rows": 21063,
+        "duplicates_removed": 0
+      },
+      {
+        "path": "post_tensile_test\\1026\\60sample\\3\\380N\\stage_00241.comdat_comdata.csv",
+        "stage": 241,
+        "sha256": "671f892813c40bb2d490504098c501c20cd023ef98be75f571009f0500eb70dc",
+        "raw_rows": 21063,
+        "valid_rows": 21063,
+        "duplicates_removed": 0
+      },
+      {
+        "path": "post_tensile_test\\1026\\60sample\\3\\380N\\stage_00242.comdat_comdata.csv",
+        "stage": 242,
+        "sha256": "051cee1232101b969c453465297cc8b4ef608a5c777e7762cd1187495ee9f1a5",
+        "raw_rows": 21063,
+        "valid_rows": 21063,
+        "duplicates_removed": 0
+      },
+      {
+        "path": "post_tensile_test\\1026\\60sample\\3\\380N\\stage_00243.comdat_comdata.csv",
+        "stage": 243,
+        "sha256": "b51673ad4883b0a9bb28dc0c4bd7ec1a787132a8406054da8d69465551fd8c35",
+        "raw_rows": 21063,
+        "valid_rows": 21063,
+        "duplicates_removed": 0
+      },
+      {
+        "path": "post_tensile_test\\1026\\60sample\\3\\380N\\stage_00244.comdat_comdata.csv",
+        "stage": 244,
+        "sha256": "5dccfa75755edfe42e165f1619ff5c8a08d19eae6224e488b7111dcae4526d0a",
+        "raw_rows": 21063,
+        "valid_rows": 21063,
+        "duplicates_removed": 0
+      },
+      {
+        "path": "post_tensile_test\\1026\\60sample\\3\\380N\\stage_00245.comdat_comdata.csv",
+        "stage": 245,
+        "sha256": "090be3921c2c203538ab155c1a34449c4182c6dfd61e5e1cc48ae32d87815ac4",
+        "raw_rows": 21063,
+        "valid_rows": 21063,
+        "duplicates_removed": 0
+      },
+      {
+        "path": "post_tensile_test\\1026\\60sample\\3\\380N\\stage_00246.comdat_comdata.csv",
+        "stage": 246,
+        "sha256": "2a879d4476fedecc763e875bc562c964b4d6ea58b26181ffa67eac59715015f0",
+        "raw_rows": 21063,
+        "valid_rows": 21063,
+        "duplicates_removed": 0
+      },
+      {
+        "path": "post_tensile_test\\1026\\60sample\\3\\380N\\stage_00247.comdat_comdata.csv",
+        "stage": 247,
+        "sha256": "4486a601611c64576e07b5d349268681b5898517e1806f3acf421768919d65a0",
+        "raw_rows": 21063,
+        "valid_rows": 21063,
+        "duplicates_removed": 0
+      },
+      {
+        "path": "post_tensile_test\\1026\\60sample\\3\\380N\\stage_00248.comdat_comdata.csv",
+        "stage": 248,
+        "sha256": "65958149000f277630b7adbf9f9efb22fcd136eddb5a1ab856c76142abc14f06",
+        "raw_rows": 21063,
+        "valid_rows": 21063,
+        "duplicates_removed": 0
+      },
+      {
+        "path": "post_tensile_test\\1026\\60sample\\3\\380N\\stage_00249.comdat_comdata.csv",
+        "stage": 249,
+        "sha256": "0fa241daf036a9cd2f4c581b18e67e4ab2ab54bbd93598fc4cf6c27878b822f9",
+        "raw_rows": 21063,
+        "valid_rows": 21063,
+        "duplicates_removed": 0
+      }
+    ],
+    "frame_count": 15,
+    "common_points": 21063,
+    "valid_points_per_frame": [
+      21063,
+      21063,
+      21063,
+      21063,
+      21063,
+      21063,
+      21063,
+      21063,
+      21063,
+      21063,
+      21063,
+      21063,
+      21063,
+      21063,
+      21063
+    ],
+    "reference_bounds": [
+      [
+        -5.4283006755,
+        -49.759422859039994
+      ],
+      [
+        12.93744994704,
+        62.9682878349
+      ]
+    ],
+    "reference_span": [
+      18.36575062254,
+      112.72771069394
+    ],
+    "displacement_reference": "initial_unloaded_image",
+    "csv_coordinate_state": "deformed",
+    "reference_coordinate_rule": "[X-DX,Y-DY]",
+    "noise_note": "Temporal SD is diagnostic; frames are not assumed independent.",
+    "delta_force_N": 129.05999999999997,
+    "registration_matrix": [
+      [
+        0,
+        1
+      ],
+      [
+        1,
+        0
+      ]
+    ]
+  }
+}

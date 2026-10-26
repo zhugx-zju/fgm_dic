@@ -1,0 +1,2394 @@
+Saved solver settings: FTOL=1e-30, GTOL=1e-12; regularization=gradient; gamma selection=L-curve; 50 candidates, [1e-12, 0.0001]
+L-curve 1/50: gamma=0.0001
+Starting L-BFGS-B optimization in m = ln(E) space...
+  Initial modulus: min=1693.0256, max=1693.0256, mean=1693.0256
+  Max iterations: 1500, ftol: 1.00e-30, gtol: 1.00e-12
+  Iteration   10: Cost = 6.276652e-02, ||grad_m|| = 6.464534e-03
+  Iteration   20: Cost = 6.275723e-02, ||grad_m|| = 1.582165e-02
+  Iteration   30: Cost = 6.274015e-02, ||grad_m|| = 2.927686e-02
+  Iteration   40: Cost = 6.272982e-02, ||grad_m|| = 1.383735e-02
+  Iteration   50: Cost = 6.272335e-02, ||grad_m|| = 1.672051e-02
+  Iteration   60: Cost = 6.271890e-02, ||grad_m|| = 7.582759e-03
+  Iteration   70: Cost = 6.271831e-02, ||grad_m|| = 5.535980e-03
+  Iteration   80: Cost = 6.271822e-02, ||grad_m|| = 8.719529e-04
+  Iteration   90: Cost = 6.271819e-02, ||grad_m|| = 7.645786e-04
+  Iteration  100: Cost = 6.271817e-02, ||grad_m|| = 1.468576e-03
+  Iteration  110: Cost = 6.271816e-02, ||grad_m|| = 9.664962e-04
+  Iteration  120: Cost = 6.271815e-02, ||grad_m|| = 2.401279e-04
+  Iteration  130: Cost = 6.271815e-02, ||grad_m|| = 1.334484e-04
+  Iteration  140: Cost = 6.271815e-02, ||grad_m|| = 9.968697e-05
+  Iteration  150: Cost = 6.271815e-02, ||grad_m|| = 1.197566e-04
+  Iteration  160: Cost = 6.271815e-02, ||grad_m|| = 1.919851e-04
+  Iteration  170: Cost = 6.271815e-02, ||grad_m|| = 2.103288e-04
+  Iteration  180: Cost = 6.271815e-02, ||grad_m|| = 2.166413e-04
+  Iteration  190: Cost = 6.271814e-02, ||grad_m|| = 5.142781e-04
+  Iteration  200: Cost = 6.271814e-02, ||grad_m|| = 7.310986e-04
+  Iteration  210: Cost = 6.271813e-02, ||grad_m|| = 3.798320e-04
+  Iteration  220: Cost = 6.271813e-02, ||grad_m|| = 2.763031e-04
+  Iteration  230: Cost = 6.271812e-02, ||grad_m|| = 3.207195e-04
+  Iteration  240: Cost = 6.271812e-02, ||grad_m|| = 7.864868e-04
+  Iteration  250: Cost = 6.271811e-02, ||grad_m|| = 3.158906e-04
+  Iteration  260: Cost = 6.271811e-02, ||grad_m|| = 3.074438e-04
+  Iteration  270: Cost = 6.271811e-02, ||grad_m|| = 5.827514e-04
+  Iteration  280: Cost = 6.271811e-02, ||grad_m|| = 3.132261e-04
+  Iteration  290: Cost = 6.271810e-02, ||grad_m|| = 3.152342e-04
+  Iteration  300: Cost = 6.271810e-02, ||grad_m|| = 4.227376e-04
+  Iteration  310: Cost = 6.271810e-02, ||grad_m|| = 1.020270e-04
+  Iteration  320: Cost = 6.271810e-02, ||grad_m|| = 8.251816e-05
+  Iteration  330: Cost = 6.271810e-02, ||grad_m|| = 6.428179e-05
+  Iteration  340: Cost = 6.271810e-02, ||grad_m|| = 2.110165e-05
+  Iteration  350: Cost = 6.271810e-02, ||grad_m|| = 9.452382e-06
+  Optimization completed: CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH
+  Final modulus: min=1691.7114, max=1694.0921, mean=1692.8559
+  stop=CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH; evaluations=380; rho=0.353468; eta=2.228462
+L-curve 2/50: gamma=6.86648845004e-05
+Starting L-BFGS-B optimization in m = ln(E) space...
+  Initial modulus: min=1691.7114, max=1694.0921, mean=1692.8559
+  Max iterations: 1500, ftol: 1.00e-30, gtol: 1.00e-12
+  Iteration   10: Cost = 6.261195e-02, ||grad_m|| = 2.015527e-03
+  Iteration   20: Cost = 6.261064e-02, ||grad_m|| = 4.860440e-03
+  Iteration   30: Cost = 6.260820e-02, ||grad_m|| = 9.071707e-03
+  Iteration   40: Cost = 6.260677e-02, ||grad_m|| = 3.967571e-03
+  Iteration   50: Cost = 6.260584e-02, ||grad_m|| = 3.627260e-03
+  Iteration   60: Cost = 6.260524e-02, ||grad_m|| = 3.948867e-03
+  Iteration   70: Cost = 6.260516e-02, ||grad_m|| = 1.017829e-03
+  Iteration   80: Cost = 6.260515e-02, ||grad_m|| = 2.515502e-04
+  Iteration   90: Cost = 6.260514e-02, ||grad_m|| = 8.133293e-04
+  Iteration  100: Cost = 6.260514e-02, ||grad_m|| = 3.413865e-04
+  Iteration  110: Cost = 6.260514e-02, ||grad_m|| = 1.757344e-04
+  Iteration  120: Cost = 6.260514e-02, ||grad_m|| = 1.614252e-04
+  Iteration  130: Cost = 6.260514e-02, ||grad_m|| = 3.715419e-05
+  Iteration  140: Cost = 6.260514e-02, ||grad_m|| = 4.009752e-05
+  Iteration  150: Cost = 6.260514e-02, ||grad_m|| = 4.352065e-05
+  Iteration  160: Cost = 6.260514e-02, ||grad_m|| = 1.157156e-04
+  Iteration  170: Cost = 6.260513e-02, ||grad_m|| = 2.096636e-04
+  Iteration  180: Cost = 6.260513e-02, ||grad_m|| = 1.029191e-04
+  Iteration  190: Cost = 6.260513e-02, ||grad_m|| = 1.276211e-04
+  Iteration  200: Cost = 6.260513e-02, ||grad_m|| = 9.736713e-05
+  Iteration  210: Cost = 6.260513e-02, ||grad_m|| = 1.225686e-04
+  Iteration  220: Cost = 6.260513e-02, ||grad_m|| = 1.009865e-04
+  Iteration  230: Cost = 6.260513e-02, ||grad_m|| = 2.359062e-04
+  Iteration  240: Cost = 6.260513e-02, ||grad_m|| = 2.663470e-04
+  Iteration  250: Cost = 6.260513e-02, ||grad_m|| = 2.206711e-04
+  Iteration  260: Cost = 6.260513e-02, ||grad_m|| = 1.076512e-04
+  Iteration  270: Cost = 6.260513e-02, ||grad_m|| = 9.736520e-05
+  Iteration  280: Cost = 6.260513e-02, ||grad_m|| = 1.416318e-04
+  Iteration  290: Cost = 6.260513e-02, ||grad_m|| = 5.687798e-05
+  Iteration  300: Cost = 6.260513e-02, ||grad_m|| = 4.059818e-05
+  Iteration  310: Cost = 6.260513e-02, ||grad_m|| = 2.672963e-05
+  Iteration  320: Cost = 6.260513e-02, ||grad_m|| = 2.270023e-05
+  Iteration  330: Cost = 6.260513e-02, ||grad_m|| = 2.260082e-05
+  Iteration  340: Cost = 6.260513e-02, ||grad_m|| = 2.955089e-05
+  Iteration  350: Cost = 6.260513e-02, ||grad_m|| = 2.288211e-05
+  Iteration  360: Cost = 6.260513e-02, ||grad_m|| = 1.525105e-05
+  Optimization completed: CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH
+  Final modulus: min=1691.1074, max=1694.5647, mean=1692.7693
+  stop=CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH; evaluations=403; rho=0.3528333; eta=3.235731
+L-curve 3/50: gamma=4.71486636346e-05
+Starting L-BFGS-B optimization in m = ln(E) space...
+  Initial modulus: min=1691.1074, max=1694.5647, mean=1692.7693
+  Max iterations: 1500, ftol: 1.00e-30, gtol: 1.00e-12
+  Iteration   10: Cost = 6.245165e-02, ||grad_m|| = 2.009199e-03
+  Iteration   20: Cost = 6.244973e-02, ||grad_m|| = 4.817282e-03
+  Iteration   30: Cost = 6.244588e-02, ||grad_m|| = 8.260183e-03
+  Iteration   40: Cost = 6.244418e-02, ||grad_m|| = 4.771554e-03
+  Iteration   50: Cost = 6.244283e-02, ||grad_m|| = 4.177158e-03
+  Iteration   60: Cost = 6.244204e-02, ||grad_m|| = 4.254354e-03
+  Iteration   70: Cost = 6.244191e-02, ||grad_m|| = 1.242736e-03
+  Iteration   80: Cost = 6.244187e-02, ||grad_m|| = 6.463712e-04
+  Iteration   90: Cost = 6.244185e-02, ||grad_m|| = 6.408952e-04
+  Iteration  100: Cost = 6.244184e-02, ||grad_m|| = 3.923162e-04
+  Iteration  110: Cost = 6.244183e-02, ||grad_m|| = 4.326904e-04
+  Iteration  120: Cost = 6.244182e-02, ||grad_m|| = 3.468679e-04
+  Iteration  130: Cost = 6.244181e-02, ||grad_m|| = 2.778422e-04
+  Iteration  140: Cost = 6.244181e-02, ||grad_m|| = 2.781224e-04
+  Iteration  150: Cost = 6.244181e-02, ||grad_m|| = 2.076365e-04
+  Iteration  160: Cost = 6.244180e-02, ||grad_m|| = 3.589818e-04
+  Iteration  170: Cost = 6.244180e-02, ||grad_m|| = 3.464869e-04
+  Iteration  180: Cost = 6.244180e-02, ||grad_m|| = 1.145146e-04
+  Iteration  190: Cost = 6.244180e-02, ||grad_m|| = 8.560139e-05
+  Iteration  200: Cost = 6.244180e-02, ||grad_m|| = 9.446005e-05
+  Iteration  210: Cost = 6.244180e-02, ||grad_m|| = 5.355284e-05
+  Iteration  220: Cost = 6.244180e-02, ||grad_m|| = 1.700378e-04
+  Iteration  230: Cost = 6.244180e-02, ||grad_m|| = 1.219049e-04
+  Iteration  240: Cost = 6.244180e-02, ||grad_m|| = 2.695407e-04
+  Iteration  250: Cost = 6.244179e-02, ||grad_m|| = 3.999019e-04
+  Iteration  260: Cost = 6.244179e-02, ||grad_m|| = 1.819985e-04
+  Iteration  270: Cost = 6.244179e-02, ||grad_m|| = 1.251186e-04
+  Iteration  280: Cost = 6.244179e-02, ||grad_m|| = 9.694608e-05
+  Iteration  290: Cost = 6.244179e-02, ||grad_m|| = 9.141498e-05
+  Iteration  300: Cost = 6.244179e-02, ||grad_m|| = 1.700647e-04
+  Iteration  310: Cost = 6.244179e-02, ||grad_m|| = 1.649786e-04
+  Iteration  320: Cost = 6.244179e-02, ||grad_m|| = 1.017424e-04
+  Iteration  330: Cost = 6.244179e-02, ||grad_m|| = 1.561231e-04
+  Iteration  340: Cost = 6.244179e-02, ||grad_m|| = 6.512874e-05
+  Iteration  350: Cost = 6.244179e-02, ||grad_m|| = 9.520894e-05
+  Iteration  360: Cost = 6.244179e-02, ||grad_m|| = 4.958126e-05
+  Iteration  370: Cost = 6.244179e-02, ||grad_m|| = 5.510752e-05
+  Iteration  380: Cost = 6.244179e-02, ||grad_m|| = 1.895455e-05
+  Iteration  390: Cost = 6.244179e-02, ||grad_m|| = 8.320060e-06
+  Iteration  400: Cost = 6.244179e-02, ||grad_m|| = 3.252375e-06
+  Optimization completed: CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH
+  Final modulus: min=1690.2568, max=1695.2724, mean=1692.6677
+  stop=CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH; evaluations=483; rho=0.351917; eta=4.692099
+L-curve 4/50: gamma=3.23745754282e-05
+Starting L-BFGS-B optimization in m = ln(E) space...
+  Initial modulus: min=1690.2568, max=1695.2724, mean=1692.6677
+  Max iterations: 1500, ftol: 1.00e-30, gtol: 1.00e-12
+  Iteration   10: Cost = 6.222057e-02, ||grad_m|| = 2.003626e-03
+  Iteration   20: Cost = 6.221781e-02, ||grad_m|| = 4.689178e-03
+  Iteration   30: Cost = 6.221275e-02, ||grad_m|| = 8.711108e-03
+  Iteration   40: Cost = 6.220974e-02, ||grad_m|| = 5.893061e-03
+  Iteration   50: Cost = 6.220779e-02, ||grad_m|| = 4.699955e-03
+  Iteration   60: Cost = 6.220673e-02, ||grad_m|| = 3.801820e-03
+  Iteration   70: Cost = 6.220653e-02, ||grad_m|| = 1.016073e-03
+  Iteration   80: Cost = 6.220647e-02, ||grad_m|| = 5.644088e-04
+  Iteration   90: Cost = 6.220646e-02, ||grad_m|| = 4.475204e-04
+  Iteration  100: Cost = 6.220645e-02, ||grad_m|| = 2.525176e-04
+  Iteration  110: Cost = 6.220645e-02, ||grad_m|| = 3.058181e-04
+  Iteration  120: Cost = 6.220644e-02, ||grad_m|| = 1.726050e-04
+  Iteration  130: Cost = 6.220644e-02, ||grad_m|| = 1.465410e-04
+  Iteration  140: Cost = 6.220644e-02, ||grad_m|| = 1.655956e-04
+  Iteration  150: Cost = 6.220644e-02, ||grad_m|| = 1.392705e-04
+  Iteration  160: Cost = 6.220643e-02, ||grad_m|| = 6.419737e-04
+  Iteration  170: Cost = 6.220643e-02, ||grad_m|| = 7.779551e-05
+  Iteration  180: Cost = 6.220643e-02, ||grad_m|| = 1.040699e-04
+  Iteration  190: Cost = 6.220643e-02, ||grad_m|| = 1.510945e-04
+  Iteration  200: Cost = 6.220643e-02, ||grad_m|| = 1.631883e-04
+  Iteration  210: Cost = 6.220643e-02, ||grad_m|| = 1.547725e-04
+  Iteration  220: Cost = 6.220642e-02, ||grad_m|| = 2.463226e-04
+  Iteration  230: Cost = 6.220642e-02, ||grad_m|| = 1.980105e-04
+  Iteration  240: Cost = 6.220641e-02, ||grad_m|| = 3.482718e-04
+  Iteration  250: Cost = 6.220641e-02, ||grad_m|| = 5.247238e-04
+  Iteration  260: Cost = 6.220640e-02, ||grad_m|| = 1.564225e-04
+  Iteration  270: Cost = 6.220640e-02, ||grad_m|| = 1.230055e-04
+  Iteration  280: Cost = 6.220640e-02, ||grad_m|| = 7.872019e-05
+  Iteration  290: Cost = 6.220640e-02, ||grad_m|| = 5.706620e-05
+  Iteration  300: Cost = 6.220640e-02, ||grad_m|| = 2.293904e-05
+  Iteration  310: Cost = 6.220640e-02, ||grad_m|| = 2.454719e-05
+  Iteration  320: Cost = 6.220640e-02, ||grad_m|| = 2.267685e-05
+  Iteration  330: Cost = 6.220640e-02, ||grad_m|| = 1.325285e-05
+  Iteration  340: Cost = 6.220640e-02, ||grad_m|| = 1.977484e-05
+  Iteration  350: Cost = 6.220640e-02, ||grad_m|| = 2.215944e-05
+  Iteration  360: Cost = 6.220640e-02, ||grad_m|| = 1.005940e-05
+  Iteration  370: Cost = 6.220640e-02, ||grad_m|| = 2.655967e-05
+  Iteration  380: Cost = 6.220640e-02, ||grad_m|| = 4.335027e-05
+  Iteration  390: Cost = 6.220640e-02, ||grad_m|| = 2.559678e-05
+  Iteration  400: Cost = 6.220640e-02, ||grad_m|| = 2.708786e-05
+  Iteration  410: Cost = 6.220640e-02, ||grad_m|| = 6.306698e-05
+  Iteration  420: Cost = 6.220640e-02, ||grad_m|| = 8.668284e-06
+  Optimization completed: CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH
+  Final modulus: min=1689.0148, max=1696.2800, mean=1692.5070
+  stop=CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH; evaluations=465; rho=0.350599; eta=6.791286
+L-curve 5/50: gamma=2.22299648253e-05
+Starting L-BFGS-B optimization in m = ln(E) space...
+  Initial modulus: min=1689.0148, max=1696.2800, mean=1692.5070
+  Max iterations: 1500, ftol: 1.00e-30, gtol: 1.00e-12
+  Iteration   10: Cost = 6.188901e-02, ||grad_m|| = 1.990518e-03
+  Iteration   20: Cost = 6.188501e-02, ||grad_m|| = 4.591102e-03
+  Iteration   30: Cost = 6.187772e-02, ||grad_m|| = 7.446472e-03
+  Iteration   40: Cost = 6.187368e-02, ||grad_m|| = 5.753298e-03
+  Iteration   50: Cost = 6.187085e-02, ||grad_m|| = 4.928160e-03
+  Iteration   60: Cost = 6.186912e-02, ||grad_m|| = 3.623600e-03
+  Iteration   70: Cost = 6.186891e-02, ||grad_m|| = 6.107156e-04
+  Iteration   80: Cost = 6.186888e-02, ||grad_m|| = 8.940719e-04
+  Iteration   90: Cost = 6.186887e-02, ||grad_m|| = 5.064844e-04
+  Iteration  100: Cost = 6.186886e-02, ||grad_m|| = 4.338413e-04
+  Iteration  110: Cost = 6.186885e-02, ||grad_m|| = 2.979821e-04
+  Iteration  120: Cost = 6.186885e-02, ||grad_m|| = 1.272984e-04
+  Iteration  130: Cost = 6.186885e-02, ||grad_m|| = 1.944832e-04
+  Iteration  140: Cost = 6.186885e-02, ||grad_m|| = 9.709041e-05
+  Iteration  150: Cost = 6.186885e-02, ||grad_m|| = 1.720546e-04
+  Iteration  160: Cost = 6.186884e-02, ||grad_m|| = 3.066303e-04
+  Iteration  170: Cost = 6.186883e-02, ||grad_m|| = 1.849155e-04
+  Iteration  180: Cost = 6.186882e-02, ||grad_m|| = 3.124622e-04
+  Iteration  190: Cost = 6.186881e-02, ||grad_m|| = 4.102093e-04
+  Iteration  200: Cost = 6.186880e-02, ||grad_m|| = 1.372478e-04
+  Iteration  210: Cost = 6.186880e-02, ||grad_m|| = 1.654650e-04
+  Iteration  220: Cost = 6.186880e-02, ||grad_m|| = 4.434442e-04
+  Iteration  230: Cost = 6.186879e-02, ||grad_m|| = 3.335240e-04
+  Iteration  240: Cost = 6.186879e-02, ||grad_m|| = 1.395922e-04
+  Iteration  250: Cost = 6.186879e-02, ||grad_m|| = 1.417234e-04
+  Iteration  260: Cost = 6.186879e-02, ||grad_m|| = 1.857263e-04
+  Iteration  270: Cost = 6.186879e-02, ||grad_m|| = 1.035496e-04
+  Iteration  280: Cost = 6.186878e-02, ||grad_m|| = 5.504174e-05
+  Iteration  290: Cost = 6.186878e-02, ||grad_m|| = 5.015219e-05
+  Iteration  300: Cost = 6.186878e-02, ||grad_m|| = 4.069948e-05
+  Iteration  310: Cost = 6.186878e-02, ||grad_m|| = 3.397921e-05
+  Iteration  320: Cost = 6.186878e-02, ||grad_m|| = 2.370113e-05
+  Iteration  330: Cost = 6.186878e-02, ||grad_m|| = 9.697564e-06
+  Iteration  340: Cost = 6.186878e-02, ||grad_m|| = 2.127025e-05
+  Iteration  350: Cost = 6.186878e-02, ||grad_m|| = 3.732154e-05
+  Iteration  360: Cost = 6.186878e-02, ||grad_m|| = 1.386056e-05
+  Iteration  370: Cost = 6.186878e-02, ||grad_m|| = 4.630845e-06
+  Iteration  380: Cost = 6.186878e-02, ||grad_m|| = 7.600245e-06
+  Iteration  390: Cost = 6.186878e-02, ||grad_m|| = 1.298756e-05
+  Iteration  400: Cost = 6.186878e-02, ||grad_m|| = 1.856634e-05
+  Iteration  410: Cost = 6.186878e-02, ||grad_m|| = 2.163673e-05
+  Iteration  420: Cost = 6.186878e-02, ||grad_m|| = 9.405690e-06
+  Iteration  430: Cost = 6.186878e-02, ||grad_m|| = 1.206812e-05
+  Iteration  440: Cost = 6.186878e-02, ||grad_m|| = 1.241846e-05
+  Iteration  450: Cost = 6.186878e-02, ||grad_m|| = 2.761176e-05
+  Iteration  460: Cost = 6.186878e-02, ||grad_m|| = 1.480671e-05
+  Iteration  470: Cost = 6.186878e-02, ||grad_m|| = 1.653144e-05
+  Iteration  480: Cost = 6.186878e-02, ||grad_m|| = 1.482263e-05
+  Iteration  490: Cost = 6.186878e-02, ||grad_m|| = 7.005595e-06
+  Iteration  500: Cost = 6.186878e-02, ||grad_m|| = 6.411969e-06
+  Iteration  510: Cost = 6.186878e-02, ||grad_m|| = 9.263389e-06
+  Iteration  520: Cost = 6.186878e-02, ||grad_m|| = 3.356957e-06
+  Iteration  530: Cost = 6.186878e-02, ||grad_m|| = 4.746616e-06
+  Optimization completed: CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH
+  Final modulus: min=1687.2442, max=1697.7367, mean=1692.2878
+  stop=CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH; evaluations=748; rho=0.3487149; eta=9.801247
+L-curve 6/50: gamma=1.52641796718e-05
+Starting L-BFGS-B optimization in m = ln(E) space...
+  Initial modulus: min=1687.2442, max=1697.7367, mean=1692.2878
+  Max iterations: 1500, ftol: 1.00e-30, gtol: 1.00e-12
+  Iteration   10: Cost = 6.141650e-02, ||grad_m|| = 1.977572e-03
+  Iteration   20: Cost = 6.141067e-02, ||grad_m|| = 4.788941e-03
+  Iteration   30: Cost = 6.139906e-02, ||grad_m|| = 8.216341e-03
+  Iteration   40: Cost = 6.139450e-02, ||grad_m|| = 7.563071e-03
+  Iteration   50: Cost = 6.139051e-02, ||grad_m|| = 3.617702e-03
+  Iteration   60: Cost = 6.138853e-02, ||grad_m|| = 2.151865e-03
+  Iteration   70: Cost = 6.138818e-02, ||grad_m|| = 1.695373e-03
+  Iteration   80: Cost = 6.138806e-02, ||grad_m|| = 7.268618e-04
+  Iteration   90: Cost = 6.138801e-02, ||grad_m|| = 1.293238e-03
+  Iteration  100: Cost = 6.138799e-02, ||grad_m|| = 2.609300e-04
+  Iteration  110: Cost = 6.138797e-02, ||grad_m|| = 3.294863e-04
+  Iteration  120: Cost = 6.138796e-02, ||grad_m|| = 3.635335e-04
+  Iteration  130: Cost = 6.138793e-02, ||grad_m|| = 2.863398e-04
+  Iteration  140: Cost = 6.138792e-02, ||grad_m|| = 2.457962e-04
+  Iteration  150: Cost = 6.138791e-02, ||grad_m|| = 3.452040e-04
+  Iteration  160: Cost = 6.138790e-02, ||grad_m|| = 3.285785e-04
+  Iteration  170: Cost = 6.138789e-02, ||grad_m|| = 3.285642e-04
+  Iteration  180: Cost = 6.138788e-02, ||grad_m|| = 1.333785e-04
+  Iteration  190: Cost = 6.138788e-02, ||grad_m|| = 1.038866e-04
+  Iteration  200: Cost = 6.138787e-02, ||grad_m|| = 1.285787e-04
+  Iteration  210: Cost = 6.138787e-02, ||grad_m|| = 8.723887e-04
+  Iteration  220: Cost = 6.138785e-02, ||grad_m|| = 6.876306e-04
+  Iteration  230: Cost = 6.138784e-02, ||grad_m|| = 1.734706e-04
+  Iteration  240: Cost = 6.138782e-02, ||grad_m|| = 4.962834e-04
+  Iteration  250: Cost = 6.138781e-02, ||grad_m|| = 1.146340e-04
+  Iteration  260: Cost = 6.138781e-02, ||grad_m|| = 9.106569e-05
+  Iteration  270: Cost = 6.138781e-02, ||grad_m|| = 1.817598e-04
+  Iteration  280: Cost = 6.138781e-02, ||grad_m|| = 8.998796e-05
+  Iteration  290: Cost = 6.138781e-02, ||grad_m|| = 5.193785e-05
+  Iteration  300: Cost = 6.138781e-02, ||grad_m|| = 3.386928e-05
+  Iteration  310: Cost = 6.138781e-02, ||grad_m|| = 6.226531e-05
+  Iteration  320: Cost = 6.138781e-02, ||grad_m|| = 4.179245e-05
+  Iteration  330: Cost = 6.138781e-02, ||grad_m|| = 6.185755e-05
+  Iteration  340: Cost = 6.138781e-02, ||grad_m|| = 4.220796e-05
+  Iteration  350: Cost = 6.138781e-02, ||grad_m|| = 1.637436e-05
+  Iteration  360: Cost = 6.138781e-02, ||grad_m|| = 9.542423e-06
+  Iteration  370: Cost = 6.138781e-02, ||grad_m|| = 3.059813e-05
+  Iteration  380: Cost = 6.138781e-02, ||grad_m|| = 7.306525e-06
+  Iteration  390: Cost = 6.138781e-02, ||grad_m|| = 4.650889e-06
+  Iteration  400: Cost = 6.138781e-02, ||grad_m|| = 5.165974e-06
+  Iteration  410: Cost = 6.138781e-02, ||grad_m|| = 5.381941e-06
+  Iteration  420: Cost = 6.138781e-02, ||grad_m|| = 9.292283e-06
+  Iteration  430: Cost = 6.138781e-02, ||grad_m|| = 1.193124e-05
+  Iteration  440: Cost = 6.138781e-02, ||grad_m|| = 7.310021e-06
+  Iteration  450: Cost = 6.138781e-02, ||grad_m|| = 1.095855e-05
+  Iteration  460: Cost = 6.138781e-02, ||grad_m|| = 1.115827e-05
+  Iteration  470: Cost = 6.138781e-02, ||grad_m|| = 2.824407e-06
+  Iteration  480: Cost = 6.138781e-02, ||grad_m|| = 3.069034e-06
+  Iteration  490: Cost = 6.138781e-02, ||grad_m|| = 6.585804e-06
+  Iteration  500: Cost = 6.138781e-02, ||grad_m|| = 7.284560e-06
+  Iteration  510: Cost = 6.138781e-02, ||grad_m|| = 7.499963e-06
+  Iteration  520: Cost = 6.138781e-02, ||grad_m|| = 4.940769e-06
+  Optimization completed: CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH
+  Final modulus: min=1684.7254, max=1699.8276, mean=1691.9844
+  stop=CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH; evaluations=693; rho=0.3460424; eta=14.08978
+L-curve 7/50: gamma=1.04811313415e-05
+Starting L-BFGS-B optimization in m = ln(E) space...
+  Initial modulus: min=1684.7254, max=1699.8276, mean=1691.9844
+  Max iterations: 1500, ftol: 1.00e-30, gtol: 1.00e-12
+  Iteration   10: Cost = 6.074931e-02, ||grad_m|| = 1.955515e-03
+  Iteration   20: Cost = 6.074093e-02, ||grad_m|| = 5.141433e-03
+  Iteration   30: Cost = 6.072421e-02, ||grad_m|| = 7.144763e-03
+  Iteration   40: Cost = 6.071826e-02, ||grad_m|| = 5.269673e-03
+  Iteration   50: Cost = 6.071287e-02, ||grad_m|| = 5.184013e-03
+  Iteration   60: Cost = 6.070996e-02, ||grad_m|| = 1.900826e-03
+  Iteration   70: Cost = 6.070961e-02, ||grad_m|| = 1.052853e-03
+  Iteration   80: Cost = 6.070951e-02, ||grad_m|| = 5.217278e-04
+  Iteration   90: Cost = 6.070946e-02, ||grad_m|| = 3.543393e-04
+  Iteration  100: Cost = 6.070942e-02, ||grad_m|| = 3.286655e-04
+  Iteration  110: Cost = 6.070940e-02, ||grad_m|| = 3.045724e-04
+  Iteration  120: Cost = 6.070937e-02, ||grad_m|| = 5.770508e-04
+  Iteration  130: Cost = 6.070933e-02, ||grad_m|| = 3.992399e-04
+  Iteration  140: Cost = 6.070931e-02, ||grad_m|| = 1.790217e-04
+  Iteration  150: Cost = 6.070930e-02, ||grad_m|| = 3.015007e-04
+  Iteration  160: Cost = 6.070929e-02, ||grad_m|| = 2.291047e-04
+  Iteration  170: Cost = 6.070928e-02, ||grad_m|| = 1.975627e-04
+  Iteration  180: Cost = 6.070926e-02, ||grad_m|| = 3.411711e-04
+  Iteration  190: Cost = 6.070926e-02, ||grad_m|| = 1.099448e-04
+  Iteration  200: Cost = 6.070925e-02, ||grad_m|| = 2.130553e-04
+  Iteration  210: Cost = 6.070923e-02, ||grad_m|| = 8.601250e-04
+  Iteration  220: Cost = 6.070920e-02, ||grad_m|| = 2.621209e-04
+  Iteration  230: Cost = 6.070918e-02, ||grad_m|| = 1.178370e-04
+  Iteration  240: Cost = 6.070918e-02, ||grad_m|| = 1.534759e-04
+  Iteration  250: Cost = 6.070918e-02, ||grad_m|| = 5.619580e-05
+  Iteration  260: Cost = 6.070918e-02, ||grad_m|| = 1.303724e-04
+  Iteration  270: Cost = 6.070917e-02, ||grad_m|| = 1.280257e-04
+  Iteration  280: Cost = 6.070917e-02, ||grad_m|| = 6.798427e-05
+  Iteration  290: Cost = 6.070917e-02, ||grad_m|| = 7.165834e-05
+  Iteration  300: Cost = 6.070917e-02, ||grad_m|| = 6.913516e-05
+  Iteration  310: Cost = 6.070917e-02, ||grad_m|| = 3.698439e-05
+  Iteration  320: Cost = 6.070917e-02, ||grad_m|| = 1.760291e-05
+  Iteration  330: Cost = 6.070917e-02, ||grad_m|| = 1.703505e-05
+  Iteration  340: Cost = 6.070917e-02, ||grad_m|| = 1.554146e-05
+  Iteration  350: Cost = 6.070917e-02, ||grad_m|| = 4.985581e-06
+  Iteration  360: Cost = 6.070917e-02, ||grad_m|| = 5.587233e-06
+  Iteration  370: Cost = 6.070917e-02, ||grad_m|| = 5.688444e-06
+  Iteration  380: Cost = 6.070917e-02, ||grad_m|| = 5.518476e-06
+  Iteration  390: Cost = 6.070917e-02, ||grad_m|| = 1.288112e-05
+  Iteration  400: Cost = 6.070917e-02, ||grad_m|| = 1.475452e-05
+  Iteration  410: Cost = 6.070917e-02, ||grad_m|| = 1.103749e-05
+  Iteration  420: Cost = 6.070917e-02, ||grad_m|| = 6.047584e-06
+  Iteration  430: Cost = 6.070917e-02, ||grad_m|| = 5.137313e-06
+  Iteration  440: Cost = 6.070917e-02, ||grad_m|| = 6.066406e-06
+  Iteration  450: Cost = 6.070917e-02, ||grad_m|| = 4.670991e-06
+  Iteration  460: Cost = 6.070917e-02, ||grad_m|| = 1.387378e-05
+  Iteration  470: Cost = 6.070917e-02, ||grad_m|| = 6.473062e-06
+  Iteration  480: Cost = 6.070917e-02, ||grad_m|| = 3.203005e-06
+  Optimization completed: CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH
+  Final modulus: min=1681.1792, max=1702.8030, mean=1691.5720
+  stop=CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH; evaluations=597; rho=0.3422968; eta=20.13974
+L-curve 8/50: gamma=7.19685673001e-06
+Starting L-BFGS-B optimization in m = ln(E) space...
+  Initial modulus: min=1681.1792, max=1702.8030, mean=1691.5720
+  Max iterations: 1500, ftol: 1.00e-30, gtol: 1.00e-12
+  Iteration   10: Cost = 5.981981e-02, ||grad_m|| = 1.925839e-03
+  Iteration   20: Cost = 5.980785e-02, ||grad_m|| = 4.957430e-03
+  Iteration   30: Cost = 5.978553e-02, ||grad_m|| = 6.586597e-03
+  Iteration   40: Cost = 5.977757e-02, ||grad_m|| = 4.202931e-03
+  Iteration   50: Cost = 5.977040e-02, ||grad_m|| = 7.245230e-03
+  Iteration   60: Cost = 5.976587e-02, ||grad_m|| = 4.144623e-03
+  Iteration   70: Cost = 5.976523e-02, ||grad_m|| = 8.058828e-04
+  Iteration   80: Cost = 5.976508e-02, ||grad_m|| = 4.937071e-04
+  Iteration   90: Cost = 5.976501e-02, ||grad_m|| = 3.374649e-04
+  Iteration  100: Cost = 5.976497e-02, ||grad_m|| = 3.289107e-04
+  Iteration  110: Cost = 5.976492e-02, ||grad_m|| = 6.071942e-04
+  Iteration  120: Cost = 5.976487e-02, ||grad_m|| = 3.721101e-04
+  Iteration  130: Cost = 5.976478e-02, ||grad_m|| = 8.525812e-04
+  Iteration  140: Cost = 5.976472e-02, ||grad_m|| = 2.841384e-04
+  Iteration  150: Cost = 5.976470e-02, ||grad_m|| = 3.931676e-04
+  Iteration  160: Cost = 5.976469e-02, ||grad_m|| = 1.994117e-04
+  Iteration  170: Cost = 5.976468e-02, ||grad_m|| = 1.351596e-04
+  Iteration  180: Cost = 5.976466e-02, ||grad_m|| = 2.246349e-04
+  Iteration  190: Cost = 5.976465e-02, ||grad_m|| = 2.852467e-04
+  Iteration  200: Cost = 5.976464e-02, ||grad_m|| = 1.002662e-04
+  Iteration  210: Cost = 5.976463e-02, ||grad_m|| = 2.025223e-04
+  Iteration  220: Cost = 5.976461e-02, ||grad_m|| = 1.690488e-04
+  Iteration  230: Cost = 5.976460e-02, ||grad_m|| = 1.780065e-04
+  Iteration  240: Cost = 5.976459e-02, ||grad_m|| = 1.762180e-04
+  Iteration  250: Cost = 5.976459e-02, ||grad_m|| = 1.875813e-04
+  Iteration  260: Cost = 5.976458e-02, ||grad_m|| = 2.836530e-05
+  Iteration  270: Cost = 5.976458e-02, ||grad_m|| = 3.206921e-05
+  Iteration  280: Cost = 5.976458e-02, ||grad_m|| = 1.911549e-05
+  Iteration  290: Cost = 5.976458e-02, ||grad_m|| = 1.022241e-05
+  Iteration  300: Cost = 5.976458e-02, ||grad_m|| = 1.252533e-05
+  Iteration  310: Cost = 5.976458e-02, ||grad_m|| = 1.156986e-05
+  Iteration  320: Cost = 5.976458e-02, ||grad_m|| = 7.981884e-06
+  Iteration  330: Cost = 5.976458e-02, ||grad_m|| = 8.577129e-06
+  Iteration  340: Cost = 5.976458e-02, ||grad_m|| = 9.955001e-06
+  Iteration  350: Cost = 5.976458e-02, ||grad_m|| = 1.000152e-05
+  Iteration  360: Cost = 5.976458e-02, ||grad_m|| = 5.400047e-06
+  Iteration  370: Cost = 5.976458e-02, ||grad_m|| = 6.548712e-06
+  Iteration  380: Cost = 5.976458e-02, ||grad_m|| = 3.299116e-06
+  Iteration  390: Cost = 5.976458e-02, ||grad_m|| = 3.198216e-06
+  Iteration  400: Cost = 5.976458e-02, ||grad_m|| = 1.155952e-05
+  Iteration  410: Cost = 5.976458e-02, ||grad_m|| = 5.104033e-06
+  Iteration  420: Cost = 5.976458e-02, ||grad_m|| = 1.055915e-05
+  Iteration  430: Cost = 5.976458e-02, ||grad_m|| = 4.949745e-06
+  Iteration  440: Cost = 5.976458e-02, ||grad_m|| = 2.701900e-06
+  Iteration  450: Cost = 5.976458e-02, ||grad_m|| = 1.602919e-06
+  Optimization completed: CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH
+  Final modulus: min=1676.2606, max=1707.0029, mean=1691.0344
+  stop=CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH; evaluations=552; rho=0.337133; eta=28.56048
+L-curve 9/50: gamma=4.94171336132e-06
+Starting L-BFGS-B optimization in m = ln(E) space...
+  Initial modulus: min=1676.2606, max=1707.0029, mean=1691.0344
+  Max iterations: 1500, ftol: 1.00e-30, gtol: 1.00e-12
+  Iteration   10: Cost = 5.854853e-02, ||grad_m|| = 1.882268e-03
+  Iteration   20: Cost = 5.853169e-02, ||grad_m|| = 4.652910e-03
+  Iteration   30: Cost = 5.850436e-02, ||grad_m|| = 5.847055e-03
+  Iteration   40: Cost = 5.849200e-02, ||grad_m|| = 4.010410e-03
+  Iteration   50: Cost = 5.848170e-02, ||grad_m|| = 3.710714e-03
+  Iteration   60: Cost = 5.847739e-02, ||grad_m|| = 4.179024e-03
+  Iteration   70: Cost = 5.847592e-02, ||grad_m|| = 1.629498e-03
+  Iteration   80: Cost = 5.847519e-02, ||grad_m|| = 1.097852e-03
+  Iteration   90: Cost = 5.847505e-02, ||grad_m|| = 3.094780e-04
+  Iteration  100: Cost = 5.847501e-02, ||grad_m|| = 3.770868e-04
+  Iteration  110: Cost = 5.847494e-02, ||grad_m|| = 9.101193e-04
+  Iteration  120: Cost = 5.847478e-02, ||grad_m|| = 5.355537e-04
+  Iteration  130: Cost = 5.847464e-02, ||grad_m|| = 3.613929e-04
+  Iteration  140: Cost = 5.847458e-02, ||grad_m|| = 1.986066e-04
+  Iteration  150: Cost = 5.847457e-02, ||grad_m|| = 1.682090e-04
+  Iteration  160: Cost = 5.847456e-02, ||grad_m|| = 1.759105e-04
+  Iteration  170: Cost = 5.847455e-02, ||grad_m|| = 1.028277e-04
+  Iteration  180: Cost = 5.847454e-02, ||grad_m|| = 2.509602e-04
+  Iteration  190: Cost = 5.847452e-02, ||grad_m|| = 2.038188e-04
+  Iteration  200: Cost = 5.847450e-02, ||grad_m|| = 1.528731e-04
+  Iteration  210: Cost = 5.847449e-02, ||grad_m|| = 1.091741e-04
+  Iteration  220: Cost = 5.847449e-02, ||grad_m|| = 5.565472e-05
+  Iteration  230: Cost = 5.847449e-02, ||grad_m|| = 7.275596e-05
+  Iteration  240: Cost = 5.847449e-02, ||grad_m|| = 1.076572e-04
+  Iteration  250: Cost = 5.847449e-02, ||grad_m|| = 3.836391e-05
+  Iteration  260: Cost = 5.847449e-02, ||grad_m|| = 5.468089e-05
+  Iteration  270: Cost = 5.847449e-02, ||grad_m|| = 3.268928e-05
+  Iteration  280: Cost = 5.847448e-02, ||grad_m|| = 4.386841e-05
+  Iteration  290: Cost = 5.847448e-02, ||grad_m|| = 3.061460e-05
+  Iteration  300: Cost = 5.847448e-02, ||grad_m|| = 3.311967e-05
+  Iteration  310: Cost = 5.847448e-02, ||grad_m|| = 2.022544e-05
+  Iteration  320: Cost = 5.847448e-02, ||grad_m|| = 1.189372e-05
+  Iteration  330: Cost = 5.847448e-02, ||grad_m|| = 9.603980e-06
+  Iteration  340: Cost = 5.847448e-02, ||grad_m|| = 3.272989e-06
+  Iteration  350: Cost = 5.847448e-02, ||grad_m|| = 7.669963e-06
+  Iteration  360: Cost = 5.847448e-02, ||grad_m|| = 2.670019e-06
+  Iteration  370: Cost = 5.847448e-02, ||grad_m|| = 2.523297e-06
+  Iteration  380: Cost = 5.847448e-02, ||grad_m|| = 2.207900e-06
+  Iteration  390: Cost = 5.847448e-02, ||grad_m|| = 1.305798e-06
+  Optimization completed: CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH
+  Final modulus: min=1669.5770, max=1712.8474, mean=1690.3676
+  stop=CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH; evaluations=460; rho=0.3301797; eta=40.05964
+L-curve 10/50: gamma=3.3932217719e-06
+Starting L-BFGS-B optimization in m = ln(E) space...
+  Initial modulus: min=1669.5770, max=1712.8474, mean=1690.3676
+  Max iterations: 1500, ftol: 1.00e-30, gtol: 1.00e-12
+  Iteration   10: Cost = 5.685330e-02, ||grad_m|| = 1.822816e-03
+  Iteration   20: Cost = 5.682996e-02, ||grad_m|| = 4.783013e-03
+  Iteration   30: Cost = 5.679408e-02, ||grad_m|| = 5.890307e-03
+  Iteration   40: Cost = 5.677809e-02, ||grad_m|| = 3.719809e-03
+  Iteration   50: Cost = 5.676479e-02, ||grad_m|| = 4.185725e-03
+  Iteration   60: Cost = 5.675889e-02, ||grad_m|| = 1.697643e-03
+  Iteration   70: Cost = 5.675796e-02, ||grad_m|| = 8.700931e-04
+  Iteration   80: Cost = 5.675776e-02, ||grad_m|| = 6.000113e-04
+  Iteration   90: Cost = 5.675771e-02, ||grad_m|| = 1.890744e-04
+  Iteration  100: Cost = 5.675769e-02, ||grad_m|| = 1.599991e-04
+  Iteration  110: Cost = 5.675764e-02, ||grad_m|| = 2.941444e-04
+  Iteration  120: Cost = 5.675757e-02, ||grad_m|| = 4.281580e-04
+  Iteration  130: Cost = 5.675750e-02, ||grad_m|| = 3.150194e-04
+  Iteration  140: Cost = 5.675744e-02, ||grad_m|| = 4.484854e-04
+  Iteration  150: Cost = 5.675743e-02, ||grad_m|| = 2.481451e-04
+  Iteration  160: Cost = 5.675741e-02, ||grad_m|| = 1.309711e-04
+  Iteration  170: Cost = 5.675740e-02, ||grad_m|| = 1.766523e-04
+  Iteration  180: Cost = 5.675739e-02, ||grad_m|| = 3.971900e-05
+  Iteration  190: Cost = 5.675739e-02, ||grad_m|| = 1.021897e-04
+  Iteration  200: Cost = 5.675739e-02, ||grad_m|| = 2.933083e-05
+  Iteration  210: Cost = 5.675739e-02, ||grad_m|| = 1.911636e-05
+  Iteration  220: Cost = 5.675739e-02, ||grad_m|| = 4.370774e-05
+  Iteration  230: Cost = 5.675739e-02, ||grad_m|| = 2.757355e-05
+  Iteration  240: Cost = 5.675739e-02, ||grad_m|| = 3.918446e-05
+  Iteration  250: Cost = 5.675739e-02, ||grad_m|| = 1.487089e-05
+  Iteration  260: Cost = 5.675739e-02, ||grad_m|| = 6.669463e-06
+  Iteration  270: Cost = 5.675739e-02, ||grad_m|| = 4.845775e-06
+  Iteration  280: Cost = 5.675739e-02, ||grad_m|| = 2.663744e-06
+  Iteration  290: Cost = 5.675739e-02, ||grad_m|| = 1.975737e-06
+  Iteration  300: Cost = 5.675739e-02, ||grad_m|| = 2.458297e-06
+  Iteration  310: Cost = 5.675739e-02, ||grad_m|| = 5.750236e-06
+  Iteration  320: Cost = 5.675739e-02, ||grad_m|| = 3.168408e-06
+  Optimization completed: CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH
+  Final modulus: min=1660.7429, max=1720.8197, mean=1689.5980
+  stop=CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH; evaluations=399; rho=0.3211154; eta=55.36105
+L-curve 11/50: gamma=2.32995181052e-06
+Starting L-BFGS-B optimization in m = ln(E) space...
+  Initial modulus: min=1660.7429, max=1720.8197, mean=1689.5980
+  Max iterations: 1500, ftol: 1.00e-30, gtol: 1.00e-12
+  Iteration   10: Cost = 5.466745e-02, ||grad_m|| = 1.747970e-03
+  Iteration   20: Cost = 5.463655e-02, ||grad_m|| = 4.881215e-03
+  Iteration   30: Cost = 5.458642e-02, ||grad_m|| = 5.255734e-03
+  Iteration   40: Cost = 5.457263e-02, ||grad_m|| = 3.133318e-03
+  Iteration   50: Cost = 5.455943e-02, ||grad_m|| = 3.645977e-03
+  Iteration   60: Cost = 5.455134e-02, ||grad_m|| = 1.867538e-03
+  Iteration   70: Cost = 5.454994e-02, ||grad_m|| = 1.244775e-03
+  Iteration   80: Cost = 5.454941e-02, ||grad_m|| = 4.847027e-04
+  Iteration   90: Cost = 5.454926e-02, ||grad_m|| = 3.039372e-04
+  Iteration  100: Cost = 5.454917e-02, ||grad_m|| = 2.872221e-04
+  Iteration  110: Cost = 5.454910e-02, ||grad_m|| = 1.651489e-04
+  Iteration  120: Cost = 5.454901e-02, ||grad_m|| = 6.873609e-04
+  Iteration  130: Cost = 5.454892e-02, ||grad_m|| = 2.128502e-04
+  Iteration  140: Cost = 5.454890e-02, ||grad_m|| = 1.312759e-04
+  Iteration  150: Cost = 5.454888e-02, ||grad_m|| = 1.149363e-04
+  Iteration  160: Cost = 5.454887e-02, ||grad_m|| = 1.220207e-04
+  Iteration  170: Cost = 5.454886e-02, ||grad_m|| = 5.433731e-05
+  Iteration  180: Cost = 5.454886e-02, ||grad_m|| = 5.802173e-05
+  Iteration  190: Cost = 5.454885e-02, ||grad_m|| = 4.403968e-05
+  Iteration  200: Cost = 5.454885e-02, ||grad_m|| = 3.315913e-05
+  Iteration  210: Cost = 5.454885e-02, ||grad_m|| = 4.175894e-05
+  Iteration  220: Cost = 5.454885e-02, ||grad_m|| = 3.388673e-05
+  Iteration  230: Cost = 5.454885e-02, ||grad_m|| = 6.397656e-05
+  Iteration  240: Cost = 5.454885e-02, ||grad_m|| = 2.497221e-05
+  Iteration  250: Cost = 5.454885e-02, ||grad_m|| = 2.605415e-05
+  Iteration  260: Cost = 5.454885e-02, ||grad_m|| = 8.840321e-06
+  Iteration  270: Cost = 5.454885e-02, ||grad_m|| = 1.979362e-06
+  Iteration  280: Cost = 5.454885e-02, ||grad_m|| = 1.568862e-06
+  Optimization completed: CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH
+  Final modulus: min=1649.4855, max=1731.4145, mean=1688.8109
+  stop=CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH; evaluations=379; rho=0.309804; eta=75.03776
+L-curve 12/50: gamma=1.59985871961e-06
+Starting L-BFGS-B optimization in m = ln(E) space...
+  Initial modulus: min=1649.4855, max=1731.4145, mean=1688.8109
+  Max iterations: 1500, ftol: 1.00e-30, gtol: 1.00e-12
+  Iteration   10: Cost = 5.196762e-02, ||grad_m|| = 1.744064e-03
+  Iteration   20: Cost = 5.193079e-02, ||grad_m|| = 4.430489e-03
+  Iteration   30: Cost = 5.188133e-02, ||grad_m|| = 5.831174e-03
+  Iteration   40: Cost = 5.185656e-02, ||grad_m|| = 3.329046e-03
+  Iteration   50: Cost = 5.184008e-02, ||grad_m|| = 8.810563e-03
+  Iteration   60: Cost = 5.183186e-02, ||grad_m|| = 1.280786e-03
+  Iteration   70: Cost = 5.183044e-02, ||grad_m|| = 6.977906e-04
+  Iteration   80: Cost = 5.182997e-02, ||grad_m|| = 4.168340e-04
+  Iteration   90: Cost = 5.182986e-02, ||grad_m|| = 2.837794e-04
+  Iteration  100: Cost = 5.182978e-02, ||grad_m|| = 2.248949e-04
+  Iteration  110: Cost = 5.182969e-02, ||grad_m|| = 2.027089e-04
+  Iteration  120: Cost = 5.182963e-02, ||grad_m|| = 1.870288e-04
+  Iteration  130: Cost = 5.182958e-02, ||grad_m|| = 2.439750e-04
+  Iteration  140: Cost = 5.182955e-02, ||grad_m|| = 8.245191e-05
+  Iteration  150: Cost = 5.182954e-02, ||grad_m|| = 9.403049e-05
+  Iteration  160: Cost = 5.182952e-02, ||grad_m|| = 9.916554e-05
+  Iteration  170: Cost = 5.182951e-02, ||grad_m|| = 4.618591e-05
+  Iteration  180: Cost = 5.182951e-02, ||grad_m|| = 1.353221e-05
+  Iteration  190: Cost = 5.182951e-02, ||grad_m|| = 1.549393e-05
+  Iteration  200: Cost = 5.182951e-02, ||grad_m|| = 1.465472e-05
+  Iteration  210: Cost = 5.182951e-02, ||grad_m|| = 1.629154e-05
+  Iteration  220: Cost = 5.182951e-02, ||grad_m|| = 6.723566e-06
+  Iteration  230: Cost = 5.182951e-02, ||grad_m|| = 5.722108e-06
+  Iteration  240: Cost = 5.182951e-02, ||grad_m|| = 3.615307e-06
+  Iteration  250: Cost = 5.182951e-02, ||grad_m|| = 3.592598e-06
+  Iteration  260: Cost = 5.182951e-02, ||grad_m|| = 7.176059e-06
+  Iteration  270: Cost = 5.182951e-02, ||grad_m|| = 8.144525e-06
+  Iteration  280: Cost = 5.182951e-02, ||grad_m|| = 1.499313e-06
+  Iteration  290: Cost = 5.182951e-02, ||grad_m|| = 2.102853e-06
+  Optimization completed: CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH
+  Final modulus: min=1635.7580, max=1745.0012, mean=1688.1385
+  stop=CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH; evaluations=398; rho=0.2964646; eta=99.27602
+L-curve 13/50: gamma=1.09854114199e-06
+Starting L-BFGS-B optimization in m = ln(E) space...
+  Initial modulus: min=1635.7580, max=1745.0012, mean=1688.1385
+  Max iterations: 1500, ftol: 1.00e-30, gtol: 1.00e-12
+  Iteration   10: Cost = 4.880206e-02, ||grad_m|| = 2.905852e-03
+  Iteration   20: Cost = 4.876471e-02, ||grad_m|| = 3.293340e-03
+  Iteration   30: Cost = 4.870727e-02, ||grad_m|| = 7.106715e-03
+  Iteration   40: Cost = 4.868104e-02, ||grad_m|| = 2.438703e-03
+  Iteration   50: Cost = 4.866178e-02, ||grad_m|| = 4.000469e-03
+  Iteration   60: Cost = 4.865582e-02, ||grad_m|| = 1.381401e-03
+  Iteration   70: Cost = 4.865434e-02, ||grad_m|| = 5.297493e-04
+  Iteration   80: Cost = 4.865402e-02, ||grad_m|| = 3.838705e-04
+  Iteration   90: Cost = 4.865394e-02, ||grad_m|| = 1.028005e-04
+  Iteration  100: Cost = 4.865391e-02, ||grad_m|| = 1.461678e-04
+  Iteration  110: Cost = 4.865388e-02, ||grad_m|| = 8.169989e-05
+  Iteration  120: Cost = 4.865387e-02, ||grad_m|| = 7.784657e-05
+  Iteration  130: Cost = 4.865386e-02, ||grad_m|| = 4.052294e-05
+  Iteration  140: Cost = 4.865385e-02, ||grad_m|| = 5.457036e-05
+  Iteration  150: Cost = 4.865385e-02, ||grad_m|| = 3.755437e-05
+  Iteration  160: Cost = 4.865385e-02, ||grad_m|| = 2.438608e-05
+  Iteration  170: Cost = 4.865385e-02, ||grad_m|| = 5.244551e-05
+  Iteration  180: Cost = 4.865384e-02, ||grad_m|| = 1.654525e-05
+  Iteration  190: Cost = 4.865384e-02, ||grad_m|| = 9.415694e-06
+  Iteration  200: Cost = 4.865384e-02, ||grad_m|| = 1.053672e-05
+  Iteration  210: Cost = 4.865384e-02, ||grad_m|| = 1.099417e-05
+  Iteration  220: Cost = 4.865384e-02, ||grad_m|| = 3.202826e-06
+  Iteration  230: Cost = 4.865384e-02, ||grad_m|| = 2.334623e-06
+  Iteration  240: Cost = 4.865384e-02, ||grad_m|| = 2.552921e-06
+  Iteration  250: Cost = 4.865384e-02, ||grad_m|| = 1.887840e-06
+  Iteration  260: Cost = 4.865384e-02, ||grad_m|| = 1.661092e-06
+  Iteration  270: Cost = 4.865384e-02, ||grad_m|| = 6.999733e-07
+  Iteration  280: Cost = 4.865384e-02, ||grad_m|| = 6.219565e-07
+  Optimization completed: CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH
+  Final modulus: min=1619.9027, max=1761.6734, mean=1687.7655
+  stop=CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH; evaluations=340; rho=0.2818009; eta=127.6348
+L-curve 14/50: gamma=7.54312006335e-07
+Starting L-BFGS-B optimization in m = ln(E) space...
+  Initial modulus: min=1619.9027, max=1761.6734, mean=1687.7655
+  Max iterations: 1500, ftol: 1.00e-30, gtol: 1.00e-12
+  Iteration   10: Cost = 4.530908e-02, ||grad_m|| = 3.310205e-03
+  Iteration   20: Cost = 4.527302e-02, ||grad_m|| = 2.912406e-03
+  Iteration   30: Cost = 4.520513e-02, ||grad_m|| = 4.117445e-03
+  Iteration   40: Cost = 4.518596e-02, ||grad_m|| = 3.769208e-03
+  Iteration   50: Cost = 4.517065e-02, ||grad_m|| = 1.507780e-03
+  Iteration   60: Cost = 4.516413e-02, ||grad_m|| = 1.092876e-03
+  Iteration   70: Cost = 4.516267e-02, ||grad_m|| = 4.102282e-04
+  Iteration   80: Cost = 4.516228e-02, ||grad_m|| = 2.329834e-04
+  Iteration   90: Cost = 4.516222e-02, ||grad_m|| = 7.793246e-05
+  Iteration  100: Cost = 4.516219e-02, ||grad_m|| = 8.656811e-05
+  Iteration  110: Cost = 4.516218e-02, ||grad_m|| = 6.322100e-05
+  Iteration  120: Cost = 4.516217e-02, ||grad_m|| = 1.547883e-04
+  Iteration  130: Cost = 4.516215e-02, ||grad_m|| = 4.507050e-05
+  Iteration  140: Cost = 4.516215e-02, ||grad_m|| = 4.612709e-05
+  Iteration  150: Cost = 4.516215e-02, ||grad_m|| = 2.037414e-05
+  Iteration  160: Cost = 4.516215e-02, ||grad_m|| = 1.844632e-05
+  Iteration  170: Cost = 4.516215e-02, ||grad_m|| = 1.436772e-05
+  Iteration  180: Cost = 4.516215e-02, ||grad_m|| = 6.674588e-06
+  Iteration  190: Cost = 4.516215e-02, ||grad_m|| = 3.665257e-06
+  Iteration  200: Cost = 4.516215e-02, ||grad_m|| = 5.440093e-06
+  Iteration  210: Cost = 4.516215e-02, ||grad_m|| = 1.311996e-06
+  Iteration  220: Cost = 4.516215e-02, ||grad_m|| = 8.238807e-07
+  Optimization completed: CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH
+  Final modulus: min=1602.6131, max=1781.0969, mean=1687.8379
+  stop=CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH; evaluations=248; rho=0.2669353; eta=159.0003
+L-curve 15/50: gamma=5.17947467923e-07
+Starting L-BFGS-B optimization in m = ln(E) space...
+  Initial modulus: min=1602.6131, max=1781.0969, mean=1687.8379
+  Max iterations: 1500, ftol: 1.00e-30, gtol: 1.00e-12
+  Iteration   10: Cost = 4.169337e-02, ||grad_m|| = 3.911064e-03
+  Iteration   20: Cost = 4.166061e-02, ||grad_m|| = 3.316020e-03
+  Iteration   30: Cost = 4.159735e-02, ||grad_m|| = 3.427391e-03
+  Iteration   40: Cost = 4.158078e-02, ||grad_m|| = 2.655733e-03
+  Iteration   50: Cost = 4.156821e-02, ||grad_m|| = 1.306619e-03
+  Iteration   60: Cost = 4.156214e-02, ||grad_m|| = 7.826052e-04
+  Iteration   70: Cost = 4.156064e-02, ||grad_m|| = 4.378947e-04
+  Iteration   80: Cost = 4.156010e-02, ||grad_m|| = 4.469992e-04
+  Iteration   90: Cost = 4.155999e-02, ||grad_m|| = 1.077232e-04
+  Iteration  100: Cost = 4.155994e-02, ||grad_m|| = 8.402747e-05
+  Iteration  110: Cost = 4.155989e-02, ||grad_m|| = 1.120274e-04
+  Iteration  120: Cost = 4.155986e-02, ||grad_m|| = 1.499228e-04
+  Iteration  130: Cost = 4.155983e-02, ||grad_m|| = 6.126366e-05
+  Iteration  140: Cost = 4.155982e-02, ||grad_m|| = 5.012486e-05
+  Iteration  150: Cost = 4.155981e-02, ||grad_m|| = 2.448915e-05
+  Iteration  160: Cost = 4.155981e-02, ||grad_m|| = 2.171636e-05
+  Iteration  170: Cost = 4.155981e-02, ||grad_m|| = 1.352381e-05
+  Iteration  180: Cost = 4.155981e-02, ||grad_m|| = 7.074374e-06
+  Iteration  190: Cost = 4.155981e-02, ||grad_m|| = 1.210849e-05
+  Iteration  200: Cost = 4.155981e-02, ||grad_m|| = 1.387840e-05
+  Iteration  210: Cost = 4.155981e-02, ||grad_m|| = 5.101368e-06
+  Iteration  220: Cost = 4.155981e-02, ||grad_m|| = 4.577816e-06
+  Iteration  230: Cost = 4.155981e-02, ||grad_m|| = 7.606713e-07
+  Optimization completed: CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH
+  Final modulus: min=1584.7624, max=1802.5102, mean=1688.4007
+  stop=CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH; evaluations=350; rho=0.2530995; eta=191.8323
+L-curve 16/50: gamma=3.55648030622e-07
+Starting L-BFGS-B optimization in m = ln(E) space...
+  Initial modulus: min=1584.7624, max=1802.5102, mean=1688.4007
+  Max iterations: 1500, ftol: 1.00e-30, gtol: 1.00e-12
+  Iteration   10: Cost = 3.817630e-02, ||grad_m|| = 4.608302e-03
+  Iteration   20: Cost = 3.814712e-02, ||grad_m|| = 2.354172e-03
+  Iteration   30: Cost = 3.809371e-02, ||grad_m|| = 2.396890e-03
+  Iteration   40: Cost = 3.808113e-02, ||grad_m|| = 2.025646e-03
+  Iteration   50: Cost = 3.807316e-02, ||grad_m|| = 9.873957e-04
+  Iteration   60: Cost = 3.806814e-02, ||grad_m|| = 5.354836e-04
+  Iteration   70: Cost = 3.806684e-02, ||grad_m|| = 3.640286e-04
+  Iteration   80: Cost = 3.806638e-02, ||grad_m|| = 1.633795e-04
+  Iteration   90: Cost = 3.806628e-02, ||grad_m|| = 7.303910e-05
+  Iteration  100: Cost = 3.806625e-02, ||grad_m|| = 5.356356e-05
+  Iteration  110: Cost = 3.806624e-02, ||grad_m|| = 4.483127e-05
+  Iteration  120: Cost = 3.806623e-02, ||grad_m|| = 3.172340e-05
+  Iteration  130: Cost = 3.806622e-02, ||grad_m|| = 2.552042e-05
+  Iteration  140: Cost = 3.806622e-02, ||grad_m|| = 1.907482e-05
+  Iteration  150: Cost = 3.806622e-02, ||grad_m|| = 1.058511e-05
+  Iteration  160: Cost = 3.806621e-02, ||grad_m|| = 4.372306e-06
+  Iteration  170: Cost = 3.806621e-02, ||grad_m|| = 4.020276e-06
+  Iteration  180: Cost = 3.806621e-02, ||grad_m|| = 1.791404e-06
+  Iteration  190: Cost = 3.806621e-02, ||grad_m|| = 1.277215e-06
+  Iteration  200: Cost = 3.806621e-02, ||grad_m|| = 3.428241e-06
+  Iteration  210: Cost = 3.806621e-02, ||grad_m|| = 1.509649e-06
+  Iteration  220: Cost = 3.806621e-02, ||grad_m|| = 9.009004e-07
+  Iteration  230: Cost = 3.806621e-02, ||grad_m|| = 3.141987e-07
+  Iteration  240: Cost = 3.806621e-02, ||grad_m|| = 2.209891e-07
+  Optimization completed: CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH
+  Final modulus: min=1567.0603, max=1824.8956, mean=1689.3452
+  stop=CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH; evaluations=316; rho=0.2412063; eta=224.6703
+L-curve 17/50: gamma=2.44205309455e-07
+Starting L-BFGS-B optimization in m = ln(E) space...
+  Initial modulus: min=1567.0603, max=1824.8956, mean=1689.3452
+  Max iterations: 1500, ftol: 1.00e-30, gtol: 1.00e-12
+  Iteration   10: Cost = 3.494031e-02, ||grad_m|| = 4.661165e-03
+  Iteration   20: Cost = 3.491024e-02, ||grad_m|| = 2.652048e-03
+  Iteration   30: Cost = 3.487794e-02, ||grad_m|| = 1.021222e-03
+  Iteration   40: Cost = 3.486791e-02, ||grad_m|| = 7.843066e-04
+  Iteration   50: Cost = 3.486335e-02, ||grad_m|| = 1.096759e-03
+  Iteration   60: Cost = 3.486033e-02, ||grad_m|| = 9.692986e-04
+  Iteration   70: Cost = 3.485950e-02, ||grad_m|| = 1.877589e-04
+  Iteration   80: Cost = 3.485926e-02, ||grad_m|| = 1.042628e-04
+  Iteration   90: Cost = 3.485919e-02, ||grad_m|| = 7.247387e-05
+  Iteration  100: Cost = 3.485915e-02, ||grad_m|| = 4.598701e-05
+  Iteration  110: Cost = 3.485913e-02, ||grad_m|| = 4.218567e-05
+  Iteration  120: Cost = 3.485912e-02, ||grad_m|| = 2.586341e-05
+  Iteration  130: Cost = 3.485912e-02, ||grad_m|| = 1.817885e-05
+  Iteration  140: Cost = 3.485912e-02, ||grad_m|| = 1.208004e-05
+  Iteration  150: Cost = 3.485912e-02, ||grad_m|| = 6.686397e-06
+  Iteration  160: Cost = 3.485912e-02, ||grad_m|| = 5.944889e-06
+  Iteration  170: Cost = 3.485912e-02, ||grad_m|| = 5.153600e-06
+  Iteration  180: Cost = 3.485912e-02, ||grad_m|| = 1.673632e-06
+  Iteration  190: Cost = 3.485912e-02, ||grad_m|| = 1.718307e-06
+  Iteration  200: Cost = 3.485912e-02, ||grad_m|| = 1.381213e-06
+  Iteration  210: Cost = 3.485912e-02, ||grad_m|| = 8.847554e-07
+  Iteration  220: Cost = 3.485912e-02, ||grad_m|| = 5.109518e-07
+  Iteration  230: Cost = 3.485912e-02, ||grad_m|| = 7.738792e-07
+  Iteration  240: Cost = 3.485912e-02, ||grad_m|| = 2.748619e-07
+  Iteration  250: Cost = 3.485912e-02, ||grad_m|| = 1.680761e-07
+  Optimization completed: CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH
+  Final modulus: min=1549.8152, max=1847.2668, mean=1690.4616
+  stop=CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH; evaluations=387; rho=0.2316003; eta=256.6015
+L-curve 18/50: gamma=1.67683293681e-07
+Starting L-BFGS-B optimization in m = ln(E) space...
+  Initial modulus: min=1549.8152, max=1847.2668, mean=1690.4616
+  Max iterations: 1500, ftol: 1.00e-30, gtol: 1.00e-12
+  Iteration   10: Cost = 3.209985e-02, ||grad_m|| = 3.852655e-03
+  Iteration   20: Cost = 3.207340e-02, ||grad_m|| = 2.106288e-03
+  Iteration   30: Cost = 3.205648e-02, ||grad_m|| = 1.622210e-03
+  Iteration   40: Cost = 3.204942e-02, ||grad_m|| = 6.461129e-04
+  Iteration   50: Cost = 3.204596e-02, ||grad_m|| = 1.336659e-03
+  Iteration   60: Cost = 3.204428e-02, ||grad_m|| = 1.903192e-04
+  Iteration   70: Cost = 3.204380e-02, ||grad_m|| = 1.778338e-04
+  Iteration   80: Cost = 3.204364e-02, ||grad_m|| = 8.620015e-05
+  Iteration   90: Cost = 3.204361e-02, ||grad_m|| = 7.719232e-05
+  Iteration  100: Cost = 3.204360e-02, ||grad_m|| = 2.451528e-05
+  Iteration  110: Cost = 3.204360e-02, ||grad_m|| = 1.588525e-05
+  Iteration  120: Cost = 3.204360e-02, ||grad_m|| = 6.594078e-06
+  Iteration  130: Cost = 3.204360e-02, ||grad_m|| = 5.097032e-06
+  Iteration  140: Cost = 3.204360e-02, ||grad_m|| = 7.788424e-06
+  Iteration  150: Cost = 3.204360e-02, ||grad_m|| = 1.733558e-06
+  Iteration  160: Cost = 3.204360e-02, ||grad_m|| = 3.085671e-06
+  Iteration  170: Cost = 3.204360e-02, ||grad_m|| = 1.389580e-06
+  Iteration  180: Cost = 3.204360e-02, ||grad_m|| = 4.703514e-07
+  Iteration  190: Cost = 3.204360e-02, ||grad_m|| = 2.087399e-07
+  Iteration  200: Cost = 3.204360e-02, ||grad_m|| = 1.815523e-07
+  Optimization completed: CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH
+  Final modulus: min=1533.4727, max=1868.9010, mean=1691.5272
+  stop=CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH; evaluations=424; rho=0.2241379; eta=287.3893
+L-curve 19/50: gamma=1.15139539933e-07
+Starting L-BFGS-B optimization in m = ln(E) space...
+  Initial modulus: min=1533.4727, max=1868.9010, mean=1691.5272
+  Max iterations: 1500, ftol: 1.00e-30, gtol: 1.00e-12
+  Iteration   10: Cost = 2.969009e-02, ||grad_m|| = 8.698568e-04
+  Iteration   20: Cost = 2.967096e-02, ||grad_m|| = 7.072675e-04
+  Iteration   30: Cost = 2.966208e-02, ||grad_m|| = 7.120367e-04
+  Iteration   40: Cost = 2.965792e-02, ||grad_m|| = 2.858248e-04
+  Iteration   50: Cost = 2.965580e-02, ||grad_m|| = 2.820149e-04
+  Iteration   60: Cost = 2.965495e-02, ||grad_m|| = 1.969027e-04
+  Iteration   70: Cost = 2.965468e-02, ||grad_m|| = 1.169606e-04
+  Iteration   80: Cost = 2.965459e-02, ||grad_m|| = 3.507488e-05
+  Iteration   90: Cost = 2.965459e-02, ||grad_m|| = 1.228610e-05
+  Iteration  100: Cost = 2.965458e-02, ||grad_m|| = 1.252661e-05
+  Iteration  110: Cost = 2.965458e-02, ||grad_m|| = 1.213163e-05
+  Iteration  120: Cost = 2.965458e-02, ||grad_m|| = 4.774196e-06
+  Iteration  130: Cost = 2.965458e-02, ||grad_m|| = 3.102142e-06
+  Iteration  140: Cost = 2.965458e-02, ||grad_m|| = 4.373644e-06
+  Iteration  150: Cost = 2.965458e-02, ||grad_m|| = 1.304893e-06
+  Iteration  160: Cost = 2.965458e-02, ||grad_m|| = 6.735025e-07
+  Iteration  170: Cost = 2.965458e-02, ||grad_m|| = 2.230573e-07
+  Iteration  180: Cost = 2.965458e-02, ||grad_m|| = 1.151493e-07
+  Optimization completed: CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH
+  Final modulus: min=1517.5611, max=1889.4945, mean=1692.3836
+  stop=CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH; evaluations=217; rho=0.2184612; eta=317.1863
+L-curve 20/50: gamma=7.90604321091e-08
+Starting L-BFGS-B optimization in m = ln(E) space...
+  Initial modulus: min=1517.5611, max=1889.4945, mean=1692.3836
+  Max iterations: 1500, ftol: 1.00e-30, gtol: 1.00e-12
+  Iteration   10: Cost = 2.770205e-02, ||grad_m|| = 4.883964e-04
+  Iteration   20: Cost = 2.768859e-02, ||grad_m|| = 1.030946e-03
+  Iteration   30: Cost = 2.768314e-02, ||grad_m|| = 9.151347e-04
+  Iteration   40: Cost = 2.768091e-02, ||grad_m|| = 1.515736e-04
+  Iteration   50: Cost = 2.767964e-02, ||grad_m|| = 1.691777e-04
+  Iteration   60: Cost = 2.767927e-02, ||grad_m|| = 8.857792e-05
+  Iteration   70: Cost = 2.767915e-02, ||grad_m|| = 4.289444e-05
+  Iteration   80: Cost = 2.767913e-02, ||grad_m|| = 1.993292e-05
+  Iteration   90: Cost = 2.767913e-02, ||grad_m|| = 6.853584e-06
+  Iteration  100: Cost = 2.767913e-02, ||grad_m|| = 7.501261e-06
+  Iteration  110: Cost = 2.767913e-02, ||grad_m|| = 3.848583e-06
+  Iteration  120: Cost = 2.767913e-02, ||grad_m|| = 2.770617e-06
+  Iteration  130: Cost = 2.767913e-02, ||grad_m|| = 1.112841e-06
+  Iteration  140: Cost = 2.767913e-02, ||grad_m|| = 1.635330e-06
+  Iteration  150: Cost = 2.767913e-02, ||grad_m|| = 5.228077e-07
+  Iteration  160: Cost = 2.767913e-02, ||grad_m|| = 2.375442e-07
+  Iteration  170: Cost = 2.767913e-02, ||grad_m|| = 2.134794e-07
+  Iteration  180: Cost = 2.767913e-02, ||grad_m|| = 5.519155e-08
+  Optimization completed: ABNORMAL: 
+  Final modulus: min=1502.1270, max=1908.8614, mean=1692.9583
+  stop=ABNORMAL: ; evaluations=358; rho=0.2142153; eta=346.0958
+L-curve 21/50: gamma=5.42867543932e-08
+Starting L-BFGS-B optimization in m = ln(E) space...
+  Initial modulus: min=1517.5611, max=1889.4945, mean=1692.3836
+  Max iterations: 1500, ftol: 1.00e-30, gtol: 1.00e-12
+  Iteration   10: Cost = 2.614970e-02, ||grad_m|| = 8.055951e-04
+  Iteration   20: Cost = 2.610379e-02, ||grad_m|| = 5.525421e-04
+  Iteration   30: Cost = 2.608838e-02, ||grad_m|| = 1.247826e-03
+  Iteration   40: Cost = 2.608407e-02, ||grad_m|| = 3.056116e-04
+  Iteration   50: Cost = 2.608044e-02, ||grad_m|| = 2.150518e-04
+  Iteration   60: Cost = 2.607974e-02, ||grad_m|| = 7.583245e-05
+  Iteration   70: Cost = 2.607963e-02, ||grad_m|| = 5.455027e-05
+  Iteration   80: Cost = 2.607960e-02, ||grad_m|| = 1.562082e-05
+  Iteration   90: Cost = 2.607959e-02, ||grad_m|| = 8.611507e-06
+  Iteration  100: Cost = 2.607959e-02, ||grad_m|| = 1.072289e-05
+  Iteration  110: Cost = 2.607959e-02, ||grad_m|| = 6.470846e-06
+  Iteration  120: Cost = 2.607959e-02, ||grad_m|| = 1.828032e-06
+  Iteration  130: Cost = 2.607959e-02, ||grad_m|| = 1.403728e-06
+  Iteration  140: Cost = 2.607959e-02, ||grad_m|| = 5.578838e-07
+  Iteration  150: Cost = 2.607959e-02, ||grad_m|| = 5.581203e-07
+  Iteration  160: Cost = 2.607959e-02, ||grad_m|| = 2.251637e-07
+  Iteration  170: Cost = 2.607959e-02, ||grad_m|| = 1.298260e-07
+  Iteration  180: Cost = 2.607959e-02, ||grad_m|| = 1.040047e-07
+  Iteration  190: Cost = 2.607959e-02, ||grad_m|| = 6.935466e-08
+  Optimization completed: CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH
+  Final modulus: min=1487.5505, max=1927.0587, mean=1693.2401
+  stop=CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH; evaluations=304; rho=0.2111084; eta=373.9755
+L-curve 22/50: gamma=3.72759372031e-08
+Starting L-BFGS-B optimization in m = ln(E) space...
+  Initial modulus: min=1487.5505, max=1927.0587, mean=1693.2401
+  Max iterations: 1500, ftol: 1.00e-30, gtol: 1.00e-12
+  Iteration   10: Cost = 2.481836e-02, ||grad_m|| = 4.849531e-04
+  Iteration   20: Cost = 2.481143e-02, ||grad_m|| = 3.299109e-04
+  Iteration   30: Cost = 2.480931e-02, ||grad_m|| = 2.183401e-04
+  Iteration   40: Cost = 2.480861e-02, ||grad_m|| = 1.115943e-04
+  Iteration   50: Cost = 2.480823e-02, ||grad_m|| = 6.363633e-05
+  Iteration   60: Cost = 2.480809e-02, ||grad_m|| = 4.200670e-05
+  Iteration   70: Cost = 2.480808e-02, ||grad_m|| = 1.049344e-05
+  Iteration   80: Cost = 2.480807e-02, ||grad_m|| = 6.344555e-06
+  Iteration   90: Cost = 2.480807e-02, ||grad_m|| = 5.066813e-06
+  Iteration  100: Cost = 2.480807e-02, ||grad_m|| = 1.907366e-06
+  Iteration  110: Cost = 2.480807e-02, ||grad_m|| = 7.402993e-07
+  Iteration  120: Cost = 2.480807e-02, ||grad_m|| = 9.006955e-07
+  Iteration  130: Cost = 2.480807e-02, ||grad_m|| = 3.199423e-07
+  Iteration  140: Cost = 2.480807e-02, ||grad_m|| = 1.468745e-07
+  Iteration  150: Cost = 2.480807e-02, ||grad_m|| = 1.096372e-07
+  Optimization completed: CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH
+  Final modulus: min=1473.7487, max=1944.2067, mean=1693.2374
+  stop=CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH; evaluations=249; rho=0.2088867; eta=400.6146
+L-curve 23/50: gamma=2.5595479227e-08
+Starting L-BFGS-B optimization in m = ln(E) space...
+  Initial modulus: min=1473.7487, max=1944.2067, mean=1693.2374
+  Max iterations: 1500, ftol: 1.00e-30, gtol: 1.00e-12
+  Iteration   10: Cost = 2.382129e-02, ||grad_m|| = 3.734985e-04
+  Iteration   20: Cost = 2.381551e-02, ||grad_m|| = 2.496464e-04
+  Iteration   30: Cost = 2.381419e-02, ||grad_m|| = 1.412217e-04
+  Iteration   40: Cost = 2.381363e-02, ||grad_m|| = 7.193342e-05
+  Iteration   50: Cost = 2.381343e-02, ||grad_m|| = 3.549412e-05
+  Iteration   60: Cost = 2.381338e-02, ||grad_m|| = 1.031974e-05
+  Iteration   70: Cost = 2.381338e-02, ||grad_m|| = 9.855983e-06
+  Iteration   80: Cost = 2.381337e-02, ||grad_m|| = 3.213871e-06
+  Iteration   90: Cost = 2.381337e-02, ||grad_m|| = 8.748239e-07
+  Iteration  100: Cost = 2.381337e-02, ||grad_m|| = 4.476204e-07
+  Iteration  110: Cost = 2.381337e-02, ||grad_m|| = 2.535534e-07
+  Iteration  120: Cost = 2.381337e-02, ||grad_m|| = 3.977293e-07
+  Iteration  130: Cost = 2.381337e-02, ||grad_m|| = 8.637259e-08
+  Iteration  140: Cost = 2.381337e-02, ||grad_m|| = 3.098744e-08
+  Optimization completed: CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH
+  Final modulus: min=1460.2802, max=1960.3408, mean=1692.9552
+  stop=CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH; evaluations=190; rho=0.2073167; eta=426.0714
+L-curve 24/50: gamma=1.75751062485e-08
+Starting L-BFGS-B optimization in m = ln(E) space...
+  Initial modulus: min=1460.2802, max=1960.3408, mean=1692.9552
+  Max iterations: 1500, ftol: 1.00e-30, gtol: 1.00e-12
+  Iteration   10: Cost = 2.305012e-02, ||grad_m|| = 7.516392e-04
+  Iteration   20: Cost = 2.304614e-02, ||grad_m|| = 1.165586e-04
+  Iteration   30: Cost = 2.304531e-02, ||grad_m|| = 7.700583e-05
+  Iteration   40: Cost = 2.304496e-02, ||grad_m|| = 2.319357e-05
+  Iteration   50: Cost = 2.304487e-02, ||grad_m|| = 3.190955e-05
+  Iteration   60: Cost = 2.304486e-02, ||grad_m|| = 7.372377e-06
+  Iteration   70: Cost = 2.304485e-02, ||grad_m|| = 4.084796e-06
+  Iteration   80: Cost = 2.304485e-02, ||grad_m|| = 1.015398e-06
+  Iteration   90: Cost = 2.304485e-02, ||grad_m|| = 8.724415e-07
+  Iteration  100: Cost = 2.304485e-02, ||grad_m|| = 2.873881e-07
+  Iteration  110: Cost = 2.304485e-02, ||grad_m|| = 9.990388e-08
+  Iteration  120: Cost = 2.304485e-02, ||grad_m|| = 4.708136e-08
+  Iteration  130: Cost = 2.304485e-02, ||grad_m|| = 1.643695e-08
+  Optimization completed: CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH
+  Final modulus: min=1446.5430, max=1975.4940, mean=1692.3991
+  stop=CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH; evaluations=268; rho=0.2061972; eta=450.8499
+L-curve 25/50: gamma=1.20679264064e-08
+Starting L-BFGS-B optimization in m = ln(E) space...
+  Initial modulus: min=1446.5430, max=1975.4940, mean=1692.3991
+  Max iterations: 1500, ftol: 1.00e-30, gtol: 1.00e-12
+  Iteration   10: Cost = 2.245939e-02, ||grad_m|| = 1.784447e-04
+  Iteration   20: Cost = 2.245687e-02, ||grad_m|| = 6.977589e-05
+  Iteration   30: Cost = 2.245603e-02, ||grad_m|| = 5.542001e-05
+  Iteration   40: Cost = 2.245578e-02, ||grad_m|| = 3.089749e-05
+  Iteration   50: Cost = 2.245573e-02, ||grad_m|| = 2.191822e-05
+  Iteration   60: Cost = 2.245572e-02, ||grad_m|| = 2.354736e-06
+  Iteration   70: Cost = 2.245572e-02, ||grad_m|| = 8.809314e-07
+  Iteration   80: Cost = 2.245572e-02, ||grad_m|| = 7.002852e-07
+  Iteration   90: Cost = 2.245572e-02, ||grad_m|| = 1.722980e-07
+  Iteration  100: Cost = 2.245572e-02, ||grad_m|| = 1.343164e-07
+  Iteration  110: Cost = 2.245572e-02, ||grad_m|| = 3.502430e-08
+  Iteration  120: Cost = 2.245572e-02, ||grad_m|| = 1.360240e-08
+  Optimization completed: CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH
+  Final modulus: min=1431.9698, max=1989.6010, mean=1691.5954
+  stop=CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH; evaluations=173; rho=0.2053762; eta=475.8035
+L-curve 26/50: gamma=8.28642772855e-09
+Starting L-BFGS-B optimization in m = ln(E) space...
+  Initial modulus: min=1431.9698, max=1989.6010, mean=1691.5954
+  Max iterations: 1500, ftol: 1.00e-30, gtol: 1.00e-12
+  Iteration   10: Cost = 2.200883e-02, ||grad_m|| = 1.226684e-04
+  Iteration   20: Cost = 2.200656e-02, ||grad_m|| = 5.538968e-05
+  Iteration   30: Cost = 2.200575e-02, ||grad_m|| = 5.440676e-05
+  Iteration   40: Cost = 2.200556e-02, ||grad_m|| = 1.755992e-05
+  Iteration   50: Cost = 2.200554e-02, ||grad_m|| = 1.235751e-05
+  Iteration   60: Cost = 2.200553e-02, ||grad_m|| = 1.230416e-06
+  Iteration   70: Cost = 2.200553e-02, ||grad_m|| = 5.967005e-07
+  Iteration   80: Cost = 2.200553e-02, ||grad_m|| = 5.914909e-07
+  Iteration   90: Cost = 2.200553e-02, ||grad_m|| = 1.345710e-07
+  Iteration  100: Cost = 2.200553e-02, ||grad_m|| = 4.604419e-08
+  Iteration  110: Cost = 2.200553e-02, ||grad_m|| = 1.678673e-08
+  Iteration  120: Cost = 2.200553e-02, ||grad_m|| = 6.772939e-09
+  Optimization completed: CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH
+  Final modulus: min=1416.3159, max=2002.4930, mean=1690.6013
+  stop=CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH; evaluations=245; rho=0.2047531; eta=501.8823
+L-curve 27/50: gamma=5.68986602902e-09
+Starting L-BFGS-B optimization in m = ln(E) space...
+  Initial modulus: min=1416.3159, max=2002.4930, mean=1690.6013
+  Max iterations: 1500, ftol: 1.00e-30, gtol: 1.00e-12
+  Iteration   10: Cost = 2.166419e-02, ||grad_m|| = 8.656268e-05
+  Iteration   20: Cost = 2.166208e-02, ||grad_m|| = 5.486027e-05
+  Iteration   30: Cost = 2.166147e-02, ||grad_m|| = 5.410915e-05
+  Iteration   40: Cost = 2.166132e-02, ||grad_m|| = 1.252964e-05
+  Iteration   50: Cost = 2.166132e-02, ||grad_m|| = 2.838467e-06
+  Iteration   60: Cost = 2.166132e-02, ||grad_m|| = 8.774002e-07
+  Iteration   70: Cost = 2.166132e-02, ||grad_m|| = 1.780951e-07
+  Iteration   80: Cost = 2.166132e-02, ||grad_m|| = 1.959593e-07
+  Iteration   90: Cost = 2.166132e-02, ||grad_m|| = 3.984509e-08
+  Iteration  100: Cost = 2.166132e-02, ||grad_m|| = 1.640513e-08
+  Optimization completed: CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH
+  Final modulus: min=1399.3865, max=2013.9463, mean=1689.4990
+  stop=CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH; evaluations=284; rho=0.2042656; eta=529.9822
+L-curve 28/50: gamma=3.90693993705e-09
+Starting L-BFGS-B optimization in m = ln(E) space...
+  Initial modulus: min=1399.3865, max=2013.9463, mean=1689.4990
+  Max iterations: 1500, ftol: 1.00e-30, gtol: 1.00e-12
+  Iteration   10: Cost = 2.139910e-02, ||grad_m|| = 6.867538e-05
+  Iteration   20: Cost = 2.139750e-02, ||grad_m|| = 5.537162e-05
+  Iteration   30: Cost = 2.139720e-02, ||grad_m|| = 1.865752e-05
+  Iteration   40: Cost = 2.139715e-02, ||grad_m|| = 2.994277e-06
+  Iteration   50: Cost = 2.139715e-02, ||grad_m|| = 8.307519e-07
+  Iteration   60: Cost = 2.139715e-02, ||grad_m|| = 3.304765e-07
+  Iteration   70: Cost = 2.139715e-02, ||grad_m|| = 5.957114e-08
+  Iteration   80: Cost = 2.139715e-02, ||grad_m|| = 2.311231e-08
+  Iteration   90: Cost = 2.139715e-02, ||grad_m|| = 1.699026e-08
+  Optimization completed: CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH
+  Final modulus: min=1380.9846, max=2023.7682, mean=1688.3707
+  stop=CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH; evaluations=125; rho=0.2038724; eta=561.172
+L-curve 29/50: gamma=2.68269579528e-09
+Starting L-BFGS-B optimization in m = ln(E) space...
+  Initial modulus: min=1380.9846, max=2023.7682, mean=1688.3707
+  Max iterations: 1500, ftol: 1.00e-30, gtol: 1.00e-12
+  Iteration   10: Cost = 2.119417e-02, ||grad_m|| = 8.343631e-05
+  Iteration   20: Cost = 2.119312e-02, ||grad_m|| = 2.398124e-05
+  Iteration   30: Cost = 2.119289e-02, ||grad_m|| = 2.209157e-05
+  Iteration   40: Cost = 2.119286e-02, ||grad_m|| = 3.155509e-06
+  Iteration   50: Cost = 2.119286e-02, ||grad_m|| = 6.490333e-07
+  Iteration   60: Cost = 2.119286e-02, ||grad_m|| = 1.733928e-07
+  Iteration   70: Cost = 2.119286e-02, ||grad_m|| = 4.074119e-08
+  Iteration   80: Cost = 2.119286e-02, ||grad_m|| = 1.547181e-08
+  Iteration   90: Cost = 2.119286e-02, ||grad_m|| = 5.345959e-09
+  Iteration  100: Cost = 2.119286e-02, ||grad_m|| = 2.754710e-09
+  Optimization completed: CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH
+  Final modulus: min=1360.7379, max=2032.0953, mean=1687.2744
+  stop=CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH; evaluations=166; rho=0.2035394; eta=597.4
+L-curve 30/50: gamma=1.84206996933e-09
+Starting L-BFGS-B optimization in m = ln(E) space...
+  Initial modulus: min=1360.7379, max=2032.0953, mean=1687.2744
+  Max iterations: 1500, ftol: 1.00e-30, gtol: 1.00e-12
+  Iteration   10: Cost = 2.103351e-02, ||grad_m|| = 9.772757e-05
+  Iteration   20: Cost = 2.103265e-02, ||grad_m|| = 2.258046e-05
+  Iteration   30: Cost = 2.103250e-02, ||grad_m|| = 7.559392e-06
+  Iteration   40: Cost = 2.103248e-02, ||grad_m|| = 1.736237e-06
+  Iteration   50: Cost = 2.103248e-02, ||grad_m|| = 4.624055e-07
+  Iteration   60: Cost = 2.103248e-02, ||grad_m|| = 8.480152e-08
+  Iteration   70: Cost = 2.103248e-02, ||grad_m|| = 3.686894e-08
+  Iteration   80: Cost = 2.103248e-02, ||grad_m|| = 9.646565e-09
+  Iteration   90: Cost = 2.103248e-02, ||grad_m|| = 4.357574e-09
+  Optimization completed: CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH
+  Final modulus: min=1337.8468, max=2039.1263, mean=1686.2335
+  stop=CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH; evaluations=121; rho=0.2032351; eta=642.5062
+L-curve 31/50: gamma=1.26485521686e-09
+Starting L-BFGS-B optimization in m = ln(E) space...
+  Initial modulus: min=1337.8468, max=2039.1263, mean=1686.2335
+  Max iterations: 1500, ftol: 1.00e-30, gtol: 1.00e-12
+  Iteration   10: Cost = 2.090392e-02, ||grad_m|| = 8.176691e-05
+  Iteration   20: Cost = 2.090325e-02, ||grad_m|| = 3.350520e-05
+  Iteration   30: Cost = 2.090312e-02, ||grad_m|| = 3.914845e-06
+  Iteration   40: Cost = 2.090311e-02, ||grad_m|| = 1.335833e-06
+  Iteration   50: Cost = 2.090311e-02, ||grad_m|| = 2.145332e-07
+  Iteration   60: Cost = 2.090311e-02, ||grad_m|| = 5.635439e-08
+  Iteration   70: Cost = 2.090311e-02, ||grad_m|| = 6.933956e-08
+  Iteration   80: Cost = 2.090311e-02, ||grad_m|| = 5.354086e-09
+  Iteration   90: Cost = 2.090311e-02, ||grad_m|| = 2.991568e-09
+  Optimization completed: CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH
+  Final modulus: min=1311.0686, max=2045.3569, mean=1685.2444
+  stop=CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH; evaluations=160; rho=0.2029308; eta=703.1304
+L-curve 32/50: gamma=8.68511373751e-10
+Starting L-BFGS-B optimization in m = ln(E) space...
+  Initial modulus: min=1311.0686, max=2045.3569, mean=1685.2444
+  Max iterations: 1500, ftol: 1.00e-30, gtol: 1.00e-12
+  Iteration   10: Cost = 2.079486e-02, ||grad_m|| = 7.076821e-05
+  Iteration   20: Cost = 2.079433e-02, ||grad_m|| = 9.754816e-06
+  Iteration   30: Cost = 2.079425e-02, ||grad_m|| = 3.631764e-06
+  Iteration   40: Cost = 2.079424e-02, ||grad_m|| = 6.699224e-07
+  Iteration   50: Cost = 2.079424e-02, ||grad_m|| = 1.754329e-07
+  Iteration   60: Cost = 2.079424e-02, ||grad_m|| = 4.766614e-08
+  Iteration   70: Cost = 2.079424e-02, ||grad_m|| = 3.642420e-08
+  Iteration   80: Cost = 2.079424e-02, ||grad_m|| = 7.729066e-09
+  Iteration   90: Cost = 2.079424e-02, ||grad_m|| = 4.326614e-09
+  Optimization completed: CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH
+  Final modulus: min=1278.2530, max=2051.9461, mean=1684.2897
+  stop=CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH; evaluations=159; rho=0.202603; eta=788.8978
+L-curve 33/50: gamma=5.96362331659e-10
+Starting L-BFGS-B optimization in m = ln(E) space...
+  Initial modulus: min=1278.2530, max=2051.9461, mean=1684.2897
+  Max iterations: 1500, ftol: 1.00e-30, gtol: 1.00e-12
+  Iteration   10: Cost = 2.069792e-02, ||grad_m|| = 2.278740e-05
+  Iteration   20: Cost = 2.069750e-02, ||grad_m|| = 9.524995e-06
+  Iteration   30: Cost = 2.069745e-02, ||grad_m|| = 2.591601e-06
+  Iteration   40: Cost = 2.069744e-02, ||grad_m|| = 5.736053e-07
+  Iteration   50: Cost = 2.069744e-02, ||grad_m|| = 1.079569e-07
+  Iteration   60: Cost = 2.069744e-02, ||grad_m|| = 2.383244e-08
+  Iteration   70: Cost = 2.069744e-02, ||grad_m|| = 9.262838e-09
+  Iteration   80: Cost = 2.069744e-02, ||grad_m|| = 2.182074e-09
+  Optimization completed: CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH
+  Final modulus: min=1236.5445, max=2059.3057, mean=1683.3548
+  stop=CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH; evaluations=172; rho=0.202237; eta=911.1381
+L-curve 34/50: gamma=4.09491506238e-10
+Starting L-BFGS-B optimization in m = ln(E) space...
+  Initial modulus: min=1236.5445, max=2059.3057, mean=1683.3548
+  Max iterations: 1500, ftol: 1.00e-30, gtol: 1.00e-12
+  Iteration   10: Cost = 2.060688e-02, ||grad_m|| = 1.559613e-05
+  Iteration   20: Cost = 2.060645e-02, ||grad_m|| = 6.594557e-06
+  Iteration   30: Cost = 2.060637e-02, ||grad_m|| = 2.227493e-06
+  Iteration   40: Cost = 2.060637e-02, ||grad_m|| = 4.729996e-07
+  Iteration   50: Cost = 2.060637e-02, ||grad_m|| = 1.726482e-07
+  Iteration   60: Cost = 2.060637e-02, ||grad_m|| = 8.385301e-08
+  Iteration   70: Cost = 2.060637e-02, ||grad_m|| = 4.260032e-08
+  Iteration   80: Cost = 2.060637e-02, ||grad_m|| = 5.371027e-09
+  Iteration   90: Cost = 2.060637e-02, ||grad_m|| = 2.000298e-09
+  Iteration  100: Cost = 2.060637e-02, ||grad_m|| = 9.426248e-10
+  Optimization completed: CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH
+  Final modulus: min=1184.1140, max=2067.8881, mean=1682.4436
+  stop=CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH; evaluations=249; rho=0.2018294; eta=1080.004
+L-curve 35/50: gamma=2.81176869797e-10
+Starting L-BFGS-B optimization in m = ln(E) space...
+  Initial modulus: min=1184.1140, max=2067.8881, mean=1682.4436
+  Max iterations: 1500, ftol: 1.00e-30, gtol: 1.00e-12
+  Iteration   10: Cost = 2.051768e-02, ||grad_m|| = 1.674634e-05
+  Iteration   20: Cost = 2.051697e-02, ||grad_m|| = 1.728955e-05
+  Iteration   30: Cost = 2.051690e-02, ||grad_m|| = 1.214974e-06
+  Iteration   40: Cost = 2.051690e-02, ||grad_m|| = 3.107561e-07
+  Iteration   50: Cost = 2.051690e-02, ||grad_m|| = 8.206142e-08
+  Iteration   60: Cost = 2.051690e-02, ||grad_m|| = 4.895349e-08
+  Iteration   70: Cost = 2.051690e-02, ||grad_m|| = 1.005168e-08
+  Iteration   80: Cost = 2.051690e-02, ||grad_m|| = 1.662445e-09
+  Iteration   90: Cost = 2.051690e-02, ||grad_m|| = 5.445701e-10
+  Optimization completed: CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH
+  Final modulus: min=1118.1692, max=2077.8429, mean=1681.5954
+  stop=CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH; evaluations=201; rho=0.2013898; eta=1301.01
+L-curve 36/50: gamma=1.93069772888e-10
+Starting L-BFGS-B optimization in m = ln(E) space...
+  Initial modulus: min=1118.1692, max=2077.8429, mean=1681.5954
+  Max iterations: 1500, ftol: 1.00e-30, gtol: 1.00e-12
+  Iteration   10: Cost = 2.042836e-02, ||grad_m|| = 1.697520e-05
+  Iteration   20: Cost = 2.042733e-02, ||grad_m|| = 5.427305e-06
+  Iteration   30: Cost = 2.042727e-02, ||grad_m|| = 3.685743e-06
+  Iteration   40: Cost = 2.042726e-02, ||grad_m|| = 7.260441e-07
+  Iteration   50: Cost = 2.042726e-02, ||grad_m|| = 2.842885e-07
+  Iteration   60: Cost = 2.042726e-02, ||grad_m|| = 3.024292e-08
+  Iteration   70: Cost = 2.042726e-02, ||grad_m|| = 1.499743e-08
+  Iteration   80: Cost = 2.042726e-02, ||grad_m|| = 5.098418e-09
+  Iteration   90: Cost = 2.042726e-02, ||grad_m|| = 6.771621e-09
+  Optimization completed: CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH
+  Final modulus: min=1038.7842, max=2104.2303, mean=1680.8960
+  stop=CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH; evaluations=167; rho=0.2009407; eta=1572.373
+L-curve 37/50: gamma=1.32571136559e-10
+Starting L-BFGS-B optimization in m = ln(E) space...
+  Initial modulus: min=1038.7842, max=2104.2303, mean=1680.8960
+  Max iterations: 1500, ftol: 1.00e-30, gtol: 1.00e-12
+  Iteration   10: Cost = 2.033932e-02, ||grad_m|| = 2.092554e-05
+  Iteration   20: Cost = 2.033822e-02, ||grad_m|| = 1.135593e-05
+  Iteration   30: Cost = 2.033800e-02, ||grad_m|| = 7.998242e-06
+  Iteration   40: Cost = 2.033797e-02, ||grad_m|| = 1.352577e-06
+  Iteration   50: Cost = 2.033797e-02, ||grad_m|| = 6.088495e-07
+  Iteration   60: Cost = 2.033797e-02, ||grad_m|| = 9.462719e-07
+  Iteration   70: Cost = 2.033797e-02, ||grad_m|| = 2.279964e-07
+  Iteration   80: Cost = 2.033797e-02, ||grad_m|| = 2.095357e-07
+  Iteration   90: Cost = 2.033797e-02, ||grad_m|| = 1.861527e-08
+  Iteration  100: Cost = 2.033797e-02, ||grad_m|| = 6.472240e-09
+  Iteration  110: Cost = 2.033797e-02, ||grad_m|| = 2.233937e-09
+  Iteration  120: Cost = 2.033797e-02, ||grad_m|| = 9.243208e-10
+  Optimization completed: CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH
+  Final modulus: min=952.7237, max=2136.4410, mean=1680.4587
+  stop=CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH; evaluations=151; rho=0.2005126; eta=1884.195
+L-curve 38/50: gamma=9.10298177992e-11
+Starting L-BFGS-B optimization in m = ln(E) space...
+  Initial modulus: min=952.7237, max=2136.4410, mean=1680.4587
+  Max iterations: 1500, ftol: 1.00e-30, gtol: 1.00e-12
+  Iteration   10: Cost = 2.025265e-02, ||grad_m|| = 2.444272e-05
+  Iteration   20: Cost = 2.025154e-02, ||grad_m|| = 1.323536e-05
+  Iteration   30: Cost = 2.025132e-02, ||grad_m|| = 1.351049e-05
+  Iteration   40: Cost = 2.025129e-02, ||grad_m|| = 2.136233e-06
+  Iteration   50: Cost = 2.025128e-02, ||grad_m|| = 1.016766e-06
+  Iteration   60: Cost = 2.025128e-02, ||grad_m|| = 4.747926e-07
+  Iteration   70: Cost = 2.025128e-02, ||grad_m|| = 1.447415e-07
+  Iteration   80: Cost = 2.025128e-02, ||grad_m|| = 2.363088e-07
+  Iteration   90: Cost = 2.025128e-02, ||grad_m|| = 5.049315e-08
+  Iteration  100: Cost = 2.025128e-02, ||grad_m|| = 1.987208e-08
+  Iteration  110: Cost = 2.025128e-02, ||grad_m|| = 8.700749e-09
+  Iteration  120: Cost = 2.025128e-02, ||grad_m|| = 1.049705e-08
+  Iteration  130: Cost = 2.025128e-02, ||grad_m|| = 1.408357e-09
+  Iteration  140: Cost = 2.025128e-02, ||grad_m|| = 1.104482e-09
+  Optimization completed: CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH
+  Final modulus: min=868.1895, max=2168.7165, mean=1680.3697
+  stop=CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH; evaluations=211; rho=0.2001338; eta=2220.941
+L-curve 39/50: gamma=6.25055192527e-11
+Starting L-BFGS-B optimization in m = ln(E) space...
+  Initial modulus: min=868.1895, max=2168.7165, mean=1680.3697
+  Max iterations: 1500, ftol: 1.00e-30, gtol: 1.00e-12
+  Iteration   10: Cost = 2.017143e-02, ||grad_m|| = 3.560007e-05
+  Iteration   20: Cost = 2.017036e-02, ||grad_m|| = 9.202946e-06
+  Iteration   30: Cost = 2.017018e-02, ||grad_m|| = 6.514925e-06
+  Iteration   40: Cost = 2.017014e-02, ||grad_m|| = 3.584223e-06
+  Iteration   50: Cost = 2.017014e-02, ||grad_m|| = 7.526149e-07
+  Iteration   60: Cost = 2.017013e-02, ||grad_m|| = 1.245783e-06
+  Iteration   70: Cost = 2.017013e-02, ||grad_m|| = 7.434518e-07
+  Iteration   80: Cost = 2.017013e-02, ||grad_m|| = 1.228169e-07
+  Iteration   90: Cost = 2.017013e-02, ||grad_m|| = 5.986989e-08
+  Iteration  100: Cost = 2.017013e-02, ||grad_m|| = 2.557418e-08
+  Iteration  110: Cost = 2.017013e-02, ||grad_m|| = 4.507805e-08
+  Iteration  120: Cost = 2.017013e-02, ||grad_m|| = 9.613237e-09
+  Iteration  130: Cost = 2.017013e-02, ||grad_m|| = 3.957637e-09
+  Iteration  140: Cost = 2.017013e-02, ||grad_m|| = 2.028817e-09
+  Iteration  150: Cost = 2.017013e-02, ||grad_m|| = 8.914544e-10
+  Optimization completed: CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH
+  Final modulus: min=789.1812, max=2198.4906, mean=1680.6313
+  stop=CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH; evaluations=194; rho=0.1998201; eta=2568.028
+L-curve 40/50: gamma=4.29193426013e-11
+Starting L-BFGS-B optimization in m = ln(E) space...
+  Initial modulus: min=789.1812, max=2198.4906, mean=1680.6313
+  Max iterations: 1500, ftol: 1.00e-30, gtol: 1.00e-12
+  Iteration   10: Cost = 2.009841e-02, ||grad_m|| = 4.507113e-05
+  Iteration   20: Cost = 2.009729e-02, ||grad_m|| = 1.262831e-05
+  Iteration   30: Cost = 2.009698e-02, ||grad_m|| = 4.654463e-06
+  Iteration   40: Cost = 2.009694e-02, ||grad_m|| = 3.184311e-06
+  Iteration   50: Cost = 2.009692e-02, ||grad_m|| = 2.804450e-06
+  Iteration   60: Cost = 2.009692e-02, ||grad_m|| = 8.930569e-07
+  Iteration   70: Cost = 2.009692e-02, ||grad_m|| = 7.949992e-07
+  Iteration   80: Cost = 2.009692e-02, ||grad_m|| = 2.187179e-07
+  Iteration   90: Cost = 2.009692e-02, ||grad_m|| = 2.331679e-07
+  Iteration  100: Cost = 2.009692e-02, ||grad_m|| = 6.797667e-08
+  Iteration  110: Cost = 2.009692e-02, ||grad_m|| = 2.055836e-07
+  Iteration  120: Cost = 2.009692e-02, ||grad_m|| = 2.994597e-08
+  Iteration  130: Cost = 2.009692e-02, ||grad_m|| = 1.924406e-08
+  Iteration  140: Cost = 2.009692e-02, ||grad_m|| = 3.442730e-08
+  Iteration  150: Cost = 2.009692e-02, ||grad_m|| = 4.859905e-09
+  Iteration  160: Cost = 2.009692e-02, ||grad_m|| = 3.023319e-09
+  Iteration  170: Cost = 2.009692e-02, ||grad_m|| = 2.372659e-09
+  Iteration  180: Cost = 2.009692e-02, ||grad_m|| = 1.030205e-09
+  Iteration  190: Cost = 2.009692e-02, ||grad_m|| = 6.472098e-10
+  Optimization completed: CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH
+  Final modulus: min=726.4046, max=2226.8867, mean=1681.1736
+  stop=CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH; evaluations=319; rho=0.1995694; eta=2919.769
+L-curve 41/50: gamma=2.94705170255e-11
+Starting L-BFGS-B optimization in m = ln(E) space...
+  Initial modulus: min=726.4046, max=2226.8867, mean=1681.1736
+  Max iterations: 1500, ftol: 1.00e-30, gtol: 1.00e-12
+  Iteration   10: Cost = 2.003408e-02, ||grad_m|| = 2.542384e-05
+  Iteration   20: Cost = 2.003299e-02, ||grad_m|| = 1.335165e-05
+  Iteration   30: Cost = 2.003276e-02, ||grad_m|| = 6.372465e-06
+  Iteration   40: Cost = 2.003271e-02, ||grad_m|| = 3.275998e-06
+  Iteration   50: Cost = 2.003269e-02, ||grad_m|| = 3.428528e-06
+  Iteration   60: Cost = 2.003268e-02, ||grad_m|| = 1.065480e-06
+  Iteration   70: Cost = 2.003267e-02, ||grad_m|| = 1.406596e-06
+  Iteration   80: Cost = 2.003267e-02, ||grad_m|| = 1.638123e-06
+  Iteration   90: Cost = 2.003267e-02, ||grad_m|| = 5.175533e-07
+  Iteration  100: Cost = 2.003267e-02, ||grad_m|| = 3.008450e-07
+  Iteration  110: Cost = 2.003267e-02, ||grad_m|| = 1.606469e-07
+  Iteration  120: Cost = 2.003267e-02, ||grad_m|| = 1.956760e-07
+  Iteration  130: Cost = 2.003267e-02, ||grad_m|| = 3.920986e-08
+  Iteration  140: Cost = 2.003267e-02, ||grad_m|| = 2.420785e-08
+  Iteration  150: Cost = 2.003267e-02, ||grad_m|| = 3.859316e-08
+  Iteration  160: Cost = 2.003267e-02, ||grad_m|| = 6.701644e-09
+  Iteration  170: Cost = 2.003267e-02, ||grad_m|| = 9.383243e-09
+  Iteration  180: Cost = 2.003267e-02, ||grad_m|| = 1.808277e-09
+  Iteration  190: Cost = 2.003267e-02, ||grad_m|| = 2.251777e-09
+  Iteration  200: Cost = 2.003267e-02, ||grad_m|| = 1.233472e-09
+  Iteration  210: Cost = 2.003267e-02, ||grad_m|| = 6.978359e-10
+  Iteration  220: Cost = 2.003267e-02, ||grad_m|| = 4.078996e-10
+  Optimization completed: CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH
+  Final modulus: min=681.4471, max=2251.1761, mean=1681.9328
+  stop=CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH; evaluations=337; rho=0.1993668; eta=3285.931
+L-curve 42/50: gamma=2.02358964773e-11
+Starting L-BFGS-B optimization in m = ln(E) space...
+  Initial modulus: min=681.4471, max=2251.1761, mean=1681.9328
+  Max iterations: 1500, ftol: 1.00e-30, gtol: 1.00e-12
+  Iteration   10: Cost = 1.997863e-02, ||grad_m|| = 2.756889e-05
+  Iteration   20: Cost = 1.997758e-02, ||grad_m|| = 2.077074e-05
+  Iteration   30: Cost = 1.997714e-02, ||grad_m|| = 1.507298e-05
+  Iteration   40: Cost = 1.997698e-02, ||grad_m|| = 6.135216e-06
+  Iteration   50: Cost = 1.997691e-02, ||grad_m|| = 3.049968e-06
+  Iteration   60: Cost = 1.997688e-02, ||grad_m|| = 5.850891e-06
+  Iteration   70: Cost = 1.997687e-02, ||grad_m|| = 1.929342e-06
+  Iteration   80: Cost = 1.997686e-02, ||grad_m|| = 1.478356e-06
+  Iteration   90: Cost = 1.997685e-02, ||grad_m|| = 2.413771e-06
+  Iteration  100: Cost = 1.997685e-02, ||grad_m|| = 5.765166e-07
+  Iteration  110: Cost = 1.997685e-02, ||grad_m|| = 6.541602e-07
+  Iteration  120: Cost = 1.997685e-02, ||grad_m|| = 7.591067e-07
+  Iteration  130: Cost = 1.997685e-02, ||grad_m|| = 3.892284e-07
+  Iteration  140: Cost = 1.997685e-02, ||grad_m|| = 1.008502e-07
+  Iteration  150: Cost = 1.997685e-02, ||grad_m|| = 1.343958e-07
+  Iteration  160: Cost = 1.997685e-02, ||grad_m|| = 5.973532e-08
+  Iteration  170: Cost = 1.997685e-02, ||grad_m|| = 4.749623e-08
+  Iteration  180: Cost = 1.997685e-02, ||grad_m|| = 3.483216e-08
+  Iteration  190: Cost = 1.997685e-02, ||grad_m|| = 2.324705e-08
+  Iteration  200: Cost = 1.997685e-02, ||grad_m|| = 1.244334e-08
+  Iteration  210: Cost = 1.997685e-02, ||grad_m|| = 1.578177e-08
+  Iteration  220: Cost = 1.997685e-02, ||grad_m|| = 5.166507e-09
+  Iteration  230: Cost = 1.997685e-02, ||grad_m|| = 7.120326e-09
+  Iteration  240: Cost = 1.997685e-02, ||grad_m|| = 5.816855e-09
+  Iteration  250: Cost = 1.997685e-02, ||grad_m|| = 2.052210e-09
+  Iteration  260: Cost = 1.997685e-02, ||grad_m|| = 1.254423e-09
+  Iteration  270: Cost = 1.997685e-02, ||grad_m|| = 2.912440e-09
+  Iteration  280: Cost = 1.997685e-02, ||grad_m|| = 7.944369e-10
+  Optimization completed: CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH
+  Final modulus: min=653.4555, max=2277.9123, mean=1682.9748
+  stop=CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH; evaluations=419; rho=0.1991882; eta=3704.796
+L-curve 43/50: gamma=1.38949549437e-11
+Starting L-BFGS-B optimization in m = ln(E) space...
+  Initial modulus: min=653.4555, max=2277.9123, mean=1682.9748
+  Max iterations: 1500, ftol: 1.00e-30, gtol: 1.00e-12
+  Iteration   10: Cost = 1.992892e-02, ||grad_m|| = 2.268892e-05
+  Iteration   20: Cost = 1.992765e-02, ||grad_m|| = 1.219200e-05
+  Iteration   30: Cost = 1.992724e-02, ||grad_m|| = 2.608130e-05
+  Iteration   40: Cost = 1.992703e-02, ||grad_m|| = 7.503967e-06
+  Iteration   50: Cost = 1.992679e-02, ||grad_m|| = 9.203520e-06
+  Iteration   60: Cost = 1.992666e-02, ||grad_m|| = 8.715547e-06
+  Iteration   70: Cost = 1.992654e-02, ||grad_m|| = 3.263503e-06
+  Iteration   80: Cost = 1.992650e-02, ||grad_m|| = 3.618240e-06
+  Iteration   90: Cost = 1.992648e-02, ||grad_m|| = 5.638326e-06
+  Iteration  100: Cost = 1.992647e-02, ||grad_m|| = 1.332577e-06
+  Iteration  110: Cost = 1.992646e-02, ||grad_m|| = 1.052807e-06
+  Iteration  120: Cost = 1.992646e-02, ||grad_m|| = 1.675407e-06
+  Iteration  130: Cost = 1.992645e-02, ||grad_m|| = 6.063308e-07
+  Iteration  140: Cost = 1.992645e-02, ||grad_m|| = 4.875537e-07
+  Iteration  150: Cost = 1.992645e-02, ||grad_m|| = 6.355365e-07
+  Iteration  160: Cost = 1.992645e-02, ||grad_m|| = 3.999543e-07
+  Iteration  170: Cost = 1.992645e-02, ||grad_m|| = 4.152536e-07
+  Iteration  180: Cost = 1.992645e-02, ||grad_m|| = 3.560841e-07
+  Iteration  190: Cost = 1.992645e-02, ||grad_m|| = 3.855512e-07
+  Iteration  200: Cost = 1.992645e-02, ||grad_m|| = 1.801885e-07
+  Iteration  210: Cost = 1.992645e-02, ||grad_m|| = 3.451671e-07
+  Iteration  220: Cost = 1.992645e-02, ||grad_m|| = 1.542205e-07
+  Iteration  230: Cost = 1.992645e-02, ||grad_m|| = 1.527607e-07
+  Iteration  240: Cost = 1.992645e-02, ||grad_m|| = 2.592361e-07
+  Iteration  250: Cost = 1.992645e-02, ||grad_m|| = 8.609803e-08
+  Iteration  260: Cost = 1.992645e-02, ||grad_m|| = 5.618749e-08
+  Iteration  270: Cost = 1.992645e-02, ||grad_m|| = 5.795183e-08
+  Iteration  280: Cost = 1.992645e-02, ||grad_m|| = 6.292031e-08
+  Iteration  290: Cost = 1.992645e-02, ||grad_m|| = 5.008002e-08
+  Iteration  300: Cost = 1.992645e-02, ||grad_m|| = 6.419519e-08
+  Iteration  310: Cost = 1.992645e-02, ||grad_m|| = 5.155900e-08
+  Iteration  320: Cost = 1.992645e-02, ||grad_m|| = 5.294867e-08
+  Iteration  330: Cost = 1.992645e-02, ||grad_m|| = 2.371729e-08
+  Iteration  340: Cost = 1.992645e-02, ||grad_m|| = 4.673513e-08
+  Iteration  350: Cost = 1.992645e-02, ||grad_m|| = 1.751128e-08
+  Iteration  360: Cost = 1.992645e-02, ||grad_m|| = 1.090613e-08
+  Iteration  370: Cost = 1.992645e-02, ||grad_m|| = 1.454960e-08
+  Iteration  380: Cost = 1.992645e-02, ||grad_m|| = 2.559118e-08
+  Iteration  390: Cost = 1.992645e-02, ||grad_m|| = 1.625699e-08
+  Iteration  400: Cost = 1.992645e-02, ||grad_m|| = 5.670432e-09
+  Iteration  410: Cost = 1.992645e-02, ||grad_m|| = 3.431582e-09
+  Iteration  420: Cost = 1.992645e-02, ||grad_m|| = 4.583170e-09
+  Iteration  430: Cost = 1.992645e-02, ||grad_m|| = 3.242341e-09
+  Iteration  440: Cost = 1.992645e-02, ||grad_m|| = 1.298249e-09
+  Iteration  450: Cost = 1.992645e-02, ||grad_m|| = 2.564256e-09
+  Optimization completed: CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH
+  Final modulus: min=640.8686, max=2315.8455, mean=1685.7271
+  stop=CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH; evaluations=553; rho=0.1989276; eta=4494.649
+L-curve 44/50: gamma=9.5409547635e-12
+Starting L-BFGS-B optimization in m = ln(E) space...
+  Initial modulus: min=640.8686, max=2315.8455, mean=1685.7271
+  Max iterations: 1500, ftol: 1.00e-30, gtol: 1.00e-12
+  Iteration   10: Cost = 1.987753e-02, ||grad_m|| = 7.248675e-05
+  Iteration   20: Cost = 1.987176e-02, ||grad_m|| = 7.911844e-05
+  Iteration   30: Cost = 1.986105e-02, ||grad_m|| = 1.634714e-04
+  Iteration   40: Cost = 1.977150e-02, ||grad_m|| = 2.859689e-04
+  Iteration   50: Cost = 1.930651e-02, ||grad_m|| = 5.032348e-04
+  Iteration   60: Cost = 1.888487e-02, ||grad_m|| = 1.299794e-03
+  Iteration   70: Cost = 1.821376e-02, ||grad_m|| = 4.227702e-04
+  Iteration   80: Cost = 1.785790e-02, ||grad_m|| = 3.474780e-04
+  Iteration   90: Cost = 1.739464e-02, ||grad_m|| = 3.146722e-04
+  Iteration  100: Cost = 1.707374e-02, ||grad_m|| = 4.356615e-04
+  Iteration  110: Cost = 1.678868e-02, ||grad_m|| = 2.615049e-04
+  Iteration  120: Cost = 1.652936e-02, ||grad_m|| = 2.600584e-04
+  Iteration  130: Cost = 1.623656e-02, ||grad_m|| = 4.079129e-04
+  Iteration  140: Cost = 1.600894e-02, ||grad_m|| = 2.729749e-04
+  Iteration  150: Cost = 1.578483e-02, ||grad_m|| = 4.600130e-04
+  Iteration  160: Cost = 1.547224e-02, ||grad_m|| = 8.218359e-04
+  Iteration  170: Cost = 1.522699e-02, ||grad_m|| = 1.100488e-03
+  Iteration  180: Cost = 1.481684e-02, ||grad_m|| = 3.772256e-04
+  Iteration  190: Cost = 1.439807e-02, ||grad_m|| = 3.763442e-04
+  Iteration  200: Cost = 1.386807e-02, ||grad_m|| = 4.541766e-04
+  Iteration  210: Cost = 1.340828e-02, ||grad_m|| = 1.034187e-03
+  Iteration  220: Cost = 1.307824e-02, ||grad_m|| = 5.440806e-04
+  Iteration  230: Cost = 1.265165e-02, ||grad_m|| = 6.729774e-04
+  Iteration  240: Cost = 1.240534e-02, ||grad_m|| = 3.367264e-04
+  Iteration  250: Cost = 1.212610e-02, ||grad_m|| = 6.464387e-04
+  Iteration  260: Cost = 1.190351e-02, ||grad_m|| = 3.330043e-04
+  Iteration  270: Cost = 1.170225e-02, ||grad_m|| = 2.474869e-04
+  Iteration  280: Cost = 1.149627e-02, ||grad_m|| = 6.289474e-04
+  Iteration  290: Cost = 1.133479e-02, ||grad_m|| = 4.334658e-04
+  Iteration  300: Cost = 1.119156e-02, ||grad_m|| = 4.630235e-04
+  Iteration  310: Cost = 1.107104e-02, ||grad_m|| = 2.567350e-04
+  Iteration  320: Cost = 1.096894e-02, ||grad_m|| = 3.066664e-04
+  Iteration  330: Cost = 1.085136e-02, ||grad_m|| = 7.131570e-04
+  Iteration  340: Cost = 1.073077e-02, ||grad_m|| = 3.774471e-04
+  Iteration  350: Cost = 1.061380e-02, ||grad_m|| = 4.721699e-04
+  Iteration  360: Cost = 1.050136e-02, ||grad_m|| = 2.738315e-04
+  Iteration  370: Cost = 1.038567e-02, ||grad_m|| = 3.019018e-04
+  Iteration  380: Cost = 1.029349e-02, ||grad_m|| = 2.146768e-04
+  Iteration  390: Cost = 1.019238e-02, ||grad_m|| = 3.315555e-04
+  Iteration  400: Cost = 1.009922e-02, ||grad_m|| = 3.733516e-04
+  Iteration  410: Cost = 1.001988e-02, ||grad_m|| = 2.911894e-04
+  Iteration  420: Cost = 9.937627e-03, ||grad_m|| = 1.909511e-04
+  Iteration  430: Cost = 9.879203e-03, ||grad_m|| = 2.517409e-04
+  Iteration  440: Cost = 9.810815e-03, ||grad_m|| = 4.271706e-04
+  Iteration  450: Cost = 9.728614e-03, ||grad_m|| = 5.162642e-04
+  Iteration  460: Cost = 9.656616e-03, ||grad_m|| = 2.191343e-04
+  Iteration  470: Cost = 9.625913e-03, ||grad_m|| = 1.220933e-04
+  Iteration  480: Cost = 9.588306e-03, ||grad_m|| = 1.279942e-04
+  Iteration  490: Cost = 9.557616e-03, ||grad_m|| = 1.563050e-04
+  Iteration  500: Cost = 9.520206e-03, ||grad_m|| = 1.752812e-04
+  Iteration  510: Cost = 9.477534e-03, ||grad_m|| = 2.385075e-04
+  Iteration  520: Cost = 9.434806e-03, ||grad_m|| = 2.741834e-04
+  Iteration  530: Cost = 9.408672e-03, ||grad_m|| = 1.777821e-04
+  Iteration  540: Cost = 9.376707e-03, ||grad_m|| = 2.173420e-04
+  Iteration  550: Cost = 9.353128e-03, ||grad_m|| = 1.255496e-04
+  Iteration  560: Cost = 9.333697e-03, ||grad_m|| = 1.058961e-04
+  Iteration  570: Cost = 9.308250e-03, ||grad_m|| = 2.529438e-04
+  Iteration  580: Cost = 9.293850e-03, ||grad_m|| = 1.456250e-04
+  Iteration  590: Cost = 9.278484e-03, ||grad_m|| = 7.891806e-05
+  Iteration  600: Cost = 9.262360e-03, ||grad_m|| = 1.256953e-04
+  Iteration  610: Cost = 9.246531e-03, ||grad_m|| = 1.251545e-04
+  Iteration  620: Cost = 9.237186e-03, ||grad_m|| = 1.409860e-04
+  Iteration  630: Cost = 9.225814e-03, ||grad_m|| = 8.249017e-05
+  Iteration  640: Cost = 9.216936e-03, ||grad_m|| = 1.817032e-04
+  Iteration  650: Cost = 9.206836e-03, ||grad_m|| = 7.358690e-05
+  Iteration  660: Cost = 9.197171e-03, ||grad_m|| = 1.127093e-04
+  Iteration  670: Cost = 9.190226e-03, ||grad_m|| = 1.116326e-04
+  Iteration  680: Cost = 9.179465e-03, ||grad_m|| = 8.661483e-05
+  Iteration  690: Cost = 9.169786e-03, ||grad_m|| = 1.563577e-04
+  Iteration  700: Cost = 9.156731e-03, ||grad_m|| = 1.815785e-04
+  Iteration  710: Cost = 9.142683e-03, ||grad_m|| = 1.206950e-04
+  Iteration  720: Cost = 9.129169e-03, ||grad_m|| = 3.253967e-04
+  Iteration  730: Cost = 9.118400e-03, ||grad_m|| = 9.664773e-05
+  Iteration  740: Cost = 9.107154e-03, ||grad_m|| = 8.232701e-05
+  Iteration  750: Cost = 9.097917e-03, ||grad_m|| = 1.863759e-04
+  Iteration  760: Cost = 9.090981e-03, ||grad_m|| = 8.135517e-05
+  Iteration  770: Cost = 9.087153e-03, ||grad_m|| = 9.221434e-05
+  Iteration  780: Cost = 9.084689e-03, ||grad_m|| = 6.510116e-05
+  Iteration  790: Cost = 9.082002e-03, ||grad_m|| = 1.104804e-04
+  Iteration  800: Cost = 9.079349e-03, ||grad_m|| = 9.334831e-05
+  Iteration  810: Cost = 9.075270e-03, ||grad_m|| = 4.476108e-05
+  Iteration  820: Cost = 9.070679e-03, ||grad_m|| = 1.651255e-04
+  Iteration  830: Cost = 9.065989e-03, ||grad_m|| = 9.470662e-05
+  Iteration  840: Cost = 9.061619e-03, ||grad_m|| = 8.698701e-05
+  Iteration  850: Cost = 9.056763e-03, ||grad_m|| = 1.512419e-04
+  Iteration  860: Cost = 9.053638e-03, ||grad_m|| = 6.355364e-05
+  Iteration  870: Cost = 9.048870e-03, ||grad_m|| = 7.288302e-05
+  Iteration  880: Cost = 9.040713e-03, ||grad_m|| = 1.857776e-04
+  Iteration  890: Cost = 9.029228e-03, ||grad_m|| = 1.110629e-04
+  Iteration  900: Cost = 9.019600e-03, ||grad_m|| = 9.916679e-05
+  Iteration  910: Cost = 9.011869e-03, ||grad_m|| = 7.494638e-05
+  Iteration  920: Cost = 9.006383e-03, ||grad_m|| = 8.836731e-05
+  Iteration  930: Cost = 9.004455e-03, ||grad_m|| = 3.708769e-05
+  Iteration  940: Cost = 9.001837e-03, ||grad_m|| = 2.592476e-05
+  Iteration  950: Cost = 8.998730e-03, ||grad_m|| = 4.442598e-05
+  Iteration  960: Cost = 8.996491e-03, ||grad_m|| = 3.755058e-05
+  Iteration  970: Cost = 8.994677e-03, ||grad_m|| = 5.227129e-05
+  Iteration  980: Cost = 8.992733e-03, ||grad_m|| = 3.947187e-05
+  Iteration  990: Cost = 8.989748e-03, ||grad_m|| = 1.133263e-04
+  Iteration 1000: Cost = 8.985101e-03, ||grad_m|| = 5.014144e-05
+  Iteration 1010: Cost = 8.980268e-03, ||grad_m|| = 1.114603e-04
+  Iteration 1020: Cost = 8.977498e-03, ||grad_m|| = 1.754937e-04
+  Iteration 1030: Cost = 8.974683e-03, ||grad_m|| = 7.139372e-05
+  Iteration 1040: Cost = 8.971405e-03, ||grad_m|| = 3.939838e-05
+  Iteration 1050: Cost = 8.968408e-03, ||grad_m|| = 1.666818e-04
+  Iteration 1060: Cost = 8.965194e-03, ||grad_m|| = 3.906653e-05
+  Iteration 1070: Cost = 8.963532e-03, ||grad_m|| = 6.313196e-05
+  Iteration 1080: Cost = 8.962357e-03, ||grad_m|| = 3.358192e-05
+  Iteration 1090: Cost = 8.961003e-03, ||grad_m|| = 4.334241e-05
+  Iteration 1100: Cost = 8.959762e-03, ||grad_m|| = 6.265780e-05
+  Iteration 1110: Cost = 8.958644e-03, ||grad_m|| = 4.710544e-05
+  Iteration 1120: Cost = 8.957138e-03, ||grad_m|| = 3.047247e-05
+  Iteration 1130: Cost = 8.955386e-03, ||grad_m|| = 4.637655e-05
+  Iteration 1140: Cost = 8.953217e-03, ||grad_m|| = 6.013050e-05
+  Iteration 1150: Cost = 8.950748e-03, ||grad_m|| = 3.702436e-05
+  Iteration 1160: Cost = 8.948730e-03, ||grad_m|| = 3.187167e-05
+  Iteration 1170: Cost = 8.946921e-03, ||grad_m|| = 2.730143e-05
+  Iteration 1180: Cost = 8.945453e-03, ||grad_m|| = 7.813526e-05
+  Iteration 1190: Cost = 8.943432e-03, ||grad_m|| = 7.144801e-05
+  Iteration 1200: Cost = 8.941168e-03, ||grad_m|| = 4.771914e-05
+  Iteration 1210: Cost = 8.938073e-03, ||grad_m|| = 1.023629e-04
+  Iteration 1220: Cost = 8.935725e-03, ||grad_m|| = 8.252587e-05
+  Iteration 1230: Cost = 8.933739e-03, ||grad_m|| = 4.010211e-05
+  Iteration 1240: Cost = 8.932475e-03, ||grad_m|| = 4.791146e-05
+  Iteration 1250: Cost = 8.930999e-03, ||grad_m|| = 5.616204e-05
+  Iteration 1260: Cost = 8.929563e-03, ||grad_m|| = 2.321521e-05
+  Iteration 1270: Cost = 8.927958e-03, ||grad_m|| = 4.635188e-05
+  Iteration 1280: Cost = 8.925954e-03, ||grad_m|| = 4.469946e-05
+  Iteration 1290: Cost = 8.923016e-03, ||grad_m|| = 5.281048e-05
+  Iteration 1300: Cost = 8.920934e-03, ||grad_m|| = 3.309190e-05
+  Iteration 1310: Cost = 8.919000e-03, ||grad_m|| = 2.633756e-05
+  Iteration 1320: Cost = 8.917937e-03, ||grad_m|| = 3.591759e-05
+  Iteration 1330: Cost = 8.916598e-03, ||grad_m|| = 3.558141e-05
+  Iteration 1340: Cost = 8.915463e-03, ||grad_m|| = 2.864935e-05
+  Iteration 1350: Cost = 8.914599e-03, ||grad_m|| = 3.943023e-05
+  Iteration 1360: Cost = 8.913716e-03, ||grad_m|| = 2.268353e-05
+  Iteration 1370: Cost = 8.913003e-03, ||grad_m|| = 2.030360e-05
+  Iteration 1380: Cost = 8.912109e-03, ||grad_m|| = 5.781541e-05
+  Iteration 1390: Cost = 8.910619e-03, ||grad_m|| = 3.398418e-05
+  Iteration 1400: Cost = 8.908934e-03, ||grad_m|| = 2.403807e-05
+  Iteration 1410: Cost = 8.907409e-03, ||grad_m|| = 2.735369e-05
+  Iteration 1420: Cost = 8.906357e-03, ||grad_m|| = 2.019136e-05
+  Iteration 1430: Cost = 8.905199e-03, ||grad_m|| = 2.366791e-05
+  Iteration 1440: Cost = 8.903845e-03, ||grad_m|| = 4.029509e-05
+  Iteration 1450: Cost = 8.902117e-03, ||grad_m|| = 3.256945e-05
+  Iteration 1460: Cost = 8.899948e-03, ||grad_m|| = 3.899987e-05
+  Iteration 1470: Cost = 8.897933e-03, ||grad_m|| = 6.952061e-05
+  Iteration 1480: Cost = 8.896557e-03, ||grad_m|| = 2.623896e-05
+  Iteration 1490: Cost = 8.895720e-03, ||grad_m|| = 3.945689e-05
+  Iteration 1500: Cost = 8.894809e-03, ||grad_m|| = 2.440139e-05
+  Optimization completed: STOP: TOTAL NO. OF ITERATIONS REACHED LIMIT
+  Final modulus: min=0.0000, max=3940.8435, mean=1756.8201
+  stop=STOP: TOTAL NO. OF ITERATIONS REACHED LIMIT; evaluations=1670; rho=0.1057168; eta=26328.27
+L-curve 45/50: gamma=6.5512855686e-12
+Starting L-BFGS-B optimization in m = ln(E) space...
+  Initial modulus: min=640.8686, max=2315.8455, mean=1685.7271
+  Max iterations: 1500, ftol: 1.00e-30, gtol: 1.00e-12
+  Iteration   10: Cost = 1.983560e-02, ||grad_m|| = 1.318392e-04
+  Iteration   20: Cost = 1.980775e-02, ||grad_m|| = 1.195625e-04
+  Iteration   30: Cost = 1.975366e-02, ||grad_m|| = 6.586418e-04
+  Iteration   40: Cost = 1.951815e-02, ||grad_m|| = 2.780692e-04
+  Iteration   50: Cost = 1.905773e-02, ||grad_m|| = 4.291789e-04
+  Iteration   60: Cost = 1.855985e-02, ||grad_m|| = 1.323362e-03
+  Iteration   70: Cost = 1.790460e-02, ||grad_m|| = 4.267347e-04
+  Iteration   80: Cost = 1.744824e-02, ||grad_m|| = 7.289599e-04
+  Iteration   90: Cost = 1.709472e-02, ||grad_m|| = 2.701008e-04
+  Iteration  100: Cost = 1.668905e-02, ||grad_m|| = 3.985339e-04
+  Iteration  110: Cost = 1.622095e-02, ||grad_m|| = 5.238195e-04
+  Iteration  120: Cost = 1.585462e-02, ||grad_m|| = 3.286676e-04
+  Iteration  130: Cost = 1.529557e-02, ||grad_m|| = 5.322730e-04
+  Iteration  140: Cost = 1.476616e-02, ||grad_m|| = 1.485074e-03
+  Iteration  150: Cost = 1.424437e-02, ||grad_m|| = 6.330194e-04
+  Iteration  160: Cost = 1.377199e-02, ||grad_m|| = 5.452763e-04
+  Iteration  170: Cost = 1.334445e-02, ||grad_m|| = 8.812403e-04
+  Iteration  180: Cost = 1.298107e-02, ||grad_m|| = 6.849024e-04
+  Iteration  190: Cost = 1.260408e-02, ||grad_m|| = 4.541786e-04
+  Iteration  200: Cost = 1.226315e-02, ||grad_m|| = 4.958730e-04
+  Iteration  210: Cost = 1.197422e-02, ||grad_m|| = 5.244703e-04
+  Iteration  220: Cost = 1.163970e-02, ||grad_m|| = 3.926848e-04
+  Iteration  230: Cost = 1.134068e-02, ||grad_m|| = 6.934195e-04
+  Iteration  240: Cost = 1.102796e-02, ||grad_m|| = 1.414080e-03
+  Iteration  250: Cost = 1.075631e-02, ||grad_m|| = 7.803434e-04
+  Iteration  260: Cost = 1.057720e-02, ||grad_m|| = 3.988839e-04
+  Iteration  270: Cost = 1.039499e-02, ||grad_m|| = 2.776667e-04
+  Iteration  280: Cost = 1.016852e-02, ||grad_m|| = 3.138381e-04
+  Iteration  290: Cost = 9.997418e-03, ||grad_m|| = 2.382120e-04
+  Iteration  300: Cost = 9.822808e-03, ||grad_m|| = 3.142996e-04
+  Iteration  310: Cost = 9.699811e-03, ||grad_m|| = 2.166285e-04
+  Iteration  320: Cost = 9.592980e-03, ||grad_m|| = 3.028410e-04
+  Iteration  330: Cost = 9.517659e-03, ||grad_m|| = 2.156136e-04
+  Iteration  340: Cost = 9.436285e-03, ||grad_m|| = 2.228580e-04
+  Iteration  350: Cost = 9.369730e-03, ||grad_m|| = 1.870241e-04
+  Iteration  360: Cost = 9.296620e-03, ||grad_m|| = 1.716689e-04
+  Iteration  370: Cost = 9.255874e-03, ||grad_m|| = 8.200097e-05
+  Iteration  380: Cost = 9.227531e-03, ||grad_m|| = 2.717579e-04
+  Iteration  390: Cost = 9.192850e-03, ||grad_m|| = 1.508988e-04
+  Iteration  400: Cost = 9.142966e-03, ||grad_m|| = 1.686904e-04
+  Iteration  410: Cost = 9.100326e-03, ||grad_m|| = 1.562278e-04
+  Iteration  420: Cost = 9.062672e-03, ||grad_m|| = 1.208404e-04
+  Iteration  430: Cost = 9.015774e-03, ||grad_m|| = 2.438635e-04
+  Iteration  440: Cost = 8.978067e-03, ||grad_m|| = 2.417111e-04
+  Iteration  450: Cost = 8.935245e-03, ||grad_m|| = 1.384390e-04
+  Iteration  460: Cost = 8.906611e-03, ||grad_m|| = 3.045085e-04
+  Iteration  470: Cost = 8.880245e-03, ||grad_m|| = 7.332405e-05
+  Iteration  480: Cost = 8.849125e-03, ||grad_m|| = 2.419072e-04
+  Iteration  490: Cost = 8.808194e-03, ||grad_m|| = 6.013893e-04
+  Iteration  500: Cost = 8.785330e-03, ||grad_m|| = 1.158924e-04
+  Iteration  510: Cost = 8.769122e-03, ||grad_m|| = 1.463027e-04
+  Iteration  520: Cost = 8.754004e-03, ||grad_m|| = 6.428105e-05
+  Iteration  530: Cost = 8.737335e-03, ||grad_m|| = 7.133457e-05
+  Iteration  540: Cost = 8.724671e-03, ||grad_m|| = 1.950880e-04
+  Iteration  550: Cost = 8.709248e-03, ||grad_m|| = 1.360972e-04
+  Iteration  560: Cost = 8.683608e-03, ||grad_m|| = 1.212759e-04
+  Iteration  570: Cost = 8.667463e-03, ||grad_m|| = 1.477853e-04
+  Iteration  580: Cost = 8.660280e-03, ||grad_m|| = 1.538786e-04
+  Iteration  590: Cost = 8.653510e-03, ||grad_m|| = 1.021419e-04
+  Iteration  600: Cost = 8.642279e-03, ||grad_m|| = 1.023054e-04
+  Iteration  610: Cost = 8.631967e-03, ||grad_m|| = 6.236325e-05
+  Iteration  620: Cost = 8.616823e-03, ||grad_m|| = 8.063095e-05
+  Iteration  630: Cost = 8.606949e-03, ||grad_m|| = 9.818657e-05
+  Iteration  640: Cost = 8.594277e-03, ||grad_m|| = 8.147036e-05
+  Iteration  650: Cost = 8.582777e-03, ||grad_m|| = 6.768795e-05
+  Iteration  660: Cost = 8.574281e-03, ||grad_m|| = 1.446609e-04
+  Iteration  670: Cost = 8.565817e-03, ||grad_m|| = 4.645801e-05
+  Iteration  680: Cost = 8.559072e-03, ||grad_m|| = 1.276952e-04
+  Iteration  690: Cost = 8.544677e-03, ||grad_m|| = 1.081907e-04
+  Iteration  700: Cost = 8.527991e-03, ||grad_m|| = 1.313272e-04
+  Iteration  710: Cost = 8.508644e-03, ||grad_m|| = 2.821544e-04
+  Iteration  720: Cost = 8.487167e-03, ||grad_m|| = 1.549744e-04
+  Iteration  730: Cost = 8.472737e-03, ||grad_m|| = 7.425456e-05
+  Iteration  740: Cost = 8.461888e-03, ||grad_m|| = 9.017900e-05
+  Iteration  750: Cost = 8.450689e-03, ||grad_m|| = 2.252501e-04
+  Iteration  760: Cost = 8.441698e-03, ||grad_m|| = 6.283558e-05
+  Iteration  770: Cost = 8.431805e-03, ||grad_m|| = 9.360024e-05
+  Iteration  780: Cost = 8.421127e-03, ||grad_m|| = 6.323130e-05
+  Iteration  790: Cost = 8.413634e-03, ||grad_m|| = 2.014127e-04
+  Iteration  800: Cost = 8.408245e-03, ||grad_m|| = 7.487670e-05
+  Iteration  810: Cost = 8.403986e-03, ||grad_m|| = 5.867954e-05
+  Iteration  820: Cost = 8.399871e-03, ||grad_m|| = 6.112746e-05
+  Iteration  830: Cost = 8.395533e-03, ||grad_m|| = 3.742303e-05
+  Iteration  840: Cost = 8.392224e-03, ||grad_m|| = 1.577170e-04
+  Iteration  850: Cost = 8.388369e-03, ||grad_m|| = 6.534106e-05
+  Iteration  860: Cost = 8.384338e-03, ||grad_m|| = 4.714156e-05
+  Iteration  870: Cost = 8.379769e-03, ||grad_m|| = 5.828706e-05
+  Iteration  880: Cost = 8.375678e-03, ||grad_m|| = 5.991593e-05
+  Iteration  890: Cost = 8.372038e-03, ||grad_m|| = 7.418529e-05
+  Iteration  900: Cost = 8.368448e-03, ||grad_m|| = 3.867667e-05
+  Iteration  910: Cost = 8.365727e-03, ||grad_m|| = 3.869141e-05
+  Iteration  920: Cost = 8.363343e-03, ||grad_m|| = 2.279950e-05
+  Iteration  930: Cost = 8.361238e-03, ||grad_m|| = 6.553743e-05
+  Iteration  940: Cost = 8.359124e-03, ||grad_m|| = 3.334541e-05
+  Iteration  950: Cost = 8.357469e-03, ||grad_m|| = 3.560551e-05
+  Iteration  960: Cost = 8.353924e-03, ||grad_m|| = 3.598314e-05
+  Iteration  970: Cost = 8.350118e-03, ||grad_m|| = 1.068925e-04
+  Iteration  980: Cost = 8.346401e-03, ||grad_m|| = 5.570493e-05
+  Iteration  990: Cost = 8.344007e-03, ||grad_m|| = 3.849393e-05
+  Iteration 1000: Cost = 8.341217e-03, ||grad_m|| = 4.680188e-05
+  Iteration 1010: Cost = 8.337399e-03, ||grad_m|| = 8.339835e-05
+  Iteration 1020: Cost = 8.331889e-03, ||grad_m|| = 8.086794e-05
+  Iteration 1030: Cost = 8.323752e-03, ||grad_m|| = 8.472077e-05
+  Iteration 1040: Cost = 8.316296e-03, ||grad_m|| = 1.693715e-04
+  Iteration 1050: Cost = 8.309779e-03, ||grad_m|| = 7.944239e-05
+  Iteration 1060: Cost = 8.303322e-03, ||grad_m|| = 8.179118e-05
+  Iteration 1070: Cost = 8.295570e-03, ||grad_m|| = 5.164279e-05
+  Iteration 1080: Cost = 8.290982e-03, ||grad_m|| = 1.281300e-04
+  Iteration 1090: Cost = 8.287938e-03, ||grad_m|| = 3.959711e-05
+  Iteration 1100: Cost = 8.284686e-03, ||grad_m|| = 4.005941e-05
+  Iteration 1110: Cost = 8.278904e-03, ||grad_m|| = 1.396647e-04
+  Iteration 1120: Cost = 8.274438e-03, ||grad_m|| = 5.020678e-05
+  Iteration 1130: Cost = 8.269831e-03, ||grad_m|| = 4.489094e-05
+  Iteration 1140: Cost = 8.263336e-03, ||grad_m|| = 1.528993e-04
+  Iteration 1150: Cost = 8.256759e-03, ||grad_m|| = 5.911643e-05
+  Iteration 1160: Cost = 8.253100e-03, ||grad_m|| = 5.160467e-05
+  Iteration 1170: Cost = 8.246145e-03, ||grad_m|| = 7.925526e-05
+  Iteration 1180: Cost = 8.223881e-03, ||grad_m|| = 9.283575e-05
+  Iteration 1190: Cost = 8.208081e-03, ||grad_m|| = 6.331821e-05
+  Iteration 1200: Cost = 8.202108e-03, ||grad_m|| = 1.292478e-04
+  Iteration 1210: Cost = 8.197730e-03, ||grad_m|| = 6.739002e-05
+  Iteration 1220: Cost = 8.195615e-03, ||grad_m|| = 2.403876e-05
+  Iteration 1230: Cost = 8.194062e-03, ||grad_m|| = 2.564393e-05
+  Iteration 1240: Cost = 8.192709e-03, ||grad_m|| = 2.738015e-05
+  Iteration 1250: Cost = 8.191318e-03, ||grad_m|| = 3.213893e-05
+  Iteration 1260: Cost = 8.189950e-03, ||grad_m|| = 3.223262e-05
+  Iteration 1270: Cost = 8.187923e-03, ||grad_m|| = 6.170559e-05
+  Iteration 1280: Cost = 8.185034e-03, ||grad_m|| = 6.823893e-05
+  Iteration 1290: Cost = 8.179098e-03, ||grad_m|| = 6.007198e-05
+  Iteration 1300: Cost = 8.175796e-03, ||grad_m|| = 1.405209e-04
+  Iteration 1310: Cost = 8.171732e-03, ||grad_m|| = 6.228651e-05
+  Iteration 1320: Cost = 8.167313e-03, ||grad_m|| = 5.748591e-05
+  Iteration 1330: Cost = 8.161705e-03, ||grad_m|| = 4.800697e-05
+  Iteration 1340: Cost = 8.156566e-03, ||grad_m|| = 9.219806e-05
+  Iteration 1350: Cost = 8.153256e-03, ||grad_m|| = 6.004252e-05
+  Iteration 1360: Cost = 8.148129e-03, ||grad_m|| = 1.058078e-04
+  Iteration 1370: Cost = 8.129260e-03, ||grad_m|| = 1.765215e-04
+  Iteration 1380: Cost = 8.113284e-03, ||grad_m|| = 1.838709e-04
+  Iteration 1390: Cost = 8.106342e-03, ||grad_m|| = 4.672897e-05
+  Iteration 1400: Cost = 8.102905e-03, ||grad_m|| = 2.483015e-05
+  Iteration 1410: Cost = 8.101021e-03, ||grad_m|| = 5.358700e-05
+  Iteration 1420: Cost = 8.099603e-03, ||grad_m|| = 3.740485e-05
+  Iteration 1430: Cost = 8.098159e-03, ||grad_m|| = 2.806674e-05
+  Iteration 1440: Cost = 8.096758e-03, ||grad_m|| = 7.303190e-05
+  Iteration 1450: Cost = 8.095587e-03, ||grad_m|| = 2.226784e-05
+  Iteration 1460: Cost = 8.094512e-03, ||grad_m|| = 2.418254e-05
+  Iteration 1470: Cost = 8.093248e-03, ||grad_m|| = 4.019777e-05
+  Iteration 1480: Cost = 8.091604e-03, ||grad_m|| = 2.777772e-05
+  Iteration 1490: Cost = 8.089674e-03, ||grad_m|| = 6.378533e-05
+  Iteration 1500: Cost = 8.086691e-03, ||grad_m|| = 1.000832e-04
+  Optimization completed: STOP: TOTAL NO. OF ITERATIONS REACHED LIMIT
+  Final modulus: min=0.0000, max=3936.6746, mean=1775.2511
+  stop=STOP: TOTAL NO. OF ITERATIONS REACHED LIMIT; evaluations=1670; rho=0.1018738; eta=29741.83
+L-curve 46/50: gamma=4.49843266897e-12
+Starting L-BFGS-B optimization in m = ln(E) space...
+  Initial modulus: min=640.8686, max=2315.8455, mean=1685.7271
+  Max iterations: 1500, ftol: 1.00e-30, gtol: 1.00e-12
+  Iteration   10: Cost = 1.980021e-02, ||grad_m|| = 2.047523e-04
+  Iteration   20: Cost = 1.973320e-02, ||grad_m|| = 2.003695e-04
+  Iteration   30: Cost = 1.963308e-02, ||grad_m|| = 2.459721e-04
+  Iteration   40: Cost = 1.923901e-02, ||grad_m|| = 5.438933e-04
+  Iteration   50: Cost = 1.877830e-02, ||grad_m|| = 1.588950e-03
+  Iteration   60: Cost = 1.847804e-02, ||grad_m|| = 7.418659e-04
+  Iteration   70: Cost = 1.773627e-02, ||grad_m|| = 2.003976e-03
+  Iteration   80: Cost = 1.715270e-02, ||grad_m|| = 5.882867e-04
+  Iteration   90: Cost = 1.679992e-02, ||grad_m|| = 2.454197e-04
+  Iteration  100: Cost = 1.635141e-02, ||grad_m|| = 4.464353e-04
+  Iteration  110: Cost = 1.572702e-02, ||grad_m|| = 5.726616e-04
+  Iteration  120: Cost = 1.497446e-02, ||grad_m|| = 1.018101e-03
+  Iteration  130: Cost = 1.424085e-02, ||grad_m|| = 6.996832e-04
+  Iteration  140: Cost = 1.339986e-02, ||grad_m|| = 6.449079e-04
+  Iteration  150: Cost = 1.268159e-02, ||grad_m|| = 5.462748e-04
+  Iteration  160: Cost = 1.183953e-02, ||grad_m|| = 6.201604e-04
+  Iteration  170: Cost = 1.100457e-02, ||grad_m|| = 6.802267e-04
+  Iteration  180: Cost = 1.032246e-02, ||grad_m|| = 6.880396e-04
+  Iteration  190: Cost = 1.000762e-02, ||grad_m|| = 5.290480e-04
+  Iteration  200: Cost = 9.725340e-03, ||grad_m|| = 4.641210e-04
+  Iteration  210: Cost = 9.514085e-03, ||grad_m|| = 2.937780e-04
+  Iteration  220: Cost = 9.335315e-03, ||grad_m|| = 3.927625e-04
+  Iteration  230: Cost = 9.184804e-03, ||grad_m|| = 2.109738e-04
+  Iteration  240: Cost = 9.023616e-03, ||grad_m|| = 3.360134e-04
+  Iteration  250: Cost = 8.874437e-03, ||grad_m|| = 2.154152e-04
+  Iteration  260: Cost = 8.785268e-03, ||grad_m|| = 2.075890e-04
+  Iteration  270: Cost = 8.664725e-03, ||grad_m|| = 7.509916e-04
+  Iteration  280: Cost = 8.587665e-03, ||grad_m|| = 3.517897e-04
+  Iteration  290: Cost = 8.524433e-03, ||grad_m|| = 1.638865e-04
+  Iteration  300: Cost = 8.465850e-03, ||grad_m|| = 1.546794e-04
+  Iteration  310: Cost = 8.417809e-03, ||grad_m|| = 1.901860e-04
+  Iteration  320: Cost = 8.375229e-03, ||grad_m|| = 1.501564e-04
+  Iteration  330: Cost = 8.344336e-03, ||grad_m|| = 2.180692e-04
+  Iteration  340: Cost = 8.318588e-03, ||grad_m|| = 1.323190e-04
+  Iteration  350: Cost = 8.277758e-03, ||grad_m|| = 1.326448e-04
+  Iteration  360: Cost = 8.236126e-03, ||grad_m|| = 2.231633e-04
+  Iteration  370: Cost = 8.206434e-03, ||grad_m|| = 2.148422e-04
+  Iteration  380: Cost = 8.166485e-03, ||grad_m|| = 1.761207e-04
+  Iteration  390: Cost = 8.138084e-03, ||grad_m|| = 1.147244e-04
+  Iteration  400: Cost = 8.104426e-03, ||grad_m|| = 1.444245e-04
+  Iteration  410: Cost = 8.072205e-03, ||grad_m|| = 1.208311e-04
+  Iteration  420: Cost = 8.051255e-03, ||grad_m|| = 1.792387e-04
+  Iteration  430: Cost = 8.020526e-03, ||grad_m|| = 1.031369e-04
+  Iteration  440: Cost = 7.997045e-03, ||grad_m|| = 1.702097e-04
+  Iteration  450: Cost = 7.971745e-03, ||grad_m|| = 9.445603e-05
+  Iteration  460: Cost = 7.944051e-03, ||grad_m|| = 9.805067e-05
+  Iteration  470: Cost = 7.918354e-03, ||grad_m|| = 2.916205e-04
+  Iteration  480: Cost = 7.891364e-03, ||grad_m|| = 2.855471e-04
+  Iteration  490: Cost = 7.861360e-03, ||grad_m|| = 1.569711e-04
+  Iteration  500: Cost = 7.829439e-03, ||grad_m|| = 2.145907e-04
+  Iteration  510: Cost = 7.814103e-03, ||grad_m|| = 1.468934e-04
+  Iteration  520: Cost = 7.801514e-03, ||grad_m|| = 3.956676e-04
+  Iteration  530: Cost = 7.786325e-03, ||grad_m|| = 8.525282e-05
+  Iteration  540: Cost = 7.769154e-03, ||grad_m|| = 9.480504e-05
+  Iteration  550: Cost = 7.744616e-03, ||grad_m|| = 2.922391e-04
+  Iteration  560: Cost = 7.732187e-03, ||grad_m|| = 1.313223e-04
+  Iteration  570: Cost = 7.720200e-03, ||grad_m|| = 9.356005e-05
+  Iteration  580: Cost = 7.707485e-03, ||grad_m|| = 7.482602e-05
+  Iteration  590: Cost = 7.696477e-03, ||grad_m|| = 7.789108e-05
+  Iteration  600: Cost = 7.688340e-03, ||grad_m|| = 1.052562e-04
+  Iteration  610: Cost = 7.675508e-03, ||grad_m|| = 1.222276e-04
+  Iteration  620: Cost = 7.663661e-03, ||grad_m|| = 1.260361e-04
+  Iteration  630: Cost = 7.649890e-03, ||grad_m|| = 1.025542e-04
+  Iteration  640: Cost = 7.618871e-03, ||grad_m|| = 1.510031e-04
+  Iteration  650: Cost = 7.598711e-03, ||grad_m|| = 2.520984e-04
+  Iteration  660: Cost = 7.588206e-03, ||grad_m|| = 1.010372e-04
+  Iteration  670: Cost = 7.577566e-03, ||grad_m|| = 7.618161e-05
+  Iteration  680: Cost = 7.571804e-03, ||grad_m|| = 4.780582e-05
+  Iteration  690: Cost = 7.567074e-03, ||grad_m|| = 1.044336e-04
+  Iteration  700: Cost = 7.561670e-03, ||grad_m|| = 5.469192e-05
+  Iteration  710: Cost = 7.558167e-03, ||grad_m|| = 4.160835e-05
+  Iteration  720: Cost = 7.556319e-03, ||grad_m|| = 8.090795e-05
+  Iteration  730: Cost = 7.551216e-03, ||grad_m|| = 4.030948e-05
+  Iteration  740: Cost = 7.545863e-03, ||grad_m|| = 1.203763e-04
+  Iteration  750: Cost = 7.536479e-03, ||grad_m|| = 1.110397e-04
+  Iteration  760: Cost = 7.521389e-03, ||grad_m|| = 1.678804e-04
+  Iteration  770: Cost = 7.491535e-03, ||grad_m|| = 1.144531e-04
+  Iteration  780: Cost = 7.473229e-03, ||grad_m|| = 9.698106e-05
+  Iteration  790: Cost = 7.456502e-03, ||grad_m|| = 1.312964e-04
+  Iteration  800: Cost = 7.448277e-03, ||grad_m|| = 1.395762e-04
+  Iteration  810: Cost = 7.439750e-03, ||grad_m|| = 5.477538e-05
+  Iteration  820: Cost = 7.432457e-03, ||grad_m|| = 5.018885e-05
+  Iteration  830: Cost = 7.425620e-03, ||grad_m|| = 7.543242e-05
+  Iteration  840: Cost = 7.418935e-03, ||grad_m|| = 6.973031e-05
+  Iteration  850: Cost = 7.414057e-03, ||grad_m|| = 7.208725e-05
+  Iteration  860: Cost = 7.408497e-03, ||grad_m|| = 5.260113e-05
+  Iteration  870: Cost = 7.404285e-03, ||grad_m|| = 1.332214e-04
+  Iteration  880: Cost = 7.401057e-03, ||grad_m|| = 4.381749e-05
+  Iteration  890: Cost = 7.398048e-03, ||grad_m|| = 5.066161e-05
+  Iteration  900: Cost = 7.394737e-03, ||grad_m|| = 6.664423e-05
+  Iteration  910: Cost = 7.392616e-03, ||grad_m|| = 3.401904e-05
+  Iteration  920: Cost = 7.389905e-03, ||grad_m|| = 9.333767e-05
+  Iteration  930: Cost = 7.386625e-03, ||grad_m|| = 6.866276e-05
+  Iteration  940: Cost = 7.383859e-03, ||grad_m|| = 5.756413e-05
+  Iteration  950: Cost = 7.380304e-03, ||grad_m|| = 6.283247e-05
+  Iteration  960: Cost = 7.376609e-03, ||grad_m|| = 3.840563e-05
+  Iteration  970: Cost = 7.372883e-03, ||grad_m|| = 1.006486e-04
+  Iteration  980: Cost = 7.367818e-03, ||grad_m|| = 4.528526e-05
+  Iteration  990: Cost = 7.364064e-03, ||grad_m|| = 5.443320e-05
+  Iteration 1000: Cost = 7.359509e-03, ||grad_m|| = 6.256582e-05
+  Iteration 1010: Cost = 7.355577e-03, ||grad_m|| = 4.386258e-05
+  Iteration 1020: Cost = 7.346511e-03, ||grad_m|| = 1.551739e-04
+  Iteration 1030: Cost = 7.330891e-03, ||grad_m|| = 1.781545e-04
+  Iteration 1040: Cost = 7.322887e-03, ||grad_m|| = 5.575128e-05
+  Iteration 1050: Cost = 7.317611e-03, ||grad_m|| = 9.702045e-05
+  Iteration 1060: Cost = 7.313902e-03, ||grad_m|| = 5.495552e-05
+  Iteration 1070: Cost = 7.309754e-03, ||grad_m|| = 6.544856e-05
+  Iteration 1080: Cost = 7.302755e-03, ||grad_m|| = 6.212909e-05
+  Iteration 1090: Cost = 7.292978e-03, ||grad_m|| = 8.386722e-05
+  Iteration 1100: Cost = 7.281315e-03, ||grad_m|| = 2.725865e-04
+  Iteration 1110: Cost = 7.255251e-03, ||grad_m|| = 5.143333e-04
+  Iteration 1120: Cost = 7.225321e-03, ||grad_m|| = 1.336139e-04
+  Iteration 1130: Cost = 7.196027e-03, ||grad_m|| = 1.139985e-04
+  Iteration 1140: Cost = 7.183123e-03, ||grad_m|| = 3.672203e-04
+  Iteration 1150: Cost = 7.173436e-03, ||grad_m|| = 4.882775e-05
+  Iteration 1160: Cost = 7.166108e-03, ||grad_m|| = 9.441424e-05
+  Iteration 1170: Cost = 7.157013e-03, ||grad_m|| = 1.140267e-04
+  Iteration 1180: Cost = 7.150228e-03, ||grad_m|| = 4.861602e-05
+  Iteration 1190: Cost = 7.147449e-03, ||grad_m|| = 9.552478e-05
+  Iteration 1200: Cost = 7.144491e-03, ||grad_m|| = 3.221227e-05
+  Iteration 1210: Cost = 7.142289e-03, ||grad_m|| = 1.440831e-04
+  Iteration 1220: Cost = 7.140404e-03, ||grad_m|| = 2.826588e-05
+  Iteration 1230: Cost = 7.138161e-03, ||grad_m|| = 2.838746e-05
+  Iteration 1240: Cost = 7.135368e-03, ||grad_m|| = 8.405338e-05
+  Iteration 1250: Cost = 7.128420e-03, ||grad_m|| = 7.922196e-05
+  Iteration 1260: Cost = 7.118246e-03, ||grad_m|| = 9.093791e-05
+  Iteration 1270: Cost = 7.110740e-03, ||grad_m|| = 8.968026e-05
+  Iteration 1280: Cost = 7.103340e-03, ||grad_m|| = 1.302433e-04
+  Iteration 1290: Cost = 7.099132e-03, ||grad_m|| = 6.483165e-05
+  Iteration 1300: Cost = 7.095798e-03, ||grad_m|| = 3.005625e-05
+  Iteration 1310: Cost = 7.094667e-03, ||grad_m|| = 5.390502e-05
+  Iteration 1320: Cost = 7.093029e-03, ||grad_m|| = 2.120787e-05
+  Iteration 1330: Cost = 7.091428e-03, ||grad_m|| = 2.634955e-05
+  Iteration 1340: Cost = 7.088583e-03, ||grad_m|| = 4.487612e-05
+  Iteration 1350: Cost = 7.084214e-03, ||grad_m|| = 5.872391e-05
+  Iteration 1360: Cost = 7.080076e-03, ||grad_m|| = 4.867461e-05
+  Iteration 1370: Cost = 7.077646e-03, ||grad_m|| = 4.075592e-05
+  Iteration 1380: Cost = 7.075547e-03, ||grad_m|| = 7.477156e-05
+  Iteration 1390: Cost = 7.074280e-03, ||grad_m|| = 3.075997e-05
+  Iteration 1400: Cost = 7.072756e-03, ||grad_m|| = 4.383568e-05
+  Iteration 1410: Cost = 7.070682e-03, ||grad_m|| = 7.623826e-05
+  Iteration 1420: Cost = 7.068745e-03, ||grad_m|| = 2.057895e-05
+  Iteration 1430: Cost = 7.067214e-03, ||grad_m|| = 3.680313e-05
+  Iteration 1440: Cost = 7.066200e-03, ||grad_m|| = 2.799373e-05
+  Iteration 1450: Cost = 7.065047e-03, ||grad_m|| = 4.066477e-05
+  Iteration 1460: Cost = 7.063752e-03, ||grad_m|| = 2.129510e-05
+  Iteration 1470: Cost = 7.062384e-03, ||grad_m|| = 4.198683e-05
+  Iteration 1480: Cost = 7.061379e-03, ||grad_m|| = 4.022406e-05
+  Iteration 1490: Cost = 7.060821e-03, ||grad_m|| = 1.831337e-05
+  Iteration 1500: Cost = 7.060450e-03, ||grad_m|| = 1.348393e-05
+  Optimization completed: STOP: TOTAL NO. OF ITERATIONS REACHED LIMIT
+  Final modulus: min=0.0000, max=3928.3968, mean=1788.4556
+  stop=STOP: TOTAL NO. OF ITERATIONS REACHED LIMIT; evaluations=1661; rho=0.09758729; eta=31969.51
+L-curve 47/50: gamma=3.08884359648e-12
+Starting L-BFGS-B optimization in m = ln(E) space...
+  Initial modulus: min=640.8686, max=2315.8455, mean=1685.7271
+  Max iterations: 1500, ftol: 1.00e-30, gtol: 1.00e-12
+  Iteration   10: Cost = 1.977116e-02, ||grad_m|| = 2.839565e-04
+  Iteration   20: Cost = 1.965019e-02, ||grad_m|| = 2.904743e-04
+  Iteration   30: Cost = 1.943067e-02, ||grad_m|| = 5.827330e-04
+  Iteration   40: Cost = 1.884810e-02, ||grad_m|| = 6.449597e-04
+  Iteration   50: Cost = 1.821190e-02, ||grad_m|| = 1.841820e-03
+  Iteration   60: Cost = 1.759394e-02, ||grad_m|| = 1.246971e-03
+  Iteration   70: Cost = 1.696409e-02, ||grad_m|| = 2.958010e-04
+  Iteration   80: Cost = 1.646534e-02, ||grad_m|| = 2.512857e-04
+  Iteration   90: Cost = 1.589015e-02, ||grad_m|| = 4.474871e-04
+  Iteration  100: Cost = 1.521622e-02, ||grad_m|| = 1.414223e-03
+  Iteration  110: Cost = 1.439513e-02, ||grad_m|| = 6.644701e-04
+  Iteration  120: Cost = 1.353316e-02, ||grad_m|| = 4.946659e-04
+  Iteration  130: Cost = 1.281527e-02, ||grad_m|| = 6.836162e-04
+  Iteration  140: Cost = 1.227571e-02, ||grad_m|| = 8.950261e-04
+  Iteration  150: Cost = 1.155493e-02, ||grad_m|| = 5.677599e-04
+  Iteration  160: Cost = 1.080775e-02, ||grad_m|| = 8.543550e-04
+  Iteration  170: Cost = 1.018633e-02, ||grad_m|| = 5.534642e-04
+  Iteration  180: Cost = 9.742989e-03, ||grad_m|| = 3.942169e-04
+  Iteration  190: Cost = 9.438830e-03, ||grad_m|| = 4.895304e-04
+  Iteration  200: Cost = 9.203777e-03, ||grad_m|| = 5.275744e-04
+  Iteration  210: Cost = 8.970537e-03, ||grad_m|| = 4.304568e-04
+  Iteration  220: Cost = 8.757316e-03, ||grad_m|| = 3.985766e-04
+  Iteration  230: Cost = 8.601217e-03, ||grad_m|| = 3.052339e-04
+  Iteration  240: Cost = 8.454813e-03, ||grad_m|| = 1.977668e-04
+  Iteration  250: Cost = 8.308169e-03, ||grad_m|| = 2.359488e-04
+  Iteration  260: Cost = 8.161424e-03, ||grad_m|| = 3.015381e-04
+  Iteration  270: Cost = 8.055183e-03, ||grad_m|| = 2.166458e-04
+  Iteration  280: Cost = 7.952370e-03, ||grad_m|| = 1.499707e-04
+  Iteration  290: Cost = 7.898871e-03, ||grad_m|| = 2.013817e-04
+  Iteration  300: Cost = 7.826966e-03, ||grad_m|| = 3.145524e-04
+  Iteration  310: Cost = 7.748863e-03, ||grad_m|| = 2.057259e-04
+  Iteration  320: Cost = 7.681371e-03, ||grad_m|| = 5.057905e-04
+  Iteration  330: Cost = 7.643965e-03, ||grad_m|| = 3.507850e-04
+  Iteration  340: Cost = 7.601853e-03, ||grad_m|| = 1.588856e-04
+  Iteration  350: Cost = 7.560825e-03, ||grad_m|| = 1.636474e-04
+  Iteration  360: Cost = 7.523853e-03, ||grad_m|| = 1.222654e-04
+  Iteration  370: Cost = 7.492587e-03, ||grad_m|| = 9.980055e-05
+  Iteration  380: Cost = 7.465661e-03, ||grad_m|| = 2.214056e-04
+  Iteration  390: Cost = 7.439356e-03, ||grad_m|| = 8.602423e-05
+  Iteration  400: Cost = 7.408339e-03, ||grad_m|| = 1.196226e-04
+  Iteration  410: Cost = 7.383124e-03, ||grad_m|| = 1.280155e-04
+  Iteration  420: Cost = 7.360053e-03, ||grad_m|| = 2.243963e-04
+  Iteration  430: Cost = 7.334054e-03, ||grad_m|| = 9.660629e-05
+  Iteration  440: Cost = 7.307145e-03, ||grad_m|| = 1.474419e-04
+  Iteration  450: Cost = 7.286401e-03, ||grad_m|| = 1.483120e-04
+  Iteration  460: Cost = 7.266934e-03, ||grad_m|| = 1.099735e-04
+  Iteration  470: Cost = 7.251476e-03, ||grad_m|| = 3.387528e-04
+  Iteration  480: Cost = 7.235468e-03, ||grad_m|| = 7.574598e-05
+  Iteration  490: Cost = 7.223170e-03, ||grad_m|| = 6.687865e-05
+  Iteration  500: Cost = 7.209314e-03, ||grad_m|| = 8.193248e-05
+  Iteration  510: Cost = 7.194713e-03, ||grad_m|| = 1.172603e-04
+  Iteration  520: Cost = 7.181614e-03, ||grad_m|| = 7.395391e-05
+  Iteration  530: Cost = 7.169624e-03, ||grad_m|| = 1.092144e-04
+  Iteration  540: Cost = 7.159026e-03, ||grad_m|| = 3.220609e-04
+  Iteration  550: Cost = 7.145398e-03, ||grad_m|| = 7.861433e-05
+  Iteration  560: Cost = 7.123735e-03, ||grad_m|| = 1.255081e-04
+  Iteration  570: Cost = 7.099015e-03, ||grad_m|| = 4.190520e-04
+  Iteration  580: Cost = 7.087029e-03, ||grad_m|| = 8.997354e-05
+  Iteration  590: Cost = 7.075902e-03, ||grad_m|| = 1.788530e-04
+  Iteration  600: Cost = 7.068268e-03, ||grad_m|| = 9.398735e-05
+  Iteration  610: Cost = 7.059146e-03, ||grad_m|| = 6.178630e-05
+  Iteration  620: Cost = 7.053028e-03, ||grad_m|| = 6.951582e-05
+  Iteration  630: Cost = 7.045460e-03, ||grad_m|| = 4.448544e-05
+  Iteration  640: Cost = 7.035184e-03, ||grad_m|| = 1.479499e-04
+  Iteration  650: Cost = 7.025790e-03, ||grad_m|| = 4.982215e-05
+  Iteration  660: Cost = 7.017698e-03, ||grad_m|| = 1.691684e-04
+  Iteration  670: Cost = 7.005797e-03, ||grad_m|| = 1.088237e-04
+  Iteration  680: Cost = 6.993570e-03, ||grad_m|| = 8.866817e-05
+  Iteration  690: Cost = 6.978005e-03, ||grad_m|| = 4.495936e-04
+  Iteration  700: Cost = 6.953846e-03, ||grad_m|| = 1.386148e-04
+  Iteration  710: Cost = 6.926737e-03, ||grad_m|| = 1.279101e-04
+  Iteration  720: Cost = 6.911854e-03, ||grad_m|| = 1.334223e-04
+  Iteration  730: Cost = 6.898351e-03, ||grad_m|| = 1.385640e-04
+  Iteration  740: Cost = 6.890836e-03, ||grad_m|| = 6.521020e-05
+  Iteration  750: Cost = 6.882019e-03, ||grad_m|| = 1.619457e-04
+  Iteration  760: Cost = 6.875960e-03, ||grad_m|| = 1.333347e-04
+  Iteration  770: Cost = 6.869625e-03, ||grad_m|| = 4.129913e-05
+  Iteration  780: Cost = 6.864258e-03, ||grad_m|| = 7.887842e-05
+  Iteration  790: Cost = 6.857943e-03, ||grad_m|| = 8.450939e-05
+  Iteration  800: Cost = 6.851698e-03, ||grad_m|| = 7.461975e-05
+  Iteration  810: Cost = 6.843835e-03, ||grad_m|| = 6.378848e-05
+  Iteration  820: Cost = 6.830276e-03, ||grad_m|| = 1.267431e-04
+  Iteration  830: Cost = 6.816313e-03, ||grad_m|| = 1.459179e-04
+  Iteration  840: Cost = 6.806070e-03, ||grad_m|| = 6.533048e-05
+  Iteration  850: Cost = 6.796929e-03, ||grad_m|| = 6.760858e-05
+  Iteration  860: Cost = 6.787573e-03, ||grad_m|| = 9.791152e-05
+  Iteration  870: Cost = 6.777536e-03, ||grad_m|| = 6.009881e-05
+  Iteration  880: Cost = 6.767520e-03, ||grad_m|| = 1.276709e-04
+  Iteration  890: Cost = 6.759015e-03, ||grad_m|| = 7.422719e-05
+  Iteration  900: Cost = 6.740809e-03, ||grad_m|| = 1.461461e-04
+  Iteration  910: Cost = 6.718481e-03, ||grad_m|| = 1.093369e-04
+  Iteration  920: Cost = 6.707854e-03, ||grad_m|| = 1.240388e-04
+  Iteration  930: Cost = 6.702685e-03, ||grad_m|| = 1.017216e-04
+  Iteration  940: Cost = 6.691599e-03, ||grad_m|| = 8.984674e-05
+  Iteration  950: Cost = 6.678325e-03, ||grad_m|| = 7.065549e-05
+  Iteration  960: Cost = 6.668332e-03, ||grad_m|| = 1.282933e-04
+  Iteration  970: Cost = 6.662891e-03, ||grad_m|| = 6.166162e-05
+  Iteration  980: Cost = 6.650833e-03, ||grad_m|| = 1.650383e-04
+  Iteration  990: Cost = 6.621097e-03, ||grad_m|| = 1.217251e-04
+  Iteration 1000: Cost = 6.592877e-03, ||grad_m|| = 2.855415e-04
+  Iteration 1010: Cost = 6.578467e-03, ||grad_m|| = 8.539405e-05
+  Iteration 1020: Cost = 6.565110e-03, ||grad_m|| = 9.532866e-05
+  Iteration 1030: Cost = 6.554911e-03, ||grad_m|| = 6.863351e-05
+  Iteration 1040: Cost = 6.543446e-03, ||grad_m|| = 1.383118e-04
+  Iteration 1050: Cost = 6.531219e-03, ||grad_m|| = 1.805647e-04
+  Iteration 1060: Cost = 6.522082e-03, ||grad_m|| = 7.571183e-05
+  Iteration 1070: Cost = 6.511979e-03, ||grad_m|| = 2.186598e-04
+  Iteration 1080: Cost = 6.504250e-03, ||grad_m|| = 5.364901e-05
+  Iteration 1090: Cost = 6.499184e-03, ||grad_m|| = 6.691456e-05
+  Iteration 1100: Cost = 6.494952e-03, ||grad_m|| = 7.571953e-05
+  Iteration 1110: Cost = 6.488223e-03, ||grad_m|| = 3.720506e-05
+  Iteration 1120: Cost = 6.482047e-03, ||grad_m|| = 1.440841e-04
+  Iteration 1130: Cost = 6.473752e-03, ||grad_m|| = 1.378531e-04
+  Iteration 1140: Cost = 6.460699e-03, ||grad_m|| = 1.365519e-04
+  Iteration 1150: Cost = 6.448099e-03, ||grad_m|| = 7.878104e-05
+  Iteration 1160: Cost = 6.441480e-03, ||grad_m|| = 1.162414e-04
+  Iteration 1170: Cost = 6.436583e-03, ||grad_m|| = 2.074659e-04
+  Iteration 1180: Cost = 6.431453e-03, ||grad_m|| = 5.099012e-05
+  Iteration 1190: Cost = 6.420934e-03, ||grad_m|| = 1.232851e-04
+  Iteration 1200: Cost = 6.407403e-03, ||grad_m|| = 9.342257e-05
+  Iteration 1210: Cost = 6.400652e-03, ||grad_m|| = 7.916510e-05
+  Iteration 1220: Cost = 6.398259e-03, ||grad_m|| = 5.216402e-05
+  Iteration 1230: Cost = 6.396722e-03, ||grad_m|| = 3.022698e-05
+  Iteration 1240: Cost = 6.395362e-03, ||grad_m|| = 5.916847e-05
+  Iteration 1250: Cost = 6.394085e-03, ||grad_m|| = 2.461413e-05
+  Iteration 1260: Cost = 6.392679e-03, ||grad_m|| = 7.736664e-05
+  Iteration 1270: Cost = 6.391207e-03, ||grad_m|| = 4.273852e-05
+  Iteration 1280: Cost = 6.389463e-03, ||grad_m|| = 2.670039e-05
+  Iteration 1290: Cost = 6.387802e-03, ||grad_m|| = 4.862261e-05
+  Iteration 1300: Cost = 6.385981e-03, ||grad_m|| = 6.993428e-05
+  Iteration 1310: Cost = 6.383243e-03, ||grad_m|| = 5.274389e-05
+  Iteration 1320: Cost = 6.378547e-03, ||grad_m|| = 5.159300e-05
+  Iteration 1330: Cost = 6.372417e-03, ||grad_m|| = 8.037040e-05
+  Iteration 1340: Cost = 6.361213e-03, ||grad_m|| = 6.836927e-05
+  Iteration 1350: Cost = 6.352700e-03, ||grad_m|| = 5.364240e-05
+  Iteration 1360: Cost = 6.349102e-03, ||grad_m|| = 5.795651e-05
+  Iteration 1370: Cost = 6.346187e-03, ||grad_m|| = 3.077284e-05
+  Iteration 1380: Cost = 6.344240e-03, ||grad_m|| = 3.480458e-05
+  Iteration 1390: Cost = 6.341813e-03, ||grad_m|| = 3.735863e-05
+  Iteration 1400: Cost = 6.339600e-03, ||grad_m|| = 6.868118e-05
+  Iteration 1410: Cost = 6.336624e-03, ||grad_m|| = 4.570385e-05
+  Iteration 1420: Cost = 6.333232e-03, ||grad_m|| = 3.227930e-05
+  Iteration 1430: Cost = 6.331493e-03, ||grad_m|| = 2.849059e-05
+  Iteration 1440: Cost = 6.330598e-03, ||grad_m|| = 1.998782e-05
+  Iteration 1450: Cost = 6.329696e-03, ||grad_m|| = 5.743781e-05
+  Iteration 1460: Cost = 6.328428e-03, ||grad_m|| = 2.745499e-05
+  Iteration 1470: Cost = 6.327006e-03, ||grad_m|| = 3.944131e-05
+  Iteration 1480: Cost = 6.325145e-03, ||grad_m|| = 3.709331e-05
+  Iteration 1490: Cost = 6.323410e-03, ||grad_m|| = 9.577278e-05
+  Iteration 1500: Cost = 6.321030e-03, ||grad_m|| = 3.435054e-05
+  Optimization completed: STOP: TOTAL NO. OF ITERATIONS REACHED LIMIT
+  Final modulus: min=0.0002, max=4248.8680, mean=1795.8307
+  stop=STOP: TOTAL NO. OF ITERATIONS REACHED LIMIT; evaluations=1659; rho=0.09366343; eta=35392.71
+L-curve 48/50: gamma=2.12095088792e-12
+Starting L-BFGS-B optimization in m = ln(E) space...
+  Initial modulus: min=640.8686, max=2315.8455, mean=1685.7271
+  Max iterations: 1500, ftol: 1.00e-30, gtol: 1.00e-12
+  Iteration   10: Cost = 1.974813e-02, ||grad_m|| = 3.573336e-04
+  Iteration   20: Cost = 1.955885e-02, ||grad_m|| = 3.290317e-04
+  Iteration   30: Cost = 1.908079e-02, ||grad_m|| = 7.392117e-04
+  Iteration   40: Cost = 1.857957e-02, ||grad_m|| = 9.094223e-04
+  Iteration   50: Cost = 1.798942e-02, ||grad_m|| = 1.208684e-03
+  Iteration   60: Cost = 1.728990e-02, ||grad_m|| = 8.368221e-04
+  Iteration   70: Cost = 1.669861e-02, ||grad_m|| = 4.922524e-04
+  Iteration   80: Cost = 1.598498e-02, ||grad_m|| = 4.199181e-04
+  Iteration   90: Cost = 1.515147e-02, ||grad_m|| = 2.113705e-03
+  Iteration  100: Cost = 1.447755e-02, ||grad_m|| = 1.559687e-03
+  Iteration  110: Cost = 1.342635e-02, ||grad_m|| = 7.203791e-04
+  Iteration  120: Cost = 1.251460e-02, ||grad_m|| = 8.266134e-04
+  Iteration  130: Cost = 1.189918e-02, ||grad_m|| = 5.557093e-04
+  Iteration  140: Cost = 1.108909e-02, ||grad_m|| = 1.359728e-03
+  Iteration  150: Cost = 1.047224e-02, ||grad_m|| = 8.302376e-04
+  Iteration  160: Cost = 1.004229e-02, ||grad_m|| = 3.300777e-04
+  Iteration  170: Cost = 9.698078e-03, ||grad_m|| = 4.249888e-04
+  Iteration  180: Cost = 9.361882e-03, ||grad_m|| = 4.506619e-04
+  Iteration  190: Cost = 9.031596e-03, ||grad_m|| = 4.180147e-04
+  Iteration  200: Cost = 8.751430e-03, ||grad_m|| = 5.967193e-04
+  Iteration  210: Cost = 8.579325e-03, ||grad_m|| = 5.046150e-04
+  Iteration  220: Cost = 8.352587e-03, ||grad_m|| = 4.051371e-04
+  Iteration  230: Cost = 8.165532e-03, ||grad_m|| = 2.652077e-04
+  Iteration  240: Cost = 7.997784e-03, ||grad_m|| = 2.359986e-04
+  Iteration  250: Cost = 7.833069e-03, ||grad_m|| = 2.484953e-04
+  Iteration  260: Cost = 7.703940e-03, ||grad_m|| = 5.149366e-04
+  Iteration  270: Cost = 7.577342e-03, ||grad_m|| = 6.008235e-04
+  Iteration  280: Cost = 7.460585e-03, ||grad_m|| = 1.706972e-04
+  Iteration  290: Cost = 7.350761e-03, ||grad_m|| = 2.190706e-04
+  Iteration  300: Cost = 7.253493e-03, ||grad_m|| = 1.569082e-04
+  Iteration  310: Cost = 7.198032e-03, ||grad_m|| = 3.754958e-04
+  Iteration  320: Cost = 7.129480e-03, ||grad_m|| = 1.710232e-04
+  Iteration  330: Cost = 7.047792e-03, ||grad_m|| = 2.935360e-04
+  Iteration  340: Cost = 6.966516e-03, ||grad_m|| = 2.368009e-04
+  Iteration  350: Cost = 6.895839e-03, ||grad_m|| = 2.044868e-04
+  Iteration  360: Cost = 6.818166e-03, ||grad_m|| = 2.415813e-04
+  Iteration  370: Cost = 6.754357e-03, ||grad_m|| = 3.131648e-04
+  Iteration  380: Cost = 6.709859e-03, ||grad_m|| = 1.273452e-04
+  Iteration  390: Cost = 6.675843e-03, ||grad_m|| = 1.175503e-04
+  Iteration  400: Cost = 6.642588e-03, ||grad_m|| = 2.227135e-04
+  Iteration  410: Cost = 6.612868e-03, ||grad_m|| = 1.954702e-04
+  Iteration  420: Cost = 6.578542e-03, ||grad_m|| = 1.490576e-04
+  Iteration  430: Cost = 6.544967e-03, ||grad_m|| = 3.858300e-04
+  Iteration  440: Cost = 6.514270e-03, ||grad_m|| = 1.728539e-04
+  Iteration  450: Cost = 6.490748e-03, ||grad_m|| = 1.369304e-04
+  Iteration  460: Cost = 6.465827e-03, ||grad_m|| = 9.182884e-05
+  Iteration  470: Cost = 6.437305e-03, ||grad_m|| = 1.074161e-04
+  Iteration  480: Cost = 6.416266e-03, ||grad_m|| = 3.964990e-04
+  Iteration  490: Cost = 6.396093e-03, ||grad_m|| = 1.532769e-04
+  Iteration  500: Cost = 6.376679e-03, ||grad_m|| = 1.184166e-04
+  Iteration  510: Cost = 6.355754e-03, ||grad_m|| = 9.679807e-05
+  Iteration  520: Cost = 6.329766e-03, ||grad_m|| = 7.846924e-05
+  Iteration  530: Cost = 6.305434e-03, ||grad_m|| = 8.742600e-05
+  Iteration  540: Cost = 6.281342e-03, ||grad_m|| = 7.449097e-05
+  Iteration  550: Cost = 6.266155e-03, ||grad_m|| = 1.621957e-04
+  Iteration  560: Cost = 6.252702e-03, ||grad_m|| = 1.534085e-04
+  Iteration  570: Cost = 6.237188e-03, ||grad_m|| = 2.278767e-04
+  Iteration  580: Cost = 6.223302e-03, ||grad_m|| = 8.399494e-05
+  Iteration  590: Cost = 6.211325e-03, ||grad_m|| = 1.061690e-04
+  Iteration  600: Cost = 6.198564e-03, ||grad_m|| = 1.076260e-04
+  Iteration  610: Cost = 6.179420e-03, ||grad_m|| = 7.527731e-05
+  Iteration  620: Cost = 6.157039e-03, ||grad_m|| = 1.001838e-04
+  Iteration  630: Cost = 6.143218e-03, ||grad_m|| = 9.414095e-05
+  Iteration  640: Cost = 6.134361e-03, ||grad_m|| = 8.643954e-05
+  Iteration  650: Cost = 6.125858e-03, ||grad_m|| = 1.423140e-04
+  Iteration  660: Cost = 6.114033e-03, ||grad_m|| = 1.585247e-04
+  Iteration  670: Cost = 6.104410e-03, ||grad_m|| = 5.768677e-05
+  Iteration  680: Cost = 6.093393e-03, ||grad_m|| = 7.481165e-05
+  Iteration  690: Cost = 6.084181e-03, ||grad_m|| = 5.144986e-05
+  Iteration  700: Cost = 6.076711e-03, ||grad_m|| = 1.075056e-04
+  Iteration  710: Cost = 6.072137e-03, ||grad_m|| = 7.999713e-05
+  Iteration  720: Cost = 6.067081e-03, ||grad_m|| = 5.628193e-05
+  Iteration  730: Cost = 6.062852e-03, ||grad_m|| = 8.223982e-05
+  Iteration  740: Cost = 6.058193e-03, ||grad_m|| = 4.152857e-05
+  Iteration  750: Cost = 6.053534e-03, ||grad_m|| = 7.609995e-05
+  Iteration  760: Cost = 6.049386e-03, ||grad_m|| = 6.202106e-05
+  Iteration  770: Cost = 6.045996e-03, ||grad_m|| = 4.328751e-05
+  Iteration  780: Cost = 6.043775e-03, ||grad_m|| = 3.014732e-05
+  Iteration  790: Cost = 6.040846e-03, ||grad_m|| = 4.018711e-05
+  Iteration  800: Cost = 6.038307e-03, ||grad_m|| = 5.498910e-05
+  Iteration  810: Cost = 6.035836e-03, ||grad_m|| = 3.827528e-05
+  Iteration  820: Cost = 6.032735e-03, ||grad_m|| = 4.330787e-05
+  Iteration  830: Cost = 6.029022e-03, ||grad_m|| = 1.048081e-04
+  Iteration  840: Cost = 6.019936e-03, ||grad_m|| = 9.577636e-05
+  Iteration  850: Cost = 6.004799e-03, ||grad_m|| = 1.195047e-04
+  Iteration  860: Cost = 5.989017e-03, ||grad_m|| = 7.252444e-05
+  Iteration  870: Cost = 5.979642e-03, ||grad_m|| = 5.609193e-05
+  Iteration  880: Cost = 5.974865e-03, ||grad_m|| = 5.187055e-05
+  Iteration  890: Cost = 5.971027e-03, ||grad_m|| = 1.322191e-04
+  Iteration  900: Cost = 5.967339e-03, ||grad_m|| = 7.048390e-05
+  Iteration  910: Cost = 5.963695e-03, ||grad_m|| = 3.904891e-05
+  Iteration  920: Cost = 5.960402e-03, ||grad_m|| = 9.887165e-05
+  Iteration  930: Cost = 5.956687e-03, ||grad_m|| = 4.007850e-05
+  Iteration  940: Cost = 5.953681e-03, ||grad_m|| = 3.074804e-05
+  Iteration  950: Cost = 5.951304e-03, ||grad_m|| = 3.391333e-05
+  Iteration  960: Cost = 5.948803e-03, ||grad_m|| = 3.833261e-05
+  Iteration  970: Cost = 5.947332e-03, ||grad_m|| = 4.300915e-05
+  Iteration  980: Cost = 5.945402e-03, ||grad_m|| = 3.144248e-05
+  Iteration  990: Cost = 5.943546e-03, ||grad_m|| = 7.142789e-05
+  Iteration 1000: Cost = 5.941482e-03, ||grad_m|| = 2.950141e-05
+  Iteration 1010: Cost = 5.939200e-03, ||grad_m|| = 5.026810e-05
+  Iteration 1020: Cost = 5.936661e-03, ||grad_m|| = 5.942079e-05
+  Iteration 1030: Cost = 5.934345e-03, ||grad_m|| = 3.804482e-05
+  Iteration 1040: Cost = 5.930423e-03, ||grad_m|| = 3.797464e-05
+  Iteration 1050: Cost = 5.923684e-03, ||grad_m|| = 7.385090e-05
+  Iteration 1060: Cost = 5.917273e-03, ||grad_m|| = 4.444249e-05
+  Iteration 1070: Cost = 5.912496e-03, ||grad_m|| = 4.636252e-05
+  Iteration 1080: Cost = 5.909580e-03, ||grad_m|| = 8.367601e-05
+  Iteration 1090: Cost = 5.907618e-03, ||grad_m|| = 6.734553e-05
+  Iteration 1100: Cost = 5.905829e-03, ||grad_m|| = 6.786781e-05
+  Iteration 1110: Cost = 5.904779e-03, ||grad_m|| = 9.743394e-05
+  Iteration 1120: Cost = 5.903873e-03, ||grad_m|| = 2.509359e-05
+  Iteration 1130: Cost = 5.903089e-03, ||grad_m|| = 1.929658e-05
+  Iteration 1140: Cost = 5.902587e-03, ||grad_m|| = 8.150185e-05
+  Iteration 1150: Cost = 5.901668e-03, ||grad_m|| = 1.878339e-05
+  Iteration 1160: Cost = 5.900784e-03, ||grad_m|| = 2.578393e-05
+  Iteration 1170: Cost = 5.900068e-03, ||grad_m|| = 4.237527e-05
+  Iteration 1180: Cost = 5.899266e-03, ||grad_m|| = 3.906971e-05
+  Iteration 1190: Cost = 5.898264e-03, ||grad_m|| = 7.730785e-05
+  Iteration 1200: Cost = 5.897109e-03, ||grad_m|| = 4.307134e-05
+  Iteration 1210: Cost = 5.895469e-03, ||grad_m|| = 7.781984e-05
+  Iteration 1220: Cost = 5.892967e-03, ||grad_m|| = 4.229857e-05
+  Iteration 1230: Cost = 5.891435e-03, ||grad_m|| = 2.836524e-05
+  Iteration 1240: Cost = 5.890290e-03, ||grad_m|| = 3.796184e-05
+  Iteration 1250: Cost = 5.887819e-03, ||grad_m|| = 2.950252e-05
+  Iteration 1260: Cost = 5.885177e-03, ||grad_m|| = 2.874617e-05
+  Iteration 1270: Cost = 5.883242e-03, ||grad_m|| = 7.967672e-05
+  Iteration 1280: Cost = 5.880959e-03, ||grad_m|| = 2.885821e-05
+  Iteration 1290: Cost = 5.878920e-03, ||grad_m|| = 7.406588e-05
+  Iteration 1300: Cost = 5.877189e-03, ||grad_m|| = 3.267281e-05
+  Iteration 1310: Cost = 5.875505e-03, ||grad_m|| = 9.950289e-05
+  Iteration 1320: Cost = 5.873853e-03, ||grad_m|| = 2.878879e-05
+  Iteration 1330: Cost = 5.872744e-03, ||grad_m|| = 1.311818e-04
+  Iteration 1340: Cost = 5.871643e-03, ||grad_m|| = 3.066705e-05
+  Iteration 1350: Cost = 5.870137e-03, ||grad_m|| = 2.223457e-05
+  Iteration 1360: Cost = 5.868847e-03, ||grad_m|| = 2.514032e-05
+  Iteration 1370: Cost = 5.867861e-03, ||grad_m|| = 7.486360e-05
+  Iteration 1380: Cost = 5.866989e-03, ||grad_m|| = 1.884133e-05
+  Iteration 1390: Cost = 5.866335e-03, ||grad_m|| = 1.396428e-05
+  Iteration 1400: Cost = 5.865795e-03, ||grad_m|| = 1.828103e-05
+  Iteration 1410: Cost = 5.865080e-03, ||grad_m|| = 6.379786e-05
+  Iteration 1420: Cost = 5.864231e-03, ||grad_m|| = 2.160899e-05
+  Iteration 1430: Cost = 5.863476e-03, ||grad_m|| = 4.050769e-05
+  Iteration 1440: Cost = 5.862166e-03, ||grad_m|| = 9.610712e-05
+  Iteration 1450: Cost = 5.860707e-03, ||grad_m|| = 3.722879e-05
+  Iteration 1460: Cost = 5.859694e-03, ||grad_m|| = 1.817505e-05
+  Iteration 1470: Cost = 5.858913e-03, ||grad_m|| = 3.919553e-05
+  Iteration 1480: Cost = 5.858315e-03, ||grad_m|| = 1.596274e-05
+  Iteration 1490: Cost = 5.857741e-03, ||grad_m|| = 1.314357e-05
+  Iteration 1500: Cost = 5.857301e-03, ||grad_m|| = 2.338920e-05
+  Optimization completed: STOP: TOTAL NO. OF ITERATIONS REACHED LIMIT
+  Final modulus: min=0.0158, max=4480.3268, mean=1828.0968
+  stop=STOP: TOTAL NO. OF ITERATIONS REACHED LIMIT; evaluations=1645; rho=0.08934985; eta=41942.99
+L-curve 49/50: gamma=1.4563484775e-12
+Starting L-BFGS-B optimization in m = ln(E) space...
+  Initial modulus: min=640.8686, max=2315.8455, mean=1685.7271
+  Max iterations: 1500, ftol: 1.00e-30, gtol: 1.00e-12
+  Iteration   10: Cost = 1.973047e-02, ||grad_m|| = 4.214354e-04
+  Iteration   20: Cost = 1.954582e-02, ||grad_m|| = 4.111973e-04
+  Iteration   30: Cost = 1.918356e-02, ||grad_m|| = 4.041216e-04
+  Iteration   40: Cost = 1.855757e-02, ||grad_m|| = 4.308947e-04
+  Iteration   50: Cost = 1.780319e-02, ||grad_m|| = 3.555463e-04
+  Iteration   60: Cost = 1.696165e-02, ||grad_m|| = 1.134008e-03
+  Iteration   70: Cost = 1.607811e-02, ||grad_m|| = 8.909677e-04
+  Iteration   80: Cost = 1.506016e-02, ||grad_m|| = 1.995613e-03
+  Iteration   90: Cost = 1.427842e-02, ||grad_m|| = 1.170461e-03
+  Iteration  100: Cost = 1.331217e-02, ||grad_m|| = 7.842882e-04
+  Iteration  110: Cost = 1.233480e-02, ||grad_m|| = 5.105591e-04
+  Iteration  120: Cost = 1.152090e-02, ||grad_m|| = 1.188768e-03
+  Iteration  130: Cost = 1.065837e-02, ||grad_m|| = 7.836063e-04
+  Iteration  140: Cost = 1.004935e-02, ||grad_m|| = 5.869194e-04
+  Iteration  150: Cost = 9.481130e-03, ||grad_m|| = 9.027311e-04
+  Iteration  160: Cost = 9.017053e-03, ||grad_m|| = 4.339552e-04
+  Iteration  170: Cost = 8.659143e-03, ||grad_m|| = 5.132910e-04
+  Iteration  180: Cost = 8.375745e-03, ||grad_m|| = 1.349110e-03
+  Iteration  190: Cost = 8.103213e-03, ||grad_m|| = 3.656656e-04
+  Iteration  200: Cost = 7.913320e-03, ||grad_m|| = 3.375123e-04
+  Iteration  210: Cost = 7.721456e-03, ||grad_m|| = 4.565908e-04
+  Iteration  220: Cost = 7.552801e-03, ||grad_m|| = 5.617799e-04
+  Iteration  230: Cost = 7.400161e-03, ||grad_m|| = 3.426543e-04
+  Iteration  240: Cost = 7.230937e-03, ||grad_m|| = 2.857177e-04
+  Iteration  250: Cost = 7.065431e-03, ||grad_m|| = 1.159468e-03
+  Iteration  260: Cost = 6.952378e-03, ||grad_m|| = 2.935905e-04
+  Iteration  270: Cost = 6.834048e-03, ||grad_m|| = 2.857144e-04
+  Iteration  280: Cost = 6.754143e-03, ||grad_m|| = 2.158911e-04
+  Iteration  290: Cost = 6.662411e-03, ||grad_m|| = 2.005213e-04
+  Iteration  300: Cost = 6.574858e-03, ||grad_m|| = 3.825519e-04
+  Iteration  310: Cost = 6.502884e-03, ||grad_m|| = 2.722468e-04
+  Iteration  320: Cost = 6.418205e-03, ||grad_m|| = 1.952715e-04
+  Iteration  330: Cost = 6.372368e-03, ||grad_m|| = 1.271116e-04
+  Iteration  340: Cost = 6.304987e-03, ||grad_m|| = 2.534892e-04
+  Iteration  350: Cost = 6.238403e-03, ||grad_m|| = 6.162101e-04
+  Iteration  360: Cost = 6.201077e-03, ||grad_m|| = 1.513656e-04
+  Iteration  370: Cost = 6.144281e-03, ||grad_m|| = 2.125879e-04
+  Iteration  380: Cost = 6.099163e-03, ||grad_m|| = 1.453120e-04
+  Iteration  390: Cost = 6.065049e-03, ||grad_m|| = 1.212177e-04
+  Iteration  400: Cost = 6.036020e-03, ||grad_m|| = 1.155340e-04
+  Iteration  410: Cost = 6.006192e-03, ||grad_m|| = 1.557218e-04
+  Iteration  420: Cost = 5.980205e-03, ||grad_m|| = 2.134762e-04
+  Iteration  430: Cost = 5.943418e-03, ||grad_m|| = 1.220895e-04
+  Iteration  440: Cost = 5.916348e-03, ||grad_m|| = 1.615976e-04
+  Iteration  450: Cost = 5.891099e-03, ||grad_m|| = 1.064305e-04
+  Iteration  460: Cost = 5.871921e-03, ||grad_m|| = 1.894086e-04
+  Iteration  470: Cost = 5.846189e-03, ||grad_m|| = 1.727810e-04
+  Iteration  480: Cost = 5.819483e-03, ||grad_m|| = 2.321367e-04
+  Iteration  490: Cost = 5.796709e-03, ||grad_m|| = 9.552603e-05
+  Iteration  500: Cost = 5.764848e-03, ||grad_m|| = 4.242927e-04
+  Iteration  510: Cost = 5.736775e-03, ||grad_m|| = 1.623177e-04
+  Iteration  520: Cost = 5.720624e-03, ||grad_m|| = 1.110437e-04
+  Iteration  530: Cost = 5.703771e-03, ||grad_m|| = 2.862793e-04
+  Iteration  540: Cost = 5.687222e-03, ||grad_m|| = 8.683199e-05
+  Iteration  550: Cost = 5.668567e-03, ||grad_m|| = 7.306419e-05
+  Iteration  560: Cost = 5.649726e-03, ||grad_m|| = 9.448570e-05
+  Iteration  570: Cost = 5.633393e-03, ||grad_m|| = 1.575526e-04
+  Iteration  580: Cost = 5.616477e-03, ||grad_m|| = 7.011334e-05
+  Iteration  590: Cost = 5.602038e-03, ||grad_m|| = 6.597495e-05
+  Iteration  600: Cost = 5.586688e-03, ||grad_m|| = 8.452076e-05
+  Iteration  610: Cost = 5.571978e-03, ||grad_m|| = 2.311317e-04
+  Iteration  620: Cost = 5.559984e-03, ||grad_m|| = 1.467552e-04
+  Iteration  630: Cost = 5.546557e-03, ||grad_m|| = 1.266401e-04
+  Iteration  640: Cost = 5.537741e-03, ||grad_m|| = 5.514901e-05
+  Iteration  650: Cost = 5.529180e-03, ||grad_m|| = 8.070111e-05
+  Iteration  660: Cost = 5.521639e-03, ||grad_m|| = 7.212030e-05
+  Iteration  670: Cost = 5.513173e-03, ||grad_m|| = 7.803817e-05
+  Iteration  680: Cost = 5.504452e-03, ||grad_m|| = 1.964050e-04
+  Iteration  690: Cost = 5.498758e-03, ||grad_m|| = 5.716353e-05
+  Iteration  700: Cost = 5.492671e-03, ||grad_m|| = 4.879598e-05
+  Iteration  710: Cost = 5.486966e-03, ||grad_m|| = 1.204031e-04
+  Iteration  720: Cost = 5.481355e-03, ||grad_m|| = 7.172578e-05
+  Iteration  730: Cost = 5.475681e-03, ||grad_m|| = 8.963260e-05
+  Iteration  740: Cost = 5.469671e-03, ||grad_m|| = 1.508680e-04
+  Iteration  750: Cost = 5.464030e-03, ||grad_m|| = 6.063916e-05
+  Iteration  760: Cost = 5.458346e-03, ||grad_m|| = 5.026187e-05
+  Iteration  770: Cost = 5.453282e-03, ||grad_m|| = 9.438247e-05
+  Iteration  780: Cost = 5.450337e-03, ||grad_m|| = 5.598783e-05
+  Iteration  790: Cost = 5.447535e-03, ||grad_m|| = 3.379625e-05
+  Iteration  800: Cost = 5.444293e-03, ||grad_m|| = 6.456466e-05
+  Iteration  810: Cost = 5.440667e-03, ||grad_m|| = 1.962001e-04
+  Iteration  820: Cost = 5.435835e-03, ||grad_m|| = 4.548659e-05
+  Iteration  830: Cost = 5.431616e-03, ||grad_m|| = 3.946287e-05
+  Iteration  840: Cost = 5.427529e-03, ||grad_m|| = 2.855472e-05
+  Iteration  850: Cost = 5.424946e-03, ||grad_m|| = 4.584611e-05
+  Iteration  860: Cost = 5.423612e-03, ||grad_m|| = 5.147718e-05
+  Iteration  870: Cost = 5.421753e-03, ||grad_m|| = 4.743222e-05
+  Iteration  880: Cost = 5.419945e-03, ||grad_m|| = 7.856853e-05
+  Iteration  890: Cost = 5.418348e-03, ||grad_m|| = 2.576978e-05
+  Iteration  900: Cost = 5.416795e-03, ||grad_m|| = 3.197123e-05
+  Iteration  910: Cost = 5.414107e-03, ||grad_m|| = 4.503250e-05
+  Iteration  920: Cost = 5.411807e-03, ||grad_m|| = 5.045888e-05
+  Iteration  930: Cost = 5.409537e-03, ||grad_m|| = 7.127025e-05
+  Iteration  940: Cost = 5.406988e-03, ||grad_m|| = 8.183279e-05
+  Iteration  950: Cost = 5.404894e-03, ||grad_m|| = 6.916139e-05
+  Iteration  960: Cost = 5.402631e-03, ||grad_m|| = 3.142299e-05
+  Iteration  970: Cost = 5.399354e-03, ||grad_m|| = 3.508690e-05
+  Iteration  980: Cost = 5.396323e-03, ||grad_m|| = 6.074367e-05
+  Iteration  990: Cost = 5.391142e-03, ||grad_m|| = 5.481934e-05
+  Iteration 1000: Cost = 5.386729e-03, ||grad_m|| = 3.488394e-05
+  Iteration 1010: Cost = 5.383625e-03, ||grad_m|| = 5.151988e-05
+  Iteration 1020: Cost = 5.380236e-03, ||grad_m|| = 7.138643e-05
+  Iteration 1030: Cost = 5.377281e-03, ||grad_m|| = 5.409362e-05
+  Iteration 1040: Cost = 5.374735e-03, ||grad_m|| = 5.741838e-05
+  Iteration 1050: Cost = 5.372329e-03, ||grad_m|| = 3.182353e-05
+  Iteration 1060: Cost = 5.369884e-03, ||grad_m|| = 4.251712e-05
+  Iteration 1070: Cost = 5.367561e-03, ||grad_m|| = 4.330187e-05
+  Iteration 1080: Cost = 5.365165e-03, ||grad_m|| = 1.080672e-04
+  Iteration 1090: Cost = 5.363170e-03, ||grad_m|| = 7.930987e-05
+  Iteration 1100: Cost = 5.360447e-03, ||grad_m|| = 3.468123e-05
+  Iteration 1110: Cost = 5.358221e-03, ||grad_m|| = 5.879928e-05
+  Iteration 1120: Cost = 5.355736e-03, ||grad_m|| = 5.399860e-05
+  Iteration 1130: Cost = 5.352010e-03, ||grad_m|| = 6.618503e-05
+  Iteration 1140: Cost = 5.344889e-03, ||grad_m|| = 1.984241e-04
+  Iteration 1150: Cost = 5.338410e-03, ||grad_m|| = 1.549661e-04
+  Iteration 1160: Cost = 5.332504e-03, ||grad_m|| = 8.267529e-05
+  Iteration 1170: Cost = 5.324398e-03, ||grad_m|| = 7.158133e-05
+  Iteration 1180: Cost = 5.319043e-03, ||grad_m|| = 1.078867e-04
+  Iteration 1190: Cost = 5.315613e-03, ||grad_m|| = 3.669956e-05
+  Iteration 1200: Cost = 5.313561e-03, ||grad_m|| = 2.777320e-05
+  Iteration 1210: Cost = 5.311855e-03, ||grad_m|| = 2.894087e-05
+  Iteration 1220: Cost = 5.309864e-03, ||grad_m|| = 5.148145e-05
+  Iteration 1230: Cost = 5.307795e-03, ||grad_m|| = 2.432211e-05
+  Iteration 1240: Cost = 5.305921e-03, ||grad_m|| = 4.303248e-05
+  Iteration 1250: Cost = 5.303555e-03, ||grad_m|| = 6.776303e-05
+  Iteration 1260: Cost = 5.300689e-03, ||grad_m|| = 3.607311e-05
+  Iteration 1270: Cost = 5.297613e-03, ||grad_m|| = 5.247231e-05
+  Iteration 1280: Cost = 5.294006e-03, ||grad_m|| = 7.083120e-05
+  Iteration 1290: Cost = 5.289204e-03, ||grad_m|| = 8.893763e-05
+  Iteration 1300: Cost = 5.284524e-03, ||grad_m|| = 7.955364e-05
+  Iteration 1310: Cost = 5.279051e-03, ||grad_m|| = 5.138286e-05
+  Iteration 1320: Cost = 5.272798e-03, ||grad_m|| = 7.717843e-05
+  Iteration 1330: Cost = 5.267580e-03, ||grad_m|| = 1.209848e-04
+  Iteration 1340: Cost = 5.264275e-03, ||grad_m|| = 2.861620e-05
+  Iteration 1350: Cost = 5.262869e-03, ||grad_m|| = 2.810174e-05
+  Iteration 1360: Cost = 5.261811e-03, ||grad_m|| = 3.111227e-05
+  Iteration 1370: Cost = 5.259605e-03, ||grad_m|| = 4.032794e-05
+  Iteration 1380: Cost = 5.257533e-03, ||grad_m|| = 3.538953e-05
+  Iteration 1390: Cost = 5.255900e-03, ||grad_m|| = 1.508043e-05
+  Iteration 1400: Cost = 5.255003e-03, ||grad_m|| = 2.013315e-05
+  Iteration 1410: Cost = 5.254181e-03, ||grad_m|| = 2.737360e-05
+  Iteration 1420: Cost = 5.252888e-03, ||grad_m|| = 2.988004e-05
+  Iteration 1430: Cost = 5.251337e-03, ||grad_m|| = 3.784693e-05
+  Iteration 1440: Cost = 5.249345e-03, ||grad_m|| = 4.219463e-05
+  Iteration 1450: Cost = 5.247344e-03, ||grad_m|| = 3.467489e-05
+  Iteration 1460: Cost = 5.246062e-03, ||grad_m|| = 2.638112e-05
+  Iteration 1470: Cost = 5.244122e-03, ||grad_m|| = 2.757188e-05
+  Iteration 1480: Cost = 5.242532e-03, ||grad_m|| = 3.393623e-05
+  Iteration 1490: Cost = 5.241391e-03, ||grad_m|| = 1.703270e-05
+  Iteration 1500: Cost = 5.240114e-03, ||grad_m|| = 2.790419e-05
+  Optimization completed: STOP: TOTAL NO. OF ITERATIONS REACHED LIMIT
+  Final modulus: min=0.0005, max=4695.5379, mean=1834.2537
+  stop=STOP: TOTAL NO. OF ITERATIONS REACHED LIMIT; evaluations=1661; rho=0.08520496; eta=47023.87
+L-curve 50/50: gamma=1e-12
+Starting L-BFGS-B optimization in m = ln(E) space...
+  Initial modulus: min=640.8686, max=2315.8455, mean=1685.7271
+  Max iterations: 1500, ftol: 1.00e-30, gtol: 1.00e-12
+  Iteration   10: Cost = 1.971727e-02, ||grad_m|| = 4.737057e-04
+  Iteration   20: Cost = 1.949932e-02, ||grad_m|| = 4.596075e-04
+  Iteration   30: Cost = 1.910490e-02, ||grad_m|| = 8.594144e-04
+  Iteration   40: Cost = 1.825515e-02, ||grad_m|| = 4.686320e-04
+  Iteration   50: Cost = 1.746393e-02, ||grad_m|| = 7.288748e-04
+  Iteration   60: Cost = 1.687253e-02, ||grad_m|| = 1.231634e-03
+  Iteration   70: Cost = 1.613916e-02, ||grad_m|| = 4.842713e-04
+  Iteration   80: Cost = 1.527586e-02, ||grad_m|| = 4.829346e-04
+  Iteration   90: Cost = 1.414467e-02, ||grad_m|| = 1.055694e-03
+  Iteration  100: Cost = 1.285943e-02, ||grad_m|| = 7.526881e-04
+  Iteration  110: Cost = 1.200389e-02, ||grad_m|| = 4.911226e-04
+  Iteration  120: Cost = 1.100616e-02, ||grad_m|| = 1.239614e-03
+  Iteration  130: Cost = 1.021049e-02, ||grad_m|| = 1.041215e-03
+  Iteration  140: Cost = 9.521912e-03, ||grad_m|| = 4.531050e-04
+  Iteration  150: Cost = 8.940821e-03, ||grad_m|| = 5.348445e-04
+  Iteration  160: Cost = 8.516089e-03, ||grad_m|| = 4.605730e-04
+  Iteration  170: Cost = 8.249727e-03, ||grad_m|| = 3.568410e-04
+  Iteration  180: Cost = 7.932333e-03, ||grad_m|| = 1.153755e-03
+  Iteration  190: Cost = 7.722803e-03, ||grad_m|| = 2.762859e-04
+  Iteration  200: Cost = 7.523138e-03, ||grad_m|| = 3.493495e-04
+  Iteration  210: Cost = 7.325791e-03, ||grad_m|| = 2.196368e-04
+  Iteration  220: Cost = 7.159771e-03, ||grad_m|| = 4.507249e-04
+  Iteration  230: Cost = 6.987221e-03, ||grad_m|| = 2.622136e-04
+  Iteration  240: Cost = 6.871273e-03, ||grad_m|| = 2.639971e-04
+  Iteration  250: Cost = 6.706691e-03, ||grad_m|| = 1.323791e-03
+  Iteration  260: Cost = 6.579818e-03, ||grad_m|| = 4.196667e-04
+  Iteration  270: Cost = 6.441819e-03, ||grad_m|| = 4.566161e-04
+  Iteration  280: Cost = 6.281596e-03, ||grad_m|| = 4.863381e-04
+  Iteration  290: Cost = 6.209654e-03, ||grad_m|| = 2.065527e-04
+  Iteration  300: Cost = 6.124965e-03, ||grad_m|| = 2.031232e-04
+  Iteration  310: Cost = 6.046616e-03, ||grad_m|| = 1.839794e-04
+  Iteration  320: Cost = 5.964477e-03, ||grad_m|| = 1.809019e-04
+  Iteration  330: Cost = 5.896313e-03, ||grad_m|| = 1.641043e-04
+  Iteration  340: Cost = 5.823151e-03, ||grad_m|| = 1.556362e-04
+  Iteration  350: Cost = 5.763107e-03, ||grad_m|| = 1.919967e-04
+  Iteration  360: Cost = 5.716815e-03, ||grad_m|| = 2.322654e-04
+  Iteration  370: Cost = 5.670436e-03, ||grad_m|| = 1.172326e-04
+  Iteration  380: Cost = 5.625784e-03, ||grad_m|| = 1.686315e-04
+  Iteration  390: Cost = 5.579410e-03, ||grad_m|| = 1.614032e-04
+  Iteration  400: Cost = 5.535959e-03, ||grad_m|| = 3.570058e-04
+  Iteration  410: Cost = 5.494336e-03, ||grad_m|| = 1.612303e-04
+  Iteration  420: Cost = 5.449974e-03, ||grad_m|| = 2.306883e-04
+  Iteration  430: Cost = 5.414512e-03, ||grad_m|| = 2.940836e-04
+  Iteration  440: Cost = 5.383713e-03, ||grad_m|| = 1.504511e-04
+  Iteration  450: Cost = 5.340663e-03, ||grad_m|| = 1.546346e-04
+  Iteration  460: Cost = 5.308157e-03, ||grad_m|| = 7.098136e-05
+  Iteration  470: Cost = 5.266479e-03, ||grad_m|| = 3.046865e-04
+  Iteration  480: Cost = 5.235013e-03, ||grad_m|| = 2.816783e-04
+  Iteration  490: Cost = 5.205242e-03, ||grad_m|| = 1.746071e-04
+  Iteration  500: Cost = 5.180381e-03, ||grad_m|| = 1.364367e-04
+  Iteration  510: Cost = 5.162080e-03, ||grad_m|| = 1.077358e-04
+  Iteration  520: Cost = 5.145348e-03, ||grad_m|| = 1.149410e-04
+  Iteration  530: Cost = 5.127840e-03, ||grad_m|| = 2.557801e-04
+  Iteration  540: Cost = 5.114370e-03, ||grad_m|| = 7.633093e-05
+  Iteration  550: Cost = 5.096601e-03, ||grad_m|| = 1.466576e-04
+  Iteration  560: Cost = 5.082537e-03, ||grad_m|| = 7.381527e-05
+  Iteration  570: Cost = 5.069029e-03, ||grad_m|| = 1.389562e-04
+  Iteration  580: Cost = 5.057988e-03, ||grad_m|| = 6.944204e-05
+  Iteration  590: Cost = 5.046029e-03, ||grad_m|| = 6.021038e-05
+  Iteration  600: Cost = 5.037036e-03, ||grad_m|| = 9.789055e-05
+  Iteration  610: Cost = 5.025707e-03, ||grad_m|| = 1.974987e-04
+  Iteration  620: Cost = 5.016648e-03, ||grad_m|| = 6.521857e-05
+  Iteration  630: Cost = 5.009943e-03, ||grad_m|| = 9.281214e-05
+  Iteration  640: Cost = 5.003103e-03, ||grad_m|| = 1.190356e-04
+  Iteration  650: Cost = 4.994228e-03, ||grad_m|| = 5.650746e-05
+  Iteration  660: Cost = 4.986454e-03, ||grad_m|| = 9.887809e-05
+  Iteration  670: Cost = 4.976730e-03, ||grad_m|| = 2.470889e-04
+  Iteration  680: Cost = 4.969644e-03, ||grad_m|| = 4.923040e-05
+  Iteration  690: Cost = 4.964372e-03, ||grad_m|| = 5.144161e-05
+  Iteration  700: Cost = 4.959227e-03, ||grad_m|| = 7.059608e-05
+  Iteration  710: Cost = 4.955434e-03, ||grad_m|| = 1.121314e-04
+  Iteration  720: Cost = 4.950081e-03, ||grad_m|| = 4.499059e-05
+  Iteration  730: Cost = 4.944814e-03, ||grad_m|| = 5.341085e-05
+  Iteration  740: Cost = 4.940551e-03, ||grad_m|| = 5.313507e-05
+  Iteration  750: Cost = 4.936562e-03, ||grad_m|| = 5.096009e-05
+  Iteration  760: Cost = 4.932676e-03, ||grad_m|| = 7.008057e-05
+  Iteration  770: Cost = 4.927368e-03, ||grad_m|| = 1.058863e-04
+  Iteration  780: Cost = 4.923583e-03, ||grad_m|| = 3.531495e-05
+  Iteration  790: Cost = 4.920815e-03, ||grad_m|| = 4.683374e-05
+  Iteration  800: Cost = 4.919053e-03, ||grad_m|| = 7.382651e-05
+  Iteration  810: Cost = 4.916378e-03, ||grad_m|| = 3.937325e-05
+  Iteration  820: Cost = 4.913583e-03, ||grad_m|| = 3.982546e-05
+  Iteration  830: Cost = 4.910472e-03, ||grad_m|| = 4.181945e-05
+  Iteration  840: Cost = 4.906464e-03, ||grad_m|| = 5.366019e-05
+  Iteration  850: Cost = 4.902217e-03, ||grad_m|| = 3.618302e-05
+  Iteration  860: Cost = 4.897378e-03, ||grad_m|| = 8.957112e-05
+  Iteration  870: Cost = 4.892708e-03, ||grad_m|| = 3.835548e-05
+  Iteration  880: Cost = 4.889678e-03, ||grad_m|| = 3.374762e-05
+  Iteration  890: Cost = 4.885802e-03, ||grad_m|| = 5.613465e-05
+  Iteration  900: Cost = 4.882244e-03, ||grad_m|| = 1.020256e-04
+  Iteration  910: Cost = 4.879331e-03, ||grad_m|| = 3.609276e-05
+  Iteration  920: Cost = 4.876153e-03, ||grad_m|| = 3.933724e-05
+  Iteration  930: Cost = 4.873166e-03, ||grad_m|| = 6.295938e-05
+  Iteration  940: Cost = 4.870215e-03, ||grad_m|| = 5.948586e-05
+  Iteration  950: Cost = 4.867336e-03, ||grad_m|| = 4.255746e-05
+  Iteration  960: Cost = 4.865134e-03, ||grad_m|| = 4.937536e-05
+  Iteration  970: Cost = 4.863708e-03, ||grad_m|| = 9.893652e-05
+  Iteration  980: Cost = 4.861342e-03, ||grad_m|| = 5.641995e-05
+  Iteration  990: Cost = 4.859057e-03, ||grad_m|| = 3.255077e-05
+  Iteration 1000: Cost = 4.856322e-03, ||grad_m|| = 3.104329e-05
+  Iteration 1010: Cost = 4.854113e-03, ||grad_m|| = 4.662367e-05
+  Iteration 1020: Cost = 4.849746e-03, ||grad_m|| = 7.865850e-05
+  Iteration 1030: Cost = 4.845408e-03, ||grad_m|| = 8.471254e-05
+  Iteration 1040: Cost = 4.840736e-03, ||grad_m|| = 6.220609e-05
+  Iteration 1050: Cost = 4.835334e-03, ||grad_m|| = 7.522646e-05
+  Iteration 1060: Cost = 4.830390e-03, ||grad_m|| = 5.195876e-05
+  Iteration 1070: Cost = 4.825573e-03, ||grad_m|| = 7.648953e-05
+  Iteration 1080: Cost = 4.821738e-03, ||grad_m|| = 4.537907e-05
+  Iteration 1090: Cost = 4.818215e-03, ||grad_m|| = 3.377871e-05
+  Iteration 1100: Cost = 4.815471e-03, ||grad_m|| = 5.456783e-05
+  Iteration 1110: Cost = 4.812957e-03, ||grad_m|| = 5.229530e-05
+  Iteration 1120: Cost = 4.810902e-03, ||grad_m|| = 3.489602e-05
+  Iteration 1130: Cost = 4.809350e-03, ||grad_m|| = 2.761257e-05
+  Iteration 1140: Cost = 4.807511e-03, ||grad_m|| = 3.986719e-05
+  Iteration 1150: Cost = 4.805343e-03, ||grad_m|| = 4.782864e-05
+  Iteration 1160: Cost = 4.803101e-03, ||grad_m|| = 2.524911e-05
+  Iteration 1170: Cost = 4.800996e-03, ||grad_m|| = 7.589114e-05
+  Iteration 1180: Cost = 4.798329e-03, ||grad_m|| = 3.961945e-05
+  Iteration 1190: Cost = 4.796169e-03, ||grad_m|| = 8.256303e-05
+  Iteration 1200: Cost = 4.793854e-03, ||grad_m|| = 3.667875e-05
+  Iteration 1210: Cost = 4.790877e-03, ||grad_m|| = 3.691993e-05
+  Iteration 1220: Cost = 4.789490e-03, ||grad_m|| = 1.621502e-04
+  Iteration 1230: Cost = 4.787567e-03, ||grad_m|| = 3.559959e-05
+  Iteration 1240: Cost = 4.786087e-03, ||grad_m|| = 2.728462e-05
+  Iteration 1250: Cost = 4.785126e-03, ||grad_m|| = 4.406768e-05
+  Iteration 1260: Cost = 4.783484e-03, ||grad_m|| = 3.455251e-05
+  Iteration 1270: Cost = 4.782168e-03, ||grad_m|| = 3.356144e-05
+  Iteration 1280: Cost = 4.780887e-03, ||grad_m|| = 2.051554e-05
+  Iteration 1290: Cost = 4.778762e-03, ||grad_m|| = 3.211433e-05
+  Iteration 1300: Cost = 4.777335e-03, ||grad_m|| = 6.292824e-05
+  Iteration 1310: Cost = 4.776356e-03, ||grad_m|| = 2.482176e-05
+  Iteration 1320: Cost = 4.775176e-03, ||grad_m|| = 1.939378e-05
+  Iteration 1330: Cost = 4.774018e-03, ||grad_m|| = 2.729902e-05
+  Iteration 1340: Cost = 4.772834e-03, ||grad_m|| = 2.840797e-05
+  Iteration 1350: Cost = 4.771900e-03, ||grad_m|| = 3.736795e-05
+  Iteration 1360: Cost = 4.770882e-03, ||grad_m|| = 4.805451e-05
+  Iteration 1370: Cost = 4.769669e-03, ||grad_m|| = 4.492974e-05
+  Iteration 1380: Cost = 4.768570e-03, ||grad_m|| = 8.091831e-05
+  Iteration 1390: Cost = 4.767435e-03, ||grad_m|| = 4.673828e-05
+  Iteration 1400: Cost = 4.766134e-03, ||grad_m|| = 8.744018e-05
+  Iteration 1410: Cost = 4.764497e-03, ||grad_m|| = 4.429330e-05
+  Iteration 1420: Cost = 4.762701e-03, ||grad_m|| = 3.340062e-05
+  Iteration 1430: Cost = 4.760575e-03, ||grad_m|| = 5.359888e-05
+  Iteration 1440: Cost = 4.758894e-03, ||grad_m|| = 9.565800e-05
+  Iteration 1450: Cost = 4.757433e-03, ||grad_m|| = 9.613217e-05
+  Iteration 1460: Cost = 4.756430e-03, ||grad_m|| = 4.284638e-05
+  Iteration 1470: Cost = 4.755173e-03, ||grad_m|| = 2.255240e-05
+  Iteration 1480: Cost = 4.753853e-03, ||grad_m|| = 3.469509e-05
+  Iteration 1490: Cost = 4.751740e-03, ||grad_m|| = 4.268125e-05
+  Iteration 1500: Cost = 4.749093e-03, ||grad_m|| = 8.433658e-05
+  Optimization completed: STOP: TOTAL NO. OF ITERATIONS REACHED LIMIT
+  Final modulus: min=0.0019, max=5072.1899, mean=1841.3956
+  stop=STOP: TOTAL NO. OF ITERATIONS REACHED LIMIT; evaluations=1657; rho=0.0818247; eta=52942.46
+Inverse: l_curve_insufficient_corner_support D:\MyProject\uniform_pressure_experiment_1023\results\dic_full\60sample_1026_run2_h1_20261026\03_inverse
+�������: D:\MyProject\uniform_pressure_experiment_1023\results\dic_full\60sample_1026_run2_h1_20261026\�������.html
+�̶����: D:\MyProject\uniform_pressure_experiment_1023\�򿪽��.html
+Cloud plots: D:\MyProject\uniform_pressure_experiment_1023\results\dic_full\60sample_1026_run2_h1_20261026\03_inverse\��ͼ.html

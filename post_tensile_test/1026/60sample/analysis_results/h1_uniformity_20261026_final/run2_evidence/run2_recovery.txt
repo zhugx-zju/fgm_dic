@@ -1,0 +1,66 @@
+Saved solver settings: FTOL=1e-30, GTOL=1e-12; regularization=gradient; gamma selection=L-curve; 50 candidates, [1e-12, 0.0001]
+Recover gamma=7.90604321091e-08: remaining iterations=1318, evaluations=11642
+Starting L-BFGS-B optimization in m = ln(E) space...
+  Initial modulus: min=1502.1270, max=1908.8614, mean=1692.9583
+  Max iterations: 1318, ftol: 1.00e-30, gtol: 1.00e-12
+  Iteration   10: Cost = 2.767913e-02, ||grad_m|| = 8.156872e-08
+  Optimization completed: CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH
+  Final modulus: min=1502.1270, max=1908.8614, mean=1692.9583
+Starting L-BFGS-B optimization in m = ln(E) space...
+  Initial modulus: min=1473.7487, max=1944.2067, mean=1693.2374
+  Max iterations: 1500, ftol: 1.00e-30, gtol: 1.00e-12
+  Iteration   10: Cost = 2.688672e-02, ||grad_m|| = 2.623259e-05
+  Iteration   20: Cost = 2.688669e-02, ||grad_m|| = 1.310619e-05
+  Iteration   30: Cost = 2.688669e-02, ||grad_m|| = 1.563053e-05
+  Iteration   40: Cost = 2.688668e-02, ||grad_m|| = 4.229669e-06
+  Iteration   50: Cost = 2.688668e-02, ||grad_m|| = 1.367539e-06
+  Iteration   60: Cost = 2.688668e-02, ||grad_m|| = 1.147435e-06
+  Iteration   70: Cost = 2.688668e-02, ||grad_m|| = 3.265978e-07
+  Iteration   80: Cost = 2.688668e-02, ||grad_m|| = 2.727469e-07
+  Iteration   90: Cost = 2.688668e-02, ||grad_m|| = 3.235634e-07
+  Iteration  100: Cost = 2.688668e-02, ||grad_m|| = 8.125650e-08
+  Iteration  110: Cost = 2.688668e-02, ||grad_m|| = 3.400395e-08
+  Iteration  120: Cost = 2.688668e-02, ||grad_m|| = 5.704396e-08
+  Optimization completed: CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH
+  Final modulus: min=1474.6192, max=1944.4476, mean=1693.5195
+Starting L-BFGS-B optimization in m = ln(E) space...
+  Initial modulus: min=1473.7487, max=1944.2067, mean=1693.2374
+  Max iterations: 1500, ftol: 1.00e-30, gtol: 1.00e-12
+  Optimization completed: CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH
+  Final modulus: min=1473.7487, max=1944.2067, mean=1693.2374
+Starting L-BFGS-B optimization in m = ln(E) space...
+  Initial modulus: min=1473.7487, max=1944.2067, mean=1693.2374
+  Max iterations: 1500, ftol: 1.00e-30, gtol: 1.00e-12
+  Iteration   10: Cost = 2.283699e-02, ||grad_m|| = 2.159972e-05
+  Iteration   20: Cost = 2.283698e-02, ||grad_m|| = 3.177705e-05
+  Iteration   30: Cost = 2.283697e-02, ||grad_m|| = 1.363264e-05
+  Iteration   40: Cost = 2.283697e-02, ||grad_m|| = 3.522573e-06
+  Iteration   50: Cost = 2.283697e-02, ||grad_m|| = 1.813512e-06
+  Iteration   60: Cost = 2.283697e-02, ||grad_m|| = 1.162631e-06
+  Iteration   70: Cost = 2.283697e-02, ||grad_m|| = 2.664978e-07
+  Iteration   80: Cost = 2.283697e-02, ||grad_m|| = 9.623601e-08
+  Iteration   90: Cost = 2.283697e-02, ||grad_m|| = 1.627937e-07
+  Iteration  100: Cost = 2.283697e-02, ||grad_m|| = 6.874341e-08
+  Iteration  110: Cost = 2.283697e-02, ||grad_m|| = 5.534280e-08
+  Optimization completed: CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH
+  Final modulus: min=1473.1790, max=1944.0279, mean=1693.0331
+Starting L-BFGS-B optimization in m = ln(E) space...
+  Initial modulus: min=1473.7487, max=1944.2067, mean=1693.2374
+  Max iterations: 1500, ftol: 1.00e-30, gtol: 1.00e-12
+  Iteration   10: Cost = 1.838004e-02, ||grad_m|| = 6.119610e-05
+  Iteration   20: Cost = 1.837997e-02, ||grad_m|| = 6.249802e-05
+  Iteration   30: Cost = 1.837995e-02, ||grad_m|| = 1.454060e-05
+  Iteration   40: Cost = 1.837993e-02, ||grad_m|| = 9.586750e-06
+  Iteration   50: Cost = 1.837993e-02, ||grad_m|| = 4.617341e-06
+  Iteration   60: Cost = 1.837993e-02, ||grad_m|| = 7.790613e-06
+  Iteration   70: Cost = 1.837993e-02, ||grad_m|| = 5.593614e-07
+  Iteration   80: Cost = 1.837993e-02, ||grad_m|| = 5.555386e-07
+  Iteration   90: Cost = 1.837993e-02, ||grad_m|| = 1.426625e-07
+  Iteration  100: Cost = 1.837993e-02, ||grad_m|| = 1.320399e-07
+  Iteration  110: Cost = 1.837993e-02, ||grad_m|| = 1.003310e-07
+  Optimization completed: CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH
+  Final modulus: min=1473.0424, max=1943.8490, mean=1692.8604
+Inverse: computed D:\MyProject\uniform_pressure_experiment_1023\results\dic_full\60sample_1026_run2_h1_20261026\03_inverse
+�������: D:\MyProject\uniform_pressure_experiment_1023\results\dic_full\60sample_1026_run2_h1_20261026\�������.html
+�̶����: D:\MyProject\uniform_pressure_experiment_1023\�򿪽��.html
+Cloud plots: D:\MyProject\uniform_pressure_experiment_1023\results\dic_full\60sample_1026_run2_h1_20261026\03_inverse\��ͼ.html

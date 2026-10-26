@@ -240,8 +240,12 @@ def write_stage_gallery(output, summary, title):
              f'<p class="path">保存位置：{html.escape(str(output.resolve()))}</p>',
              f'<p>{reference_text}</p>',
              f'<p>{_objective_description(summary)}</p>',
-             '<p>实际拉力：'+html.escape('；'.join(f"{name}: {record['mean_corrected_force_N']:.6f} N"
+             '<p>模型载荷：'+html.escape('；'.join(f"{name}: {record['mean_corrected_force_N']:.6f} N"
                                                  for name, record in summary['force_pairing'].items()))+'</p>']
+    if summary.get('force_reference_note'):
+        parts.append('<p>力参考：'+html.escape(summary['force_reference_note'])+'</p>')
+    if summary.get('evaluation_scope') == 'fit_only_no_independent_validation':
+        parts.append('<p>本次仅有识别数据；位移回代为拟合检查，没有未参与识别的独立验证平台。</p>')
     if _synthetic_notice(summary):
         parts.insert(5, '<p><strong>'+html.escape(_synthetic_notice(summary))+'</strong></p>')
     if not summary['coordinates_verified']:

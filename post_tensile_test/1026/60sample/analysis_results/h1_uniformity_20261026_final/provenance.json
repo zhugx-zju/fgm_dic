@@ -1,0 +1,17 @@
+[
+  {
+    "case_directory": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\60sample_1026_run1_h1_20261026",
+    "inverse_metadata_sha256": "a50dd21be57749ccd01ead539d3bca8c6e5d617da612ec9d34fdc4f6a2e81122",
+    "prepared_fields_sha256": "3c9969340fc11b5bf309318af8a1b19bca4c67eeb48851d1e6d7cd158730e04a"
+  },
+  {
+    "case_directory": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\60sample_1026_run2_h1_20261026",
+    "inverse_metadata_sha256": "49eb2bdb037739608bbf92ca8b7373299a397ec5f2ed090df36bb63bd5478471",
+    "prepared_fields_sha256": "4aba4302bd5b767c065329712dbed0f7162cd52fffc3a224f22d69386ca976dd"
+  },
+  {
+    "case_directory": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\60sample_1026_run3_h1_20261026",
+    "inverse_metadata_sha256": "fc9bb3fafd9f53644765ba2cb897dc5a31c3895d8591a0c850d4af931d3a564e",
+    "prepared_fields_sha256": "74bb807d654d2cfe68cf0eb0fe72c6553f39be54b2968b6a7d77127e69e17a81"
+  }
+]

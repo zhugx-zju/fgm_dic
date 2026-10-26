@@ -1,0 +1,487 @@
+{
+  "workflow": "dic_case_preparation",
+  "status": "prepared",
+  "case_id": "project1023_60sample_1026_run2_h1_20261026",
+  "requested_configuration_sha256": "f7f91b8a5a9db794548d0d9c71614c7326f91bffa0d443f579aee823406d29de",
+  "coordinates_verified": false,
+  "registration": {
+    "mode": "assumed_center",
+    "matrix": [
+      [
+        0.0,
+        1.0
+      ],
+      [
+        1.0,
+        0.0
+      ]
+    ],
+    "note": "均匀试样无材料分区；DIC原Y作为拉伸轴x，原X作为横向y；坐标与位移共用换轴，保持毫米长度。参考点云居中仅确定原点，不缩放。DIC覆盖宽度按用户要求作为承载宽度，厚度近似3.2 mm。",
+    "cloud_center_fem_mm": [
+      55.671166487899995,
+      8.8391545697
+    ]
+  },
+  "matrix": [
+    [
+      0.0,
+      1.0
+    ],
+    [
+      1.0,
+      0.0
+    ]
+  ],
+  "offset_mm": [
+    50.0663892813,
+    3.8989754486
+  ],
+  "physical_model_mm": [
+    111.34233297579999,
+    17.6783091394,
+    3.2
+  ],
+  "domain_geometry": {
+    "source": "dic_reference_bounds",
+    "source_platform": "run2",
+    "load_section_width_mm": 17.6783091394,
+    "lateral_boundary": "traction_free_approximation",
+    "material_position": "centered assumption"
+  },
+  "shared_mesh": {
+    "nel_x": 121,
+    "nel_y": 19,
+    "hx_mm": 0.9201845700479339,
+    "hy_mm": 0.9304373231263158,
+    "source": "configured_grid",
+    "nodes": 2440,
+    "same_for_forward_and_inverse": true
+  },
+  "force_pairing": {
+    "run2": {
+      "mean_corrected_force_N": 211.2344,
+      "provenance": "User-defined end-minus-start force: end 280.00000000 N minus record-start 68.76560000 N. End force assumed; no contemporaneous force record. DIC reference/force-start coincidence unverified.",
+      "reference": "force_increment_from_record_start",
+      "model_end_force_N": 211.2344,
+      "uniform_traction_MPa": 3.733996813806164,
+      "load_section_width_mm": 17.6783091394,
+      "force_reference_note": "用户指定始末载荷差值。第2次：280.00000000 - 68.76560000 = 211.23440000 N。末载为用户明确假设，无同期载荷覆盖。载荷记录起点与DIC第0帧未同步核实；绝对模量是此参考对应假设下的条件性结果。"
+    }
+  },
+  "shared_reference": {
+    "run2": {
+      "reference_platform": "run2",
+      "common_grid_points": 20880,
+      "max_coordinate_difference_export_units": 0.0
+    }
+  },
+  "platforms": {
+    "run2": {
+      "sources": [
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1026\\60sample\\2\\280N\\stage_00465.comdat_comdata.csv",
+          "stage": 465,
+          "sha256": "8c5acc11f12d911dc0cef304e9f2826e1dc6c6bee789aae56ce898fc68943806",
+          "raw_rows": 20880,
+          "valid_rows": 20880,
+          "duplicates_removed": 0
+        },
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1026\\60sample\\2\\280N\\stage_00466.comdat_comdata.csv",
+          "stage": 466,
+          "sha256": "bcdf8f356d8f96b065e7e346d27d8b81025dd59d029859f21ee28b5d349d56c7",
+          "raw_rows": 20880,
+          "valid_rows": 20880,
+          "duplicates_removed": 0
+        },
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1026\\60sample\\2\\280N\\stage_00467.comdat_comdata.csv",
+          "stage": 467,
+          "sha256": "185ea144c228fcf12e21fa63f2a1c18dbe69f214fdcad17319a2400bcbb02d4c",
+          "raw_rows": 20880,
+          "valid_rows": 20880,
+          "duplicates_removed": 0
+        },
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1026\\60sample\\2\\280N\\stage_00468.comdat_comdata.csv",
+          "stage": 468,
+          "sha256": "d5a6f4442d7411b7382c6a900d12eae433d6e025bf1dfd7baf048b1478c7e7eb",
+          "raw_rows": 20880,
+          "valid_rows": 20880,
+          "duplicates_removed": 0
+        },
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1026\\60sample\\2\\280N\\stage_00469.comdat_comdata.csv",
+          "stage": 469,
+          "sha256": "edbe0f3608adf982197654204d8ae832c4e671f275503824bc41720747534475",
+          "raw_rows": 20880,
+          "valid_rows": 20880,
+          "duplicates_removed": 0
+        },
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1026\\60sample\\2\\280N\\stage_00470.comdat_comdata.csv",
+          "stage": 470,
+          "sha256": "21ab33bd9c6d3198e4da3ec5fe9f45e2f8eb0a2ff521f51543500c5938e4f40f",
+          "raw_rows": 20880,
+          "valid_rows": 20880,
+          "duplicates_removed": 0
+        },
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1026\\60sample\\2\\280N\\stage_00471.comdat_comdata.csv",
+          "stage": 471,
+          "sha256": "8b9562c66d76681d8f017dcff4a88b8ae29ad3e09f9c6845d0316f9df26e92a4",
+          "raw_rows": 20880,
+          "valid_rows": 20880,
+          "duplicates_removed": 0
+        },
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1026\\60sample\\2\\280N\\stage_00472.comdat_comdata.csv",
+          "stage": 472,
+          "sha256": "82420f86f7a8f5976d6c7a6fdc6bc922f58b282e892a862c193dd73247f0c70c",
+          "raw_rows": 20880,
+          "valid_rows": 20880,
+          "duplicates_removed": 0
+        },
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1026\\60sample\\2\\280N\\stage_00473.comdat_comdata.csv",
+          "stage": 473,
+          "sha256": "9f84fd00d80920bfeb94545dc2617ba221326bacaa541b32c5a9dc6746a97739",
+          "raw_rows": 20880,
+          "valid_rows": 20880,
+          "duplicates_removed": 0
+        },
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1026\\60sample\\2\\280N\\stage_00474.comdat_comdata.csv",
+          "stage": 474,
+          "sha256": "97e54086b959a143738576d08bcb5d0551846a4a9ac6405dda833fb8e9894877",
+          "raw_rows": 20880,
+          "valid_rows": 20880,
+          "duplicates_removed": 0
+        },
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1026\\60sample\\2\\280N\\stage_00475.comdat_comdata.csv",
+          "stage": 475,
+          "sha256": "4e688f975ed7e6717ae9dee38ffb1d8e63576a52b8474afe351f0f12f3635e24",
+          "raw_rows": 20880,
+          "valid_rows": 20880,
+          "duplicates_removed": 0
+        },
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1026\\60sample\\2\\280N\\stage_00476.comdat_comdata.csv",
+          "stage": 476,
+          "sha256": "3536433537c302ff2c35769840bdebb629253f992c2731ca256f2784a2d0c46a",
+          "raw_rows": 20880,
+          "valid_rows": 20880,
+          "duplicates_removed": 0
+        },
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1026\\60sample\\2\\280N\\stage_00477.comdat_comdata.csv",
+          "stage": 477,
+          "sha256": "f4ecca5811010a7de961ea60f27ea0c4e97f15c10ebbed1c75e77cf9593d9fc9",
+          "raw_rows": 20880,
+          "valid_rows": 20880,
+          "duplicates_removed": 0
+        },
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1026\\60sample\\2\\280N\\stage_00478.comdat_comdata.csv",
+          "stage": 478,
+          "sha256": "f5ab52204d315b0822426a37800780522f058fccda45b1fff00ad87370c4f25e",
+          "raw_rows": 20880,
+          "valid_rows": 20880,
+          "duplicates_removed": 0
+        },
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1026\\60sample\\2\\280N\\stage_00479.comdat_comdata.csv",
+          "stage": 479,
+          "sha256": "583e21fef4a7030ef2bca197ffe6dd534f83515bca3bf9fe93c2d233d344e56b",
+          "raw_rows": 20880,
+          "valid_rows": 20880,
+          "duplicates_removed": 0
+        }
+      ],
+      "frame_count": 15,
+      "common_points": 20880,
+      "valid_points_per_frame": [
+        20880,
+        20880,
+        20880,
+        20880,
+        20880,
+        20880,
+        20880,
+        20880,
+        20880,
+        20880,
+        20880,
+        20880,
+        20880,
+        20880,
+        20880
+      ],
+      "reference_bounds": [
+        [
+          -3.8989754486,
+          -50.0663892813
+        ],
+        [
+          13.7793336908,
+          61.27594369449999
+        ]
+      ],
+      "reference_span": [
+        17.6783091394,
+        111.34233297579999
+      ],
+      "displacement_reference": "initial_reference_image",
+      "csv_coordinate_state": "deformed",
+      "reference_coordinate_rule": "[X-DX,Y-DY]",
+      "noise_note": "Temporal SD is diagnostic; frames are not assumed independent."
+    }
+  },
+  "calibration": [
+    {
+      "infill_percent": 60,
+      "batch": 1023,
+      "n": 4,
+      "mean_E_MPa": 1173.51874116734,
+      "sd_E_MPa": 61.86564442499001,
+      "fit_method": "common_stress_window_OLS"
+    }
+  ],
+  "calibration_source_sha256": "8e67f28122cfc9ae1710f5c9081179c92ac21c85e63d1b56de5fad641bb60898",
+  "rigid_policy": "FE has three gauge constraints; observed residual fits the same two translations and infinitesimal rotation",
+  "primary_nu_prespecified": 0.26,
+  "objective_definition": "0.5*r.T@W_area@r + 0.5*gamma*integral(|grad(E)|^2); no modulus or noise normalization",
+  "physical_validation_status": "not_established; geometry registration and boundary-equivalence evidence are distinct",
+  "scope": "conditional comparison under explicit registration assumptions",
+  "evaluation_scope": "fit_only_no_independent_validation",
+  "force_reference": "force_increment_from_record_start",
+  "force_reference_note": "用户指定始末载荷差值。第2次：280.00000000 - 68.76560000 = 211.23440000 N。末载为用户明确假设，无同期载荷覆盖。载荷记录起点与DIC第0帧未同步核实；绝对模量是此参考对应假设下的条件性结果。",
+  "displacement_component_weights": {
+    "ux": 1.0,
+    "uy": 1.0
+  },
+  "coverage": [
+    {
+      "case": "run2",
+      "dic_row_step_mm": 0.31014577429999995,
+      "dic_col_step_mm": 0.3101457742999998,
+      "points": 20880,
+      "frame_count": 15,
+      "points_inside": 20880,
+      "points_outside": 0,
+      "x_min_mm": 0.0,
+      "x_max_mm": 111.34233297579999,
+      "y_min_mm": 0.0,
+      "y_max_mm": 17.6783091394
+    }
+  ],
+  "configuration": {
+    "PROJECT_ROOT": "D:\\MyProject\\uniform_pressure_experiment_1023",
+    "RUN_NAME": "60sample_1026_run2_h1_20261026",
+    "INPUTS_CONFIGURED": true,
+    "DATA_MODE": "dic",
+    "MESH_SOURCE": "configured_grid",
+    "CONFIGURED_ELEMENTS": [
+      121,
+      19
+    ],
+    "REGULARIZATION_MODE": "gradient",
+    "TV_DELTA": 10.0,
+    "DISPLACEMENT_COMPONENT_WEIGHTS": [
+      1.0,
+      1.0
+    ],
+    "PRIMARY_NU": 0.26,
+    "NU_VALUES": [
+      0.24,
+      0.26,
+      0.28,
+      0.33
+    ],
+    "SYNTHETIC_NU": 0.26,
+    "GAMMA_COUNT": 50,
+    "GAMMA_LOG10_RANGE": [
+      -12.0,
+      -4.0
+    ],
+    "MAX_ITER": 1500,
+    "MAX_FUN": 12000,
+    "FTOL": 1e-30,
+    "GTOL": 1e-12,
+    "EXACT_TV_SOLVER": "primal_dual",
+    "EXACT_TV_PRIMAL_STEP": 20000000.0,
+    "EXACT_TV_COUPLING": 0.9,
+    "EXACT_TV_OPTIONS": {
+      "max_outer": 12000,
+      "max_inner": 150,
+      "stationarity_atol": 1e-09,
+      "stationarity_rtol": 0.001,
+      "primal_atol": 1e-06,
+      "primal_rtol": 0.0001,
+      "gap_atol": 1e-09,
+      "gap_rtol": 0.0001,
+      "adapt_interval": 10
+    },
+    "SAMPLE_ROOT": "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1026\\60sample",
+    "PLATFORMS": {
+      "run2": {
+        "folder": "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1026\\60sample\\2\\280N",
+        "stages": [
+          465,
+          479
+        ],
+        "run": 2,
+        "setting_N": 280,
+        "force_N": 211.2344,
+        "force_note": "User-defined end-minus-start force: end 280.00000000 N minus record-start 68.76560000 N. End force assumed; no contemporaneous force record. DIC reference/force-start coincidence unverified."
+      }
+    },
+    "FIT_CASES": [
+      "run2"
+    ],
+    "PREDICT_CASES": [],
+    "FORCE_PAIRING_CSV": "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1026\\60sample\\selected_dic_windows.csv",
+    "FORCE_REFERENCE": "force_increment_from_record_start",
+    "FORCE_REFERENCE_NOTE": "用户指定始末载荷差值。第2次：280.00000000 - 68.76560000 = 211.23440000 N。末载为用户明确假设，无同期载荷覆盖。载荷记录起点与DIC第0帧未同步核实；绝对模量是此参考对应假设下的条件性结果。",
+    "FORCE_ASSUMED": true,
+    "DIC_UNIT": "mm",
+    "DIC_COORDINATE_STATE": "deformed",
+    "DISPLACEMENT_REFERENCE": "initial_reference_image",
+    "DOMAIN_SOURCE": "dic_reference_bounds",
+    "GEO_L": 111.34233297579999,
+    "GEO_H": 17.6783091394,
+    "THICKNESS": 3.2,
+    "LOAD_SECTION_WIDTH": 17.6783091394,
+    "INTERNAL_SIDE_BOUNDARY": "traction_free_approximation",
+    "REGION_INFILL_PERCENT": [
+      60
+    ],
+    "REGION_BOUNDARIES_MANUFACTURING_X": [],
+    "REGION_BOUNDARIES_X": [],
+    "REGION_BOUNDARIES_CENTERED_X": [],
+    "CALIBRATION_CSV": "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1023\\analysis_results\\modulus_20261026_28_final\\group_summary.csv",
+    "CALIBRATION_METHOD": "common_stress_window_OLS",
+    "REGISTRATION": {
+      "mode": "assumed_center",
+      "matrix": [
+        [
+          0.0,
+          1.0
+        ],
+        [
+          1.0,
+          0.0
+        ]
+      ],
+      "note": "均匀试样无材料分区；DIC原Y作为拉伸轴x，原X作为横向y；坐标与位移共用换轴，保持毫米长度。参考点云居中仅确定原点，不缩放。DIC覆盖宽度按用户要求作为承载宽度，厚度近似3.2 mm。",
+      "cloud_center_fem_mm": [
+        55.671166487899995,
+        8.8391545697
+      ]
+    },
+    "OUTSIDE_POINT_POLICY": "reject",
+    "CASE_ID": "project1023_60sample_1026_run2_h1_20261026",
+    "CASE_OUTPUT": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\60sample_1026_run2_h1_20261026",
+    "NEL_X": 121,
+    "NEL_Y": 19,
+    "GAMMA_CANDIDATES": [
+      1e-12,
+      1.4563484775012444e-12,
+      2.1209508879201927e-12,
+      3.088843596477485e-12,
+      4.498432668969453e-12,
+      6.551285568595496e-12,
+      9.540954763499924e-12,
+      1.389495494373136e-11,
+      2.0235896477251556e-11,
+      2.94705170255181e-11,
+      4.2919342601287785e-11,
+      6.250551925273977e-11,
+      9.102981779915227e-11,
+      1.3257113655901109e-10,
+      1.9306977288832457e-10,
+      2.8117686979742364e-10,
+      4.0949150623804193e-10,
+      5.963623316594636e-10,
+      8.68511373751352e-10,
+      1.2648552168552958e-09,
+      1.8420699693267164e-09,
+      2.6826957952797275e-09,
+      3.906939937054621e-09,
+      5.689866029018305e-09,
+      8.28642772854686e-09,
+      1.206792640639329e-08,
+      1.757510624854793e-08,
+      2.5595479226995333e-08,
+      3.7275937203149377e-08,
+      5.4286754393238595e-08,
+      7.906043210907701e-08,
+      1.1513953993264481e-07,
+      1.6768329368110066e-07,
+      2.4420530945486497e-07,
+      3.5564803062231287e-07,
+      5.179474679231213e-07,
+      7.543120063354623e-07,
+      1.0985411419875572e-06,
+      1.5998587196060574e-06,
+      2.3299518105153717e-06,
+      3.3932217718953298e-06,
+      4.941713361323839e-06,
+      7.196856730011514e-06,
+      1.0481131341546853e-05,
+      1.5264179671752335e-05,
+      2.2229964825261955e-05,
+      3.237457542817647e-05,
+      4.71486636345739e-05,
+      6.866488450042999e-05,
+      0.0001
+    ]
+  },
+  "environment": {
+    "python": "3.13.2 | packaged by Anaconda, Inc. | (main, Feb  6 2025, 18:49:14) [MSC v.1929 64 bit (AMD64)]",
+    "executable": "D:\\miniconda3\\python.exe",
+    "numpy": "2.4.0",
+    "scipy": "1.17.1",
+    "platform": "Windows-11-10.0.26300-SP0",
+    "git_revision": "087375cfb4ca5b45b8be25b31fd869d8c7de8166",
+    "git_dirty": true,
+    "command": [
+      "D:\\MyProject\\uniform_pressure_experiment_1023\\script\\step1_prepare_dic.py"
+    ]
+  },
+  "source_sha256": {
+    "dic_case_config.py": "c7c691b9e43753fe0deb63fc3afd0911037af16d38c33a3f1792896318243390",
+    "fgm_asm\\exact_tv.py": "979814d5ef8e431883c0333660723538461ec8fd144232bbc17c3e33044ce6e7",
+    "fgm_asm\\fem_forward.py": "bde2f57ef5ef7d091f80fa950c79a898f7878fec4424ea5abc2892465d7a8266",
+    "fgm_asm\\grf.py": "ffd2705ed28c642e83299149d352695235bfa383abae3870e8f05292a4c1d28c",
+    "fgm_asm\\inverse_solver.py": "32ee38eac13280a349b9a8fcc99b62ae5494db8db2d90358471c8c5022f28646",
+    "fgm_asm\\load_case.py": "ff8761cd9c709580258af1192c59715a4260ce2a3417edcb8620d7662e65aa56",
+    "fgm_asm\\l_curve.py": "2a376d962782df76bc75603ebd16d46bcf6b9c60103b709a30330baff7f06eee",
+    "fgm_asm\\material.py": "7982752e658a7d722f76209fc978e2a8930dcf0f22ed121617cb2ada04805cbc",
+    "fgm_asm\\mesh.py": "1024656e9608b8afcc7ec6e3908a9adbf8991fa64914e6b93565cb8756bd7432",
+    "fgm_asm\\observation.py": "a9f8b7bcdf48e627933b3e6bcae1ad8f087cfa19d4daf7970f1c0f1c997eede7",
+    "fgm_asm\\regularization.py": "aabba467ec8acd83f1a46671dfe58b26aacded0fabc8f945a59c4c73cd0082ab",
+    "fgm_asm\\research.py": "3a86f6fdd73d8d5e102f2ef0141c9e9ced2159a7147fe545b8ad8017b0a6ea93",
+    "fgm_asm\\tgv.py": "abdef11e675718111bdd9630d56adcbd902152b1577a3a79af2c121186e846af",
+    "fgm_asm\\__init__.py": "eea06c1e7cf5ffe79e033adf820c112401b646430f4bcf3655fbdc13862c9c34",
+    "lib\\config_utils.py": "091f1c7135c1521de1e4a78698b960a61027ce597359de9dfed18f1f9646d25c",
+    "lib\\dic_case_reporting.py": "b5aa045517de5a7b31df958934751a3f9f1a4db853a258969d741ab8b6c42f63",
+    "lib\\dic_case_workflow.py": "f3ed232ead3089b5b20523e287cb9bb40e0cd6b8f874963166a023ee97e5bce6",
+    "lib\\dic_frame_selection.py": "6ee5b336463b2d46ad325c827cf73a84492ca19182f4300fd2b3ca7b31a4c10d",
+    "lib\\dic_preprocessing.py": "8fdbf7107b347376ffe2dc91a0b8f5c54476aaa1d8f2ed710d427952b70368ee",
+    "lib\\experiment_data.py": "0463994916d6f68390a7d360e397853cd9fafcf7f2f0dad1dcd804ec73d3af2b",
+    "lib\\io_utils.py": "be64bd808fdb2cc75c19208326cc38d572369f08cdf2f8749ff2a24b2f8b3e55",
+    "lib\\research_reporting.py": "a347d23bbf0f8e12fdacd496607cee45585ad7c404e3372aebf179b5f93d71b2",
+    "lib\\synthetic_recovery.py": "10dd9678f6d2667a046054ade24825da7742541cc6dbf967a3f05574e767f495",
+    "lib\\tensile_calibration.py": "d68f5b7c905c82bc89aedbf717171dbdf6c2871e39c3538ef7bfd6dfe187524a",
+    "lib\\tensile_fit_standard.py": "47d6a1fb83d164cddfe8edefbe9f7934043a37d7ef0f4617f1bf1204ef1bb222",
+    "lib\\verify_tensile_calibration.py": "de20f6fe49bad33c7ca7869ce53a67467f427ffd9369b374212ff0e86ad4b036",
+    "lib\\__init__.py": "cee96f9d84d28c0a84b710640de16b3544a2187987c25735016fc188df7db10e",
+    "script\\step1_prepare_dic.py": "a1da0c1ace622027790f47301f2b372db0493a5d171388e638eccc84523209cc",
+    "script\\step2_forward_calibrated.py": "49cc7f57c5d79c3e21c99a21aad378447bc6b71d3259b88794ffe5ca958e2977",
+    "script\\step3_inverse_dic.py": "9d8e740103b99a9b10f9ca17d4ebc6fb704a73989af971dd64d266e8422dd893",
+    "script\\step4_compare_results.py": "11a4b81b212d1f442f62f4f8152c08b340cc0366efee946fa261dfb45e5126d9",
+    "script\\__init__.py": "d49f1e106b2e6e10d230c915183ef7d43390802a159c80aa118c8980e8be421a"
+  }
+}

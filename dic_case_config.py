@@ -1,9 +1,9 @@
-"""唯一日常配置：H1主线，Huber-TV／精确TV对照；1023输入尚未配对。"""
+"""唯一日常配置：1026均匀60%试样，逐次独立H1反演。"""
 from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).resolve().parent
-RUN_NAME = 'h1_run01'
-INPUTS_CONFIGURED = False  # 完成docs/input_setup.md中的真实输入配置后改为True。
+RUN_NAME = '60sample_1026_run3_h1_20261026'
+INPUTS_CONFIGURED = True
 DATA_MODE = 'dic'  # dic / synthetic_layered / synthetic_nodal
 MESH_SOURCE = 'configured_grid'  # configured_grid / dic_grid
 CONFIGURED_ELEMENTS = (121, 19)
@@ -24,29 +24,28 @@ EXACT_TV_OPTIONS = dict(max_outer=12000, max_inner=150, stationarity_atol=1e-9,
     stationarity_rtol=1e-3, primal_atol=1e-6, primal_rtol=1e-4,
     gap_atol=1e-9, gap_rtol=1e-4, adapt_interval=10)
 
-# 1023目录目前只有工作簿及既有标定资料，没有本流程要求的逐帧DIC CSV。
-# 不沿用旧试样的帧号、60.1 N偏置、319.9 N假定力或材料坐标锚点。
-SAMPLE_ROOT = PROJECT_ROOT / 'post_tensile_test' / '1023'
-PLATFORMS = {}  # {平台名: {'folder': Path(...), 'stages': (首帧,末帧), 'run': ..., 'setting_N': ...}}
-FIT_CASES, PREDICT_CASES = (), ()
+# 三次各自使用DIC参考坐标和用户指定的始末载荷差；不合并参考图。
+SAMPLE_ROOT = PROJECT_ROOT / 'post_tensile_test' / '1026' / '60sample'
+PLATFORMS = {'run3': {'folder': 'D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1026\\60sample\\3\\380N', 'stages': (235, 249), 'run': 3, 'setting_N': 380, 'force_N': 129.05999999999997, 'force_note': 'User-defined end-minus-start force: end 379.78479000 N minus record-start 250.72479000 N. End force last measured record; plateau mean differs by 0.135 N. DIC reference/force-start coincidence unverified.'}}
+FIT_CASES, PREDICT_CASES = ('run3',), ()
 FORCE_PAIRING_CSV = SAMPLE_ROOT / 'selected_dic_windows.csv'
-FORCE_REFERENCE = 'corrected_force_from_unloaded_state'
-FORCE_REFERENCE_NOTE = '待核对当前试样的参考图、净力与逐帧配对。'
+FORCE_REFERENCE = 'force_increment_from_record_start'
+FORCE_REFERENCE_NOTE = '用户指定始末载荷差值。第3次：379.78479000 - 250.72479000 = 129.06000000 N。末载为载荷文件最后一条记录，窗口内均值为379.6495967 N。载荷记录起点与DIC第0帧未同步核实；绝对模量是此参考对应假设下的条件性结果。'
 FORCE_ASSUMED = False
 DIC_UNIT = 'mm'
 DIC_COORDINATE_STATE = 'deformed'
-DISPLACEMENT_REFERENCE = 'initial_unloaded_image'
+DISPLACEMENT_REFERENCE = 'initial_reference_image'
 DOMAIN_SOURCE = 'dic_reference_bounds'
 GEO_L, GEO_H, THICKNESS = None, None, 3.2
-LOAD_SECTION_WIDTH = 20.  # 制造名义尺寸；新试样计算前核对实际尺寸。
+LOAD_SECTION_WIDTH = 18.36575062254
 INTERNAL_SIDE_BOUNDARY = 'traction_free_approximation'
-REGION_INFILL_PERCENT = (100, 90, 80, 70, 60, 50, 40)
-REGION_BOUNDARIES_MANUFACTURING_X = (-40., -24., -8., 8., 24., 40.)
-MATERIAL_WINDOW_MM = None
-REGION_BOUNDARIES_X = None
-CALIBRATION_CSV = SAMPLE_ROOT / 'analysis_results' / 'modulus_20261026_28_final' / 'group_summary.csv'
+REGION_INFILL_PERCENT = (60,)
+REGION_BOUNDARIES_MANUFACTURING_X = ()
+REGION_BOUNDARIES_X = ()
+REGION_BOUNDARIES_CENTERED_X = ()
+CALIBRATION_CSV = PROJECT_ROOT / 'post_tensile_test' / '1023' / 'analysis_results' / 'modulus_20261026_28_final' / 'group_summary.csv'
 CALIBRATION_METHOD = 'common_stress_window_OLS'
-REGISTRATION = {'mode': 'pending', 'note': '当前试样的方向、毫米尺度及材料位置尚未确认。'}
+REGISTRATION = {'mode': 'assumed_center', 'matrix': [[0.0, 1.0], [1.0, 0.0]], 'note': '均匀试样无材料分区；DIC原Y作为拉伸轴x，原X作为横向y；坐标与位移共用换轴，保持毫米长度。参考点云居中仅确定原点，不缩放。DIC覆盖宽度按用户要求作为承载宽度，厚度近似3.2 mm。'}
 OUTSIDE_POINT_POLICY = 'reject'
 
 if not RUN_NAME or RUN_NAME in ('.', '..') or any(c in RUN_NAME for c in '<>:"/\\|?*'):

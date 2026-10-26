@@ -176,9 +176,13 @@ def _validate(cfg):
     displacement_component_weights(cfg)
     if cfg.DIC_UNIT != 'mm':
         raise ValueError('Convert positions AND displacements to mm before this pipeline')
-    if (cfg.DISPLACEMENT_REFERENCE != 'initial_unloaded_image' or
-            cfg.FORCE_REFERENCE != 'corrected_force_from_unloaded_state'):
-        raise ValueError('These steps require unloaded-reference displacement and matched actual force')
+    reference_pair = (cfg.DISPLACEMENT_REFERENCE, cfg.FORCE_REFERENCE)
+    if reference_pair not in {
+            ('initial_unloaded_image', 'corrected_force_from_unloaded_state'),
+            ('initial_reference_image', 'force_increment_from_record_start')}:
+        raise ValueError('Use matched unloaded references or an explicitly documented record-start force increment')
+    if reference_pair[1] == 'force_increment_from_record_start' and not cfg.FORCE_REFERENCE_NOTE.strip():
+        raise ValueError('Record-start increments require a note about the DIC/force reference alignment')
     for key in ('GEO_L', 'GEO_H', 'THICKNESS'):
         if not np.isfinite(getattr(cfg, key)) or getattr(cfg, key) <= 0:
             raise ValueError(f'{key} must be positive and finite')
@@ -194,8 +198,8 @@ def _validate(cfg):
         raise ValueError('Supply a nonempty list of physical Poisson ratios')
     if cfg.PRIMARY_NU not in cfg.NU_VALUES:
         raise ValueError('PRIMARY_NU must be fixed in NU_VALUES before comparison')
-    if set(cfg.FIT_CASES) & set(cfg.PREDICT_CASES) or not cfg.FIT_CASES or not cfg.PREDICT_CASES:
-        raise ValueError('Need disjoint, nonempty fit and held-out case lists')
+    if set(cfg.FIT_CASES) & set(cfg.PREDICT_CASES) or not cfg.FIT_CASES:
+        raise ValueError('Need nonempty fit cases and a disjoint (possibly empty) held-out list')
     if set(cfg.FIT_CASES) | set(cfg.PREDICT_CASES) != set(cfg.PLATFORMS):
         raise ValueError('Every platform must be assigned to fit or prediction')
     if cfg.OUTSIDE_POINT_POLICY not in ('reject', 'crop_to_physical_roi'):
@@ -547,6 +551,11 @@ def prepare_dic(cfg, output):
                'objective_definition': '0.5*r.T@W_area@r + 0.5*gamma*integral(|grad(E)|^2); no modulus or noise normalization',
                'physical_validation_status': 'not_established; geometry registration and boundary-equivalence evidence are distinct',
                'scope': 'registered comparison' if verified else 'conditional comparison under explicit registration assumptions'}
+    summary['evaluation_scope'] = ('fit_and_held_out' if cfg.PREDICT_CASES else 'fit_only_no_independent_validation')
+    summary['force_reference'] = cfg.FORCE_REFERENCE
+    summary['force_reference_note'] = cfg.FORCE_REFERENCE_NOTE
+    for platform_metadata in summary['platforms'].values():
+        platform_metadata['displacement_reference'] = cfg.DISPLACEMENT_REFERENCE
     component_weights = displacement_component_weights(cfg)
     summary['displacement_component_weights'] = dict(zip(('ux', 'uy'), component_weights.tolist()))
     if not np.array_equal(component_weights, [1., 1.]):
@@ -676,6 +685,9 @@ def _stage_summary(prepared, provenance, stage):
                                               'coverage', 'force_pairing', 'scope', 'primary_nu_prespecified',
                                               'objective_definition')}
     summary.update(provenance, workflow=stage, status='running')
+    for key in ('evaluation_scope', 'force_reference', 'force_reference_note'):
+        if key in prepared:
+            summary[key] = prepared[key]
     if 'domain_geometry' in prepared:
         summary['domain_geometry'] = prepared['domain_geometry']
     if 'material_registration' in prepared:

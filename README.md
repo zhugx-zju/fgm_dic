@@ -2,6 +2,8 @@
 
 主线为：独立材料标定 → 分层正演与DIC比较；DIC → 自由二维H1模量反演 → 标定比较；识别模量正演回代。分层试样提供可制造的验证载体，研究目标仍是连续空间模量表征。
 
+1026均匀60%试样的三次独立H1反演已完成，见[均匀性报告](post_tensile_test/1026/60sample/analysis_results/h1_uniformity_20261026_final/report.md)：主ν=0.26时空间CV分别20.58%、8.54%、4.18%。第3次最接近均匀，但三次均保留横向位移拟合与力参考对应的限制；这不是独立物理验证。当前根配置停留在第3次，全部原始数值结果和逐次配置在results/dic_full/60sample_1026_run*_h1_20261026。
+
 当前材料参数见[1023拉伸标定报告](post_tensile_test/1023/analysis_results/modulus_20261026_28_final/analysis_report.md)及[分组参数表](post_tensile_test/1023/analysis_results/modulus_20261026_28_final/group_summary.csv)。只使用本次试样的独立标定，不进行不同批次的填充率结果比较。
 
 按逐根线性段重新分析，并检查组内单根偏差≤3%、组均值随填充率不减的要求，见[逐根与约束选段报告](post_tensile_test/1023/analysis_results/individual_3pct_monotone_20261026_final/analysis_report.md)。其中3%一致性和单调性作为显式选段约束，不是独立验证结论；原独立标定和默认配置保留。
@@ -17,7 +19,7 @@ python -B -m script.step3_inverse_dic
 python -B -m script.step4_compare_results
 ```
 
-**当前1023输入未就绪，默认不会启动反演。** 保留的工作簿不是逐帧DIC场，旧试样帧号、力偏置和坐标不能直接套用。[输入准备](docs/input_setup.md) · [四步用法](docs/workflow.md)
+**1026均匀试样已配置并保存结果；再次计算须换RUN_NAME，已有目录拒绝覆盖。1023分层输入仍未就绪。** 保留的工作簿不能替代逐帧DIC场，试样之间不能套用帧号、力偏置与坐标。[输入准备](docs/input_setup.md) · [四步用法](docs/workflow.md)
 
 ## 项目内容
 
