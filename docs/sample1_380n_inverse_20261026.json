@@ -1,0 +1,879 @@
+{
+  "records": [
+    {
+      "run": 2,
+      "output": "D:\\MyProject\\uniform_pressure_experiment_1016\\results\\dic_full\\sample1_run2_380n_h1_20261026",
+      "status": "computed",
+      "selected_gamma": 2.5595479226995333e-08,
+      "l_curve_message": "Selected maximum positive discrete log-log curvature.",
+      "scan_recovery": {
+        "method": "reset L-BFGS history only for abnormal line-search failures, within original total budget",
+        "original_selection": "D:\\MyProject\\uniform_pressure_experiment_1016\\results\\dic_full\\sample1_run2_380n_h1_20261026\\03_inverse\\selection_before_recovery.csv",
+        "source_sha256": {
+          "lib\\dic_case_workflow.py": "6d11600e3791cf70bcefd0a6160d8b517ab2cf91b8430fbf4f2c7a7e1be4ae71",
+          "script\\step3_inverse_dic.py": "a53e7d51d018a4014ae8d6d64a30b9999ed440a4ce0927b2a97e3b47be2d54c0"
+        }
+      },
+      "scanned_points": 50,
+      "solver_success_points": 40,
+      "gtol_points": 0,
+      "total_scan_fe": 31676,
+      "mesh_elements": [
+        129,
+        19
+      ],
+      "parameters": 2600,
+      "observations": 25610,
+      "physical_model_mm": [
+        112.9034444112,
+        18.386311562000003,
+        3.2
+      ],
+      "force_assumed_N": 333.6728,
+      "mark_registration": {
+        "method": "confirmed_marks_midpoint_unit_scale",
+        "manufacturing_x_offset_mm": 56.4517222056,
+        "manufacturing_x_fem_coefficient": -1,
+        "manufacturing_x_relation": "manufacturing_x = -1 * FEM_x + 56.4517222056 mm",
+        "infill_order_along_fem_x": [
+          100,
+          90,
+          80,
+          70,
+          60,
+          50,
+          40
+        ],
+        "manufacturing_mark_x_mm": [
+          57.0,
+          -57.0
+        ],
+        "manufacturing_roi_x_mm": [
+          56.4517222056,
+          -56.4517222056
+        ],
+        "nominal_mark_gap_mm": 114.0,
+        "dic_span_mm": 112.9034444112,
+        "dic_minus_nominal_mark_gap_mm": -1.0965555888000011,
+        "endpoint_discrepancy_mm": [
+          -0.5482777944000006,
+          0.5482777944000006
+        ],
+        "length_scale_factor": 1.0,
+        "direction_note": "New specimen sample_1. User reports marks approximately 53 mm from each outer end and ROI boundaries approximately at those marks. Align their midpoint with specimen center; preserve measured mm span, without stretching to the nominal 114 mm gap. Infill direction is UNKNOWN. Descending infill along raw +Y is only comparison hypothesis A; reverse hypothesis B must also be evaluated. Neither partition nor calibration enters the free 2D inverse.",
+        "transverse_location": "internal DIC ROI bounds; no measured specimen edge registration"
+      },
+      "initialization": {
+        "source": "homogeneous_dic_fit",
+        "uniform_E_MPa": 1623.3308832060573,
+        "fit_cases": [
+          "380N"
+        ],
+        "nu": 0.26,
+        "uses_calibration": false,
+        "uses_prediction_cases": false
+      },
+      "provenance": {
+        "prepared_metadata_sha256": "2cc7c323fddbbe4feb27ab427404a86f3e54c962d96e144286640b649afbca3a",
+        "prepared_fields_sha256": "35c88e3af7488bd8422556b1eec57b8cb6dbcf98683f7fb147b01c2898cccb52"
+      },
+      "requested_configuration_sha256": "10537be125f9faa8711b8b1dfa24f3bdd00c3740b045cc7d2d1e3fb88085d05e",
+      "raw_dic_sources": [
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment_1016\\post_tensile_test\\1016\\sample_1\\2\\380N\\stage_00680.comdat_comdata.csv",
+          "stage": 680,
+          "sha256": "4dcb5ddb549f22361c26b7b5ebc6ca63bbe7f69b391e8fc031dde32f653b1320",
+          "raw_rows": 26004,
+          "valid_rows": 26004,
+          "duplicates_removed": 394
+        },
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment_1016\\post_tensile_test\\1016\\sample_1\\2\\380N\\stage_00681.comdat_comdata.csv",
+          "stage": 681,
+          "sha256": "c6af720bd6f59afa8538c9d94fe106f77d615244bc42350bc56704bdcf40ef1c",
+          "raw_rows": 26004,
+          "valid_rows": 26004,
+          "duplicates_removed": 394
+        },
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment_1016\\post_tensile_test\\1016\\sample_1\\2\\380N\\stage_00682.comdat_comdata.csv",
+          "stage": 682,
+          "sha256": "736386756c875a13ba720b07be7670a2d4fd8935b2d5859925cdf40f1be7c037",
+          "raw_rows": 26004,
+          "valid_rows": 26004,
+          "duplicates_removed": 394
+        },
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment_1016\\post_tensile_test\\1016\\sample_1\\2\\380N\\stage_00683.comdat_comdata.csv",
+          "stage": 683,
+          "sha256": "f659049b526190bc5ec92a3b9d7b2bd255cef0cdc735c732dc365d0b2cbf928c",
+          "raw_rows": 26004,
+          "valid_rows": 26004,
+          "duplicates_removed": 394
+        },
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment_1016\\post_tensile_test\\1016\\sample_1\\2\\380N\\stage_00684.comdat_comdata.csv",
+          "stage": 684,
+          "sha256": "2d4f5dc68edf811f1b2d96d3970ed05d31a620033399889edd24bbe1efb423aa",
+          "raw_rows": 26004,
+          "valid_rows": 26004,
+          "duplicates_removed": 394
+        },
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment_1016\\post_tensile_test\\1016\\sample_1\\2\\380N\\stage_00685.comdat_comdata.csv",
+          "stage": 685,
+          "sha256": "aa8ba7c5611146329ff2290e9be0e85606859a65eef48a231a57e97a1bab7756",
+          "raw_rows": 26004,
+          "valid_rows": 26004,
+          "duplicates_removed": 394
+        },
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment_1016\\post_tensile_test\\1016\\sample_1\\2\\380N\\stage_00686.comdat_comdata.csv",
+          "stage": 686,
+          "sha256": "7c19045f34893605eb7970230051f81afb444751d919847a377343a3b06f6ca8",
+          "raw_rows": 26004,
+          "valid_rows": 26004,
+          "duplicates_removed": 394
+        },
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment_1016\\post_tensile_test\\1016\\sample_1\\2\\380N\\stage_00687.comdat_comdata.csv",
+          "stage": 687,
+          "sha256": "8ee7334fe3782ff1281945fc7dcad044f03b2f7d74db0088839083ff69f5d2be",
+          "raw_rows": 26004,
+          "valid_rows": 26004,
+          "duplicates_removed": 394
+        },
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment_1016\\post_tensile_test\\1016\\sample_1\\2\\380N\\stage_00688.comdat_comdata.csv",
+          "stage": 688,
+          "sha256": "ed24419c26acbd367b205809ea00281ec8d887c06570f8dd504af0b6970abaa6",
+          "raw_rows": 26004,
+          "valid_rows": 26004,
+          "duplicates_removed": 394
+        },
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment_1016\\post_tensile_test\\1016\\sample_1\\2\\380N\\stage_00689.comdat_comdata.csv",
+          "stage": 689,
+          "sha256": "f54f3970ebf4866b36308ebb4fd8eb0bbc0b05c5bed397d85cad0a4de4e6e6b9",
+          "raw_rows": 26004,
+          "valid_rows": 26004,
+          "duplicates_removed": 394
+        },
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment_1016\\post_tensile_test\\1016\\sample_1\\2\\380N\\stage_00690.comdat_comdata.csv",
+          "stage": 690,
+          "sha256": "3129aa8b28f8d8764b26d2b80f74c5ec1bc1573fade1f58b00c3fe8f4dac98e8",
+          "raw_rows": 26004,
+          "valid_rows": 26004,
+          "duplicates_removed": 394
+        },
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment_1016\\post_tensile_test\\1016\\sample_1\\2\\380N\\stage_00691.comdat_comdata.csv",
+          "stage": 691,
+          "sha256": "3d9ba6c57684708dda67f9873992292e3fab58acb9cd15568591f1e4d4dd6a75",
+          "raw_rows": 26004,
+          "valid_rows": 26004,
+          "duplicates_removed": 394
+        },
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment_1016\\post_tensile_test\\1016\\sample_1\\2\\380N\\stage_00692.comdat_comdata.csv",
+          "stage": 692,
+          "sha256": "84fc110300245d01e1ea48643cede534464851f6d2eaeee38582b45cea1c28c4",
+          "raw_rows": 26004,
+          "valid_rows": 26004,
+          "duplicates_removed": 394
+        },
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment_1016\\post_tensile_test\\1016\\sample_1\\2\\380N\\stage_00693.comdat_comdata.csv",
+          "stage": 693,
+          "sha256": "9c6ee394280deb39b2f64d9d76f0072ed7dc38032612c74c95be2c55a206a326",
+          "raw_rows": 26004,
+          "valid_rows": 26004,
+          "duplicates_removed": 394
+        },
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment_1016\\post_tensile_test\\1016\\sample_1\\2\\380N\\stage_00694.comdat_comdata.csv",
+          "stage": 694,
+          "sha256": "14f6e08cf2aee92c8e7bb30bf99f635ac6a4b809adf11d6670216a0d8f9b85e7",
+          "raw_rows": 26004,
+          "valid_rows": 26004,
+          "duplicates_removed": 394
+        }
+      ],
+      "calibration_source_sha256": "dce84b8e873af2adcaf3dbbbfe4aad4693cba8e5b467b4f3e955e356b45bff0f",
+      "temporal_check": {
+        "affine_axial_strain_by_frame": [
+          0.0032081539868713386,
+          0.0032091093266262685,
+          0.003208783696265124,
+          0.003208199700143885,
+          0.003207019845295351,
+          0.0032079566892116796,
+          0.003209456302607867,
+          0.0032078274409798107,
+          0.0032099914860538054,
+          0.0032095421499822832,
+          0.0032106908014609184,
+          0.003212746400472337,
+          0.0032121828483346947,
+          0.0032125877586994677,
+          0.00321395749024184
+        ],
+        "affine_axial_strain_mean": 0.0032098803948831115,
+        "affine_axial_strain_range": 6.937644946489272e-06,
+        "affine_axial_strain_range_percent_of_mean": 0.21613406398408525,
+        "role": "temporal consistency diagnostic; affine fields are not removed from observations"
+      },
+      "display_is_final": true,
+      "initial_scan_success_points": 38,
+      "recovery_extra_fe": 81,
+      "display_gamma": 2.5595479226995333e-08,
+      "modulus_nodal_range_MPa": [
+        1332.3391081534878,
+        1984.7739926602424
+      ],
+      "width_mean_endpoints_MPa": [
+        1976.8258318894423,
+        1336.1667244849598
+      ],
+      "width_mean_range_MPa": [
+        1336.1667244849598,
+        1976.8383596433475
+      ],
+      "final_checks": [
+        {
+          "nu": 0.24,
+          "prediction_recomputed": true,
+          "objective_recomputed": 0.014169850984488513,
+          "gradient_inf_recomputed": 5.559613503913801e-09,
+          "gradient_inf_saved": 5.559613503913801e-09,
+          "converged": true,
+          "stop_message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+          "evaluations": 119
+        },
+        {
+          "nu": 0.26,
+          "prediction_recomputed": true,
+          "objective_recomputed": 0.013021315786105183,
+          "gradient_inf_recomputed": 5.698391020522329e-09,
+          "gradient_inf_saved": 5.698391020522329e-09,
+          "converged": true,
+          "stop_message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+          "evaluations": 21
+        },
+        {
+          "nu": 0.28,
+          "prediction_recomputed": true,
+          "objective_recomputed": 0.0121304469840883,
+          "gradient_inf_recomputed": 3.671477523946884e-09,
+          "gradient_inf_saved": 3.671477523946884e-09,
+          "converged": true,
+          "stop_message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+          "evaluations": 137
+        },
+        {
+          "nu": 0.33,
+          "prediction_recomputed": true,
+          "objective_recomputed": 0.011027727883279773,
+          "gradient_inf_recomputed": 2.043177987445143e-09,
+          "gradient_inf_saved": 2.043177987445143e-09,
+          "converged": true,
+          "stop_message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+          "evaluations": 210
+        }
+      ],
+      "calibration": [
+        {
+          "infill_percent": 100,
+          "batch": 1013,
+          "n": 5,
+          "mean_E_MPa": 2399.573262132105,
+          "sd_E_MPa": 69.86429169409345,
+          "fit_method": "independent"
+        },
+        {
+          "infill_percent": 90,
+          "batch": 1013,
+          "n": 4,
+          "mean_E_MPa": 2120.05686119206,
+          "sd_E_MPa": 34.48691066602953,
+          "fit_method": "independent"
+        },
+        {
+          "infill_percent": 80,
+          "batch": 1016,
+          "n": 5,
+          "mean_E_MPa": 1842.0790060073489,
+          "sd_E_MPa": 46.50500622544038,
+          "fit_method": "independent"
+        },
+        {
+          "infill_percent": 70,
+          "batch": 1016,
+          "n": 5,
+          "mean_E_MPa": 1708.3381341110266,
+          "sd_E_MPa": 26.726979564091817,
+          "fit_method": "independent"
+        },
+        {
+          "infill_percent": 60,
+          "batch": 1013,
+          "n": 5,
+          "mean_E_MPa": 1638.661938579892,
+          "sd_E_MPa": 137.95538881325984,
+          "fit_method": "independent"
+        },
+        {
+          "infill_percent": 50,
+          "batch": 1013,
+          "n": 5,
+          "mean_E_MPa": 1396.4107925415587,
+          "sd_E_MPa": 76.58266428520218,
+          "fit_method": "independent"
+        },
+        {
+          "infill_percent": 40,
+          "batch": 1013,
+          "n": 5,
+          "mean_E_MPa": 1231.8683164619763,
+          "sd_E_MPa": 56.04510725642147,
+          "fit_method": "independent"
+        }
+      ],
+      "region_boundaries_x_mm": [
+        16.4517222056,
+        32.4517222056,
+        48.4517222056,
+        64.45172220559999,
+        80.45172220559999,
+        96.45172220559999
+      ],
+      "direction_preference_axial_response": "A_decreasing_raw_Y",
+      "direction_preference_regional_modulus": "A_decreasing_raw_Y",
+      "direction_response_preference": "A_decreasing_raw_Y"
+    },
+    {
+      "run": 3,
+      "output": "D:\\MyProject\\uniform_pressure_experiment_1016\\results\\dic_full\\sample1_run3_380n_h1_20261026",
+      "status": "l_curve_insufficient_corner_support",
+      "selected_gamma": null,
+      "l_curve_message": "The curvature peak is not bracketed by two valid solves on each side.",
+      "scan_recovery": {
+        "method": "reset L-BFGS history only for abnormal line-search failures, within original total budget",
+        "original_selection": "D:\\MyProject\\uniform_pressure_experiment_1016\\results\\dic_full\\sample1_run3_380n_h1_20261026\\03_inverse\\selection_before_recovery.csv",
+        "source_sha256": {
+          "lib\\dic_case_workflow.py": "6d11600e3791cf70bcefd0a6160d8b517ab2cf91b8430fbf4f2c7a7e1be4ae71",
+          "script\\step3_inverse_dic.py": "a53e7d51d018a4014ae8d6d64a30b9999ed440a4ce0927b2a97e3b47be2d54c0"
+        }
+      },
+      "scanned_points": 50,
+      "solver_success_points": 43,
+      "gtol_points": 0,
+      "total_scan_fe": 29090,
+      "mesh_elements": [
+        130,
+        19
+      ],
+      "parameters": 2620,
+      "observations": 25408,
+      "physical_model_mm": [
+        113.61997308260001,
+        18.07590481694,
+        3.2
+      ],
+      "force_assumed_N": 325.3872,
+      "mark_registration": {
+        "method": "confirmed_marks_midpoint_unit_scale",
+        "manufacturing_x_offset_mm": 56.809986541300006,
+        "manufacturing_x_fem_coefficient": -1,
+        "manufacturing_x_relation": "manufacturing_x = -1 * FEM_x + 56.8099865413 mm",
+        "infill_order_along_fem_x": [
+          100,
+          90,
+          80,
+          70,
+          60,
+          50,
+          40
+        ],
+        "manufacturing_mark_x_mm": [
+          57.0,
+          -57.0
+        ],
+        "manufacturing_roi_x_mm": [
+          56.809986541300006,
+          -56.809986541300006
+        ],
+        "nominal_mark_gap_mm": 114.0,
+        "dic_span_mm": 113.61997308260001,
+        "dic_minus_nominal_mark_gap_mm": -0.38002691739998795,
+        "endpoint_discrepancy_mm": [
+          -0.19001345869999398,
+          0.19001345869999398
+        ],
+        "length_scale_factor": 1.0,
+        "direction_note": "New specimen sample_1. User reports marks approximately 53 mm from each outer end and ROI boundaries approximately at those marks. Align their midpoint with specimen center; preserve measured mm span, without stretching to the nominal 114 mm gap. Infill direction is UNKNOWN. Descending infill along raw +Y is only comparison hypothesis A; reverse hypothesis B must also be evaluated. Neither partition nor calibration enters the free 2D inverse.",
+        "transverse_location": "internal DIC ROI bounds; no measured specimen edge registration"
+      },
+      "initialization": {
+        "source": "homogeneous_dic_fit",
+        "uniform_E_MPa": 1616.5114128071996,
+        "fit_cases": [
+          "380N"
+        ],
+        "nu": 0.26,
+        "uses_calibration": false,
+        "uses_prediction_cases": false
+      },
+      "provenance": {
+        "prepared_metadata_sha256": "5beb98bbcc08ce65574b39a2fb631f98b4fda1f9ec236c02441fba05f6bf7766",
+        "prepared_fields_sha256": "7a36a0cf2701714efe528feb2dc7e73daa076cece53890f0d8acf15cfb487444"
+      },
+      "requested_configuration_sha256": "bffcf74371342b0ba888f9472378765e90d702eaf1554157450a89361ff91f34",
+      "raw_dic_sources": [
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment_1016\\post_tensile_test\\1016\\sample_1\\3\\380N\\stage_00853.comdat_comdata.csv",
+          "stage": 853,
+          "sha256": "6e5f8fe20041ae60bbb71376e1dba3c2ced8c197177a855f2cddd093ab6c36ce",
+          "raw_rows": 25408,
+          "valid_rows": 25408,
+          "duplicates_removed": 0
+        },
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment_1016\\post_tensile_test\\1016\\sample_1\\3\\380N\\stage_00854.comdat_comdata.csv",
+          "stage": 854,
+          "sha256": "657f80d7a359ffcdfe718a13a385c4f12587e07e6e1fc1fdaedf3c1c3a7d9d41",
+          "raw_rows": 25408,
+          "valid_rows": 25408,
+          "duplicates_removed": 0
+        },
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment_1016\\post_tensile_test\\1016\\sample_1\\3\\380N\\stage_00855.comdat_comdata.csv",
+          "stage": 855,
+          "sha256": "3ab297b8b1f2fb0b25acdf747b8dd96c744cf73bf06e040c2a08a540c118a8d2",
+          "raw_rows": 25408,
+          "valid_rows": 25408,
+          "duplicates_removed": 0
+        },
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment_1016\\post_tensile_test\\1016\\sample_1\\3\\380N\\stage_00856.comdat_comdata.csv",
+          "stage": 856,
+          "sha256": "2dac1f0e3c49839e7b75595e1d248641b97d90fa8755af1da8e30ebee4df6cce",
+          "raw_rows": 25408,
+          "valid_rows": 25408,
+          "duplicates_removed": 0
+        },
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment_1016\\post_tensile_test\\1016\\sample_1\\3\\380N\\stage_00857.comdat_comdata.csv",
+          "stage": 857,
+          "sha256": "8596030a06a546fcf293908fa5e60692e682e69a3d6a630256476cc9020c15e3",
+          "raw_rows": 25408,
+          "valid_rows": 25408,
+          "duplicates_removed": 0
+        },
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment_1016\\post_tensile_test\\1016\\sample_1\\3\\380N\\stage_00858.comdat_comdata.csv",
+          "stage": 858,
+          "sha256": "6f8ca967c2115cb90babb19dafdc92d2b409634eb78c88a666fa733cd439792e",
+          "raw_rows": 25408,
+          "valid_rows": 25408,
+          "duplicates_removed": 0
+        },
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment_1016\\post_tensile_test\\1016\\sample_1\\3\\380N\\stage_00859.comdat_comdata.csv",
+          "stage": 859,
+          "sha256": "593be540fb1494491be9abcaf2bc8f97de30cebfb060251286edcd7bd2cbb008",
+          "raw_rows": 25408,
+          "valid_rows": 25408,
+          "duplicates_removed": 0
+        },
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment_1016\\post_tensile_test\\1016\\sample_1\\3\\380N\\stage_00860.comdat_comdata.csv",
+          "stage": 860,
+          "sha256": "89ecfe0ee129f2a6b5cb5d736e3eefdb2c32da9a7472f31510610d0868246bf0",
+          "raw_rows": 25408,
+          "valid_rows": 25408,
+          "duplicates_removed": 0
+        },
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment_1016\\post_tensile_test\\1016\\sample_1\\3\\380N\\stage_00861.comdat_comdata.csv",
+          "stage": 861,
+          "sha256": "32ce6b9cfd74890578fcff18dab05d36156bb808daa9989105dcf295b6e52ef7",
+          "raw_rows": 25408,
+          "valid_rows": 25408,
+          "duplicates_removed": 0
+        },
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment_1016\\post_tensile_test\\1016\\sample_1\\3\\380N\\stage_00862.comdat_comdata.csv",
+          "stage": 862,
+          "sha256": "0560750245e3927ca80b7b8bff599e649c7ffb79c95e7b15e4ecee68b48c04c5",
+          "raw_rows": 25408,
+          "valid_rows": 25408,
+          "duplicates_removed": 0
+        },
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment_1016\\post_tensile_test\\1016\\sample_1\\3\\380N\\stage_00863.comdat_comdata.csv",
+          "stage": 863,
+          "sha256": "3a7937211b35382b823006932a69b292d54df385600db2fb4174af28b91f8df4",
+          "raw_rows": 25408,
+          "valid_rows": 25408,
+          "duplicates_removed": 0
+        },
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment_1016\\post_tensile_test\\1016\\sample_1\\3\\380N\\stage_00864.comdat_comdata.csv",
+          "stage": 864,
+          "sha256": "46f21aa79a0eb73d53c6f2df55f9dd9f61b6dc607d22a4207ce53d9e4894139a",
+          "raw_rows": 25408,
+          "valid_rows": 25408,
+          "duplicates_removed": 0
+        },
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment_1016\\post_tensile_test\\1016\\sample_1\\3\\380N\\stage_00865.comdat_comdata.csv",
+          "stage": 865,
+          "sha256": "75f6e55aecc1bf34f03717ad600142603fdcedb2506de79ff73491b9373328bb",
+          "raw_rows": 25408,
+          "valid_rows": 25408,
+          "duplicates_removed": 0
+        },
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment_1016\\post_tensile_test\\1016\\sample_1\\3\\380N\\stage_00866.comdat_comdata.csv",
+          "stage": 866,
+          "sha256": "121cacbeead0ae57aba5559fca9851b81b0442f056e1e57767231803adcbb7b8",
+          "raw_rows": 25408,
+          "valid_rows": 25408,
+          "duplicates_removed": 0
+        },
+        {
+          "path": "D:\\MyProject\\uniform_pressure_experiment_1016\\post_tensile_test\\1016\\sample_1\\3\\380N\\stage_00867.comdat_comdata.csv",
+          "stage": 867,
+          "sha256": "3ced58af732c42243339bd4ff8d692ece0c4180bd05035700c2076adf9eacc78",
+          "raw_rows": 25408,
+          "valid_rows": 25408,
+          "duplicates_removed": 0
+        }
+      ],
+      "calibration_source_sha256": "dce84b8e873af2adcaf3dbbbfe4aad4693cba8e5b467b4f3e955e356b45bff0f",
+      "temporal_check": {
+        "affine_axial_strain_by_frame": [
+          0.0031411101796216577,
+          0.0031421693706296374,
+          0.0031432763473204493,
+          0.003143542701976522,
+          0.0031449736744241534,
+          0.003145693073153597,
+          0.0031467808229745675,
+          0.0031464212436478228,
+          0.00314593553722013,
+          0.003146264614602955,
+          0.0031452944388413884,
+          0.0031439076053206704,
+          0.0031450221901680258,
+          0.0031467182259632236,
+          0.003147151920370153
+        ],
+        "affine_axial_strain_mean": 0.003144950796415663,
+        "affine_axial_strain_range": 6.041740748495127e-06,
+        "affine_axial_strain_range_percent_of_mean": 0.19210922967001484,
+        "role": "temporal consistency diagnostic; affine fields are not removed from observations"
+      },
+      "display_is_final": false,
+      "initial_scan_success_points": 43,
+      "recovery_extra_fe": 138,
+      "display_gamma": 1.7575106248547933e-08,
+      "display_role": "unselected curvature-peak field; diagnostic only",
+      "corner_neighborhood": [
+        {
+          "gamma": 3.7275937203149377e-08,
+          "nu": 0.26,
+          "converged": true,
+          "residual_norm": 0.108266110046146,
+          "regularization_norm": 412.7251421107989,
+          "data_cost": 0.0058607752922621,
+          "regularization_cost": 0.0031748296476644,
+          "regularization_resolved": true,
+          "iterations": 173,
+          "evaluations": 271,
+          "final_gradient_inf": 3.036084336920737e-09,
+          "gradient_tolerance_satisfied": false,
+          "stop_message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+          "initial_source": "gamma_5.42868e-08",
+          "curvature": 1.005339866996193,
+          "eligible": true,
+          "selected": false,
+          "solution_directory": null
+        },
+        {
+          "gamma": 2.5595479226995333e-08,
+          "nu": 0.26,
+          "converged": true,
+          "residual_norm": 0.1049454011453277,
+          "regularization_norm": 439.5169180862577,
+          "data_cost": 0.0055067686107768,
+          "regularization_cost": 0.002472204901999,
+          "regularization_resolved": true,
+          "iterations": 142,
+          "evaluations": 399,
+          "final_gradient_inf": 2.905729523786046e-09,
+          "gradient_tolerance_satisfied": false,
+          "stop_message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+          "initial_source": "gamma_3.72759e-08",
+          "curvature": 1.114829235929372,
+          "eligible": true,
+          "selected": false,
+          "solution_directory": null
+        },
+        {
+          "gamma": 1.7575106248547933e-08,
+          "nu": 0.26,
+          "converged": true,
+          "residual_norm": 0.102489566430996,
+          "regularization_norm": 465.914114285538,
+          "data_cost": 0.0052520556136067,
+          "regularization_cost": 0.0019075665471154,
+          "regularization_resolved": true,
+          "iterations": 132,
+          "evaluations": 261,
+          "final_gradient_inf": 1.7349354070659401e-09,
+          "gradient_tolerance_satisfied": false,
+          "stop_message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+          "initial_source": "gamma_2.55955e-08",
+          "curvature": 1.1987090520783472,
+          "eligible": true,
+          "selected": false,
+          "solution_directory": null
+        },
+        {
+          "gamma": 1.2067926406393293e-08,
+          "nu": 0.26,
+          "converged": true,
+          "residual_norm": 0.1007185099773917,
+          "regularization_norm": 491.59784097128767,
+          "data_cost": 0.0050721091260329,
+          "regularization_cost": 0.0014582184577262,
+          "regularization_resolved": true,
+          "iterations": 131,
+          "evaluations": 282,
+          "final_gradient_inf": 1.162243164824593e-09,
+          "gradient_tolerance_satisfied": false,
+          "stop_message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+          "initial_source": "gamma_1.75751e-08",
+          "curvature": null,
+          "eligible": true,
+          "selected": false,
+          "solution_directory": null
+        },
+        {
+          "gamma": 8.286427728546861e-09,
+          "nu": 0.26,
+          "converged": false,
+          "residual_norm": 0.0994079336103602,
+          "regularization_norm": 517.516618067268,
+          "data_cost": 0.0049409686323408,
+          "regularization_cost": 0.0011096498311172,
+          "regularization_resolved": true,
+          "iterations": 124,
+          "evaluations": 548,
+          "final_gradient_inf": 1.107971438761465e-09,
+          "gradient_tolerance_satisfied": false,
+          "stop_message": "ABNORMAL: ",
+          "initial_source": "gamma_1.20679e-08",
+          "curvature": null,
+          "eligible": false,
+          "selected": false,
+          "solution_directory": "l_curve\\gamma_8.28643e-09\\recovery_1"
+        }
+      ],
+      "modulus_nodal_range_MPa": [
+        1330.0721296733257,
+        2003.8811834998965
+      ],
+      "width_mean_endpoints_MPa": [
+        1991.8946932895487,
+        1331.8037732871942
+      ],
+      "width_mean_range_MPa": [
+        1331.8037732871942,
+        1991.8946932895487
+      ],
+      "final_checks": [
+        {
+          "nu": 0.26,
+          "prediction_recomputed": true,
+          "objective_recomputed": 0.007159622160722218,
+          "gradient_inf_recomputed": 1.7349354070693283e-09,
+          "gradient_inf_saved": 1.7349354070659401e-09,
+          "converged": true,
+          "stop_message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+          "evaluations": 261
+        }
+      ],
+      "calibration": [
+        {
+          "infill_percent": 100,
+          "batch": 1013,
+          "n": 5,
+          "mean_E_MPa": 2399.573262132105,
+          "sd_E_MPa": 69.86429169409345,
+          "fit_method": "independent"
+        },
+        {
+          "infill_percent": 90,
+          "batch": 1013,
+          "n": 4,
+          "mean_E_MPa": 2120.05686119206,
+          "sd_E_MPa": 34.48691066602953,
+          "fit_method": "independent"
+        },
+        {
+          "infill_percent": 80,
+          "batch": 1016,
+          "n": 5,
+          "mean_E_MPa": 1842.0790060073489,
+          "sd_E_MPa": 46.50500622544038,
+          "fit_method": "independent"
+        },
+        {
+          "infill_percent": 70,
+          "batch": 1016,
+          "n": 5,
+          "mean_E_MPa": 1708.3381341110266,
+          "sd_E_MPa": 26.726979564091817,
+          "fit_method": "independent"
+        },
+        {
+          "infill_percent": 60,
+          "batch": 1013,
+          "n": 5,
+          "mean_E_MPa": 1638.661938579892,
+          "sd_E_MPa": 137.95538881325984,
+          "fit_method": "independent"
+        },
+        {
+          "infill_percent": 50,
+          "batch": 1013,
+          "n": 5,
+          "mean_E_MPa": 1396.4107925415587,
+          "sd_E_MPa": 76.58266428520218,
+          "fit_method": "independent"
+        },
+        {
+          "infill_percent": 40,
+          "batch": 1013,
+          "n": 5,
+          "mean_E_MPa": 1231.8683164619763,
+          "sd_E_MPa": 56.04510725642147,
+          "fit_method": "independent"
+        }
+      ],
+      "region_boundaries_x_mm": [
+        16.809986541300006,
+        32.809986541300006,
+        48.809986541300006,
+        64.8099865413,
+        80.8099865413,
+        96.8099865413
+      ],
+      "direction_preference_axial_response": "A_decreasing_raw_Y",
+      "direction_preference_regional_modulus": "A_decreasing_raw_Y",
+      "direction_response_preference": "A_decreasing_raw_Y"
+    }
+  ],
+  "code_sha256": "8f3d875b61c3bee6b15bee5dfc83fefbf5025c5594fdff7857578d61878ae650",
+  "smoke_checks": {
+    "2": {
+      "prepared_metadata_sha256": "2cc7c323fddbbe4feb27ab427404a86f3e54c962d96e144286640b649afbca3a",
+      "prepared_fields_sha256": "35c88e3af7488bd8422556b1eec57b8cb6dbcf98683f7fb147b01c2898cccb52",
+      "mesh_elements": [
+        129,
+        19
+      ],
+      "nodes": 2600,
+      "observations": 25610,
+      "initialization": {
+        "source": "homogeneous_dic_fit",
+        "uniform_E_MPa": 1623.3308832060573,
+        "fit_cases": [
+          "380N"
+        ],
+        "nu": 0.26,
+        "uses_calibration": false,
+        "uses_prediction_cases": false
+      },
+      "homogeneous_analytic_max_error_mm": 3.0941915696303113e-13,
+      "directional_derivative": [
+        {
+          "step": 0.001,
+          "adjoint": -0.008964853969807297,
+          "finite_difference": -0.008964854268753153,
+          "relative_error": 3.3346426718740546e-08
+        },
+        {
+          "step": 0.0003,
+          "adjoint": -0.008964853969807297,
+          "finite_difference": -0.008964853511437647,
+          "relative_error": 5.112962810903537e-08
+        },
+        {
+          "step": 0.0001,
+          "adjoint": -0.008964853969807297,
+          "finite_difference": -0.008964849603082525,
+          "relative_error": 4.870937983388586e-07
+        }
+      ],
+      "smoke_evaluations": 5,
+      "smoke_initial_cost": 0.1374528647052257,
+      "smoke_final_cost": 0.037644863283124774,
+      "elapsed_s": 0.2939142999239266,
+      "role": "input/implementation smoke only; not gamma selection or experimental validation"
+    },
+    "3": {
+      "prepared_metadata_sha256": "5beb98bbcc08ce65574b39a2fb631f98b4fda1f9ec236c02441fba05f6bf7766",
+      "prepared_fields_sha256": "7a36a0cf2701714efe528feb2dc7e73daa076cece53890f0d8acf15cfb487444",
+      "mesh_elements": [
+        130,
+        19
+      ],
+      "nodes": 2620,
+      "observations": 25408,
+      "initialization": {
+        "source": "homogeneous_dic_fit",
+        "uniform_E_MPa": 1616.5114128071996,
+        "fit_cases": [
+          "380N"
+        ],
+        "nu": 0.26,
+        "uses_calibration": false,
+        "uses_prediction_cases": false
+      },
+      "homogeneous_analytic_max_error_mm": 4.587996649263459e-13,
+      "directional_derivative": [
+        {
+          "step": 0.001,
+          "adjoint": -0.008592994735456907,
+          "finite_difference": -0.008592994764543282,
+          "relative_error": 3.38489391255487e-09
+        },
+        {
+          "step": 0.0003,
+          "adjoint": -0.008592994735456907,
+          "finite_difference": -0.008592993936245205,
+          "relative_error": 9.3007353854056e-08
+        },
+        {
+          "step": 0.0001,
+          "adjoint": -0.008592994735456907,
+          "finite_difference": -0.008592992963227242,
+          "relative_error": 2.0624121387981432e-07
+        }
+      ],
+      "smoke_evaluations": 5,
+      "smoke_initial_cost": 0.09390918582714455,
+      "smoke_final_cost": 0.02845475691795172,
+      "elapsed_s": 0.27727280010003597,
+      "role": "input/implementation smoke only; not gamma selection or experimental validation"
+    }
+  },
+  "inverse_direction_independent": true,
+  "force_assumed": true,
+  "direction_independently_verified": false
+}
