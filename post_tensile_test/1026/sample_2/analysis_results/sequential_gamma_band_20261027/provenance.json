@@ -1,0 +1,180 @@
+{
+  "source_protocol_sha256": "bc922bf6990b2007b06bb512f1e92002ad77087962a938bc1e805158642be04e",
+  "source_selection_sha256": "c6effa01860264dc1819c5319118675ef2f51346e89f072356d338f251c6e987",
+  "saved_fields": [
+    {
+      "field": "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1026\\sample_2\\analysis_results\\sequential_lcurve_20261027\\scan\\gamma_4.29193426013e-11\\fields.npz",
+      "sha256": "d55c3df45b1698448b94c91bf971b80b6b6fcdc26cce9561dffee91c9073d078"
+    },
+    {
+      "field": "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1026\\sample_2\\analysis_results\\sequential_lcurve_20261027\\scan\\gamma_6.25055192527e-11\\fields.npz",
+      "sha256": "38fc38fb55b7b2775be390c6eb4ccc9b973148303138321b4d82b466524dfd86"
+    },
+    {
+      "field": "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1026\\sample_2\\analysis_results\\sequential_lcurve_20261027\\scan\\gamma_9.10298177992e-11\\fields.npz",
+      "sha256": "cd51ff657748e3c267194afc0e166803b94e7db23b887b777ca9ebfc84e191c6"
+    },
+    {
+      "field": "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1026\\sample_2\\analysis_results\\sequential_lcurve_20261027\\scan\\gamma_1.32571136559e-10\\fields.npz",
+      "sha256": "7330cac6540185bb2080c756e1a973da3e4e40bd8d6a38f47137f1a275eedb08"
+    },
+    {
+      "field": "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1026\\sample_2\\analysis_results\\sequential_lcurve_20261027\\scan\\gamma_1.93069772888e-10\\fields.npz",
+      "sha256": "5767d5fab6c19af1c6ed7f7a146961cd941021480552e0bf7bb8cf003dd6aa07"
+    },
+    {
+      "field": "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1026\\sample_2\\analysis_results\\sequential_lcurve_20261027\\scan\\gamma_2.81176869797e-10\\fields.npz",
+      "sha256": "5024bf4c2d385375b590978631e90b11db81db8daeb9d15f1910e1b6d80108a9"
+    },
+    {
+      "field": "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1026\\sample_2\\analysis_results\\sequential_lcurve_20261027\\scan\\gamma_4.09491506238e-10\\fields.npz",
+      "sha256": "408ad283ef7d3e395277e1090e7089341aca539bebb4b4bea183e6bbc819d803"
+    },
+    {
+      "field": "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1026\\sample_2\\analysis_results\\sequential_lcurve_20261027\\scan\\gamma_5.96362331659e-10\\fields.npz",
+      "sha256": "804288168d1e24fc28f963b145cb24cb2a469a5b4a13c5e626a5f678c706777f"
+    },
+    {
+      "field": "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1026\\sample_2\\analysis_results\\sequential_lcurve_20261027\\scan\\gamma_8.68511373751e-10\\fields.npz",
+      "sha256": "525798a1a40039b30534a8df8d3f3ac949f05ccdbc6ab1cf7b821c8955cddbf6"
+    },
+    {
+      "field": "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1026\\sample_2\\analysis_results\\sequential_lcurve_20261027\\scan\\gamma_1.26485521686e-09\\fields.npz",
+      "sha256": "43d2170c5d48e67e4e4453af1f253d4b18de2aab7898cd0b5604807ad1c92a4c"
+    },
+    {
+      "field": "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1026\\sample_2\\analysis_results\\sequential_lcurve_20261027\\scan\\gamma_1.84206996933e-09\\fields.npz",
+      "sha256": "edb98940f1202f06c7c8cf5af6fd44e6762c9808044351f116ec8b1eb37b41a9"
+    },
+    {
+      "field": "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1026\\sample_2\\analysis_results\\sequential_lcurve_20261027\\scan\\gamma_2.68269579528e-09\\fields.npz",
+      "sha256": "c8280bb40ed9f81616e7e7673cec5b8fbe52c915472e100879ddc17a72dc28f0"
+    },
+    {
+      "field": "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1026\\sample_2\\analysis_results\\sequential_lcurve_20261027\\scan\\gamma_3.90693993705e-09\\fields.npz",
+      "sha256": "db0b198e877d6ff9a0d930d942e538cfcce957b57f3a60740ee98227a9eefaa9"
+    },
+    {
+      "field": "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1026\\sample_2\\analysis_results\\sequential_lcurve_20261027\\scan\\gamma_5.68986602902e-09\\fields.npz",
+      "sha256": "79d8f4b084617e58154f4d7df339ce316ce34dba3dd6a89a935fca740e962c0f"
+    },
+    {
+      "field": "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1026\\sample_2\\analysis_results\\sequential_lcurve_20261027\\scan\\gamma_1.20679264064e-08\\fields.npz",
+      "sha256": "cadf254c00067936dacafec24fd583b51b603fe6c67b6ee168355b743db9c327"
+    },
+    {
+      "field": "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1026\\sample_2\\analysis_results\\sequential_lcurve_20261027\\scan\\gamma_1.75751062485e-08\\fields.npz",
+      "sha256": "a5f84d61d6e8e538d4cfd6cd29e8d1e0a7a4b971a190a53095d988d9c772e0bd"
+    },
+    {
+      "field": "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1026\\sample_2\\analysis_results\\sequential_lcurve_20261027\\scan\\gamma_2.5595479227e-08\\fields.npz",
+      "sha256": "2632d29834c9186d13622c7e5a2d915e4e79298622307e6bc3acef3db09ad7dc"
+    },
+    {
+      "field": "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1026\\sample_2\\analysis_results\\sequential_lcurve_20261027\\scan\\gamma_3.72759372031e-08\\fields.npz",
+      "sha256": "d9b53b003604af245a6e5242f4cac2bc64658110ef4c35f0f517fda86ffcce66"
+    },
+    {
+      "field": "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1026\\sample_2\\analysis_results\\sequential_lcurve_20261027\\scan\\gamma_5.42867543932e-08\\fields.npz",
+      "sha256": "c7b55c2dddedab5d29d811efb2e489aad3032b92128739155538378cfb7430c8"
+    },
+    {
+      "field": "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1026\\sample_2\\analysis_results\\sequential_lcurve_20261027\\scan\\gamma_7.90604321091e-08\\fields.npz",
+      "sha256": "9c380a6f342ede494a52affe1cb1ea5c406a376ca1b5a34c53f9353b232e44e3"
+    },
+    {
+      "field": "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1026\\sample_2\\analysis_results\\sequential_lcurve_20261027\\scan\\gamma_1.15139539933e-07\\fields.npz",
+      "sha256": "7a34d9b5e17e317317ecaf280b250dd873e7955d77db345268a73a607db78ed8"
+    },
+    {
+      "field": "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1026\\sample_2\\analysis_results\\sequential_lcurve_20261027\\scan\\gamma_1.67683293681e-07\\fields.npz",
+      "sha256": "027ccf8b030674ee59bea9c2e826d1c245faa23b727e3bfec29e92ad3bc392de"
+    },
+    {
+      "field": "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1026\\sample_2\\analysis_results\\sequential_lcurve_20261027\\scan\\gamma_2.44205309455e-07\\fields.npz",
+      "sha256": "facef0cc4ea823a0cc464d2a0da801b3c3189f883aa2a574ccd103ecb82bc68a"
+    },
+    {
+      "field": "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1026\\sample_2\\analysis_results\\sequential_lcurve_20261027\\scan\\gamma_3.55648030622e-07\\fields.npz",
+      "sha256": "64fa1393f2600d17b0d224f9338c39af3562f4a4c09019e073186d74fe5bd359"
+    },
+    {
+      "field": "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1026\\sample_2\\analysis_results\\sequential_lcurve_20261027\\scan\\gamma_5.17947467923e-07\\fields.npz",
+      "sha256": "758c8d46da3060ab1af069194c1a523d8dbf571010bd74d9c9f678f6a35b8067"
+    },
+    {
+      "field": "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1026\\sample_2\\analysis_results\\sequential_lcurve_20261027\\scan\\gamma_7.54312006335e-07\\fields.npz",
+      "sha256": "a0508286f6af0866cf972076b8065cb1605ec4b980f9e50f6ef550777ed77e41"
+    },
+    {
+      "field": "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1026\\sample_2\\analysis_results\\sequential_lcurve_20261027\\scan\\gamma_1.09854114199e-06\\fields.npz",
+      "sha256": "3302eaed4d84a7372c509f5fbb23ea305d96928458cb0bbed3e7edcd95529511"
+    },
+    {
+      "field": "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1026\\sample_2\\analysis_results\\sequential_lcurve_20261027\\scan\\gamma_1.59985871961e-06\\fields.npz",
+      "sha256": "0d7e55d592fca5e4a2819d10043420bed5793870072df2cb9c372a9b36bd2542"
+    },
+    {
+      "field": "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1026\\sample_2\\analysis_results\\sequential_lcurve_20261027\\scan\\gamma_2.32995181052e-06\\fields.npz",
+      "sha256": "8463b4da6772b842c40ab7e3fbade02c7fafb517621a5f9bb2ede3c37b27a9f7"
+    },
+    {
+      "field": "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1026\\sample_2\\analysis_results\\sequential_lcurve_20261027\\scan\\gamma_3.3932217719e-06\\fields.npz",
+      "sha256": "8002bd65c1e30f9da5ee2178459c90652e02032802cdf9db9743e995874e2a43"
+    },
+    {
+      "field": "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1026\\sample_2\\analysis_results\\sequential_lcurve_20261027\\scan\\gamma_4.94171336132e-06\\fields.npz",
+      "sha256": "d10e2a421c57f1bcbb79d384d5954de154831fac0d700713a027bc9ac5c3b3fc"
+    },
+    {
+      "field": "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1026\\sample_2\\analysis_results\\sequential_lcurve_20261027\\scan\\gamma_7.19685673001e-06\\fields.npz",
+      "sha256": "7abcdf8c93756edfac95fdc1a104a491f66fa3730100a4b7dd164e4e81558952"
+    },
+    {
+      "field": "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1026\\sample_2\\analysis_results\\sequential_lcurve_20261027\\scan\\gamma_1.04811313415e-05\\fields.npz",
+      "sha256": "b5f730fb66b35194eac397f61070fb8a31e5f002eca7a936e8ea10099dc31dc1"
+    },
+    {
+      "field": "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1026\\sample_2\\analysis_results\\sequential_lcurve_20261027\\scan\\gamma_1.52641796718e-05\\fields.npz",
+      "sha256": "87274a8e500908d9a4b021fd9ef55213daa31f007a0eea35c1ea14cc24723f75"
+    },
+    {
+      "field": "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1026\\sample_2\\analysis_results\\sequential_lcurve_20261027\\scan\\gamma_2.22299648253e-05\\fields.npz",
+      "sha256": "26872f0f7c0bc36db2282645288ecddcc38c6a88ca3f08ed32ac8267e010dc07"
+    },
+    {
+      "field": "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1026\\sample_2\\analysis_results\\sequential_lcurve_20261027\\scan\\gamma_3.23745754282e-05\\fields.npz",
+      "sha256": "dd6fd7c1565be29bacad5ba7634c2bf189f6d0349a5315faf08918a3bc4fa663"
+    },
+    {
+      "field": "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1026\\sample_2\\analysis_results\\sequential_lcurve_20261027\\scan\\gamma_4.71486636346e-05\\fields.npz",
+      "sha256": "70392f0d69fa87332999d2ce0204b54125b74a3202469fc24e38898cb41196bb"
+    },
+    {
+      "field": "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1026\\sample_2\\analysis_results\\sequential_lcurve_20261027\\scan\\gamma_6.86648845004e-05\\fields.npz",
+      "sha256": "eb128ca7497d525c11d94d4c625fa3d01cc02aeb3320988c2825cc7647cdea78"
+    },
+    {
+      "field": "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1026\\sample_2\\analysis_results\\sequential_lcurve_20261027\\scan\\gamma_0.0001\\fields.npz",
+      "sha256": "aa1e624cb5c6e2a565c6a094df67330c5938137f07f3fc8b9bd3726b20a0cc5e"
+    }
+  ],
+  "original_lcurve_gamma_unchanged": 3.5564803062231287e-07,
+  "requested_band": [
+    1e-10,
+    1e-08
+  ],
+  "representative_targets": [
+    1e-08,
+    1.2648552168552956e-09,
+    1e-10
+  ],
+  "representative_gammas": [
+    5.689866029018305e-09,
+    1.2648552168552958e-09,
+    1.3257113655901109e-10
+  ],
+  "no_optimization_executed": true,
+  "reference_used_for_selection": false,
+  "implementation_sha256": "6c6d784642642a8387e840d1315091107585dbeb8679066852a8d86175857c65"
+}
