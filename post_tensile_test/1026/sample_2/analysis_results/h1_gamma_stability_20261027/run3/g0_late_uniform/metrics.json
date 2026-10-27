@@ -1,0 +1,42 @@
+{
+  "run": 3,
+  "job": "g0_late_uniform",
+  "gamma": 1.2067926406393291e-08,
+  "split": "late",
+  "initialization": "uniform",
+  "converged": true,
+  "stop_message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+  "iterations": 167,
+  "evaluations": 312,
+  "final_gradient_inf": 7.6969952588331e-10,
+  "gradient_tolerance_satisfied": false,
+  "final_cost": 0.013144910925058245,
+  "residual_norm": 0.14623973927157075,
+  "regularization_norm": 637.4531908055003,
+  "target_change_from_full_percent": 0.09277449827184764,
+  "field_change_from_saved_continuation_percent": 0.05218871439731644,
+  "saved_continuation_converged": false,
+  "saved_continuation_cost": 0.0131145459160648,
+  "saved_continuation_fields_sha256": "384200a4cbefeedb3a7cd94292a7a1efaf7e723a5259adc216b2979ad09ef7e1",
+  "errors_on_splits": {
+    "full": {
+      "axial_relative_error_percent": 0.9431990491215948,
+      "transverse_relative_error_percent": 32.45406324690768,
+      "displacement_relative_error_percent": 2.006870502709698
+    },
+    "early": {
+      "axial_relative_error_percent": 0.953377018921939,
+      "transverse_relative_error_percent": 32.26527001593801,
+      "displacement_relative_error_percent": 2.0076594347021994
+    },
+    "late": {
+      "axial_relative_error_percent": 0.9520160057743242,
+      "transverse_relative_error_percent": 32.37238138807408,
+      "displacement_relative_error_percent": 2.00859051079585
+    }
+  },
+  "minimum_E_MPa": 915.7044145160844,
+  "maximum_E_MPa": 2110.292493919018,
+  "source_calibration_used": false,
+  "line_search_restarts": []
+}

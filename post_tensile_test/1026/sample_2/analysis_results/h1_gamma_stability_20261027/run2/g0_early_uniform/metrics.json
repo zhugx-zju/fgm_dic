@@ -1,0 +1,42 @@
+{
+  "run": 2,
+  "job": "g0_early_uniform",
+  "gamma": 1.2067926406393291e-08,
+  "split": "early",
+  "initialization": "uniform",
+  "converged": false,
+  "stop_message": "ABNORMAL: ",
+  "iterations": 175,
+  "evaluations": 313,
+  "final_gradient_inf": 7.590474131981818e-10,
+  "gradient_tolerance_satisfied": false,
+  "final_cost": 0.010261709986348674,
+  "residual_norm": 0.12678076750551937,
+  "regularization_norm": 607.2485110331977,
+  "target_change_from_full_percent": 0.1357445337132464,
+  "field_change_from_saved_continuation_percent": 0.1293174371866782,
+  "saved_continuation_converged": true,
+  "saved_continuation_cost": 0.010268696553012602,
+  "saved_continuation_fields_sha256": "a7a4688e6d18fd041d50e172afbab46217b33db79711483d825610479276b8eb",
+  "errors_on_splits": {
+    "full": {
+      "axial_relative_error_percent": 1.1458853788041494,
+      "transverse_relative_error_percent": 35.31923933819166,
+      "displacement_relative_error_percent": 2.3301868175505507
+    },
+    "early": {
+      "axial_relative_error_percent": 1.136693777442129,
+      "transverse_relative_error_percent": 35.57332941452667,
+      "displacement_relative_error_percent": 2.3265913909304237
+    },
+    "late": {
+      "axial_relative_error_percent": 1.1703335715681478,
+      "transverse_relative_error_percent": 35.00971166060192,
+      "displacement_relative_error_percent": 2.34056687668722
+    }
+  },
+  "minimum_E_MPa": 976.4888178837225,
+  "maximum_E_MPa": 2103.667559883164,
+  "source_calibration_used": false,
+  "line_search_restarts": []
+}
