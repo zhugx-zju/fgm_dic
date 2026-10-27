@@ -1,0 +1,259 @@
+{
+  "definition": "C2 natural cubic E(infill), through seven calibration means, no extrapolation.",
+  "infill_percent": [
+    40,
+    50,
+    60,
+    70,
+    80,
+    90,
+    100
+  ],
+  "E_MPa": [
+    985.3173453809236,
+    1119.9635930652971,
+    1276.0479512463494,
+    1472.296966192906,
+    1623.1692954666526,
+    2055.1776879419385,
+    2566.7065354178467
+  ],
+  "cubic_coefficients": [
+    [
+      0.0006482951692819583,
+      0.018196634650268956,
+      -0.05470828750153217,
+      0.11509517291754527,
+      -0.07915965529429954,
+      -7.21599412645446e-05
+    ],
+    [
+      0.0,
+      0.01944885507845856,
+      0.5653478945865278,
+      -1.0759007304594375,
+      2.3769544570669217,
+      0.002164798237937049
+    ],
+    [
+      13.399795251509156,
+      13.594283802293745,
+      19.4422512989436,
+      14.336722940214505,
+      27.347260206289334,
+      51.1384527593379
+    ],
+    [
+      985.3173453809236,
+      1119.9635930652971,
+      1276.0479512463494,
+      1472.296966192906,
+      1623.1692954666526,
+      2055.1776879419385
+    ]
+  ],
+  "minimum_analytic_derivative_MPa_per_percentage_point": 10.984244139525401,
+  "spatial_mapping": "phi_percent = 70 + 0.625*manufacturing_x_mm, only -48 <= x <= 48; inherited layer-center correspondence, not coordinate rescaling.",
+  "spatial_mapping_role": "Auxiliary continuous comparison assumption, not verified actual continuous infill.",
+  "displayed_references": "Black solid: smooth E(infill); grey dashed: original layered calibration.",
+  "no_optimization_or_gamma_reselection": true,
+  "source_protocol_sha256": "5fa761df7c0cee0115bf80711ca2c673c2a3a9cddec264987014eea3402bbdbf",
+  "source_calibration": [
+    {
+      "infill_percent": 40,
+      "batch": 1023,
+      "n": 4,
+      "mean_E_MPa": 985.3173453809236,
+      "sd_E_MPa": 32.56724874767779,
+      "fit_method": "individual_window_joint_3pct_monotone"
+    },
+    {
+      "infill_percent": 50,
+      "batch": 1023,
+      "n": 4,
+      "mean_E_MPa": 1119.9635930652971,
+      "sd_E_MPa": 36.2435593335999,
+      "fit_method": "individual_window_joint_3pct_monotone"
+    },
+    {
+      "infill_percent": 60,
+      "batch": 1023,
+      "n": 4,
+      "mean_E_MPa": 1276.0479512463494,
+      "sd_E_MPa": 30.423667556175324,
+      "fit_method": "individual_window_joint_3pct_monotone"
+    },
+    {
+      "infill_percent": 70,
+      "batch": 1023,
+      "n": 4,
+      "mean_E_MPa": 1472.296966192906,
+      "sd_E_MPa": 34.769355160469594,
+      "fit_method": "individual_window_joint_3pct_monotone"
+    },
+    {
+      "infill_percent": 80,
+      "batch": 1023,
+      "n": 4,
+      "mean_E_MPa": 1623.1692954666526,
+      "sd_E_MPa": 37.86737646970733,
+      "fit_method": "individual_window_joint_3pct_monotone"
+    },
+    {
+      "infill_percent": 90,
+      "batch": 1023,
+      "n": 4,
+      "mean_E_MPa": 2055.1776879419385,
+      "sd_E_MPa": 42.249205194328106,
+      "fit_method": "individual_window_joint_3pct_monotone"
+    },
+    {
+      "infill_percent": 100,
+      "batch": 1023,
+      "n": 4,
+      "mean_E_MPa": 2566.7065354178467,
+      "sd_E_MPa": 54.78717275398657,
+      "fit_method": "individual_window_joint_3pct_monotone"
+    }
+  ],
+  "source_fields": [
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1026\\sample_2\\analysis_results\\sequential_lcurve_gmax1e-8_20261027\\scan\\gamma_3.55648030622e-11\\fields.npz",
+      "sha256": "aba0f149e8faf79ca9280516e9a37386036bb4d019e982bd56ed52e51050765a"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1026\\sample_2\\analysis_results\\sequential_lcurve_gmax1e-8_20261027\\scan\\gamma_4.29193426013e-11\\fields.npz",
+      "sha256": "d55c3df45b1698448b94c91bf971b80b6b6fcdc26cce9561dffee91c9073d078"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1026\\sample_2\\analysis_results\\sequential_lcurve_gmax1e-8_20261027\\scan\\gamma_5.17947467923e-11\\fields.npz",
+      "sha256": "ca71973a17689214b2831a845e34d09b65883b792d06c3abeb19dc49108ce410"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1026\\sample_2\\analysis_results\\sequential_lcurve_gmax1e-8_20261027\\scan\\gamma_6.25055192527e-11\\fields.npz",
+      "sha256": "38fc38fb55b7b2775be390c6eb4ccc9b973148303138321b4d82b466524dfd86"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1026\\sample_2\\analysis_results\\sequential_lcurve_gmax1e-8_20261027\\scan\\gamma_7.54312006335e-11\\fields.npz",
+      "sha256": "478428ba596f274c236d59d2cef864b0c98428f0689cce11030a3620a1a1e952"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1026\\sample_2\\analysis_results\\sequential_lcurve_gmax1e-8_20261027\\scan\\gamma_9.10298177992e-11\\fields.npz",
+      "sha256": "cd51ff657748e3c267194afc0e166803b94e7db23b887b777ca9ebfc84e191c6"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1026\\sample_2\\analysis_results\\sequential_lcurve_gmax1e-8_20261027\\scan\\gamma_1.09854114199e-10\\fields.npz",
+      "sha256": "c3f8e5aae21462948141c628c2c1bae4cefb941c594bc53f83f40e6c6a47bc16"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1026\\sample_2\\analysis_results\\sequential_lcurve_gmax1e-8_20261027\\scan\\gamma_1.32571136559e-10\\fields.npz",
+      "sha256": "7330cac6540185bb2080c756e1a973da3e4e40bd8d6a38f47137f1a275eedb08"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1026\\sample_2\\analysis_results\\sequential_lcurve_gmax1e-8_20261027\\scan\\gamma_1.59985871961e-10\\fields.npz",
+      "sha256": "4bfd7fc6ed8fd2803029cd5a08669161feb6377ef0748accfebb60746aedbf96"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1026\\sample_2\\analysis_results\\sequential_lcurve_gmax1e-8_20261027\\scan\\gamma_1.93069772888e-10\\fields.npz",
+      "sha256": "5767d5fab6c19af1c6ed7f7a146961cd941021480552e0bf7bb8cf003dd6aa07"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1026\\sample_2\\analysis_results\\sequential_lcurve_gmax1e-8_20261027\\scan\\gamma_2.32995181052e-10\\fields.npz",
+      "sha256": "d5fb5febbef9d48f7808fa06fee8241c4cf799c861591fb71ffde57e48e7b6e0"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1026\\sample_2\\analysis_results\\sequential_lcurve_gmax1e-8_20261027\\scan\\gamma_2.81176869797e-10\\fields.npz",
+      "sha256": "3b980311f1df485f66ad84ad726673d72192ff655ad33a334083a5e00e291153"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1026\\sample_2\\analysis_results\\sequential_lcurve_gmax1e-8_20261027\\scan\\gamma_3.3932217719e-10\\fields.npz",
+      "sha256": "0116adf3c4c0c9fc8ca62bc153292929bddf767dd7b16c50a948ad0379ac7bc6"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1026\\sample_2\\analysis_results\\sequential_lcurve_gmax1e-8_20261027\\scan\\gamma_4.09491506238e-10\\fields.npz",
+      "sha256": "408ad283ef7d3e395277e1090e7089341aca539bebb4b4bea183e6bbc819d803"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1026\\sample_2\\analysis_results\\sequential_lcurve_gmax1e-8_20261027\\scan\\gamma_4.94171336132e-10\\fields.npz",
+      "sha256": "9ab53fab48d7b1339978e0e7b2566654d03b30b6edc1b76823eb0c6734aaa9c1"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1026\\sample_2\\analysis_results\\sequential_lcurve_gmax1e-8_20261027\\scan\\gamma_5.96362331659e-10\\fields.npz",
+      "sha256": "804288168d1e24fc28f963b145cb24cb2a469a5b4a13c5e626a5f678c706777f"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1026\\sample_2\\analysis_results\\sequential_lcurve_gmax1e-8_20261027\\scan\\gamma_7.19685673001e-10\\fields.npz",
+      "sha256": "1350a5f9bd0e9703aa113004700329614ae32f6546e7a69b2051457f176ebed2"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1026\\sample_2\\analysis_results\\sequential_lcurve_gmax1e-8_20261027\\scan\\gamma_8.68511373751e-10\\fields.npz",
+      "sha256": "525798a1a40039b30534a8df8d3f3ac949f05ccdbc6ab1cf7b821c8955cddbf6"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1026\\sample_2\\analysis_results\\sequential_lcurve_gmax1e-8_20261027\\scan\\gamma_1.04811313415e-09\\fields.npz",
+      "sha256": "70a0dedbefca6eb8d48b49068e7b25145013adc38d17ad8442a25be2f682df30"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1026\\sample_2\\analysis_results\\sequential_lcurve_gmax1e-8_20261027\\scan\\gamma_1.26485521686e-09\\fields.npz",
+      "sha256": "43d2170c5d48e67e4e4453af1f253d4b18de2aab7898cd0b5604807ad1c92a4c"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1026\\sample_2\\analysis_results\\sequential_lcurve_gmax1e-8_20261027\\scan\\gamma_1.52641796718e-09\\fields.npz",
+      "sha256": "cf91192213dfb89bbf5736959f144fce9674634209c7546f83cf1417aa8007f8"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1026\\sample_2\\analysis_results\\sequential_lcurve_gmax1e-8_20261027\\scan\\gamma_1.84206996933e-09\\fields.npz",
+      "sha256": "edb98940f1202f06c7c8cf5af6fd44e6762c9808044351f116ec8b1eb37b41a9"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1026\\sample_2\\analysis_results\\sequential_lcurve_gmax1e-8_20261027\\scan\\gamma_2.22299648253e-09\\fields.npz",
+      "sha256": "0cbabee1cdb0e1c79549e2519f886350bf8998a51f9709c71d028a56ed4db25c"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1026\\sample_2\\analysis_results\\sequential_lcurve_gmax1e-8_20261027\\scan\\gamma_2.68269579528e-09\\fields.npz",
+      "sha256": "c8280bb40ed9f81616e7e7673cec5b8fbe52c915472e100879ddc17a72dc28f0"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1026\\sample_2\\analysis_results\\sequential_lcurve_gmax1e-8_20261027\\scan\\gamma_3.23745754282e-09\\fields.npz",
+      "sha256": "e99a287b7ae8a7303f849baa7e56b86830581f369569d4fa50d78b9bfacfb452"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1026\\sample_2\\analysis_results\\sequential_lcurve_gmax1e-8_20261027\\scan\\gamma_3.90693993705e-09\\fields.npz",
+      "sha256": "db0b198e877d6ff9a0d930d942e538cfcce957b57f3a60740ee98227a9eefaa9"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1026\\sample_2\\analysis_results\\sequential_lcurve_gmax1e-8_20261027\\scan\\gamma_4.71486636346e-09\\fields.npz",
+      "sha256": "ceb1422a8b5b85aba2e42c2098bd8ba7c0b65687468fe4bcdba69c35357dcdb5"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1026\\sample_2\\analysis_results\\sequential_lcurve_gmax1e-8_20261027\\scan\\gamma_5.68986602902e-09\\fields.npz",
+      "sha256": "97c798558d67270c3d9ce641b80265d3013d67a4aec05a9076a56d615cd639a5"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1026\\sample_2\\analysis_results\\sequential_lcurve_gmax1e-8_20261027\\scan\\gamma_6.86648845004e-09\\fields.npz",
+      "sha256": "31d2efa9028703585fe80904b86f93bebbbcf081304fc52301b1930936ee587f"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1026\\sample_2\\analysis_results\\sequential_lcurve_gmax1e-8_20261027\\scan\\gamma_1e-08\\fields.npz",
+      "sha256": "adf0de38863cb589b9987573377fc25bd5a3b94dcdc3f9ac2f56326892bea534"
+    }
+  ],
+  "independent_adaptive_quad_checks": [
+    {
+      "gamma": 1.0985411419875573e-10,
+      "adaptive_quad_relative_error_percent": 10.673014114756135,
+      "adaptive_quad_absolute_error_estimate": 4.831157696116861e-11
+    },
+    {
+      "gamma": 1.2648552168552958e-09,
+      "adaptive_quad_relative_error_percent": 10.401836874824104,
+      "adaptive_quad_absolute_error_estimate": 9.453711175638332e-11
+    },
+    {
+      "gamma": 1e-08,
+      "adaptive_quad_relative_error_percent": 10.819364768854092,
+      "adaptive_quad_absolute_error_estimate": 1.153143156307204e-13
+    }
+  ],
+  "implementation_sha256": "9f006f285e0c6fd2efbc98bc844398d68e0e9188ea4309802d7d3330cfb2dd43"
+}

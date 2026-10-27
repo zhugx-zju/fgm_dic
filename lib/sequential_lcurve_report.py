@@ -185,6 +185,8 @@ def analyze(study: Path, output: Path):
                 ax.plot(mesh.plot_x[0]-mesh.geo_l/2,profile,color=color,lw=1.4,label=f'阶段{index}结果')
             reference_x=np.linspace(-48.,48.,1001)
             ax.plot(reference_x,smooth_reference(reference_x),color='black',lw=1.3,label='连续平滑标定E(φ)，不参与选γ')
+            ax.stairs(values,np.r_[-mesh.geo_l/2,np.arange(-40.,41.,16.),mesh.geo_l/2],baseline=None,
+                      color='#777777',ls='--',lw=1.2,label='分层标定阶梯线')
             ax.set(title=f'{label}，γ={gamma:.3g}',ylabel='宽度均值 E (MPa)')
             ax.legend(frameon=False,ncol=4,fontsize=8)
             plotted_map=map_ax.pcolormesh(mesh.plot_x-mesh.geo_l/2,mesh.plot_y,field.reshape(mesh.nods_y,mesh.nods_x),

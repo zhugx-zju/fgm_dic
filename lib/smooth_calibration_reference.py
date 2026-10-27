@@ -141,15 +141,19 @@ def analyze(study:Path,output:Path):
     colors=('#0072B2','#009E73','#D55E00')
     fig,ax=plt.subplots(figsize=(10,5),constrained_layout=True)
     ax.plot(dense_fill,density_reference(dense_fill),color='black',lw=1.8,label='连续平滑标定分布 E(φ)，C²三次样条')
+    infill_edges=np.r_[infill[0],(infill[:-1]+infill[1:])/2,infill[-1]]
+    ax.stairs(values,infill_edges,baseline=None,color='#777777',ls='--',lw=1.3,label='分层标定阶梯线')
     ax.errorbar(infill,values,yerr=calibration.sd_E_MPa.to_numpy(),fmt='o',color='black',ms=4,capsize=3,lw=.9,label='标定均值 ± 组内SD')
     for gamma,color in zip(picked,colors):
         profile,_=profiles[gamma]
         ax.plot(dense_fill,np.interp((dense_fill-70)/.625,x,profile),color=color,lw=1.5,label=f'顺序反演 γ={gamma:.3g}')
-    ax.set(xlabel='连续化填充率 φ (%)',ylabel='E (MPa)',xlim=(40,100),title='将七层标定连续化为光滑E(φ)，不再用层中心折线')
+    ax.set(xlabel='连续化填充率 φ (%)',ylabel='E (MPa)',xlim=(40,100),title='连续光滑分布、分层标定与顺序反演结果')
     ax.legend(frameon=False,fontsize=9,ncol=2)
     save(fig,output/'smooth_E_of_infill')
     fig,ax=plt.subplots(figsize=(10,5),constrained_layout=True)
     ax.plot(xi,spatial_reference(xi),color='black',lw=1.8,label='连续平滑标定参照 E[φ(ξ)]')
+    spatial_edges=np.r_[x[0],np.arange(-40.,41.,16.),x[-1]]
+    ax.stairs(values,spatial_edges,baseline=None,color='#777777',ls='--',lw=1.3,label='分层标定阶梯线')
     for gamma,color in zip(picked,colors):
         ax.plot(x,profiles[gamma][0],color=color,lw=1.5,label=f'最终诊断场 γ={gamma:.3g}')
     ax.set(xlabel='制造坐标 ξ (mm)',ylabel='E (MPa)',xlim=(x[0],x[-1]),title='同一空间对应下，与连续平滑模量分布比较')
@@ -162,6 +166,7 @@ def analyze(study:Path,output:Path):
     ax=fig.add_subplot(grid[0])
     ax.plot(x,profile,color='#009E73',lw=1.8,label='顺序反演最终场：宽度均值')
     ax.plot(xi,spatial_reference(xi),color='black',lw=1.8,label='连续平滑标定参照')
+    ax.stairs(values,spatial_edges,baseline=None,color='#777777',ls='--',lw=1.3,label='分层标定阶梯线')
     ax.set(ylabel='E (MPa)',title=f'γ={gamma:.3g}诊断结果：修正后的连续平滑参照',xlim=(x[0],x[-1]))
     ax.legend(frameon=False,fontsize=9)
     map_ax=fig.add_subplot(grid[1],sharex=ax)
@@ -174,6 +179,7 @@ def analyze(study:Path,output:Path):
         minimum_analytic_derivative_MPa_per_percentage_point=min_derivative,
         spatial_mapping='phi_percent = 70 + 0.625*manufacturing_x_mm, only -48 <= x <= 48; inherited layer-center correspondence, not coordinate rescaling.',
         spatial_mapping_role='Auxiliary continuous comparison assumption, not verified actual continuous infill.',
+        displayed_references='Black solid: smooth E(infill); grey dashed: original layered calibration.',
         no_optimization_or_gamma_reselection=True,source_protocol_sha256=file_sha256(study/'protocol.json'),
         source_calibration=records,source_fields=sources,independent_adaptive_quad_checks=quad_checks,
         implementation_sha256=file_sha256(Path(__file__)))
@@ -187,7 +193,7 @@ def analyze(study:Path,output:Path):
     for gamma in picked:
         row=table[table.gamma==gamma].iloc[0]
         lines.append(f'| {gamma:.4g} | {row.smooth_mean_absolute_relative_error_percent:.4f} | {row.historical_linear_mean_absolute_relative_error_percent:.4f} | {row.layered_mean_absolute_relative_error_percent:.4f} |')
-    lines+=['','原30个有效最终场均按新参照重算，见all_smooth_reference_errors.csv。新图不再把旧折线作为光滑分布；阶梯误差仅保留作历史分层表示对照。','',
+    lines+=['','原30个有效最终场均按新参照重算，见all_smooth_reference_errors.csv。图中同时保留黑色实线的连续光滑E(φ)和灰色虚线的分层标定阶梯线；阶梯误差作为分层表示的独立对照，旧层中心折线不再冒充光滑参照。','',
         '核验：标定均值逐点通过，逐区间导数最小值与C²拼接解析检查；相对差异积分在节点、样条结点与误差多项式实根处切分，8点/16点Gauss一致；三个展示点另以独立自适应quad核对。常值场10%差异解析检查通过。原准备数据哈希不变。','',
         '![连续E随填充率分布](smooth_E_of_infill.png)','', '![连续参照空间比较](smooth_spatial_comparison.png)','', '![修正后的结果图](corrected_final_field.png)','',
         '复现：`python -B -m lib.smooth_calibration_reference --study <新范围顺序扫描目录> --output <新输出目录>`。']

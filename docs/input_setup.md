@@ -1,5 +1,7 @@
 # 当前输入状态与配置要求
 
+结果图同时保留两种标定参照：黑色实线为连续光滑E(φ)，灰色虚线为原分层标定阶梯线，彩线为反演结果；两种参照不互相替代。当前叠加图见`post_tensile_test/1026/sample_2/analysis_results/sequential_lcurve_gmax1e-8_20261027/smooth_and_layered_20261027/`。本次仅补回显示线，数值误差与前次一致。
+
 当前用户指定的辅助参照为随填充率变化的完整连续光滑E(φ)，不能用层中心分段直线代替。`lib/smooth_calibration_reference.py`以本次七个单调标定均值构造C²自然三次样条，并解析核验单调不减；在填充率40%–100%上定义，不外推。空间比较暂保留既有层中心对应φ=70+0.625ξ、ξ∈[-48,48] mm，不缩放物理坐标，不把连续化参照视为实测连续真值。修正图表和误差见`post_tensile_test/1026/sample_2/analysis_results/sequential_lcurve_gmax1e-8_20261027/smooth_reference_final/report.md`。历史`trend_*`列仍指旧折线口径，仅用于追溯；新结果使用`smooth_*`列。该修正只改变事后参照，不改标定均值、反演场、目标函数或γ。
 
 根配置当前对应40%–70%区段γ上限降低试验第3次：`RUN_NAME=sample2_1026_run3_h1_infill40_70_gmax1e7_20261027`，范围1e-12至1e-7，仍为50点，FTOL/GTOL及其余输入均保持原值。三次扫描完整结束；第1次选得6.25055e-8，第2/3次分别为insufficient_corner_support/range_insufficient，无正式新选γ。报告见`post_tensile_test/1026/sample_2/analysis_results/infill40_70_gmax1e7_20261027/report.md`；已有结果使用--input查看，新运行仍需更换RUN_NAME。

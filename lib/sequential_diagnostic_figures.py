@@ -48,6 +48,8 @@ def plot(study:Path,output:Path,gamma_target:float):
 
     def references(ax):
         ax.plot(reference_x,smooth_reference(70+.625*reference_x),color='black',lw=1.5,label='连续平滑标定分布 E(φ)')
+        ax.stairs(values,np.r_[x[0],np.arange(-40.,41.,16.),x[-1]],baseline=None,
+                  color='#777777',ls='--',lw=1.3,label='分层标定阶梯线')
         ax.plot(np.arange(-48.,49.,16.),values,'o',color='black',ms=3,label='标定均值')
         ax.set(xlim=(x[0],x[-1]),ylabel='E (MPa)')
 

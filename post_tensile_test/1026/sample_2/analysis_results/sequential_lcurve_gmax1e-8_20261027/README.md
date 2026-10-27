@@ -1,5 +1,7 @@
 # 最大γ降低四个数量级后的顺序反演
 
+最新结果图同时保留连续光滑与分层两条参照：[填充率横轴对照](smooth_and_layered_20261027/smooth_E_of_infill.png) · [空间横轴对照](smooth_and_layered_20261027/smooth_spatial_comparison.png) · [单γ曲线和二维场](smooth_and_layered_20261027/corrected_final_field.png)。黑色实线表示连续光滑E(φ)，灰色虚线表示分层标定阶梯线；仅增加图示，所有误差数值保持一致。
+
 **连续参照口径已修正：** 用户所指的是随填充率变化的连续光滑E(φ)，不是层中心折线。当前正确图表见[光滑E(φ)与反演结果](smooth_reference_final/smooth_E_of_infill.png)、[修正后的模量结果图](smooth_reference_final/corrected_final_field.png)和[新误差报告](smooth_reference_final/report.md)。旧diagnostic_figures中的层中心折线仅保留作历史记录；反演数值不变，γ=1.264855e-9对新光滑参照的平均绝对相对差异为10.4018%，旧折线口径10.6701%不再代表用户指定的光滑分布。
 
 本次上限由1e-4降低至1e-8，下限保持1e-12，共50个对数均匀候选。每个γ内仍按1→2→3传递模量初值，网格、数据、载荷、初值规则和每阶段预算不变；没有干预中间迭代。扫描及自动后处理均以退出码0结束。
