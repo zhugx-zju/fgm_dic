@@ -1,0 +1,160 @@
+{
+  "calibration_sha256": "c64cee0989da7bfb41b6726fded2dae74e1ccf58da16251f50ab31c8a0789b35",
+  "calibration_method": "individual_window_joint_3pct_monotone",
+  "inverse_optimization_rerun": false,
+  "runs": {
+    "1": {
+      "output": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run1_h1_monotone_20261026",
+      "stages": {
+        "01_prepared": {
+          "status": "prepared",
+          "metadata_sha256": "7c42c8da9d11e2c2becd704c3362d966683b8263873ef1b8e3ab2037a4ee3982"
+        },
+        "02_forward": {
+          "status": "computed",
+          "metadata_sha256": "b28d654737b5b6f2afd593e9a2514814e6a29571cbc395551244caf8786fd34f"
+        },
+        "03_inverse": {
+          "status": "computed",
+          "metadata_sha256": "5d53def0e4c19dcac88813f5eda6753dd8b7f024c566766ea45b1c7e67d94e18"
+        },
+        "04_comparison": {
+          "status": "computed",
+          "metadata_sha256": "5ffd462300e05ff2630b175b2201f2f3972399e83fab4be3521009b4688e2818"
+        }
+      },
+      "inverse_reuse_checks": [
+        {
+          "nu": 0.24,
+          "all_inverse_arrays_exactly_equal": true,
+          "source_fields_sha256": "0f430e11db60b82d298ef4f86a72d22bf5d4190117ead0a9df46dcf81cbb2246",
+          "updated_fields_sha256": "0f430e11db60b82d298ef4f86a72d22bf5d4190117ead0a9df46dcf81cbb2246"
+        },
+        {
+          "nu": 0.26,
+          "all_inverse_arrays_exactly_equal": true,
+          "source_fields_sha256": "2647459d96fa5216648ea777656077ad9d12e90da65080b71c48a457dd197576",
+          "updated_fields_sha256": "2647459d96fa5216648ea777656077ad9d12e90da65080b71c48a457dd197576"
+        },
+        {
+          "nu": 0.28,
+          "all_inverse_arrays_exactly_equal": true,
+          "source_fields_sha256": "e7013782293ded37081d9471667a7680075e3fc26769e41b2c0ebb5f3f42e530",
+          "updated_fields_sha256": "e7013782293ded37081d9471667a7680075e3fc26769e41b2c0ebb5f3f42e530"
+        },
+        {
+          "nu": 0.33,
+          "all_inverse_arrays_exactly_equal": true,
+          "source_fields_sha256": "7b509c9f28279396f5d4367a4925605f51250898f2526e54e7369867cb7634b9",
+          "updated_fields_sha256": "7b509c9f28279396f5d4367a4925605f51250898f2526e54e7369867cb7634b9"
+        }
+      ]
+    },
+    "2": {
+      "output": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run2_h1_monotone_20261026",
+      "stages": {
+        "01_prepared": {
+          "status": "prepared",
+          "metadata_sha256": "408f1286c2718cf07f4ce23509b07c5b2c02085f9d385f684b7f3f0daa1ce677"
+        },
+        "02_forward": {
+          "status": "computed",
+          "metadata_sha256": "d3409e8b3b8d9bceb9ed2dfbe6f6042e6676da09b4ef7826f1506f199e3be3e8"
+        },
+        "03_inverse": {
+          "status": "computed",
+          "metadata_sha256": "36d3a4ce7826ed5d36629f60f20196c77b0019f56b0d21762f11afafbb86df88"
+        },
+        "04_comparison": {
+          "status": "computed",
+          "metadata_sha256": "7a3bd480f2c26f4fd644ce3c26a8636c1fe9859412f319b399bda6fa317bbc9c"
+        }
+      },
+      "inverse_reuse_checks": [
+        {
+          "nu": 0.24,
+          "all_inverse_arrays_exactly_equal": true,
+          "source_fields_sha256": "80c4966f729c23124e2a8f16c94f57fbf4c804eee8bac2537582a2df19c6fd9c",
+          "updated_fields_sha256": "80c4966f729c23124e2a8f16c94f57fbf4c804eee8bac2537582a2df19c6fd9c"
+        },
+        {
+          "nu": 0.26,
+          "all_inverse_arrays_exactly_equal": true,
+          "source_fields_sha256": "97b27bd8450d1be69867d43103a01d7aaa33b9dab6c4c31e74769ad0ce0e40ee",
+          "updated_fields_sha256": "97b27bd8450d1be69867d43103a01d7aaa33b9dab6c4c31e74769ad0ce0e40ee"
+        },
+        {
+          "nu": 0.28,
+          "all_inverse_arrays_exactly_equal": true,
+          "source_fields_sha256": "15ba1e3a4968553ff92214874f1f732a7fb21d7cf5616fea060602751d7e4c23",
+          "updated_fields_sha256": "15ba1e3a4968553ff92214874f1f732a7fb21d7cf5616fea060602751d7e4c23"
+        },
+        {
+          "nu": 0.33,
+          "all_inverse_arrays_exactly_equal": true,
+          "source_fields_sha256": "352c7e01bb06430626eb64a582a2bd7597717806acb2c8bbb5587f8fc66fcb1c",
+          "updated_fields_sha256": "352c7e01bb06430626eb64a582a2bd7597717806acb2c8bbb5587f8fc66fcb1c"
+        }
+      ]
+    },
+    "3": {
+      "output": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run3_h1_monotone_20261026",
+      "stages": {
+        "01_prepared": {
+          "status": "prepared",
+          "metadata_sha256": "5cf8e8b9e302a635c7d35a5b80db2ca9c9d68f35c2ac186b8b9caee9b11bfc2f"
+        },
+        "02_forward": {
+          "status": "computed",
+          "metadata_sha256": "8f5018c1f3a20d27d6ec071990c18f8e61b9432256e5f5c624c3854164985a71"
+        },
+        "03_inverse": {
+          "status": "computed",
+          "metadata_sha256": "755d98b4c6600bff6630c7a6ad6b64b75f8d5c461a7c55669a499950a7acf37e"
+        },
+        "04_comparison": {
+          "status": "computed",
+          "metadata_sha256": "e0db0a23841837e893100a898dc1fe6fab4b25381dbd5b0fcfd2193c99c17c45"
+        }
+      },
+      "inverse_reuse_checks": [
+        {
+          "nu": 0.24,
+          "all_inverse_arrays_exactly_equal": true,
+          "source_fields_sha256": "2a717bf57158d70160007ff52f2304faa5d46798790cef38be3b22af11687707",
+          "updated_fields_sha256": "2a717bf57158d70160007ff52f2304faa5d46798790cef38be3b22af11687707"
+        },
+        {
+          "nu": 0.26,
+          "all_inverse_arrays_exactly_equal": true,
+          "source_fields_sha256": "3414f044bb519994e7d7f779aa37d7bc4c6ea1c2d25dbb127c96ce593d6f03e0",
+          "updated_fields_sha256": "3414f044bb519994e7d7f779aa37d7bc4c6ea1c2d25dbb127c96ce593d6f03e0"
+        },
+        {
+          "nu": 0.28,
+          "all_inverse_arrays_exactly_equal": true,
+          "source_fields_sha256": "a7144f96ae38cfe2cba28edb384123563564ee37c680525ca1ebfbc26dea25ce",
+          "updated_fields_sha256": "a7144f96ae38cfe2cba28edb384123563564ee37c680525ca1ebfbc26dea25ce"
+        },
+        {
+          "nu": 0.33,
+          "all_inverse_arrays_exactly_equal": true,
+          "source_fields_sha256": "40e9d0cdc318a9dcd3d0700e0fb09a5a216ece409316edbcff203fe35539b2b3",
+          "updated_fields_sha256": "40e9d0cdc318a9dcd3d0700e0fb09a5a216ece409316edbcff203fe35539b2b3"
+        }
+      ]
+    }
+  },
+  "implementation_sha256": {
+    "lib\\calibration_reference_update.py": "ea9e4cca0b70e818d7ecf2a0b3c4eabc63af81ca1a44c20842ae9e2fbae08738",
+    "lib\\sample2_result_analysis.py": "09d2a3b2bc9bfe61647704553dc256515a83187efaff2aa89972badb1710fd58",
+    "lib\\dic_preprocessing.py": "5d7627153a08062efff64384f84ea459db7ff5af37103b1bf7d82df8bca4f124",
+    "lib\\dic_case_reporting.py": "9908df0add7597421ae572d7b8658263348ec1a44d4907e96e735be3c05503a0",
+    "lib\\dic_case_workflow.py": "9196b0223688ff74d65b0896b532df03b757e5f9bf41c917e9fd4a262c78e7db",
+    "lib/calibration_reference_update.py": "36a1ff0c422909578c3433d9578cc03aa0c36c7a4011e053c23b8cf70a83fb6c"
+  },
+  "source_inverse_preparation_identity_verified": true,
+  "initialization_calibration_independence_verified": true,
+  "calibration_snapshot_sha256": "9532b78875359d2d5fc9915059e75dd7c71a5fdc7e4a021d7ebfdf19c68f0259",
+  "calibration_snapshot_note": "Snapshot line endings normalized to LF; original calibration_sha256 is retained for frozen preparation identity. Numeric table verified unchanged."
+}

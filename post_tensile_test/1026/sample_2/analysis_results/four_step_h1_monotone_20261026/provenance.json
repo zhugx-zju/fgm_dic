@@ -1,0 +1,329 @@
+[
+  {
+    "run": 1,
+    "root": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run1_h1_monotone_20261026",
+    "prepared_metadata_sha256": "7c42c8da9d11e2c2becd704c3362d966683b8263873ef1b8e3ab2037a4ee3982",
+    "inverse_metadata_sha256": "5d53def0e4c19dcac88813f5eda6753dd8b7f024c566766ea45b1c7e67d94e18",
+    "comparison_metadata_sha256": "5ffd462300e05ff2630b175b2201f2f3972399e83fab4be3521009b4688e2818",
+    "inverse_fields_sha256": "2647459d96fa5216648ea777656077ad9d12e90da65080b71c48a457dd197576",
+    "forward_fields_sha256": "5e528876065217f58bfe1d3c3bc6c11cd5e333a36b5b0b83257bf60b94128f2e",
+    "saved_inverse_replay_verified": true,
+    "all_input_hashes_verified": true,
+    "inverse_reuse": {
+      "operation": "external_calibration_reference_update_only; no optimization or gamma selection rerun",
+      "source_inverse": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run1_h1_20261026\\03_inverse",
+      "source_metadata_sha256": "d42b1c527278990f69cddbfdac3c08aa1fc2a33b7f17da31949394cc1f225236",
+      "source_prepared_metadata_sha256": "81fb14102385ece42aa3938840753f5dfad11b6c5d81251e7c0f6af70dc40508",
+      "changed_configuration_keys": [
+        "CALIBRATION_CSV",
+        "CALIBRATION_METHOD",
+        "CASE_ID",
+        "CASE_OUTPUT",
+        "RUN_NAME"
+      ],
+      "all_prepared_arrays_exactly_equal": true,
+      "observation_operator_exactly_equal": true,
+      "weights_and_applied_load_exactly_equal": true,
+      "source_solver_environment": {
+        "python": "3.13.2 | packaged by Anaconda, Inc. | (main, Feb  6 2025, 18:49:14) [MSC v.1929 64 bit (AMD64)]",
+        "executable": "D:\\miniconda3\\python.exe",
+        "numpy": "2.4.0",
+        "scipy": "1.17.1",
+        "platform": "Windows-11-10.0.26300-SP0",
+        "git_revision": "fc8982e808898af718808c55880ca5beb6b02d7d",
+        "git_dirty": true,
+        "command": [
+          "D:\\MyProject\\uniform_pressure_experiment_1023\\script\\step3_inverse_dic.py"
+        ]
+      },
+      "source_numerical_source_sha256": {
+        "dic_case_config.py": "6d0d43c8372f73ff687a659e93af1e8c32fd4fe6586fc227b2307e2a671949ea",
+        "fgm_asm\\exact_tv.py": "979814d5ef8e431883c0333660723538461ec8fd144232bbc17c3e33044ce6e7",
+        "fgm_asm\\fem_forward.py": "bde2f57ef5ef7d091f80fa950c79a898f7878fec4424ea5abc2892465d7a8266",
+        "fgm_asm\\grf.py": "ffd2705ed28c642e83299149d352695235bfa383abae3870e8f05292a4c1d28c",
+        "fgm_asm\\inverse_solver.py": "32ee38eac13280a349b9a8fcc99b62ae5494db8db2d90358471c8c5022f28646",
+        "fgm_asm\\load_case.py": "ff8761cd9c709580258af1192c59715a4260ce2a3417edcb8620d7662e65aa56",
+        "fgm_asm\\l_curve.py": "2a376d962782df76bc75603ebd16d46bcf6b9c60103b709a30330baff7f06eee",
+        "fgm_asm\\material.py": "7982752e658a7d722f76209fc978e2a8930dcf0f22ed121617cb2ada04805cbc",
+        "fgm_asm\\mesh.py": "1024656e9608b8afcc7ec6e3908a9adbf8991fa64914e6b93565cb8756bd7432",
+        "fgm_asm\\observation.py": "a9f8b7bcdf48e627933b3e6bcae1ad8f087cfa19d4daf7970f1c0f1c997eede7",
+        "fgm_asm\\regularization.py": "aabba467ec8acd83f1a46671dfe58b26aacded0fabc8f945a59c4c73cd0082ab",
+        "fgm_asm\\research.py": "3a86f6fdd73d8d5e102f2ef0141c9e9ced2159a7147fe545b8ad8017b0a6ea93",
+        "fgm_asm\\tgv.py": "abdef11e675718111bdd9630d56adcbd902152b1577a3a79af2c121186e846af",
+        "fgm_asm\\__init__.py": "eea06c1e7cf5ffe79e033adf820c112401b646430f4bcf3655fbdc13862c9c34",
+        "lib\\config_utils.py": "091f1c7135c1521de1e4a78698b960a61027ce597359de9dfed18f1f9646d25c",
+        "lib\\dic_case_reporting.py": "b5aa045517de5a7b31df958934751a3f9f1a4db853a258969d741ab8b6c42f63",
+        "lib\\dic_case_workflow.py": "f3ed232ead3089b5b20523e287cb9bb40e0cd6b8f874963166a023ee97e5bce6",
+        "lib\\dic_frame_selection.py": "6ee5b336463b2d46ad325c827cf73a84492ca19182f4300fd2b3ca7b31a4c10d",
+        "lib\\dic_preprocessing.py": "8fdbf7107b347376ffe2dc91a0b8f5c54476aaa1d8f2ed710d427952b70368ee",
+        "lib\\experiment_data.py": "0463994916d6f68390a7d360e397853cd9fafcf7f2f0dad1dcd804ec73d3af2b",
+        "lib\\io_utils.py": "be64bd808fdb2cc75c19208326cc38d572369f08cdf2f8749ff2a24b2f8b3e55",
+        "lib\\research_reporting.py": "a347d23bbf0f8e12fdacd496607cee45585ad7c404e3372aebf179b5f93d71b2",
+        "lib\\synthetic_recovery.py": "10dd9678f6d2667a046054ade24825da7742541cc6dbf967a3f05574e767f495",
+        "lib\\tensile_calibration.py": "d68f5b7c905c82bc89aedbf717171dbdf6c2871e39c3538ef7bfd6dfe187524a",
+        "lib\\tensile_fit_standard.py": "47d6a1fb83d164cddfe8edefbe9f7934043a37d7ef0f4617f1bf1204ef1bb222",
+        "lib\\uniform_calibration_comparison.py": "95e68dff76bd8c4f2becacc6f90029862b3397367f8a2ce34136b2d720b3465f",
+        "lib\\uniform_sample_analysis.py": "bfec3fa24e1f5bab12febc28b5f34795668011c06472ee49ba3c208604c33975",
+        "lib\\verify_tensile_calibration.py": "de20f6fe49bad33c7ca7869ce53a67467f427ffd9369b374212ff0e86ad4b036",
+        "lib\\__init__.py": "cee96f9d84d28c0a84b710640de16b3544a2187987c25735016fc188df7db10e",
+        "script\\step1_prepare_dic.py": "a1da0c1ace622027790f47301f2b372db0493a5d171388e638eccc84523209cc",
+        "script\\step2_forward_calibrated.py": "49cc7f57c5d79c3e21c99a21aad378447bc6b71d3259b88794ffe5ca958e2977",
+        "script\\step3_inverse_dic.py": "9d8e740103b99a9b10f9ca17d4ebc6fb704a73989af971dd64d266e8422dd893",
+        "script\\step4_compare_results.py": "11a4b81b212d1f442f62f4f8152c08b340cc0366efee946fa261dfb45e5126d9",
+        "script\\__init__.py": "d49f1e106b2e6e10d230c915183ef7d43390802a159c80aa118c8980e8be421a"
+      },
+      "trial_provenance_note": "l_curve trials copied verbatim; their metadata describes the original optimization."
+    },
+    "material_registration": {
+      "method": "confirmed_marks_midpoint_unit_scale",
+      "manufacturing_x_offset_mm": -52.963027063,
+      "manufacturing_x_fem_coefficient": 1,
+      "manufacturing_x_relation": "manufacturing_x = 1 * FEM_x + -52.963027063 mm",
+      "infill_order_along_fem_x": [
+        40,
+        50,
+        60,
+        70,
+        80,
+        90,
+        100
+      ],
+      "manufacturing_mark_x_mm": [
+        -57.0,
+        57.0
+      ],
+      "manufacturing_roi_x_mm": [
+        -52.963027063,
+        52.963027063
+      ],
+      "nominal_mark_gap_mm": 114.0,
+      "dic_span_mm": 105.926054126,
+      "dic_minus_nominal_mark_gap_mm": -8.073945874000003,
+      "endpoint_discrepancy_mm": [
+        4.036972937000002,
+        -4.036972937000002
+      ],
+      "length_scale_factor": 1.0,
+      "direction_note": "用户确认导出ROI在两条标线之间，各标线距端部53 mm；制造文件给出220 mm总长和七区界面。高填充率在位移较大端，本次原+Y端DY较大，FEM x沿原+Y，填充率沿x为40至100%。软件毫米尺度作为独立于标线间距的长度来源，尺度本身按用户口径假设有效；两标线中点对齐，不缩放DIC实际跨度为名义114 mm。DIC覆盖宽度假定为承载宽度，厚度约3.2 mm。",
+      "transverse_location": "internal DIC ROI bounds; no measured specimen edge registration"
+    }
+  },
+  {
+    "run": 2,
+    "root": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run2_h1_monotone_20261026",
+    "prepared_metadata_sha256": "408f1286c2718cf07f4ce23509b07c5b2c02085f9d385f684b7f3f0daa1ce677",
+    "inverse_metadata_sha256": "36d3a4ce7826ed5d36629f60f20196c77b0019f56b0d21762f11afafbb86df88",
+    "comparison_metadata_sha256": "7a3bd480f2c26f4fd644ce3c26a8636c1fe9859412f319b399bda6fa317bbc9c",
+    "inverse_fields_sha256": "97b27bd8450d1be69867d43103a01d7aaa33b9dab6c4c31e74769ad0ce0e40ee",
+    "forward_fields_sha256": "7171c37baa6b8d41f9dc58bcab86c7c31d187e4749bf851e823c7f8b0dbc4669",
+    "saved_inverse_replay_verified": true,
+    "all_input_hashes_verified": true,
+    "inverse_reuse": {
+      "operation": "external_calibration_reference_update_only; no optimization or gamma selection rerun",
+      "source_inverse": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run2_h1_20261026\\03_inverse",
+      "source_metadata_sha256": "0bb35498406d3e5be03dfcab315e0b448fe9495b3eda9c2b08463d07cae4ff0b",
+      "source_prepared_metadata_sha256": "b7851ca5ce5acf24b91e164b4231c1dda58b097228816ed6515a9a7b7541a233",
+      "changed_configuration_keys": [
+        "CALIBRATION_CSV",
+        "CALIBRATION_METHOD",
+        "CASE_ID",
+        "CASE_OUTPUT",
+        "RUN_NAME"
+      ],
+      "all_prepared_arrays_exactly_equal": true,
+      "observation_operator_exactly_equal": true,
+      "weights_and_applied_load_exactly_equal": true,
+      "source_solver_environment": {
+        "python": "3.13.2 | packaged by Anaconda, Inc. | (main, Feb  6 2025, 18:49:14) [MSC v.1929 64 bit (AMD64)]",
+        "executable": "D:\\miniconda3\\python.exe",
+        "numpy": "2.4.0",
+        "scipy": "1.17.1",
+        "platform": "Windows-11-10.0.26300-SP0",
+        "git_revision": "fc8982e808898af718808c55880ca5beb6b02d7d",
+        "git_dirty": true,
+        "command": [
+          "D:\\MyProject\\uniform_pressure_experiment_1023\\script\\step3_inverse_dic.py"
+        ]
+      },
+      "source_numerical_source_sha256": {
+        "dic_case_config.py": "c9f6ffb9497042f14f38e2ae4bd14454a92823dad357df6ddf5515c12f060247",
+        "fgm_asm\\exact_tv.py": "979814d5ef8e431883c0333660723538461ec8fd144232bbc17c3e33044ce6e7",
+        "fgm_asm\\fem_forward.py": "bde2f57ef5ef7d091f80fa950c79a898f7878fec4424ea5abc2892465d7a8266",
+        "fgm_asm\\grf.py": "ffd2705ed28c642e83299149d352695235bfa383abae3870e8f05292a4c1d28c",
+        "fgm_asm\\inverse_solver.py": "32ee38eac13280a349b9a8fcc99b62ae5494db8db2d90358471c8c5022f28646",
+        "fgm_asm\\load_case.py": "ff8761cd9c709580258af1192c59715a4260ce2a3417edcb8620d7662e65aa56",
+        "fgm_asm\\l_curve.py": "2a376d962782df76bc75603ebd16d46bcf6b9c60103b709a30330baff7f06eee",
+        "fgm_asm\\material.py": "7982752e658a7d722f76209fc978e2a8930dcf0f22ed121617cb2ada04805cbc",
+        "fgm_asm\\mesh.py": "1024656e9608b8afcc7ec6e3908a9adbf8991fa64914e6b93565cb8756bd7432",
+        "fgm_asm\\observation.py": "a9f8b7bcdf48e627933b3e6bcae1ad8f087cfa19d4daf7970f1c0f1c997eede7",
+        "fgm_asm\\regularization.py": "aabba467ec8acd83f1a46671dfe58b26aacded0fabc8f945a59c4c73cd0082ab",
+        "fgm_asm\\research.py": "3a86f6fdd73d8d5e102f2ef0141c9e9ced2159a7147fe545b8ad8017b0a6ea93",
+        "fgm_asm\\tgv.py": "abdef11e675718111bdd9630d56adcbd902152b1577a3a79af2c121186e846af",
+        "fgm_asm\\__init__.py": "eea06c1e7cf5ffe79e033adf820c112401b646430f4bcf3655fbdc13862c9c34",
+        "lib\\config_utils.py": "091f1c7135c1521de1e4a78698b960a61027ce597359de9dfed18f1f9646d25c",
+        "lib\\dic_case_reporting.py": "b5aa045517de5a7b31df958934751a3f9f1a4db853a258969d741ab8b6c42f63",
+        "lib\\dic_case_workflow.py": "f3ed232ead3089b5b20523e287cb9bb40e0cd6b8f874963166a023ee97e5bce6",
+        "lib\\dic_frame_selection.py": "6ee5b336463b2d46ad325c827cf73a84492ca19182f4300fd2b3ca7b31a4c10d",
+        "lib\\dic_preprocessing.py": "8fdbf7107b347376ffe2dc91a0b8f5c54476aaa1d8f2ed710d427952b70368ee",
+        "lib\\experiment_data.py": "0463994916d6f68390a7d360e397853cd9fafcf7f2f0dad1dcd804ec73d3af2b",
+        "lib\\io_utils.py": "be64bd808fdb2cc75c19208326cc38d572369f08cdf2f8749ff2a24b2f8b3e55",
+        "lib\\research_reporting.py": "a347d23bbf0f8e12fdacd496607cee45585ad7c404e3372aebf179b5f93d71b2",
+        "lib\\synthetic_recovery.py": "10dd9678f6d2667a046054ade24825da7742541cc6dbf967a3f05574e767f495",
+        "lib\\tensile_calibration.py": "d68f5b7c905c82bc89aedbf717171dbdf6c2871e39c3538ef7bfd6dfe187524a",
+        "lib\\tensile_fit_standard.py": "47d6a1fb83d164cddfe8edefbe9f7934043a37d7ef0f4617f1bf1204ef1bb222",
+        "lib\\uniform_calibration_comparison.py": "95e68dff76bd8c4f2becacc6f90029862b3397367f8a2ce34136b2d720b3465f",
+        "lib\\uniform_sample_analysis.py": "bfec3fa24e1f5bab12febc28b5f34795668011c06472ee49ba3c208604c33975",
+        "lib\\verify_tensile_calibration.py": "de20f6fe49bad33c7ca7869ce53a67467f427ffd9369b374212ff0e86ad4b036",
+        "lib\\__init__.py": "cee96f9d84d28c0a84b710640de16b3544a2187987c25735016fc188df7db10e",
+        "script\\step1_prepare_dic.py": "a1da0c1ace622027790f47301f2b372db0493a5d171388e638eccc84523209cc",
+        "script\\step2_forward_calibrated.py": "49cc7f57c5d79c3e21c99a21aad378447bc6b71d3259b88794ffe5ca958e2977",
+        "script\\step3_inverse_dic.py": "9d8e740103b99a9b10f9ca17d4ebc6fb704a73989af971dd64d266e8422dd893",
+        "script\\step4_compare_results.py": "11a4b81b212d1f442f62f4f8152c08b340cc0366efee946fa261dfb45e5126d9",
+        "script\\__init__.py": "d49f1e106b2e6e10d230c915183ef7d43390802a159c80aa118c8980e8be421a"
+      },
+      "trial_provenance_note": "l_curve trials copied verbatim; their metadata describes the original optimization."
+    },
+    "material_registration": {
+      "method": "confirmed_marks_midpoint_unit_scale",
+      "manufacturing_x_offset_mm": -52.887468776800006,
+      "manufacturing_x_fem_coefficient": 1,
+      "manufacturing_x_relation": "manufacturing_x = 1 * FEM_x + -52.8874687768 mm",
+      "infill_order_along_fem_x": [
+        40,
+        50,
+        60,
+        70,
+        80,
+        90,
+        100
+      ],
+      "manufacturing_mark_x_mm": [
+        -57.0,
+        57.0
+      ],
+      "manufacturing_roi_x_mm": [
+        -52.887468776800006,
+        52.887468776800006
+      ],
+      "nominal_mark_gap_mm": 114.0,
+      "dic_span_mm": 105.77493755360001,
+      "dic_minus_nominal_mark_gap_mm": -8.225062446399988,
+      "endpoint_discrepancy_mm": [
+        4.112531223199994,
+        -4.112531223199994
+      ],
+      "length_scale_factor": 1.0,
+      "direction_note": "用户确认导出ROI在两条标线之间，各标线距端部53 mm；制造文件给出220 mm总长和七区界面。高填充率在位移较大端，本次原+Y端DY较大，FEM x沿原+Y，填充率沿x为40至100%。软件毫米尺度作为独立于标线间距的长度来源，尺度本身按用户口径假设有效；两标线中点对齐，不缩放DIC实际跨度为名义114 mm。DIC覆盖宽度假定为承载宽度，厚度约3.2 mm。",
+      "transverse_location": "internal DIC ROI bounds; no measured specimen edge registration"
+    }
+  },
+  {
+    "run": 3,
+    "root": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run3_h1_monotone_20261026",
+    "prepared_metadata_sha256": "5cf8e8b9e302a635c7d35a5b80db2ca9c9d68f35c2ac186b8b9caee9b11bfc2f",
+    "inverse_metadata_sha256": "755d98b4c6600bff6630c7a6ad6b64b75f8d5c461a7c55669a499950a7acf37e",
+    "comparison_metadata_sha256": "e0db0a23841837e893100a898dc1fe6fab4b25381dbd5b0fcfd2193c99c17c45",
+    "inverse_fields_sha256": "3414f044bb519994e7d7f779aa37d7bc4c6ea1c2d25dbb127c96ce593d6f03e0",
+    "forward_fields_sha256": "c5e71e9262169ec1c5cf4b252733ca1982571b2ce8b7760e09ea499b815a551e",
+    "saved_inverse_replay_verified": true,
+    "all_input_hashes_verified": true,
+    "inverse_reuse": {
+      "operation": "external_calibration_reference_update_only; no optimization or gamma selection rerun",
+      "source_inverse": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run3_h1_20261026\\03_inverse",
+      "source_metadata_sha256": "ffc8871dcc4d749c92a0ddd1f75108f6d9ebb3ffcf711b06e3069fd3e9dfe0c3",
+      "source_prepared_metadata_sha256": "db57c57223312859a8639dda303e6c46ec1594bd3faa42dd71d72195ce085c3a",
+      "changed_configuration_keys": [
+        "CALIBRATION_CSV",
+        "CALIBRATION_METHOD",
+        "CASE_ID",
+        "CASE_OUTPUT",
+        "RUN_NAME"
+      ],
+      "all_prepared_arrays_exactly_equal": true,
+      "observation_operator_exactly_equal": true,
+      "weights_and_applied_load_exactly_equal": true,
+      "source_solver_environment": {
+        "python": "3.13.2 | packaged by Anaconda, Inc. | (main, Feb  6 2025, 18:49:14) [MSC v.1929 64 bit (AMD64)]",
+        "executable": "D:\\miniconda3\\python.exe",
+        "numpy": "2.4.0",
+        "scipy": "1.17.1",
+        "platform": "Windows-11-10.0.26300-SP0",
+        "git_revision": "fc8982e808898af718808c55880ca5beb6b02d7d",
+        "git_dirty": true,
+        "command": [
+          "D:\\MyProject\\uniform_pressure_experiment_1023\\script\\step3_inverse_dic.py"
+        ]
+      },
+      "source_numerical_source_sha256": {
+        "dic_case_config.py": "d9e3f635c67f0d1ebda78a0c6c36f383b27db373f2fbdc9ee20a2b803f9e97a7",
+        "fgm_asm\\exact_tv.py": "979814d5ef8e431883c0333660723538461ec8fd144232bbc17c3e33044ce6e7",
+        "fgm_asm\\fem_forward.py": "bde2f57ef5ef7d091f80fa950c79a898f7878fec4424ea5abc2892465d7a8266",
+        "fgm_asm\\grf.py": "ffd2705ed28c642e83299149d352695235bfa383abae3870e8f05292a4c1d28c",
+        "fgm_asm\\inverse_solver.py": "32ee38eac13280a349b9a8fcc99b62ae5494db8db2d90358471c8c5022f28646",
+        "fgm_asm\\load_case.py": "ff8761cd9c709580258af1192c59715a4260ce2a3417edcb8620d7662e65aa56",
+        "fgm_asm\\l_curve.py": "2a376d962782df76bc75603ebd16d46bcf6b9c60103b709a30330baff7f06eee",
+        "fgm_asm\\material.py": "7982752e658a7d722f76209fc978e2a8930dcf0f22ed121617cb2ada04805cbc",
+        "fgm_asm\\mesh.py": "1024656e9608b8afcc7ec6e3908a9adbf8991fa64914e6b93565cb8756bd7432",
+        "fgm_asm\\observation.py": "a9f8b7bcdf48e627933b3e6bcae1ad8f087cfa19d4daf7970f1c0f1c997eede7",
+        "fgm_asm\\regularization.py": "aabba467ec8acd83f1a46671dfe58b26aacded0fabc8f945a59c4c73cd0082ab",
+        "fgm_asm\\research.py": "3a86f6fdd73d8d5e102f2ef0141c9e9ced2159a7147fe545b8ad8017b0a6ea93",
+        "fgm_asm\\tgv.py": "abdef11e675718111bdd9630d56adcbd902152b1577a3a79af2c121186e846af",
+        "fgm_asm\\__init__.py": "eea06c1e7cf5ffe79e033adf820c112401b646430f4bcf3655fbdc13862c9c34",
+        "lib\\config_utils.py": "091f1c7135c1521de1e4a78698b960a61027ce597359de9dfed18f1f9646d25c",
+        "lib\\dic_case_reporting.py": "b5aa045517de5a7b31df958934751a3f9f1a4db853a258969d741ab8b6c42f63",
+        "lib\\dic_case_workflow.py": "f3ed232ead3089b5b20523e287cb9bb40e0cd6b8f874963166a023ee97e5bce6",
+        "lib\\dic_frame_selection.py": "6ee5b336463b2d46ad325c827cf73a84492ca19182f4300fd2b3ca7b31a4c10d",
+        "lib\\dic_preprocessing.py": "8fdbf7107b347376ffe2dc91a0b8f5c54476aaa1d8f2ed710d427952b70368ee",
+        "lib\\experiment_data.py": "0463994916d6f68390a7d360e397853cd9fafcf7f2f0dad1dcd804ec73d3af2b",
+        "lib\\io_utils.py": "be64bd808fdb2cc75c19208326cc38d572369f08cdf2f8749ff2a24b2f8b3e55",
+        "lib\\research_reporting.py": "a347d23bbf0f8e12fdacd496607cee45585ad7c404e3372aebf179b5f93d71b2",
+        "lib\\synthetic_recovery.py": "10dd9678f6d2667a046054ade24825da7742541cc6dbf967a3f05574e767f495",
+        "lib\\tensile_calibration.py": "d68f5b7c905c82bc89aedbf717171dbdf6c2871e39c3538ef7bfd6dfe187524a",
+        "lib\\tensile_fit_standard.py": "47d6a1fb83d164cddfe8edefbe9f7934043a37d7ef0f4617f1bf1204ef1bb222",
+        "lib\\uniform_calibration_comparison.py": "95e68dff76bd8c4f2becacc6f90029862b3397367f8a2ce34136b2d720b3465f",
+        "lib\\uniform_sample_analysis.py": "bfec3fa24e1f5bab12febc28b5f34795668011c06472ee49ba3c208604c33975",
+        "lib\\verify_tensile_calibration.py": "de20f6fe49bad33c7ca7869ce53a67467f427ffd9369b374212ff0e86ad4b036",
+        "lib\\__init__.py": "cee96f9d84d28c0a84b710640de16b3544a2187987c25735016fc188df7db10e",
+        "script\\step1_prepare_dic.py": "a1da0c1ace622027790f47301f2b372db0493a5d171388e638eccc84523209cc",
+        "script\\step2_forward_calibrated.py": "49cc7f57c5d79c3e21c99a21aad378447bc6b71d3259b88794ffe5ca958e2977",
+        "script\\step3_inverse_dic.py": "9d8e740103b99a9b10f9ca17d4ebc6fb704a73989af971dd64d266e8422dd893",
+        "script\\step4_compare_results.py": "11a4b81b212d1f442f62f4f8152c08b340cc0366efee946fa261dfb45e5126d9",
+        "script\\__init__.py": "d49f1e106b2e6e10d230c915183ef7d43390802a159c80aa118c8980e8be421a"
+      },
+      "trial_provenance_note": "l_curve trials copied verbatim; their metadata describes the original optimization."
+    },
+    "material_registration": {
+      "method": "confirmed_marks_midpoint_unit_scale",
+      "manufacturing_x_offset_mm": -54.52759643245,
+      "manufacturing_x_fem_coefficient": 1,
+      "manufacturing_x_relation": "manufacturing_x = 1 * FEM_x + -54.5275964324 mm",
+      "infill_order_along_fem_x": [
+        40,
+        50,
+        60,
+        70,
+        80,
+        90,
+        100
+      ],
+      "manufacturing_mark_x_mm": [
+        -57.0,
+        57.0
+      ],
+      "manufacturing_roi_x_mm": [
+        -54.52759643245,
+        54.52759643245
+      ],
+      "nominal_mark_gap_mm": 114.0,
+      "dic_span_mm": 109.0551928649,
+      "dic_minus_nominal_mark_gap_mm": -4.944807135100007,
+      "endpoint_discrepancy_mm": [
+        2.4724035675500033,
+        -2.4724035675500033
+      ],
+      "length_scale_factor": 1.0,
+      "direction_note": "用户确认导出ROI在两条标线之间，各标线距端部53 mm；制造文件给出220 mm总长和七区界面。高填充率在位移较大端，本次原+Y端DY较大，FEM x沿原+Y，填充率沿x为40至100%。软件毫米尺度作为独立于标线间距的长度来源，尺度本身按用户口径假设有效；两标线中点对齐，不缩放DIC实际跨度为名义114 mm。DIC覆盖宽度假定为承载宽度，厚度约3.2 mm。",
+      "transverse_location": "internal DIC ROI bounds; no measured specimen edge registration"
+    }
+  }
+]

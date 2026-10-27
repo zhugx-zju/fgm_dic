@@ -7,6 +7,7 @@ from pathlib import Path
 from urllib.parse import quote
 
 import pandas as pd
+import numpy as np
 
 from .dic_preprocessing import RELATIVE_ERROR_DESCRIPTION
 
@@ -332,6 +333,30 @@ def write_case_report(output, summary, metrics, regions, selection):
     status = summary['status']
     cover = pd.DataFrame(summary['coverage'])
     metric_table, region_table = pd.DataFrame(metrics), pd.DataFrame(regions)
+    calibration_note = ''
+    reuse_note = ('反演数值复用原始识别结果，本次仅更新外部标定参照；模量、位移及选参记录已核对一致，未重新优化。'
+                  if summary.get('inverse_reuse') else '')
+    if not metric_table.empty:
+        from .dic_case_workflow import load_prepared
+        from .dic_preprocessing import relative_displacement_errors
+        prepared = Path(summary.get('prepared_directory', output.parent/'01_prepared'))
+        report_cfg, _, cases, _, _ = load_prepared(prepared)
+        if report_cfg.CALIBRATION_METHOD == 'individual_window_joint_3pct_monotone':
+            calibration_note = ('本次标定参照采用随填充率不减及组内3%一致性约束的选窗分布；'
+                                'fit_method=individual_window_joint_3pct_monotone。标定选窗约束未施加到空间反演。')
+        case_map = {case.name: case for case in cases}
+        directories = {}
+        for name in summary['upstream_sources']:
+            path = Path(name)
+            workflow = json.loads((path/'run_metadata.json').read_text(encoding='utf-8'))['workflow']
+            directories['forward' if workflow == 'dic_calibrated_forward' else 'inverse'] = path
+        relative_rows = []
+        for item in metrics:
+            with np.load(directories[item['model']]/f"nu_{item['nu']:.2f}"/'fields.npz') as fields:
+                errors = relative_displacement_errors(case_map[item['case']], fields[f"{item['case']}_prediction"])
+            relative_rows.append({key: item[key] for key in ('nu', 'case', 'role', 'model')} | errors)
+        metric_table = pd.DataFrame(relative_rows)
+        metric_table.to_csv(output/'displacement_relative_errors.csv', index=False, lineterminator='\n')
     observation_description = (
         'DIC参考点直接作为有限元节点，H仅将节点位移置换到测点顺序，无测点插值。'
         if mesh.get('source') == 'dic_grid' else
@@ -340,6 +365,7 @@ def write_case_report(output, summary, metrics, regions, selection):
     title = f"DIC 正反演对照：{summary['case_id']}"
     overview = Path(summary.get('prepared_directory', output.parent/'01_prepared')).parent/'结果总览.html'
     lines = [f'# {title}', '', f'运行状态：`{status}`。物理坐标配准已核验：{verified}。', '',
+             calibration_note, '', reuse_note, '',
              '## 几何、观测与统一网格', '',
              _geometry_description(summary), '',
              f"独立标定正演与自由二维反演共用 {mesh['nel_x']}×{mesh['nel_y']} 单元，单元尺寸 {mesh['hx_mm']}×{mesh['hy_mm']} mm。{observation_description}", '',
@@ -348,12 +374,12 @@ def write_case_report(output, summary, metrics, regions, selection):
              '## 独立标定正演、DIC 与反演回代', '', RELATIVE_ERROR_DESCRIPTION, '',
              '位移及原始残差 CSV 保留 mm；相对误差图与逐测点新增列使用 %，各 ν 的 `relative_error_summary.csv` 保存分母和汇总指标。', '']
     if not metric_table.empty:
-        lines += ['| ν | 平台 | 用途 | 模型 | 双分量 RMS (mm) | 轴向 RMSE (mm) | 横向 RMSE (mm) |',
+        lines += ['| ν | 平台 | 用途 | 模型 | 双分量相对误差 (%) | 轴向相对误差 (%) | 横向相对误差 (%) |',
                   '| --- | --- | --- | --- | ---: | ---: | ---: |']
-        for r in metrics:
-            lines.append(f"| {r['nu']:.2f} | {r['case']} | {r['role']} | {r['model']} | {r['rms_mm']:.7f} | {r['rmse_ux_mm']:.7f} | {r['rmse_uy_mm']:.7f} |")
+        for r in relative_rows:
+            lines.append(f"| {r['nu']:.2f} | {r['case']} | {r['role']} | {r['model']} | {r['displacement_relative_error_percent']:.3f} | {r['axial_relative_error_percent']:.3f} | {r['transverse_relative_error_percent']:.3f} |")
         lines += ['', '## 自由二维模量与独立标定', '',
-                  '| ν | 填充率 | 标定均值±组内 SD (MPa) | 反演区域均值 (MPa) | 相对差异 |',
+                  '| ν | 填充率 | 标定均值±组内 SD (MPa) | 反演区域均值 (MPa) | 相对标定参照的误差 |',
                   '| --- | --- | ---: | ---: | ---: |']
         for r in regions:
             lines.append(f"| {r['nu']:.2f} | {r['infill_percent']}% | {r['mean_E_MPa']:.1f}±{r['sd_E_MPa']:.1f} | {r['inverse_mean_E_MPa']:.1f} | {r['difference_percent']:+.2f}% |")
@@ -397,11 +423,13 @@ def write_case_report(output, summary, metrics, regions, selection):
              PAGE_STYLE,
              f'<h1>{html.escape(title)}</h1>',
              f'<p>运行状态：{html.escape(status)}；物理配准已核验：{verified}。</p>',
-             f'<p><a href="{_link(overview, output)}">返回实验结果总览</a> · <a href="comparison.csv">位移误差 CSV</a> · <a href="regional_comparison.csv">区域模量 CSV</a> · <a href="selection.csv">选参记录 CSV</a></p>',
+             f'<p><a href="{_link(overview, output)}">返回实验结果总览</a> · <a href="displacement_relative_errors.csv">位移相对误差 CSV</a> · <a href="regional_comparison.csv">区域模量 CSV</a> · <a href="selection.csv">选参记录 CSV</a></p>',
              f'<p class="path">本页与图表保存于：{html.escape(str(output.resolve()))}</p>',
              '<p>DIC 云图沿用 post_DIC：规则网格、jet 色图、等比例坐标及独立单图。三个位移场采用相同色标；两幅相对误差采用相同对称百分比色标。显示时仅共同减去 DIC 分量均值，CSV 保留原参考态。</p>',
              f'<p>{COMPONENT_REFERENCE_TEXT}</p>',
              f'<p>{RELATIVE_ERROR_DESCRIPTION}</p>',
+             f'<p>{html.escape(calibration_note)}</p>',
+             f'<p>{html.escape(reuse_note)}</p>',
              f'<p>{_objective_description(summary)}</p>']
     if _synthetic_notice(summary):
         parts.insert(4, '<p><strong>'+html.escape(_synthetic_notice(summary))+'</strong></p>')
@@ -418,7 +446,12 @@ def write_case_report(output, summary, metrics, regions, selection):
         if _scan_completion_description(summary):
             parts.append('<p>'+html.escape(_scan_completion_description(summary))+'</p>')
         parts.append(f'<p><a href="{_link(inverse/"云图.html", output)}">查看 L-curve、曲率图与反演场</a></p>')
-        parts += ['<h2>位移定量对照</h2>', metric_table.to_html(index=False, border=0, float_format=lambda x: f'{x:.7g}'),
+        displayed_metrics = metric_table.rename(columns={
+            'nu': 'ν', 'case': '平台', 'role': '用途', 'model': '模型',
+            'axial_relative_error_percent': '轴向相对误差 (%)',
+            'transverse_relative_error_percent': '横向相对误差 (%)',
+            'displacement_relative_error_percent': '双分量相对误差 (%)'})
+        parts += ['<h2>位移相对误差对照</h2>', displayed_metrics.to_html(index=False, border=0, float_format=lambda x: f'{x:.7g}'),
                   '<h2>模量与独立标定对照</h2>', region_table.to_html(index=False, border=0, float_format=lambda x: f'{x:.6g}')]
         for solver in sorted(summary['solvers'], key=lambda s: (s['nu'] != summary['primary_nu_prespecified'], s['nu'])):
             directory = f"nu_{solver['nu']:.2f}"
@@ -428,8 +461,8 @@ def write_case_report(output, summary, metrics, regions, selection):
                 parts.append(f'<p><a href="{directory}/relative_error_summary.csv">相对误差汇总 CSV（含各分量的 DIC 分母）</a></p>')
                 relative_table = pd.read_csv(relative_path).rename(columns={
                     'case': '平台', 'model': '模型', 'component': '分量',
-                    'dic_deformation_rms_mm': 'DIC 变形 RMS (mm)',
-                    'relative_weighted_rms_percent': '相对 RMS (%)',
+                    'dic_deformation_rms_mm': 'DIC 变形幅值 (mm)',
+                    'relative_weighted_rms_percent': '相对误差 (%)',
                     'absolute_relative_p95_percent': '绝对相对误差 P95 (%)'})
                 parts.append(relative_table.drop(columns=['role', 'relative_defined']).to_html(
                     index=False, border=0, float_format=lambda x: f'{x:.6g}', na_rep='未定义'))

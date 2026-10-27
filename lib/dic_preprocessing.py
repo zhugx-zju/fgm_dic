@@ -8,7 +8,8 @@ import numpy as np
 
 RELATIVE_ERROR_DESCRIPTION = (
     '有符号相对误差 e_c=100×(u_model,c−u_DIC,c)/s_c（%）；'
-    's_c 是该平台 DIC 按观测权重去除两平移和一微小转动后的分量 RMS。'
+    's_c=||u_DIC,c的变形分量||_W/√Σw，变形分量已去除两平移和一微小转动。'
+    '整体位移相对误差 ε_c=100×||u_model,c−u_DIC,c||_W/||u_DIC,c的变形分量||_W。'
     '分母只由 DIC 决定，同一平台的全部模型与 ν 共用，不逐点除以过零位移。'
     '无可分辨变形的分量标为未定义，不用任意小常数替代分母。'
 )
@@ -161,6 +162,32 @@ def dic_relative_error_scale(case):
     return scale
 
 
+def relative_displacement_errors(case, prediction):
+    """Area-weighted L2 relative errors, normalized only by DIC deformation.
+
+    The prediction includes the workflow's fitted rigid modes. No pointwise
+    displacement division or material/noise normalization enters this metric.
+    """
+    from fgm_asm.load_case import evaluate_observation
+
+    obs = case.observation
+    predicted = np.asarray(prediction, dtype=float).reshape(-1)
+    if predicted.shape != obs.u_measured.shape or not np.isfinite(predicted).all():
+        raise ValueError('Prediction must be finite and aligned with the flattened observation vector.')
+    deformation = evaluate_observation(case, np.zeros(obs.H.shape[1]))['residual'].reshape(-1, 2)
+    residual = (obs.u_measured-predicted).reshape(-1, 2)
+    weight = obs.weight_vector.reshape(-1, 2)
+    numerator = np.sum(weight*residual**2, axis=0)
+    denominator = np.sum(weight*deformation**2, axis=0)
+    defined = np.isfinite(dic_relative_error_scale(case))
+    result = np.full(2, np.nan)
+    result[defined] = 100*np.sqrt(numerator[defined]/denominator[defined])
+    total = (100*np.sqrt(numerator.sum()/denominator.sum()) if defined.any() else np.nan)
+    return {'axial_relative_error_percent': float(result[0]),
+            'transverse_relative_error_percent': float(result[1]),
+            'displacement_relative_error_percent': float(total)}
+
+
 def plot_dic_fe_components(output, name, x_grid, y_grid, fields, limits, model, title,
                            observation_label='Processed DIC'):
     """Show both displacement components in one figure, in the DIC reference.
@@ -240,7 +267,7 @@ def save_dic_comparison(output, cases, model_states, fit_names, grid_ids=None, *
             for model, error in errors.items():
                 key = f'{model}_error_{label}'
                 error_maps[key] = relative[model][:, component]
-                titles[key] = f'{condition}: {model} relative error, {label}\n{observation_label} deformation RMS = {scale[component]:.5g} mm'
+                titles[key] = f'{condition}: {model} relative error, {label}\n{observation_label} deformation amplitude = {scale[component]:.5g} mm'
                 limits[key] = (-bound, bound)
                 point_table[f'{key}_mm'] = error[:, component]
                 point_table[f'{model}_relative_error_{label}_percent'] = relative[model][:, component]
@@ -260,7 +287,7 @@ def save_dic_comparison(output, cases, model_states, fit_names, grid_ids=None, *
         x_grid, y_grid, fields = grid_fields_from_points(xy, error_maps, ids, allow_nan=True)
         plot_grid_fields(output/case.name, case.name, x_grid, y_grid,
                          [(key, value, titles[key]) for key, value in fields.items()],
-                         cmap='jet', limits=limits, title_prefix='', unit=f'% of {observation_label} deformation RMS')
+                         cmap='jet', limits=limits, title_prefix='', unit=f'% of {observation_label} deformation amplitude')
         pd.DataFrame(point_table).to_csv(output/case.name/'point_fields.csv', index=False)
         for model, state in states.items():
             error = errors[model]

@@ -1035,7 +1035,7 @@ def compare_dic_results(prepared, forward, inverse, output, plots=True, plot_onl
                    initialization=sources[1].get('initialization'),
                    inverse_directory=str(inverse.resolve()),
                    l_curve_status=sources[1]['l_curve_status'], l_curve_message=sources[1]['l_curve_message'])
-    for key in ('scan_recovery', 'scan_completion'):
+    for key in ('scan_recovery', 'scan_completion', 'inverse_reuse'):
         if key in sources[1]:
             summary[key] = sources[1][key]
     metrics = pd.concat([pd.read_csv(forward/'comparison.csv'), pd.read_csv(inverse/'comparison.csv')], ignore_index=True)

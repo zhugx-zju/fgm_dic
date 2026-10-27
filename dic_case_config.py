@@ -3,7 +3,7 @@ from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).resolve().parent
 SAMPLE_RUN = 3  # 1/2/3分别执行四个入口；参考图不合并。
-RUN_NAME = f'sample2_1026_run{SAMPLE_RUN}_h1_20261026'
+RUN_NAME = f'sample2_1026_run{SAMPLE_RUN}_h1_monotone_20261026'
 INPUTS_CONFIGURED = True
 DATA_MODE = 'dic'  # dic / synthetic_layered / synthetic_nodal
 MESH_SOURCE = 'configured_grid'  # configured_grid / dic_grid
@@ -61,8 +61,8 @@ REGION_INFILL_PERCENT = (40, 50, 60, 70, 80, 90, 100)
 REGION_BOUNDARIES_MANUFACTURING_X = (-40., -24., -8., 8., 24., 40.)
 REGION_BOUNDARIES_X = ()
 REGION_BOUNDARIES_CENTERED_X = ()
-CALIBRATION_CSV = PROJECT_ROOT / 'post_tensile_test' / '1023' / 'analysis_results' / 'modulus_20261026_28_final' / 'group_summary.csv'
-CALIBRATION_METHOD = 'common_stress_window_OLS'
+CALIBRATION_CSV = PROJECT_ROOT / 'post_tensile_test' / '1023' / 'analysis_results' / 'individual_3pct_monotone_20261026_final' / 'group_summary.csv'
+CALIBRATION_METHOD = 'individual_window_joint_3pct_monotone'
 REGISTRATION = {
     'mode': 'specimen_marks', 'matrix': [[0., 1.], [1., 0.]],
     'mark_reference': 'roi_axial_extrema', 'length_scale_source': 'independent_dic_calibration',
