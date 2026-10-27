@@ -22,7 +22,8 @@ from .dic_preprocessing import (grid_fields_from_points, plot_displacement_cloud
                                 plot_grid_fields, save_dic_comparison)
 from .experiment_data import (check_platform_reference, dic_roi_mask, file_sha256,
                               load_calibration, load_dic_platform)
-from .research_reporting import plot_l_curve, plot_modulus_comparison, save_run, save_x_profile
+from .results_io import plot_l_curve, plot_modulus_comparison, save_run, save_x_profile
+from .calibration_reference import configured_smooth_reference
 
 
 # Source files affecting equilibrium, observations and inversion. Package
@@ -493,15 +494,16 @@ def resolve_dic_geometry(cfg, reference):
 def prepare_dic(cfg, output):
     """Stage 1: freeze experimental inputs, or explicitly generated FE data."""
     if not getattr(cfg, 'INPUTS_CONFIGURED', True):
-        raise ValueError('1023输入尚未配置：请先按docs/input_setup.md核对DIC逐帧CSV、力配对、独立标定和材料坐标，再设置INPUTS_CONFIGURED=True。')
+        raise ValueError('输入尚未配置：请按docs/public/inputs.md核对DIC逐帧CSV、力配对、标定和材料坐标，再设置INPUTS_CONFIGURED=True。')
     if hasattr(cfg, 'SYNTHETIC_SOURCE_PREPARED'):
         from .synthetic_recovery import prepare_synthetic
         return prepare_synthetic(cfg, output)
     output = Path(output)
     if output.exists():
         raise FileExistsError(f'Choose a new preparation output: {output}')
-    from .config_utils import configuration_fingerprint
+    from .config_utils import configuration_fingerprint, resolve_pipeline_inputs
     requested_fingerprint = configuration_fingerprint(cfg)
+    cfg = resolve_pipeline_inputs(cfg)
     data_mode = getattr(cfg, 'DATA_MODE', 'dic')
     if data_mode not in ('dic', 'synthetic_layered', 'synthetic_nodal'):
         raise ValueError('DATA_MODE must be dic, synthetic_layered or synthetic_nodal')
@@ -552,6 +554,11 @@ def prepare_dic(cfg, output):
                'physical_validation_status': 'not_established; geometry registration and boundary-equivalence evidence are distinct',
                'scope': 'registered comparison' if verified else 'conditional comparison under explicit registration assumptions'}
     summary['evaluation_scope'] = ('fit_and_held_out' if cfg.PREDICT_CASES else 'fit_only_no_independent_validation')
+    if getattr(cfg, 'DATA_PROVENANCE', None) == 'synthetic_demo':
+        summary['scope'] = 'synthetic example CSV; pipeline demonstration only'
+        summary['physical_validation_status'] = 'synthetic; no physical experiment validation'
+        summary['synthetic_observations'] = dict(representation='synthetic_example_csv',
+            known_nu=cfg.PRIMARY_NU, noise_added=True, experimental_displacements_used=False)
     summary['force_reference'] = cfg.FORCE_REFERENCE
     summary['force_reference_note'] = cfg.FORCE_REFERENCE_NOTE
     for platform_metadata in summary['platforms'].values():
@@ -984,7 +991,8 @@ def plot_saved_stage(output, prepared=None):
                 plot_grid_fields(destination, 'inverse_modulus', mesh.plot_x, mesh.plot_y,
                                  [('E', field.reshape(mesh.nods_y, mesh.nods_x), f'Free 2D E, nu={nu:.2f}')],
                                  'jet', title_prefix='', unit='MPa', bounds=bounds)
-                save_x_profile(destination, mesh, field, reference)
+                smooth, audit = configured_smooth_reference(cfg, pd.DataFrame(metadata['calibration']))
+                save_x_profile(destination, mesh, field, reference, smooth, audit)
             else:
                 np.testing.assert_allclose(fields['E_calibrated'], reference(mesh.X, mesh.Y), rtol=0, atol=0)
             states = []
@@ -1081,7 +1089,8 @@ def compare_dic_results(prepared, forward, inverse, output, plots=True, plot_onl
             save_dic_comparison(destination, cases, {'forward': states[0], 'inverse': states[1]},
                                 cfg.FIT_CASES, grid_ids, nu=nu)
             plot_modulus_comparison(destination, mesh, reference(mesh.X, mesh.Y), field)
-            save_x_profile(destination, mesh, field, reference)
+            smooth, audit = configured_smooth_reference(cfg, pd.DataFrame(metadata['calibration']))
+            save_x_profile(destination, mesh, field, reference, smooth, audit)
     if not plot_only:
         metrics.to_csv(output/'comparison.csv', index=False)
         regions.to_csv(output/'regional_comparison.csv', index=False)
@@ -1093,7 +1102,7 @@ def compare_dic_results(prepared, forward, inverse, output, plots=True, plot_onl
 
 
 def _update_summary(output, summary):
-    from .research_reporting import _json_value
+    from .results_io import _json_value
 
     path = output / 'run_metadata.json'
     metadata = json.loads(path.read_text(encoding='utf-8'))

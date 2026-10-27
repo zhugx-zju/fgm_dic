@@ -16,7 +16,7 @@ import pandas as pd
 from fgm_asm.load_case import evaluate_observation
 from fgm_asm.research import partition_modulus, solve_forward
 from .experiment_data import file_sha256
-from .research_reporting import save_run
+from .results_io import save_run
 
 
 def generate_synthetic_fields(cfg, mesh, cases, summary: dict, arrays: dict,
@@ -163,7 +163,7 @@ def run_recovery_diagnostics(prepared: str | Path, output: str | Path) -> list[d
         record = dict(summary, gamma=gamma, solver=solver, **metrics, displacement=point_metrics)
         save_run(Path(output)/f'gamma_{gamma:g}', cfg, record, arrays)
         rows.append({'gamma': gamma, **metrics, **solver, 'displacement': point_metrics})
-    from .research_reporting import _json_value
+    from .results_io import _json_value
     (Path(output)/'diagnostics.json').write_text(
         json.dumps(_json_value(rows), ensure_ascii=False, indent=2, allow_nan=False), encoding='utf-8')
     return rows
@@ -175,7 +175,7 @@ def write_recovery_report(root: str | Path) -> list[dict]:
     import matplotlib.pyplot as plt
     from .dic_case_workflow import load_prepared
     from .dic_preprocessing import save_dic_comparison
-    from .research_reporting import _json_value, plot_modulus_comparison
+    from .results_io import _json_value, plot_modulus_comparison
 
     root = Path(root)
     baseline = root.parent/'coarse'/'03_inverse'

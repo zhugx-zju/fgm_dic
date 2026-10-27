@@ -8,17 +8,17 @@ from lib.dic_case_workflow import compare_dic_results
 from lib.dic_case_reporting import publish_stage
 
 
-def main():
+def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--input', type=Path, help='01_prepared directory; defaults to CASE_OUTPUT in --config')
-    parser.add_argument('--config', default='dic_case_config', help='User configuration; verified against frozen step-1 inputs')
+    parser.add_argument('--config', default='config', help='User configuration; verified against frozen step-1 inputs')
     parser.add_argument('--forward', type=Path)
     parser.add_argument('--inverse', type=Path)
     parser.add_argument('--output', type=Path)
     drawing = parser.add_mutually_exclusive_group()
     drawing.add_argument('--no-plots', action='store_true')
     drawing.add_argument('--plot-only', action='store_true', help='Refresh plots from the saved comparison; no numerical changes')
-    args = parser.parse_args()
+    args = parser.parse_args(argv)
     source = prepared_input(args.input, args.config)
     root = source.parent
     output = args.output or root/'04_comparison'

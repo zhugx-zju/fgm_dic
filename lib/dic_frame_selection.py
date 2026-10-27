@@ -26,21 +26,40 @@ class TimingData:
         return self.points[:, :, 1].mean(axis=0)
 
 
-def read_timing(folder: Path, fps: float) -> TimingData:
+def read_timing(folder: Path, fps: float, *, force_file='force.xlsb', displacement_file='disp.csv') -> TimingData:
     if not np.isfinite(fps) or fps <= 0:
         raise ValueError('fps must be a confirmed positive sampling frequency.')
-    with open_workbook(str(folder / 'force.xlsb')) as book:
-        if len(book.sheets) != 1:
-            raise ValueError(f'{folder}: expected one machine-data sheet.')
-        with book.get_sheet(1) as sheet:
-            rows = [[cell.v for cell in row] for row in sheet.rows()]
-    machine = np.asarray(rows[1:], dtype=float)
+    force_path = folder / force_file
+    if force_path.suffix.lower() == '.csv':
+        import pandas as pd
+        machine = pd.read_csv(force_path)[['time_s', 'force_N', 'displacement_mm', 'extension_mm']].to_numpy(float)
+    else:
+        with open_workbook(str(force_path)) as book:
+            if len(book.sheets) != 1:
+                raise ValueError(f'{folder}: expected one machine-data sheet.')
+            with book.get_sheet(1) as sheet:
+                rows = [[cell.v for cell in row] for row in sheet.rows()]
+        machine = np.asarray(rows[1:], dtype=float)
     if machine.ndim != 2 or machine.shape[1] != 4 or not np.isfinite(machine).all():
         raise ValueError(f'{folder}: expected finite time/force/displacement/extension columns.')
     if not np.all(np.diff(machine[:, 0]) > 0):
         raise ValueError(f'{folder}: machine time is not strictly increasing.')
+    displacement_path = folder / displacement_file
+    header = displacement_path.read_text(encoding='utf-8-sig', errors='replace').splitlines()[0]
+    if header.startswith('stage,'):
+        import pandas as pd
+        table = pd.read_csv(displacement_path)
+        stages = table.stage.to_numpy(float)
+        if len(stages) < 8 or not np.array_equal(stages, np.arange(len(stages))):
+            raise ValueError('DIC stage must start at zero with no missing or duplicate frames')
+        labels = ['point1-DY', 'point2-DY']
+        points = np.stack([np.column_stack((stages, table[name]))
+                           for name in ('point1_DY_mm', 'point2_DY_mm')])
+        if not np.isfinite(points).all():
+            raise ValueError('DIC timing data contain nonfinite values')
+        return TimingData(machine, points, labels, stages/fps, fps)
     labels, blocks = [], []
-    for row in csv.reader((folder / 'disp.csv').read_text(encoding='gb18030').splitlines()):
+    for row in csv.reader(displacement_path.read_text(encoding='gb18030').splitlines()):
         if row and '-DY' in row[0]:
             labels.append(row[0])
             blocks.append([])
@@ -55,6 +74,8 @@ def read_timing(folder: Path, fps: float) -> TimingData:
         raise ValueError(f'{folder}: DIC points have missing values or unmatched time columns.')
     if not np.all(np.diff(points[0, :, 0]) > 0):
         raise ValueError(f'{folder}: DIC export time must be strictly increasing.')
+    if not np.array_equal(points[0, :, 0], np.arange(points.shape[1])):
+        raise ValueError('Legacy DIC time column must be confirmed zero-based consecutive stage numbers')
     return TimingData(machine, points, labels, np.arange(points.shape[1])/fps, fps)
 
 
@@ -132,7 +153,6 @@ def draw_selection(data: TimingData, record: dict, output: Path, language: str,
     force_ax.plot(f[:, 0], f[:, 1], color='#292929', lw=1.7)
     dic_ax.plot(t, mean, color='#4D4D4D', lw=1.35)
     force_ax.set_ylim(*force_limits)
-    force_ax.set_yticks([80, 180, 280, 380, 480])
     force_ax.set_ylabel(tr('Machine force reading (N)', '试验机力示值 (N)'))
     dic_ax.set_ylabel(tr('Mean axial displacement (mm)', '两点平均轴向位移 (mm)'))
     dic_ax.set_xlabel(tr('Estimated machine time (s)', '估计试验机时间 (s)'))
@@ -162,7 +182,7 @@ def draw_selection(data: TimingData, record: dict, output: Path, language: str,
     peak = record['raw_peak_N']
     peak_t = record['peak_machine_time_s']
     force_ax.scatter(peak_t, peak, s=20, color='#292929', zorder=5)
-    label_y = peak+65 if peak < 400 else peak-100
+    label_y = force_limits[0]+.65*np.ptp(force_limits)
     force_ax.annotate(tr(f'Peak {peak:.3f} N', f'峰值 {peak:.3f} N'),
                       xy=(peak_t, peak), xytext=(peak_t-end*.20, label_y), ha='center', fontsize=10.5,
                       color='#303030', bbox={'facecolor': 'white', 'edgecolor': 'none', 'pad': 1.5},
@@ -170,20 +190,21 @@ def draw_selection(data: TimingData, record: dict, output: Path, language: str,
     if not complete:
         force_ax.text((f[-1, 0]+end)/2, force_limits[0]+.25*np.ptp(force_limits),
                       tr('No recorded\nforce', '同期载荷\n未记录'), ha='center', va='center', fontsize=10.5, color='.4')
-    label = tr(f'Frames {lo}–{hi}: 15-frame candidate\nMidpoint frame: {center}; force unverified',
-               f'第 {lo}–{hi} 帧：15 帧候选\n中间帧：{center}；载荷尚未核实') if not complete else tr(
-        f'Frames {lo}–{hi}: 15-frame window\nSingle-frame option: {center}',
-        f'第 {lo}–{hi} 帧：15 帧窗口\n可选单帧：{center}')
+    count = hi-lo+1
+    label = tr(f'Frames {lo}–{hi}: {count}-frame candidate\nMidpoint frame: {center}; force unverified',
+               f'第 {lo}–{hi} 帧：{count} 帧候选\n中间帧：{center}；载荷尚未核实') if not complete else tr(
+        f'Frames {lo}–{hi}: {count}-frame window\nSingle-frame option: {center}',
+        f'第 {lo}–{hi} 帧：{count} 帧窗口\n可选单帧：{center}')
     dic_ax.annotate(label, xy=(t[center], mean[center]),
                     xytext=(t[center]-end*.15, mean[center]+span*.20+.015),
                     color=color, fontsize=11, ha='center', va='bottom',
                     arrowprops={'arrowstyle': '-', 'color': color, 'lw': .9, 'shrinkA': 4, 'shrinkB': 6})
-    fig.text(.10, .115, tr('Selection: 6–9 s after fitted final DIC hold entry; 5 Hz; 15 frames.',
-                           '选取规则：DIC 拟合末端停留入口后 6–9 s；采样率 5 Hz；取 15 帧。'), fontsize=10.5, color='#303030')
+    rule = record.get('selection_rule', f'6–9 s after hold entry; {data.fps:g} Hz; {count} frames')
+    fig.text(.10, .115, tr(f'Selection: {rule}', f'选帧规则：{rule}'), fontsize=10.5, color='#303030')
     fig.text(.10, .070, tr(f'Force record ends at {f[-1, 0]:.2f} s. Hatching marks missing force; no tail extrapolation.',
                           f'载荷记录止于 {f[-1, 0]:.2f} s；斜线区为同期载荷缺失，未外推或填充载荷。'), fontsize=10.5, color='#303030')
-    fig.text(.10, .025, tr(f'Zero-based stages. Estimated mapping: t_machine = stage / 5 {record["machine_time_offset_s"]:+.2f} s.',
-                          f'帧号从 0 开始。估计同步：试验机时间 = 帧号 / 5 {record["machine_time_offset_s"]:+.2f} s。'),
+    fig.text(.10, .025, tr(f'Zero-based stages. Estimated mapping: t_machine = stage / {data.fps:g} {record["machine_time_offset_s"]:+.2f} s.',
+                          f'帧号从 0 开始。估计同步：试验机时间 = 帧号 / {data.fps:g} {record["machine_time_offset_s"]:+.2f} s。'),
              fontsize=10, color='#505050')
     stem = output / f'run{record["run"]}_loading_dic_selection_{language}'
     fig.savefig(stem.with_suffix('.png'), dpi=400)

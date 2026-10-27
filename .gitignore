@@ -39,3 +39,10 @@ nonlinear_case_inverse_derivation
 *.fls
 *.synctex.gz
 *.xdv
+
+# Local inputs, one-off work and source bundles (the synthetic fixture is public).
+data/*
+!data/example/
+!data/example/**
+tmp/
+dist/

@@ -1,0 +1,178 @@
+{
+  "base_commit": "9943ab0ee84d830d9e58ba4802c05098ffa48ac8",
+  "moves": [
+    {
+      "from": "lib/calibration_reference_update.py",
+      "to": "research/calibration_reference_update.py",
+      "original_sha256": "36a1ff0c422909578c3433d9578cc03aa0c36c7a4011e053c23b8cf70a83fb6c"
+    },
+    {
+      "from": "lib/dic_calibration_curve_comparison.py",
+      "to": "research/dic_calibration_curve_comparison.py",
+      "original_sha256": "653b7ea6725773982bfd5a1f8aa21ec08600e0e2a8159832283286ea794b7411"
+    },
+    {
+      "from": "lib/dic_gamma_sensitivity.py",
+      "to": "research/dic_gamma_sensitivity.py",
+      "original_sha256": "8c6eaf4fd969c98559c108d042e8c4a7f4fc256465b56c7412ffe33de16f5513"
+    },
+    {
+      "from": "lib/dic_gamma_stability.py",
+      "to": "research/dic_gamma_stability.py",
+      "original_sha256": "7c41e729303f148b8a3cc654b172aac2225602b6f89b2a74faf37ac698c29d9f"
+    },
+    {
+      "from": "lib/dic_gamma_stability_report.py",
+      "to": "research/dic_gamma_stability_report.py",
+      "original_sha256": "f6760b974e2a940fa4f2a93d38c5f11fb7094e774c1a418e6a0728e01cb61eff"
+    },
+    {
+      "from": "lib/joint_reference_diagnostic.py",
+      "to": "research/joint_reference_diagnostic.py",
+      "original_sha256": "ccfdba3c0966d131b986acbbb3b5aaeb1d7fad97be2e6666b377703088ca41dd"
+    },
+    {
+      "from": "lib/material_window_analysis.py",
+      "to": "research/material_window_analysis.py",
+      "original_sha256": "052883781354ce4ef7c6718f857f6f218374335d99c4a2687357efaf96881e77"
+    },
+    {
+      "from": "lib/material_window_gamma_check.py",
+      "to": "research/material_window_gamma_check.py",
+      "original_sha256": "e06c48987fe4d4d51200405821f192c2464e60b1244b23a30e6d105327effe92"
+    },
+    {
+      "from": "lib/material_window_range_analysis.py",
+      "to": "research/material_window_range_analysis.py",
+      "original_sha256": "030372f5efb90b5d6471357c1e0f9acd57e93f241faa871ee034340bfde35c85"
+    },
+    {
+      "from": "lib/sample2_result_analysis.py",
+      "to": "research/sample2_result_analysis.py",
+      "original_sha256": "09d2a3b2bc9bfe61647704553dc256515a83187efaff2aa89972badb1710fd58"
+    },
+    {
+      "from": "lib/sequential_case_diagnostic.py",
+      "to": "research/sequential_case_diagnostic.py",
+      "original_sha256": "a69029c3260bc8acb08e313d03b71e163204e2c63ccce4c15a514e03655c7965"
+    },
+    {
+      "from": "lib/sequential_diagnostic_figures.py",
+      "to": "research/sequential_diagnostic_figures.py",
+      "original_sha256": "d2e7c4f0e9fd6375b1be9a58ccedcfe7abda5ba4ae37cdbb7df6c90af622f324"
+    },
+    {
+      "from": "lib/sequential_gamma_band.py",
+      "to": "research/sequential_gamma_band.py",
+      "original_sha256": "33ec8bdc51545adb2d8dd6d58ee0e2e6cf9e466565eb9c5f7442429ea09b9401"
+    },
+    {
+      "from": "lib/sequential_lcurve_report.py",
+      "to": "research/sequential_lcurve_report.py",
+      "original_sha256": "ff19b66e145c400357740c60c7b97d50efb95f756944f7b1b56c623759e069b5"
+    },
+    {
+      "from": "lib/sequential_lcurve_scan.py",
+      "to": "research/sequential_lcurve_scan.py",
+      "original_sha256": "1a4c635f22c2cc93f1862faff1b9bf1e7960ed56b5db0341986518da370bd2fe"
+    },
+    {
+      "from": "lib/smooth_calibration_reference.py",
+      "to": "research/smooth_calibration_reference.py",
+      "original_sha256": "9f006f285e0c6fd2efbc98bc844398d68e0e9188ea4309802d7d3330cfb2dd43"
+    },
+    {
+      "from": "lib/tensile_fit_standard.py",
+      "to": "research/tensile_fit_standard.py",
+      "original_sha256": "47d6a1fb83d164cddfe8edefbe9f7934043a37d7ef0f4617f1bf1204ef1bb222"
+    },
+    {
+      "from": "lib/uniform_calibration_comparison.py",
+      "to": "research/uniform_calibration_comparison.py",
+      "original_sha256": "95e68dff76bd8c4f2becacc6f90029862b3397367f8a2ce34136b2d720b3465f"
+    },
+    {
+      "from": "lib/uniform_sample_analysis.py",
+      "to": "research/uniform_sample_analysis.py",
+      "original_sha256": "bfec3fa24e1f5bab12febc28b5f34795668011c06472ee49ba3c208604c33975"
+    },
+    {
+      "from": "lib/verify_tensile_calibration.py",
+      "to": "research/verify_tensile_calibration.py",
+      "original_sha256": "de20f6fe49bad33c7ca7869ce53a67467f427ffd9369b374212ff0e86ad4b036"
+    },
+    {
+      "from": "tests/test_material_window_analysis.py",
+      "to": "D:/MyProject/uniform_pressure_experiment_1023/research/tests/test_material_window_analysis.py"
+    },
+    {
+      "from": "tests/test_material_window_gamma_check.py",
+      "to": "D:/MyProject/uniform_pressure_experiment_1023/research/tests/test_material_window_gamma_check.py"
+    },
+    {
+      "from": "tests/test_uniform_sample_statistics.py",
+      "to": "D:/MyProject/uniform_pressure_experiment_1023/research/tests/test_uniform_sample_statistics.py"
+    },
+    {
+      "from_path": "lib/research_reporting.py",
+      "to": "lib/results_io.py"
+    },
+    {
+      "from_path": "lib/tensile_calibration.py",
+      "to": "research/tensile_calibration.py",
+      "note": "Shared fitting functions retained in lib/tensile_calibration.py; old orchestration moved."
+    },
+    {
+      "from_path": "dic_case_config.py",
+      "to": "research/previous_dic_case_config.py.txt",
+      "note": "Exact former config retained as non-executable snapshot."
+    },
+    {
+      "from": "docs/architecture.md",
+      "to": "research/history/docs/architecture.md"
+    },
+    {
+      "from": "docs/workflow.md",
+      "to": "research/history/docs/workflow.md"
+    },
+    {
+      "from": "docs/input_setup.md",
+      "to": "research/history/docs/input_setup.md"
+    },
+    {
+      "from": "docs/research_summary.md",
+      "to": "research/history/docs/research_summary.md"
+    }
+  ],
+  "mechanics_sha256": {
+    "fgm_asm/exact_tv.py": "979814d5ef8e431883c0333660723538461ec8fd144232bbc17c3e33044ce6e7",
+    "fgm_asm/fem_forward.py": "bde2f57ef5ef7d091f80fa950c79a898f7878fec4424ea5abc2892465d7a8266",
+    "fgm_asm/grf.py": "ffd2705ed28c642e83299149d352695235bfa383abae3870e8f05292a4c1d28c",
+    "fgm_asm/inverse_solver.py": "32ee38eac13280a349b9a8fcc99b62ae5494db8db2d90358471c8c5022f28646",
+    "fgm_asm/load_case.py": "ff8761cd9c709580258af1192c59715a4260ce2a3417edcb8620d7662e65aa56",
+    "fgm_asm/l_curve.py": "2a376d962782df76bc75603ebd16d46bcf6b9c60103b709a30330baff7f06eee",
+    "fgm_asm/material.py": "7982752e658a7d722f76209fc978e2a8930dcf0f22ed121617cb2ada04805cbc",
+    "fgm_asm/mesh.py": "1024656e9608b8afcc7ec6e3908a9adbf8991fa64914e6b93565cb8756bd7432",
+    "fgm_asm/observation.py": "a9f8b7bcdf48e627933b3e6bcae1ad8f087cfa19d4daf7970f1c0f1c997eede7",
+    "fgm_asm/regularization.py": "aabba467ec8acd83f1a46671dfe58b26aacded0fabc8f945a59c4c73cd0082ab",
+    "fgm_asm/research.py": "3a86f6fdd73d8d5e102f2ef0141c9e9ced2159a7147fe545b8ad8017b0a6ea93",
+    "fgm_asm/tgv.py": "abdef11e675718111bdd9630d56adcbd902152b1577a3a79af2c121186e846af",
+    "fgm_asm/__init__.py": "eea06c1e7cf5ffe79e033adf820c112401b646430f4bcf3655fbdc13862c9c34"
+  },
+  "mainline_modules": [
+    "lib/__init__.py",
+    "lib/calibration_reference.py",
+    "lib/calibration_workflow.py",
+    "lib/config_utils.py",
+    "lib/dic_case_reporting.py",
+    "lib/dic_case_workflow.py",
+    "lib/dic_frame_selection.py",
+    "lib/dic_preprocessing.py",
+    "lib/experiment_data.py",
+    "lib/frame_selection_workflow.py",
+    "lib/io_utils.py",
+    "lib/results_io.py",
+    "lib/synthetic_recovery.py",
+    "lib/tensile_calibration.py"
+  ]
+}

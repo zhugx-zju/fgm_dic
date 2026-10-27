@@ -1,0 +1,12 @@
+{
+  "kind": "synthetic_demo_only",
+  "seed": 20261027,
+  "units": "mm, N, MPa",
+  "force_increment_N": 80.0,
+  "poisson_ratio": 0.26,
+  "truth_representation": "Q4 nodal layered samples",
+  "temporal_noise_sd_mm": 2e-05,
+  "common_spatial_noise_sd_mm": 0.00015,
+  "generator_sha256": "f5de14b5e8bbd8b124918f3e2ab1081e6007009e80288303f077edf14b6368eb",
+  "note": "No real experimental input; calibration curves and timing are synthetic. The FE fixture demonstrates operation, not independent physical validation."
+}

@@ -8,12 +8,12 @@ from lib.dic_case_workflow import plot_saved_stage, prepare_dic
 from lib.dic_case_reporting import publish_stage
 
 
-def main():
+def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--config', default='dic_case_config', help='Python module or .py path')
+    parser.add_argument('--config', default='config', help='Python module or .py path')
     parser.add_argument('--output', type=Path, help='Override 01_prepared directory; later stages then need --input')
     parser.add_argument('--plot-only', action='store_true', help='Redraw saved fields only; do not reread raw CSV')
-    args = parser.parse_args()
+    args = parser.parse_args(argv)
     cfg = load_python_configuration(args.config)
     print(f"当前选择：data={getattr(cfg, 'DATA_MODE', 'legacy configuration')}, "
           f"mesh={getattr(cfg, 'MESH_SOURCE', 'configured_grid')}, regularization={cfg.REGULARIZATION_MODE}")

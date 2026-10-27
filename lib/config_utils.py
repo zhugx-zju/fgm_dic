@@ -5,6 +5,31 @@ import hashlib
 import importlib
 import importlib.util
 import json
+from types import SimpleNamespace
+
+
+def resolve_pipeline_inputs(cfg):
+    """Resolve generated tables at execution time; config imports never read results."""
+    if not getattr(cfg, 'USE_FRAME_SELECTION', False):
+        return cfg
+    import pandas as pd
+    table = pd.read_csv(cfg.FORCE_PAIRING_CSV)
+    resolved = SimpleNamespace(**vars(cfg))
+    platforms = {}
+    for name, item in cfg.PLATFORMS.items():
+        rows = table[(table['run'] == item['run']) & (table.setting_N == item['setting_N'])]
+        if len(rows) != 1:
+            raise ValueError(f'{name}: selection must contain exactly one run/setting')
+        row = rows.iloc[0]
+        if row['status'] != 'ready':
+            raise ValueError(f'{name}: export_candidate_only; complete force coverage, stability and reference evidence first, '
+                             'or explicitly configure an assumed force with USE_FRAME_SELECTION=False')
+        stages = (int(row.stage_first), int(row.stage_last))
+        if item.get('stages') is not None and tuple(item['stages']) != stages:
+            raise ValueError(f'{name}: manually specified stages differ from selected frames')
+        platforms[name] = dict(item, stages=stages)
+    resolved.PLATFORMS = platforms
+    return resolved
 
 
 def configuration_fingerprint(configuration) -> str:

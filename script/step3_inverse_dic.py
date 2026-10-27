@@ -9,14 +9,14 @@ from lib.dic_case_workflow import inverse_dic, plot_saved_stage, resume_l_curve
 from lib.dic_case_reporting import publish_stage
 
 
-def main():
+def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--input', type=Path, help='01_prepared directory; defaults to CASE_OUTPUT in --config')
-    parser.add_argument('--config', default='dic_case_config', help='User configuration; verified against frozen step-1 inputs')
+    parser.add_argument('--config', default='config', help='User configuration; verified against frozen step-1 inputs')
     parser.add_argument('--output', type=Path)
     parser.add_argument('--plot-only', action='store_true', help='Redraw saved fields only; no inversion')
     parser.add_argument('--resume', action='store_true', help='Recover unresolved scan line searches within the original remaining budget')
-    args = parser.parse_args()
+    args = parser.parse_args(argv)
     if args.resume and args.plot_only:
         parser.error('--resume and --plot-only are mutually exclusive')
     source = prepared_input(args.input, args.config)

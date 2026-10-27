@@ -202,7 +202,7 @@ def publish_stage(case_root, stage, output, summary, project_root=None):
     parts.append('</html>')
     overview = case_root/'结果总览.html'
     overview.write_text('\n'.join(parts), encoding='utf-8')
-    results = project_root/'results'
+    results = case_root.parent
     results.mkdir(exist_ok=True)
     parts = ['<!doctype html><html lang="zh-CN"><meta charset="utf-8"><title>项目计算结果</title>', PAGE_STYLE,
              '<h1>项目计算结果</h1>',
@@ -225,7 +225,7 @@ def publish_stage(case_root, stage, output, summary, project_root=None):
         parts.append('</ul></details>')
     parts.append('</html>')
     (results/'index.html').write_text('\n'.join(parts), encoding='utf-8')
-    print(f'结果总览: {overview}\n固定入口: {project_root / "打开结果.html"}')
+    print(f'结果总览: {overview}\n结果索引: {results / "index.html"}')
 
 
 def write_stage_gallery(output, summary, title):
@@ -384,6 +384,8 @@ def write_case_report(output, summary, metrics, regions, selection):
         for r in regions:
             lines.append(f"| {r['nu']:.2f} | {r['infill_percent']}% | {r['mean_E_MPa']:.1f}±{r['sd_E_MPa']:.1f} | {r['inverse_mean_E_MPa']:.1f} | {r['difference_percent']:+.2f}% |")
         lines += ['', '组内 SD 和反演场空间 SD 的含义不同，均不作为参数置信区间；分区统计限于当前计算域，并非完整制造区统计。', '',
+                  '模量剖面同时保留灰色分层阶梯参照；配置允许且自然三次样条通过单调检查时，叠加黑色光滑标定参照。'
+                  '光滑参照仅在标定填充率支持内显示，不外推，不作为连续材料真值或反演先验；状态见各ν目录smooth_reference_status.json。', '',
                   f"主泊松比预先指定为 {summary['primary_nu_prespecified']}；其他 ν 为同条件敏感性比较，不根据留出平台误差更换主值。", '',
                   f"gamma={summary['selected_gamma']:g}，只按识别平台的 L-curve 最大正曲率拐点选择；状态：{summary['l_curve_status']}。不按预测平台误差或独立材料标定调参。"]
         settings = summary['inverse_settings']
