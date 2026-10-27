@@ -1,0 +1,689 @@
+{
+  "source_fields": [
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run1_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_0.0001\\fields.npz",
+      "sha256": "de05c3da9e3886d19f6df340426f717d8719ec6a71fb8dbf2034273f742042cb"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run1_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_6.86649e-05\\fields.npz",
+      "sha256": "a7f42d666f10b8e70d175ce512b577b66a4be2591b5574d12acd168e8756349c"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run1_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_4.71487e-05\\fields.npz",
+      "sha256": "2d454c00a03076c18e89d006155c53a9d3dba7969f05d894c6c677bffc90650a"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run1_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_3.23746e-05\\fields.npz",
+      "sha256": "e6a57ebb19aaa81137bf228731f676cc85fe8b7370d6b260392cd1505535f16e"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run1_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_2.223e-05\\fields.npz",
+      "sha256": "dcf0eb72f99dbc268e8a981e6b342f7166ad2d7e87db969dbb6f96130aa89104"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run1_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_1.52642e-05\\fields.npz",
+      "sha256": "235c304bcd10b0350719a4a110377d75c50f20411a5cbce44805d3a79c92dbab"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run1_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_1.04811e-05\\fields.npz",
+      "sha256": "0b077c781588c2851ffcd1bfafa39fe991ac6ef43d69e2768f8a443fee321f82"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run1_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_7.19686e-06\\fields.npz",
+      "sha256": "2dac3ad368ce5b996a6d43f2abe63270c0f294cf7080a25c62a7415949336d0b"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run1_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_4.94171e-06\\fields.npz",
+      "sha256": "4ee2e44c77239680d975aae3517b7c516ca6ce84aeeaffbedd448f55bad79ce5"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run1_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_3.39322e-06\\fields.npz",
+      "sha256": "6c4a5d8e70e236ff8e24f1a96cfda080cd19f3ef35567521652a935624cf08c6"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run1_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_2.32995e-06\\fields.npz",
+      "sha256": "9fa61d2e96f13b41d06782c0a74672615e9edb439a9fe7f1e5add261cfb7e47e"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run1_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_1.59986e-06\\fields.npz",
+      "sha256": "e56370e6d5a268156cbcf36aa79797c1b74413c21f90f1190a28bc0dbd9c7f7a"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run1_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_1.09854e-06\\fields.npz",
+      "sha256": "82ede3e3c5b3553ca25008aa6c4bb186350c176f458604fcb630336fad9216e4"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run1_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_7.54312e-07\\fields.npz",
+      "sha256": "07b1bcee505dd9b3e824dd38b6a0be15554f32ffaf3ff3fafea652494168047a"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run1_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_5.17947e-07\\fields.npz",
+      "sha256": "a9ac0496b98163e30efd7a0f5e2f9ceb3fb568aa560ab1ad97a7bf79585c0b20"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run1_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_3.55648e-07\\fields.npz",
+      "sha256": "2c9e929df65b5126c8f7d73b651bd63beab31b2a2cd124133e8f45d69040438e"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run1_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_2.44205e-07\\fields.npz",
+      "sha256": "3855cbd6189f808dd2f9db2aa4225d80469660a1b335b5899868e60476fc825d"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run1_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_1.67683e-07\\fields.npz",
+      "sha256": "15360f1b16e51e30e9deead5dcf93bd135d4dfd8059988b974c15b01f140f114"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run1_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_1.1514e-07\\fields.npz",
+      "sha256": "89a1015d257878703542e043216bf6edd006554a6108f71434688370bbbc7f2b"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run1_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_7.90604e-08\\fields.npz",
+      "sha256": "ca9c3cc5f8bed3ede256979942bb980ebd5d4cc232b42e26f9d443ae1356dc48"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run1_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_5.42868e-08\\fields.npz",
+      "sha256": "349d8926b9134ab89360a9a43897ffbb8417794d53eacbf164e0750eaa28ffa9"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run1_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_3.72759e-08\\fields.npz",
+      "sha256": "cabc467697f834257fbbf52a02eb938acc09b97ffb3058151a18082acfd40e19"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run1_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_2.55955e-08\\fields.npz",
+      "sha256": "22c579c07e112030f7a2dccf7bb9c107c51aba778c08bae3b57c7a430fde3e08"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run1_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_1.75751e-08\\fields.npz",
+      "sha256": "7b6ce24d09af7851cdca6055da5b9f2cc1a045f67a38f6430b80f07f7e193d43"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run1_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_1.20679e-08\\fields.npz",
+      "sha256": "e4611bdf43db381bf0aeb7e1c216a97c0dc9016a5334295313ef0c3836b870d5"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run1_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_8.28643e-09\\fields.npz",
+      "sha256": "9034e0d8143426057cd69d3b0d716afd8e2ada6c6746716f8ca15baac1a6a40e"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run1_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_5.68987e-09\\fields.npz",
+      "sha256": "66f132ced6018f8e7d1b409dcbbe3e7b6e248a566a68ba9c798366b7f5152065"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run1_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_3.90694e-09\\fields.npz",
+      "sha256": "089dc230520ebc398c122b7783631db0ab947af22a1e47a236389219a7728e8a"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run1_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_2.6827e-09\\fields.npz",
+      "sha256": "6ca19ebdf01ad47af63586e758e9243ee412880350318f4c745f419ffcf07bff"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run1_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_1.84207e-09\\fields.npz",
+      "sha256": "3ed1c60e4258f8978520c647562cde8243719681556e29ad90c7174fd1fba100"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run1_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_1.26486e-09\\fields.npz",
+      "sha256": "7a234bc6f5345b5a0a542b3495a3d0a0c997dcd2952cb2b63008494c62a9f4d5"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run1_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_8.68511e-10\\fields.npz",
+      "sha256": "03e8c360b54d4f868415a7b02a8a27bd899a95adc5051c66b60c8774799c96ca"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run1_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_5.96362e-10\\fields.npz",
+      "sha256": "896f2d04d35d3aefc188c65456ccecef15456d42b57f7a25567464136289ab57"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run1_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_4.09492e-10\\fields.npz",
+      "sha256": "f8accaaf418da10f32f0101f31cc2e901d4d5aa683c2dee2c66d914a7d3e078f"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run1_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_2.81177e-10\\fields.npz",
+      "sha256": "5e1e9cdf2b8356f3b66a2031ab4de3bdafcd814e3809b9d73457c7edb10bdc28"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run1_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_1.9307e-10\\fields.npz",
+      "sha256": "d7a599cf86815648155856952879a068ec4506539ccf90774e7f50d9c5be365d"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run1_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_1.32571e-10\\fields.npz",
+      "sha256": "cd6439bf8b558567c6cd7296bec2c79efedb5c6c54af6f654787fe0831255f1c"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run1_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_9.10298e-11\\fields.npz",
+      "sha256": "3720024a7efacb4107669376152abfbeadb3c93ae87a2235953c39ec1657e102"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run1_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_6.25055e-11\\fields.npz",
+      "sha256": "bbd3a13ed36565e7240a699a27976b6801bc647b3af3384f21423fcb3a35cff3"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run1_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_4.29193e-11\\fields.npz",
+      "sha256": "efced86652860b2cfd2d42b7586782e6ee0026ac23dd0914050d3e70479667a6"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run1_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_2.94705e-11\\fields.npz",
+      "sha256": "a27b83997f756cc5af88ddc5dc4a90ba32d66c1f62d307d733d86fe8950b6d9f"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run1_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_2.02359e-11\\fields.npz",
+      "sha256": "bb17d4b132d7b1b0ff2c5eee05411b52dc845fd842fa8b8fc9f1adffa69e883e"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run1_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_1.3895e-11\\fields.npz",
+      "sha256": "26036d0de11b1e2e21224ef5d5ba0eecf1b047238d9be41cbe9c5b6649f4c8d0"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run1_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_9.54095e-12\\fields.npz",
+      "sha256": "4e0cad240cb8da151cf4deabdc0dc9a97514314dd8b6c60fcea8f2e807a3af80"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run1_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_6.55129e-12\\fields.npz",
+      "sha256": "f5e83c71e594ef4a2b5952b88edf44788c43f30b013cb9fd5a3063e8dc4acd97"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run1_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_4.49843e-12\\fields.npz",
+      "sha256": "dd10e5b834e332f152487791548295c112e5f3a1e855f78c7b33b9fdc85ecbed"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run1_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_3.08884e-12\\fields.npz",
+      "sha256": "118243ec4187d5fec8e55fce4a5b5a81e0bc572e8c6c1b9b6bbf9039192549d9"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run1_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_2.12095e-12\\fields.npz",
+      "sha256": "fa8879dad8639ce46e2b477724c92cd03e1f961e930328ada8d861d9e8591d89"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run1_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_1.45635e-12\\fields.npz",
+      "sha256": "3f21511c5f7518ded623953ca3cc3e7cea6c402bbd64b462b1c42c2c888eb1ee"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run1_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_1e-12\\fields.npz",
+      "sha256": "a2c40a3a608e7a49f8c4638122427bd6b4ce54ce110b3bf9bdeecab9ef523d83"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1026\\sample_2\\analysis_results\\h1_gamma_stability_20261027\\run1\\g0_full_uniform\\fields.npz",
+      "sha256": "be20c1ca9bbe695caac3f9995ed90dde79a90f1f6644dd4f62f9971646e7c84e"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1026\\sample_2\\analysis_results\\h1_gamma_stability_20261027\\run1\\g1_full_uniform\\fields.npz",
+      "sha256": "f56bbd938639ab70e072361e1d9d4d1d8fcd76204198f6853323c8524ce14486"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1026\\sample_2\\analysis_results\\h1_gamma_stability_20261027\\run1\\g2_full_uniform\\fields.npz",
+      "sha256": "a99040c856a613ee53f126f15398a43b0e265813a973d8a5d8b500186e605926"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run2_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_0.0001\\fields.npz",
+      "sha256": "350d82c5ff26928dcdaab0f4d350eace7547edd2f685e832148f89dc75f010d8"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run2_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_6.86649e-05\\fields.npz",
+      "sha256": "1f7b4770d3fab75eabddde06f79ac8f4a33f16e0d29be1057a725b378d12fdea"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run2_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_4.71487e-05\\fields.npz",
+      "sha256": "56fb82bb00cfc3914d2b2e44bd1feed034a4cc373a23cfbc39c4a8b744bb2ff7"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run2_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_3.23746e-05\\fields.npz",
+      "sha256": "040d5e3705a06df80c58ee0d6fee51d7b80bbd2c96b06ffa2c072ee0169a1af1"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run2_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_2.223e-05\\fields.npz",
+      "sha256": "b1637eb2ff6bec33f0c5a0cb3d8c44ada49604a49be56299aa2023a0bab76b7d"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run2_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_1.52642e-05\\fields.npz",
+      "sha256": "3893651b2b531b54379034a797fe4027a9fb7d8e32ef1f07dbf1b328ae18cdb3"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run2_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_1.04811e-05\\fields.npz",
+      "sha256": "23d208f2f4b15223f4edfc9fe7d1062be29636927d321568b5d6686b3870e8ea"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run2_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_7.19686e-06\\fields.npz",
+      "sha256": "8f8d4c2e1f0e17e275082aa0c8e2a81350143de82e9bf3031f481a0991f60ad3"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run2_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_4.94171e-06\\fields.npz",
+      "sha256": "0d7fce59632b47366b0645742929cf4dce74054ab5cea95b9d7d95f0ebadb1f9"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run2_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_3.39322e-06\\fields.npz",
+      "sha256": "85dee11a399f91dddb6f9f58dc5f9169daf6262441430337271911a267628fbd"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run2_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_2.32995e-06\\fields.npz",
+      "sha256": "f2a13d9bb368cee21e9025285e79ed76af79324a5c02c07011228ae4734ce2e7"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run2_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_1.59986e-06\\fields.npz",
+      "sha256": "8e7f94c7798df2a44502291a96275681935b59dca690524e26a73a98253553cd"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run2_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_1.09854e-06\\fields.npz",
+      "sha256": "0aa407aa64d64370e6ac50875cc2f791eea0d1c67d9f73a22dc47dcaca937658"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run2_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_7.54312e-07\\fields.npz",
+      "sha256": "7909642be7a5395b27597e30cb7aefddfc43431e0d393560e506ab36dfd5c7de"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run2_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_5.17947e-07\\fields.npz",
+      "sha256": "c72b0e3c8bde9d026cecb5afd2262f34ec53fe2c33852f89807797e6318a8542"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run2_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_3.55648e-07\\fields.npz",
+      "sha256": "9f214fcd543f15c64f0828e2fdd2cddbb22cf65ab9d63ebbf265e524b8da2e22"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run2_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_2.44205e-07\\fields.npz",
+      "sha256": "a18f2ad97742a55d7a978dd6e5e2b0b83f0cba2c6077490f1fd2a3049bdf3faf"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run2_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_1.67683e-07\\fields.npz",
+      "sha256": "e7f78bb155175abafdab26ca3b98ba9e7f4237250245df193d8e5e364c432c0c"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run2_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_1.1514e-07\\fields.npz",
+      "sha256": "653f007acc31807d052dec4d43c9320606be795f497493bf60e5de7d671d3de8"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run2_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_7.90604e-08\\fields.npz",
+      "sha256": "e0ec4a7e8fba3b4da3cedf7db66a14f812f226712ac7d4acb18b420f6be6b665"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run2_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_5.42868e-08\\fields.npz",
+      "sha256": "51cd678439556743a24912c1d1621cd28a8a98e8c3bfa79f8f3218f678d427c4"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run2_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_3.72759e-08\\fields.npz",
+      "sha256": "3be8fc5a64db20900b0fcfb9f67aa3e3e97354500e427850b433a50b4ea0edc5"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run2_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_2.55955e-08\\fields.npz",
+      "sha256": "4da197a041680400be2bdf04cadd370f23f64c41c47bc1c048bb3c2f5e2e91b8"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run2_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_1.75751e-08\\fields.npz",
+      "sha256": "fa8c9b2dfe842ff3ed267934977705937ace432f3b24ef343343efa4ce87ee1d"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run2_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_1.20679e-08\\fields.npz",
+      "sha256": "a7a4688e6d18fd041d50e172afbab46217b33db79711483d825610479276b8eb"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run2_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_8.28643e-09\\fields.npz",
+      "sha256": "f7e715ac67ca7f93a84bbd0703bb6a8145cf013ac0a9bd0517ad54406ed7a861"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run2_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_5.68987e-09\\fields.npz",
+      "sha256": "eff5625fe67c8e8ac6a2a58a3c58b4c0a9973200d525151e9090ad4951a54fcc"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run2_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_3.90694e-09\\fields.npz",
+      "sha256": "a4b2dc805c75aeb2fc567b95f1c7f9f981fa868bd6570f094f6963831cc5b1dd"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run2_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_2.6827e-09\\fields.npz",
+      "sha256": "58b03fc3f61d9ce4b01904ce4bdefd17d35b3f3db73fe09b8da85a423b0a1358"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run2_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_1.84207e-09\\fields.npz",
+      "sha256": "a4d27f7f26471d9f6accf9e06ed019e3b0df282ccc343a0fd15f9bd05f65ccd7"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run2_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_1.26486e-09\\fields.npz",
+      "sha256": "a5106263004860dbf8e86efd1597d1b8e1bbbd67b331908e16acebbd8844dfcc"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run2_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_8.68511e-10\\fields.npz",
+      "sha256": "d2fb6826112b2778676a7e192fa5adc2204acb40447b10063fb5245bd8323e0a"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run2_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_5.96362e-10\\fields.npz",
+      "sha256": "8930fa609c8743f0e101a71242953d414f8b036e74d7cd78130e46ddf7bc3ae3"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run2_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_4.09492e-10\\fields.npz",
+      "sha256": "799c1116d424443c4facd3806cac2a5aba7d4e4fb323823d056fa770f542e69f"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run2_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_2.81177e-10\\fields.npz",
+      "sha256": "f69eaf0e0d93f702f70eaae579c824f59bee391f6ba938e27c4587601bd9e3a4"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run2_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_1.9307e-10\\fields.npz",
+      "sha256": "2a695969a455f92b2fe5d9a4184f0db2c277c448027840daa576ea4ed76abd92"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run2_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_1.32571e-10\\fields.npz",
+      "sha256": "dbf0779e421a2470ebffeeb54c7f6388d064b921ed1f4157f4e7e2f5e686c0fd"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run2_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_9.10298e-11\\fields.npz",
+      "sha256": "77caf2d88506a07c294471045a00c669da3061732754a3db6f0b22dd7a7a8347"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run2_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_6.25055e-11\\fields.npz",
+      "sha256": "87c59fe181c3fb27ffdbfa95065af3d4681e4fa81e8c24b5cf4652e1981057cd"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run2_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_4.29193e-11\\fields.npz",
+      "sha256": "4bcd147bd1f663c0f0982f4068bd07bb3da494df09eae92dcea884f7367fc70d"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run2_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_2.94705e-11\\fields.npz",
+      "sha256": "64ed94b1b476807e81d02d0a12bb0b63fac2d01be51572542edf45b5ddafd109"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run2_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_2.02359e-11\\fields.npz",
+      "sha256": "2d16ccf27991050545e0fd4aa4118fdb45c136bbe2c845a6b84bcca72567564f"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run2_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_1.3895e-11\\fields.npz",
+      "sha256": "1c798c0f57221607af2b9868d976000678febf1424be166618556b92156557dc"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run2_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_9.54095e-12\\fields.npz",
+      "sha256": "f97d01788b31bee15e266b4a687c3a6b72d4c7e2e18cd86bd829aea5e92bd2e6"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run2_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_6.55129e-12\\fields.npz",
+      "sha256": "c0dbbbc9510c7fed7757b4e91193ce91523eb6496648a514e4de4ac6fff5ca44"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run2_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_4.49843e-12\\fields.npz",
+      "sha256": "abd6d4593c764ab883fdc06869ccd9c5f46f988a83204ad465602c02700e98be"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run2_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_3.08884e-12\\fields.npz",
+      "sha256": "ed5c673a07e5c2f6d29255dc38cf8ce6898395e6f39df4915937038a7d98d23b"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run2_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_2.12095e-12\\fields.npz",
+      "sha256": "cc554a5d4f6a67bb3f48971319105a930ff7ba021bf724b1d8dfa757e3210c0d"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run2_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_1.45635e-12\\fields.npz",
+      "sha256": "237deeb2374b0dc3b1d73bdee941c9ebfb22e065274c8d7c045a534fde0cadd7"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run2_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_1e-12\\fields.npz",
+      "sha256": "1421db00708697d8103cd727b8b39243e3177c5eb149b363200704c9603c8cdf"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1026\\sample_2\\analysis_results\\h1_gamma_stability_20261027\\run2\\g0_full_uniform\\fields.npz",
+      "sha256": "27248936d4d371e39860e8260a55b7be500a1d55f8d43cd74e22f4c9baf0ead6"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1026\\sample_2\\analysis_results\\h1_gamma_stability_20261027\\run2\\g1_full_uniform\\fields.npz",
+      "sha256": "167d1dc116a46ab3979a950da303d0f1cd994cca9c5d4d00beff278ca8345d3e"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1026\\sample_2\\analysis_results\\h1_gamma_stability_20261027\\run2\\g2_full_uniform\\fields.npz",
+      "sha256": "7576d7a2012d0c503df8cd927b0516347ccf8c52b10e6708334b86984a0eee9a"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run3_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_0.0001\\fields.npz",
+      "sha256": "6c5ee340fa8874251c714fe08f89b72c8c354e04a3b637ded257753a71a672d1"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run3_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_6.86649e-05\\fields.npz",
+      "sha256": "60f43bcce5ad5e052b44492532f98a3d589ba8676e200aa1eb27db60a6f26609"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run3_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_4.71487e-05\\fields.npz",
+      "sha256": "87a59529ff45c0921f0b430639e725deff0f80d88888ffb30b687bfca034a208"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run3_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_3.23746e-05\\fields.npz",
+      "sha256": "12420fec8548d31e5b0a7568e7d6e8892c3477f9894bb69dc3cd495cf482be23"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run3_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_2.223e-05\\fields.npz",
+      "sha256": "e913bb8640a4305afba0a49113259222f344fb07fdf5d7a09d61fad88112a26f"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run3_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_1.52642e-05\\fields.npz",
+      "sha256": "5df3f231afcbca8848696905e5769ac86ad25c33d558791ffc733c937b3bffbb"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run3_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_1.04811e-05\\fields.npz",
+      "sha256": "53e9495837bf3dcd8c8aa52f087d0ab6383252fd46b7c49bb7379012a79dca11"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run3_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_7.19686e-06\\fields.npz",
+      "sha256": "029ed17c21a9b949189eb23f65be0c9f54c156e65c9a59ee2dcdb3b6b1a8da08"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run3_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_4.94171e-06\\fields.npz",
+      "sha256": "e92113838d0ef82a3d9499df3cc7431172435389a795ffda6adf044b8c78aeed"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run3_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_3.39322e-06\\fields.npz",
+      "sha256": "2324c2ed969a01fd7327b8f7bee4e6fe1df0d9fefa61b9121acb56fdefa1c3d5"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run3_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_2.32995e-06\\fields.npz",
+      "sha256": "d42f585057ae38e891858da32419a5dd4151f3385ed47fec17f841349bb3695d"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run3_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_1.59986e-06\\fields.npz",
+      "sha256": "4aac3bbce82c5ea51d99abf13212778eb10ff9e0e80b7f1a2a3e8e7a71245235"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run3_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_1.09854e-06\\fields.npz",
+      "sha256": "d7024e940aff03ed81bc557b6bb46036d61fb7d32d1d09904b417935f2fe9019"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run3_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_7.54312e-07\\fields.npz",
+      "sha256": "44fbf2dcfa22c89c8b50440f9ce2b3f938f492fc6ad75cc67222aee9609d3334"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run3_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_5.17947e-07\\fields.npz",
+      "sha256": "b0f84193d71a26a144e7876da22acc63ba5d9483f92ceeb85bf6c331f9d3ecf2"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run3_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_3.55648e-07\\fields.npz",
+      "sha256": "5244b5a5c0dca068044fc08c63e57f25882044fe6d7c7bbe677f93ff1a519a23"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run3_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_2.44205e-07\\fields.npz",
+      "sha256": "efc0e036b84deb451141d9985676588346030f35a569950fc962e931ce1d60ae"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run3_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_1.67683e-07\\fields.npz",
+      "sha256": "0dc4a35bd4f1e776c94352f22b2f7ba64eb59c4c2c5a1cbc3a06a449131fb3d3"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run3_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_1.1514e-07\\fields.npz",
+      "sha256": "cc1399f10b9ffee41b3b1392d38c39b0efa1dacfe0464625951221f288224d79"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run3_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_7.90604e-08\\fields.npz",
+      "sha256": "bb1b32a850b9dccc6a9351698d5a2c33136a99ba785140c081b9c507f308745b"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run3_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_5.42868e-08\\fields.npz",
+      "sha256": "62d3114ad12bc3385d1d908b1b6c5bb5c7f386288082dbd6ab66501bb468018a"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run3_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_3.72759e-08\\fields.npz",
+      "sha256": "3ffd3e2bb0eac86b8feb1c20190dd5c1b9475dff7de8761ffeba1562409642ec"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run3_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_2.55955e-08\\fields.npz",
+      "sha256": "2c4d2f9ea56215b00d5d35bc3233f4d2b91d3a8eed9fb41d226e49d590bd2938"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run3_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_1.75751e-08\\fields.npz",
+      "sha256": "48dd913c95db8908c35ecc4b53b610de0cc1fe1f75b9bd11fcb0244ab97910ff"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run3_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_1.20679e-08\\fields.npz",
+      "sha256": "384200a4cbefeedb3a7cd94292a7a1efaf7e723a5259adc216b2979ad09ef7e1"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run3_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_8.28643e-09\\fields.npz",
+      "sha256": "35d5a55e3564f383285fdb2f9fe7189644a9f4ac280d11029b74352646df379c"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run3_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_5.68987e-09\\fields.npz",
+      "sha256": "28ccabec07e46cff9a3edec47ba737624a141a87e75b8e28018c78abb1c59b16"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run3_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_3.90694e-09\\fields.npz",
+      "sha256": "ffb3beba6077f55583c2aafed42d9b530d6a3714ce7981c2f37d14fc51d8c9ed"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run3_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_2.6827e-09\\fields.npz",
+      "sha256": "2a1ed26bd22bdfa896226550693a26b804c0b8b8abe047d451a18f18526c95e9"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run3_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_1.84207e-09\\fields.npz",
+      "sha256": "7a788920db8e65eec0d4c2ad436263c5bcd506d1fb3fc6916633fb81f07a579b"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run3_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_1.26486e-09\\fields.npz",
+      "sha256": "00a42623d7b22ee2d2f814520209c48a3bd10e28d270c8510f3bb411cea8b576"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run3_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_8.68511e-10\\fields.npz",
+      "sha256": "557d01003ff66f6458ce266907d93f32bfc0ce878353fed220e434d9a85b94ed"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run3_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_5.96362e-10\\fields.npz",
+      "sha256": "c3c8cba5556879da0348f1599a1362f4122c6dbcb693a016b11e398accaf146c"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run3_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_4.09492e-10\\fields.npz",
+      "sha256": "28c9f5dadf3ffe4a8aff72c137d97b0596364471605594d066397dca14f1bddd"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run3_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_2.81177e-10\\fields.npz",
+      "sha256": "e04472f04355b788504f80dded77e1045537e37000163eace8fc353d1c7d2fd7"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run3_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_1.9307e-10\\fields.npz",
+      "sha256": "fe2f22e354ca0cbcc63f811f0838fd78fb1a278cd55f9a258631fba5d44c32d6"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run3_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_1.32571e-10\\fields.npz",
+      "sha256": "65c8e1ff6e4df713ad9b472c7642954e3e063b62daa7313b892a9fafd7e9a71d"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run3_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_9.10298e-11\\fields.npz",
+      "sha256": "ff92efcd726926adf9491a279f96b7c7bb20c2559f26ef3f21525523faab7c44"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run3_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_6.25055e-11\\fields.npz",
+      "sha256": "23f93d47c6cfe4bcf06e341263f8233f69fd991452f0a95fedfbb8882a93e309"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run3_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_4.29193e-11\\fields.npz",
+      "sha256": "88340b45efe3e60d062fa5cd34df0afe069e4de4f57e917acfaac43d28d897b1"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run3_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_2.94705e-11\\fields.npz",
+      "sha256": "a28cd55b840b211c73dff8f59dc9f83c3fefcf197a197026cfc9880660381391"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run3_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_2.02359e-11\\fields.npz",
+      "sha256": "fb9e9e2112bf1122e34d6a078fe3246d60ee767f7e755482c9eab92e41169930"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run3_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_1.3895e-11\\fields.npz",
+      "sha256": "deebcdef35b24bc2f56948f98d0a8f0aa3d314493d4c5a079b9d62a780c0be47"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run3_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_9.54095e-12\\fields.npz",
+      "sha256": "a27527f8c2f24be5196e8f0644705d535089cdad7f53b16382017bc734c25dc4"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run3_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_6.55129e-12\\fields.npz",
+      "sha256": "61c06337ad09246c6883049893c8bc97876d5ebc0e9d73e676bf5c5dcbcbb9f0"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run3_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_4.49843e-12\\fields.npz",
+      "sha256": "52d289f8f115706c6cca85034d133089d3d22f3a1bb1a3be6c38b77a61bdb655"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run3_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_3.08884e-12\\fields.npz",
+      "sha256": "f3d45577ff804cf7fc8b93d0b94d9753d06b2daf1fb079b07a5d3887151367d9"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run3_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_2.12095e-12\\fields.npz",
+      "sha256": "eb0de1237bd4a8dd4f4f0a7e9dd477a2e1ee37a6fd19bc1330c711622a82849c"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run3_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_1.45635e-12\\fields.npz",
+      "sha256": "80063adda8b6d00347dce5b3b6486c55b9625dc31e395b8dd0bac454ee91c349"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run3_h1_monotone_20261026\\03_inverse\\l_curve\\gamma_1e-12\\fields.npz",
+      "sha256": "6c5ec2df9980c6b7af1da819060f5a8c494f53ec077f7466d698d7f74a092d14"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1026\\sample_2\\analysis_results\\h1_gamma_stability_20261027\\run3\\g0_full_uniform\\fields.npz",
+      "sha256": "365f22eee46e32627c6a5f4396877add78eaf58bbfbe2248cf8959244f1250ce"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1026\\sample_2\\analysis_results\\h1_gamma_stability_20261027\\run3\\g1_full_uniform\\fields.npz",
+      "sha256": "2d653636c916781d84fe11ce3bcd7679e9c989871570b32d55525a28a9ff0017"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1026\\sample_2\\analysis_results\\h1_gamma_stability_20261027\\run3\\g2_full_uniform\\fields.npz",
+      "sha256": "5f234c75301a596bfe5ca9fc946daa8356919cc7b3193a994c3c8ae7a2c461b5"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run1_h1_monotone_20261026\\01_prepared\\run_metadata.json",
+      "sha256": "7c42c8da9d11e2c2becd704c3362d966683b8263873ef1b8e3ab2037a4ee3982"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run1_h1_monotone_20261026\\01_prepared\\fields.npz",
+      "sha256": "fb6c2b4a709395d2792b0c04f6713ed746001cad7ca2b2cf3151797545a55b71"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run2_h1_monotone_20261026\\01_prepared\\run_metadata.json",
+      "sha256": "408f1286c2718cf07f4ce23509b07c5b2c02085f9d385f684b7f3f0daa1ce677"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run2_h1_monotone_20261026\\01_prepared\\fields.npz",
+      "sha256": "f68fd6b334580970c5d2b4ed95c11727441786e4f0e86d5ecd1e0f7ef45afc6e"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run3_h1_monotone_20261026\\01_prepared\\run_metadata.json",
+      "sha256": "5cf8e8b9e302a635c7d35a5b80db2ca9c9d68f35c2ac186b8b9caee9b11bfc2f"
+    },
+    {
+      "path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run3_h1_monotone_20261026\\01_prepared\\fields.npz",
+      "sha256": "8f0592b39282979f133eb7f90ba4e04c82406e18f799bf0825e69d7795b486e6"
+    }
+  ],
+  "script_sha256": "a7694821865c45c24a7c3b9a09dcdc7b1ef9f7a003c1e786792bd95b218c0904",
+  "centers_mm": [
+    -48.0,
+    -32.0,
+    -16.0,
+    0.0,
+    16.0,
+    32.0,
+    48.0
+  ],
+  "interfaces_mm": [
+    -40.0,
+    -24.0,
+    -8.0,
+    8.0,
+    24.0,
+    40.0
+  ],
+  "common_support_mm": [
+    -48,
+    48
+  ],
+  "calibration_role": "Post-hoc comparison only; not a gamma-selection criterion",
+  "metric": "Length-averaged absolute relative difference of transverse-mean curves",
+  "quadrature_check": "Order 6 versus 12; split FE knots, reference knots, interfaces and difference zeroes"
+}
