@@ -1,0 +1,184 @@
+{
+  "source_cases": [
+    {
+      "case": "run1",
+      "source": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run1_h1_monotone_20261026",
+      "source_geometry_mm": [
+        105.926054126,
+        18.43550794901
+      ],
+      "common_geometry_mm": [
+        105.77493755360001,
+        18.43550794901
+      ],
+      "translation_mm": [
+        -0.07555828619999261,
+        0.0
+      ],
+      "length_scale": 1.0,
+      "points_original": 20400,
+      "points_kept": 20280,
+      "force_common_N": 229.2224,
+      "original_force_N": 229.2224,
+      "traction_MPa": 3.8855452314155894,
+      "homogeneous_dic_E_MPa": 1091.7430131218891,
+      "registration_verified": false,
+      "reference_policy": "Each independent reference has its own three eliminated rigid modes.",
+      "prepared_metadata_sha256": "7c42c8da9d11e2c2becd704c3362d966683b8263873ef1b8e3ab2037a4ee3982",
+      "prepared_fields_sha256": "fb6c2b4a709395d2792b0c04f6713ed746001cad7ca2b2cf3151797545a55b71"
+    },
+    {
+      "case": "run2",
+      "source": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run2_h1_monotone_20261026",
+      "source_geometry_mm": [
+        105.77493755360001,
+        18.4636725353
+      ],
+      "common_geometry_mm": [
+        105.77493755360001,
+        18.43550794901
+      ],
+      "translation_mm": [
+        0.0,
+        -0.01408229314499998
+      ],
+      "length_scale": 1.0,
+      "points_original": 20340,
+      "points_kept": 19662,
+      "force_common_N": 308.90886884863187,
+      "original_force_N": 309.3808,
+      "traction_MPa": 5.236309288694234,
+      "homogeneous_dic_E_MPa": 1322.9661881061966,
+      "registration_verified": false,
+      "reference_policy": "Each independent reference has its own three eliminated rigid modes.",
+      "prepared_metadata_sha256": "408f1286c2718cf07f4ce23509b07c5b2c02085f9d385f684b7f3f0daa1ce677",
+      "prepared_fields_sha256": "f68fd6b334580970c5d2b4ed95c11727441786e4f0e86d5ecd1e0f7ef45afc6e"
+    },
+    {
+      "case": "run3",
+      "source": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run3_h1_monotone_20261026",
+      "source_geometry_mm": [
+        109.0551928649,
+        19.3018040506
+      ],
+      "common_geometry_mm": [
+        105.77493755360001,
+        18.43550794901
+      ],
+      "translation_mm": [
+        -1.6401276556499909,
+        -0.4331480507950012
+      ],
+      "length_scale": 1.0,
+      "points_original": 20740,
+      "points_kept": 18696,
+      "force_common_N": 379.86510026839596,
+      "original_force_N": 397.7152,
+      "traction_MPa": 6.439087231130425,
+      "homogeneous_dic_E_MPa": 1300.1835438252415,
+      "registration_verified": false,
+      "reference_policy": "Each independent reference has its own three eliminated rigid modes.",
+      "prepared_metadata_sha256": "5cf8e8b9e302a635c7d35a5b80db2ca9c9d68f35c2ac186b8b9caee9b11bfc2f",
+      "prepared_fields_sha256": "8f0592b39282979f133eb7f90ba4e04c82406e18f799bf0825e69d7795b486e6"
+    }
+  ],
+  "common_geometry_mm": [
+    105.77493755360001,
+    18.43550794901,
+    3.2
+  ],
+  "elements": [
+    121,
+    19
+  ],
+  "nu": 0.26,
+  "gamma_candidates": [
+    1e-08,
+    8.28642772854686e-09,
+    6.866488450042998e-09,
+    5.689866029018281e-09,
+    4.71486636345739e-09,
+    3.906939937054621e-09,
+    3.23745754281764e-09,
+    2.6826957952797275e-09,
+    2.222996482526191e-09,
+    1.8420699693267164e-09,
+    1.5264179671752304e-09,
+    1.2648552168552958e-09,
+    1.048113134154683e-09,
+    8.68511373751352e-10,
+    7.196856730011529e-10,
+    5.963623316594636e-10,
+    4.941713361323838e-10,
+    4.0949150623804193e-10,
+    3.3932217718953296e-10,
+    2.811768697974225e-10,
+    2.329951810515372e-10,
+    1.9306977288832457e-10,
+    1.5998587196060573e-10,
+    1.3257113655901109e-10,
+    1.0985411419875573e-10,
+    9.102981779915227e-11,
+    7.543120063354607e-11,
+    6.250551925273977e-11,
+    5.179474679231202e-11,
+    4.2919342601287785e-11,
+    3.556480306223121e-11,
+    2.94705170255181e-11,
+    2.4420530945486546e-11,
+    2.0235896477251556e-11,
+    1.67683293681101e-11,
+    1.389495494373136e-11,
+    1.151395399326448e-11,
+    9.540954763499924e-12,
+    7.906043210907701e-12,
+    6.551285568595496e-12,
+    5.428675439323859e-12,
+    4.498432668969453e-12,
+    3.727593720314938e-12,
+    3.088843596477485e-12,
+    2.559547922699533e-12,
+    2.1209508879201927e-12,
+    1.7575106248547894e-12,
+    1.4563484775012444e-12,
+    1.2067926406393264e-12,
+    1e-12
+  ],
+  "order": [
+    "run1",
+    "run2",
+    "run3"
+  ],
+  "gamma_grid_source": "explicit_experiment_log10_bounds",
+  "gamma_log10_range": [
+    -12.0,
+    -8.0
+  ],
+  "stage_objective": "0.5*r_current.T W_current r_current + 0.5*gamma*integral(|grad E|^2)",
+  "per_gamma_initialization": {
+    "source": "homogeneous_dic_fit",
+    "uniform_E_MPa": 1091.7430131218891,
+    "fit_cases": [
+      "run1"
+    ],
+    "nu": 0.26,
+    "uses_calibration": false,
+    "uses_prediction_cases": false
+  },
+  "cross_gamma_continuation": false,
+  "stage_transfer": "Previous E_final becomes the next E_initial exactly; reset L-BFGS history.",
+  "primary_rho": "sqrt(sum_c r_c(E_terminal).T W_c r_c(E_terminal)); all residuals replayed with ONE terminal field",
+  "primary_eta": "sqrt(integral(|grad E_terminal|^2)); no gamma factor",
+  "secondary_curve": "Terminal current-case residual norm and the same terminal regularization norm.",
+  "mathematical_scope": "Endpoint all-case curve is a sequential diagnostic. Terminal field does not minimize the all-case objective. Original geometric corner checks are retained without assuming monotonicity.",
+  "case_weights": "Original area weights; no force, modulus, noise or relative-error normalization.",
+  "max_iter_per_stage": 1500,
+  "max_fun_per_stage": 12000,
+  "ftol": 1e-30,
+  "gtol": 1e-12,
+  "failure_policy": "At most two history resets after ABNORMAL within original remaining per-stage budget. Stop chain if still unsuccessful; never pass a failed field onward.",
+  "calibration_used_in_fit_or_gamma_selection": false,
+  "coordinate_scope": "Earlier conditional center registration, independent reference images and force increments; no material-landmark certification.",
+  "implementation_sha256": "1a4c635f22c2cc93f1862faff1b9bf1e7960ed56b5db0341986518da370bd2fe",
+  "common_preparation_sha256": "ccfdba3c0966d131b986acbbb3b5aaeb1d7fad97be2e6666b377703088ca41dd"
+}

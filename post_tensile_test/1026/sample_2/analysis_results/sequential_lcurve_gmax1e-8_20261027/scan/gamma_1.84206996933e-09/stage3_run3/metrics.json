@@ -1,0 +1,31 @@
+{
+  "gamma": 1.8420699693267164e-09,
+  "stage": 3,
+  "case": "run3",
+  "converged": true,
+  "solver_success": true,
+  "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+  "iterations": 121,
+  "evaluations": 293,
+  "gradient_inf": 1.1880385005948863e-09,
+  "gradient_tolerance_satisfied": false,
+  "within_original_budget": true,
+  "attempts": [
+    {
+      "attempt": 1,
+      "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+      "converged": true,
+      "iterations": 121,
+      "evaluations": 293,
+      "final_gradient_inf": 1.1880385005948863e-09,
+      "internal_restarts": []
+    }
+  ],
+  "residual_norm": 0.11899610748170403,
+  "regularization_norm": 889.9674152263024,
+  "objective": 0.007809535189372953,
+  "source_initial": "stage2",
+  "axial_relative_error_percent": 0.7717789724576997,
+  "transverse_relative_error_percent": 30.455723441285148,
+  "displacement_relative_error_percent": 1.7831902168747187
+}

@@ -1,0 +1,124 @@
+{
+  "gamma": 8.28642772854686e-09,
+  "converged": false,
+  "completed_stages": 3,
+  "iterations": 450,
+  "evaluations": 779,
+  "all_stage_gradient_tolerances_satisfied": false,
+  "stage_records": [
+    {
+      "gamma": 8.28642772854686e-09,
+      "stage": 1,
+      "case": "run1",
+      "converged": true,
+      "solver_success": true,
+      "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+      "iterations": 156,
+      "evaluations": 233,
+      "gradient_inf": 2.9157703747602354e-09,
+      "gradient_tolerance_satisfied": false,
+      "within_original_budget": true,
+      "attempts": [
+        {
+          "attempt": 1,
+          "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+          "converged": true,
+          "iterations": 156,
+          "evaluations": 233,
+          "final_gradient_inf": 2.9157703747602354e-09,
+          "internal_restarts": []
+        }
+      ],
+      "residual_norm": 0.22492353547963057,
+      "regularization_norm": 831.7865933043789,
+      "objective": 0.02816185937754194,
+      "source_initial": "same_first_case_homogeneous",
+      "axial_relative_error_percent": 1.3117968068809136,
+      "transverse_relative_error_percent": 26.65216233880664,
+      "displacement_relative_error_percent": 4.5522295983123
+    },
+    {
+      "gamma": 8.28642772854686e-09,
+      "stage": 2,
+      "case": "run2",
+      "converged": true,
+      "solver_success": true,
+      "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+      "iterations": 160,
+      "evaluations": 241,
+      "gradient_inf": 4.027654377466287e-10,
+      "gradient_tolerance_satisfied": false,
+      "within_original_budget": true,
+      "attempts": [
+        {
+          "attempt": 1,
+          "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+          "converged": true,
+          "iterations": 160,
+          "evaluations": 241,
+          "final_gradient_inf": 4.027654377466287e-10,
+          "internal_restarts": []
+        }
+      ],
+      "residual_norm": 0.11909804415992338,
+      "regularization_norm": 654.555483997588,
+      "objective": 0.008867302548583662,
+      "source_initial": "stage1",
+      "axial_relative_error_percent": 1.0740827720468553,
+      "transverse_relative_error_percent": 34.40562751967876,
+      "displacement_relative_error_percent": 2.2244424631607305
+    },
+    {
+      "gamma": 8.28642772854686e-09,
+      "stage": 3,
+      "case": "run3",
+      "converged": false,
+      "solver_success": false,
+      "message": "ABNORMAL: ",
+      "iterations": 134,
+      "evaluations": 305,
+      "gradient_inf": 1.0194769812279505e-09,
+      "gradient_tolerance_satisfied": false,
+      "within_original_budget": true,
+      "attempts": [
+        {
+          "attempt": 1,
+          "message": "ABNORMAL: ",
+          "converged": false,
+          "iterations": 134,
+          "evaluations": 235,
+          "final_gradient_inf": 1.0194769812279505e-09,
+          "internal_restarts": []
+        },
+        {
+          "attempt": 2,
+          "message": "ABNORMAL: ",
+          "converged": false,
+          "iterations": 0,
+          "evaluations": 35,
+          "final_gradient_inf": 1.0194769812279505e-09,
+          "internal_restarts": []
+        },
+        {
+          "attempt": 3,
+          "message": "ABNORMAL: ",
+          "converged": false,
+          "iterations": 0,
+          "evaluations": 35,
+          "final_gradient_inf": 1.0194769812279505e-09,
+          "internal_restarts": []
+        }
+      ],
+      "residual_norm": 0.12538124829426459,
+      "regularization_norm": 624.583346499249,
+      "objective": 0.00947651449120719,
+      "source_initial": "stage2",
+      "axial_relative_error_percent": 0.8868927950807225,
+      "transverse_relative_error_percent": 31.383798025871425,
+      "displacement_relative_error_percent": 1.8788733519896759
+    }
+  ],
+  "residual_norm": null,
+  "regularization_norm": null,
+  "terminal_case_residual_norm": null
+}

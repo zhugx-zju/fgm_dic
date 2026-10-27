@@ -124,7 +124,8 @@ def analyze(study: Path, output: Path):
         visible=scan.loc[good,key]
         if len(visible) and visible.min()<visible.max():
             ax.xaxis.set_major_locator(FixedLocator(np.geomspace(visible.min(),visible.max(),5)))
-            ax.xaxis.set_major_formatter(FuncFormatter(lambda value,position:f'{value:.3g}'))
+            decimals=min(10,max(0,int(np.ceil(-np.log10(visible.max()-visible.min())))+1))
+            ax.xaxis.set_major_formatter(FuncFormatter(lambda value,position,places=decimals:f'{value:.{places}f}'))
             ax.xaxis.set_minor_locator(NullLocator())
         ax.set(title=title+'\n'+('已选定' if corner['status']=='selected' else corner['status']),xlabel=r'面积加权残差范数 ρ (mm$^2$)',ylabel='H1梯度范数 η (MPa)')
         axes[1,column].semilogx(scan.gamma,scan[f'{label}_curvature'],'o-',color=color,ms=3,lw=1)
@@ -187,7 +188,7 @@ def analyze(study: Path, output: Path):
         save(fig,output/'selected_profiles')
         save(fig_map,output/'selected_modulus_maps')
     lines=['# 每个γ内执行完整1→2→3的顺序反演与L-curve','',
-        f'原50个γ，范围1e-12–1e-4。共{len(stages)}个已执行阶段，{int(scan.converged.sum())}条完整成功顺序链，{int((~scan.converged).sum())}个无效γ。每个γ从相同的工况1 DIC均匀初值出发，无跨γ续算；同γ内逐元素传递E1→E2→E3，每阶段只有当前工况目标。','',
+        f'{len(scan)}个γ，范围{scan.gamma.min():.6g}–{scan.gamma.max():.6g}。共{len(stages)}个已执行阶段，{int(scan.converged.sum())}条完整成功顺序链，{int((~scan.converged).sum())}个无效γ。每个γ从相同的工况1 DIC均匀初值出发，无跨γ续算；同γ内逐元素传递E1→E2→E3，每阶段只有当前工况目标。','',
         '**主选点口径：** 取同一个最终场E3(γ)，分别正演并配准三个工况，ρ=sqrt(Σ r_c(E3)ᵀW_c r_c(E3))；η=sqrt(∫|∇E3|²)，不把γ乘进范数。没有混用E1拟合工况1、E2拟合工况2、E3拟合工况3的残差。','',
         '主曲线是顺序端点的多工况几何诊断：E3只最小化最后工况的目标，没有最小化总残差目标。因此它不是同时联合目标的标准Tikhonov解路径，也不保证沿γ单调。另保存末工况残差曲线与三个阶段各自曲线以区分选点定义。所有曲线使用原离散正曲率、相邻有效点、两侧各两点支撑与单调性规则；没有有效拐点时保留失败，不按标定补γ。','',
         '| 曲线 | 选点状态 | γ |', '|---|---|---:|']
@@ -206,7 +207,9 @@ def analyze(study: Path, output: Path):
             lines.append(f'| {r.selection} | {r.gamma:.4g} | {r.case} | {r.axial_relative_error_percent:.3f} | {r.transverse_relative_error_percent:.3f} | {r.displacement_relative_error_percent:.3f} | {r.trend_common_mean_absolute_relative_error_percent:.3f} | {r.layered_common_mean_absolute_relative_error_percent:.3f} |')
         lines+=['','标定曲线差异统一为宽度均值曲线在[−48,48] mm的平均绝对相对差异。趋势线连接七层中心标定值，不视为连续材料真值。','',
                 '![选定γ的阶段曲线](selected_profiles.png)','', '![选定γ的二维场](selected_modulus_maps.png)','']
-    lines+=['复现扫描：`python -u -B -m lib.sequential_lcurve_scan --cases <三个完整ROI冻结目录> --output <新目录>`；完全相同协议的完整缓存可用`--resume`。后处理：`python -B -m lib.sequential_lcurve_report --study <扫描目录> --output <新的报告目录>`。']
+    bounds=protocol.get('gamma_log10_range')
+    range_arguments=f' --gamma-log10-range {bounds[0]:g} {bounds[1]:g}' if protocol.get('gamma_grid_source')=='explicit_experiment_log10_bounds' else ''
+    lines+=[f'复现扫描：`python -u -B -m lib.sequential_lcurve_scan --cases <三个完整ROI冻结目录> --output <新目录>{range_arguments}`；完全相同协议的完整缓存可用`--resume`。后处理：`python -B -m lib.sequential_lcurve_report --study <扫描目录> --output <新的报告目录>`。']
     (output/'report.md').write_text('\n'.join(lines)+'\n',encoding='utf-8')
     import fgm_asm.l_curve as selector_module
     evidence=dict(source_protocol_sha256=file_sha256(study/'protocol.json'),

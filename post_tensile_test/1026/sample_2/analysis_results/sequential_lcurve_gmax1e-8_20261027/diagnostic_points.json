@@ -1,0 +1,140 @@
+[
+  {
+    "gamma": 1e-08,
+    "selection_role": "predeclared diagnostic target; not L-curve selected",
+    "errors": [
+      {
+        "case": "run1",
+        "data_cost": 0.6150479060440994,
+        "axial_relative_error_percent": 17.187029041803157,
+        "transverse_relative_error_percent": 89.8319639947961,
+        "displacement_relative_error_percent": 22.447021719901716
+      },
+      {
+        "case": "run2",
+        "data_cost": 0.015149918372510538,
+        "axial_relative_error_percent": 2.1125012509966914,
+        "transverse_relative_error_percent": 43.679146825700535,
+        "displacement_relative_error_percent": 3.251147637475705
+      },
+      {
+        "case": "run3",
+        "data_cost": 0.008004816523675094,
+        "axial_relative_error_percent": 0.909543933330396,
+        "transverse_relative_error_percent": 31.522700274877817,
+        "displacement_relative_error_percent": 1.896075411836436
+      }
+    ],
+    "reference_metrics": {
+      "trend_common_mean_absolute_relative_error_percent": 11.092667627075848,
+      "trend_common_l2_relative_error_percent": 15.430413608694588,
+      "layered_common_mean_absolute_relative_error_percent": 11.036250793477953,
+      "layered_common_l2_relative_error_percent": 16.57961025595036,
+      "layered_full_mean_absolute_relative_error_percent": 11.223986660624327,
+      "layered_full_l2_relative_error_percent": 16.976164512603678,
+      "seven_region_mean_absolute_relative_error_percent": 11.04703896726892
+    },
+    "spatial_metrics": {
+      "transverse_dispersion_percent": 1.4333768545894725,
+      "negative_slope_length_percent": 0.0,
+      "min_nodal_E_MPa": 902.7572694196822,
+      "max_nodal_E_MPa": 2047.111079813034,
+      "mean_E_MPa": 1367.904252827382,
+      "spatial_sd_MPa": 319.78468760461806,
+      "spatial_CV_percent": 23.377709875792906
+    },
+    "source_fields_sha256": "adf0de38863cb589b9987573377fc25bd5a3b94dcdc3f9ac2f56326892bea534"
+  },
+  {
+    "gamma": 1.2648552168552956e-09,
+    "selection_role": "predeclared diagnostic target; not L-curve selected",
+    "errors": [
+      {
+        "case": "run1",
+        "data_cost": 0.6142571568734113,
+        "axial_relative_error_percent": 17.175151864630557,
+        "transverse_relative_error_percent": 89.77992764610386,
+        "displacement_relative_error_percent": 22.432587338077003
+      },
+      {
+        "case": "run2",
+        "data_cost": 0.01410185058300572,
+        "axial_relative_error_percent": 1.9894079121596422,
+        "transverse_relative_error_percent": 42.85826763567311,
+        "displacement_relative_error_percent": 3.1366755566412428
+      },
+      {
+        "case": "run3",
+        "data_cost": 0.006947059009642066,
+        "axial_relative_error_percent": 0.754169686624578,
+        "transverse_relative_error_percent": 30.26119479201979,
+        "displacement_relative_error_percent": 1.7663648315025815
+      }
+    ],
+    "reference_metrics": {
+      "trend_common_mean_absolute_relative_error_percent": 10.670119567642146,
+      "trend_common_l2_relative_error_percent": 14.607818129309805,
+      "layered_common_mean_absolute_relative_error_percent": 10.639780005177114,
+      "layered_common_l2_relative_error_percent": 15.576496897105423,
+      "layered_full_mean_absolute_relative_error_percent": 10.623130907963768,
+      "layered_full_l2_relative_error_percent": 15.021593324309897,
+      "seven_region_mean_absolute_relative_error_percent": 10.290862770652268
+    },
+    "spatial_metrics": {
+      "transverse_dispersion_percent": 1.768086836175316,
+      "negative_slope_length_percent": 23.966942148760328,
+      "min_nodal_E_MPa": 759.5079550508707,
+      "max_nodal_E_MPa": 2337.0661875449664,
+      "mean_E_MPa": 1387.6103875768094,
+      "spatial_sd_MPa": 373.55870271963516,
+      "spatial_CV_percent": 26.92100794748175
+    },
+    "source_fields_sha256": "43d2170c5d48e67e4e4453af1f253d4b18de2aab7898cd0b5604807ad1c92a4c"
+  },
+  {
+    "gamma": 1.0985411419875572e-10,
+    "selection_role": "predeclared diagnostic target; not L-curve selected",
+    "errors": [
+      {
+        "case": "run1",
+        "data_cost": 0.6139746930206902,
+        "axial_relative_error_percent": 17.17326217567627,
+        "transverse_relative_error_percent": 89.74498068562333,
+        "displacement_relative_error_percent": 22.427428974365224
+      },
+      {
+        "case": "run2",
+        "data_cost": 0.013720042511684863,
+        "axial_relative_error_percent": 1.9723230960265787,
+        "transverse_relative_error_percent": 42.12881291590168,
+        "displacement_relative_error_percent": 3.093921380894513
+      },
+      {
+        "case": "run3",
+        "data_cost": 0.006131639006230636,
+        "axial_relative_error_percent": 0.6288164043751954,
+        "transverse_relative_error_percent": 29.092719952205737,
+        "displacement_relative_error_percent": 1.659465410495062
+      }
+    ],
+    "reference_metrics": {
+      "trend_common_mean_absolute_relative_error_percent": 10.892375977612062,
+      "trend_common_l2_relative_error_percent": 15.349444864403178,
+      "layered_common_mean_absolute_relative_error_percent": 10.346119262826848,
+      "layered_common_l2_relative_error_percent": 16.294797684595032,
+      "layered_full_mean_absolute_relative_error_percent": 10.322944939467043,
+      "layered_full_l2_relative_error_percent": 15.553015237462464,
+      "seven_region_mean_absolute_relative_error_percent": 9.287619367215395
+    },
+    "spatial_metrics": {
+      "transverse_dispersion_percent": 5.148107756825384,
+      "negative_slope_length_percent": 38.84297520661156,
+      "min_nodal_E_MPa": 509.62717203975984,
+      "max_nodal_E_MPa": 2934.1073839087753,
+      "mean_E_MPa": 1410.991820915529,
+      "spatial_sd_MPa": 448.5139617798146,
+      "spatial_CV_percent": 31.787141153574808
+    },
+    "source_fields_sha256": "c3f8e5aae21462948141c628c2c1bae4cefb941c594bc53f83f40e6c6a47bc16"
+  }
+]

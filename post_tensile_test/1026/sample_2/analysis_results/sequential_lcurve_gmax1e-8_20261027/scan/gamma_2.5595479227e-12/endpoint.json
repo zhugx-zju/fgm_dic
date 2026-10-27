@@ -1,0 +1,44 @@
+{
+  "gamma": 2.559547922699533e-12,
+  "converged": false,
+  "completed_stages": 1,
+  "iterations": 1500,
+  "evaluations": 1647,
+  "all_stage_gradient_tolerances_satisfied": false,
+  "stage_records": [
+    {
+      "gamma": 2.559547922699533e-12,
+      "stage": 1,
+      "case": "run1",
+      "converged": false,
+      "solver_success": false,
+      "message": "STOP: TOTAL NO. OF ITERATIONS REACHED LIMIT",
+      "iterations": 1500,
+      "evaluations": 1647,
+      "gradient_inf": 1.2374176793566054e-05,
+      "gradient_tolerance_satisfied": false,
+      "within_original_budget": true,
+      "attempts": [
+        {
+          "attempt": 1,
+          "message": "STOP: TOTAL NO. OF ITERATIONS REACHED LIMIT",
+          "converged": false,
+          "iterations": 1500,
+          "evaluations": 1647,
+          "final_gradient_inf": 1.2374176793566054e-05,
+          "internal_restarts": []
+        }
+      ],
+      "residual_norm": 0.11411052218556948,
+      "regularization_norm": 42490.05115308986,
+      "objective": 0.008821115237697356,
+      "source_initial": "same_first_case_homogeneous",
+      "axial_relative_error_percent": 1.484023190776178,
+      "transverse_relative_error_percent": 10.907673553641056,
+      "displacement_relative_error_percent": 2.309483956244611
+    }
+  ],
+  "residual_norm": null,
+  "regularization_norm": null,
+  "terminal_case_residual_norm": null
+}

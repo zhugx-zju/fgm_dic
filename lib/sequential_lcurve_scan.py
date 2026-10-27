@@ -62,15 +62,24 @@ def verify_sources(audit):
         assert file_sha256(root/'run_metadata.json') == record['prepared_metadata_sha256']
 
 
-def run(roots: list[Path], output: Path, *, resume=False, smoke=False):
+def run(roots: list[Path], output: Path, *, resume=False, smoke=False, gamma_log10_range=None):
     if output.exists() and not resume:
         raise FileExistsError('Use a new output, or explicit --resume for identical completed gamma caches.')
     cfg, mesh, cases, audit, arrays, _ = build_common_cases(roots)
     initial, initialization = homogeneous_dic_initial(mesh, [cases[0]], cfg.THICKNESS, cfg.PRIMARY_NU)
     gammas = np.sort(np.asarray(cfg.GAMMA_CANDIDATES))[::-1]
+    if gamma_log10_range is not None:
+        bounds=np.asarray(gamma_log10_range,dtype=float)
+        if bounds.shape!=(2,) or not np.isfinite(bounds).all() or bounds[0]>=bounds[1]:
+            raise ValueError('Gamma log10 bounds must be two finite, strictly increasing numbers.')
+        gammas=np.logspace(bounds[0],bounds[1],len(gammas))[::-1]
+        if not (np.isfinite(gammas).all() and (gammas>0).all()):
+            raise ValueError('Gamma bounds overflow or underflow the numerical range.')
     output.mkdir(parents=True, exist_ok=resume)
     protocol = dict(source_cases=audit, common_geometry_mm=[mesh.geo_l, mesh.geo_h, cfg.THICKNESS],
         elements=[121,19], nu=cfg.PRIMARY_NU, gamma_candidates=gammas.tolist(), order=[c.name for c in cases],
+        gamma_grid_source='explicit_experiment_log10_bounds' if gamma_log10_range is not None else 'frozen_source_candidates',
+        gamma_log10_range=[float(np.log10(gammas.min())),float(np.log10(gammas.max()))],
         stage_objective='0.5*r_current.T W_current r_current + 0.5*gamma*integral(|grad E|^2)',
         per_gamma_initialization=initialization, cross_gamma_continuation=False,
         stage_transfer='Previous E_final becomes the next E_initial exactly; reset L-BFGS history.',
@@ -180,5 +189,7 @@ if __name__=='__main__':
     parser.add_argument('--output',type=Path,required=True)
     parser.add_argument('--resume',action='store_true')
     parser.add_argument('--smoke',action='store_true')
+    parser.add_argument('--gamma-log10-range',type=float,nargs=2,metavar=('LOW','HIGH'),
+                        help='Experimental gamma bounds in log10 units; retain the frozen candidate count.')
     args=parser.parse_args()
-    run(args.cases,args.output,resume=args.resume,smoke=args.smoke)
+    run(args.cases,args.output,resume=args.resume,smoke=args.smoke,gamma_log10_range=args.gamma_log10_range)

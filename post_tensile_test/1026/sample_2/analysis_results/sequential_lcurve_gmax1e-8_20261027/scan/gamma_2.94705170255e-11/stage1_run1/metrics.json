@@ -1,0 +1,31 @@
+{
+  "gamma": 2.94705170255181e-11,
+  "stage": 1,
+  "case": "run1",
+  "converged": false,
+  "solver_success": false,
+  "message": "STOP: TOTAL NO. OF ITERATIONS REACHED LIMIT",
+  "iterations": 1500,
+  "evaluations": 1662,
+  "gradient_inf": 9.47491369373824e-06,
+  "gradient_tolerance_satisfied": false,
+  "within_original_budget": true,
+  "attempts": [
+    {
+      "attempt": 1,
+      "message": "STOP: TOTAL NO. OF ITERATIONS REACHED LIMIT",
+      "converged": false,
+      "iterations": 1500,
+      "evaluations": 1662,
+      "final_gradient_inf": 9.47491369373824e-06,
+      "internal_restarts": []
+    }
+  ],
+  "residual_norm": 0.14988257317549109,
+  "regularization_norm": 17035.13321427294,
+  "objective": 0.01550850246721969,
+  "source_initial": "same_first_case_homogeneous",
+  "axial_relative_error_percent": 1.731555916834861,
+  "transverse_relative_error_percent": 15.308312117719733,
+  "displacement_relative_error_percent": 3.03347484035289
+}
