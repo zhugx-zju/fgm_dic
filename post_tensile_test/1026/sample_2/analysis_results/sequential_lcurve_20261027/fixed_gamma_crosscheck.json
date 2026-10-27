@@ -1,0 +1,9 @@
+{
+  "gamma": 1.2648552168552956e-09,
+  "independent_fixed_gamma_comparison": true,
+  "terminal_field_relative_difference_percent": 5.11243294767112e-06,
+  "new_field_sha256": "43d2170c5d48e67e4e4453af1f253d4b18de2aab7898cd0b5604807ad1c92a4c",
+  "previous_field_path": "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1026\\sample_2\\analysis_results\\sequential_case_diagnostic_20261027\\forward_stage3_run3\\fields.npz",
+  "previous_field_sha256": "38c9af26a657d6d3bcd513f932b37a86306d503e2b2ccaf01ee604a3e3c4a939",
+  "tolerance_percent": 0.001
+}

@@ -1,0 +1,131 @@
+{
+  "gamma": 7.196856730011514e-06,
+  "converged": true,
+  "completed_stages": 3,
+  "iterations": 1201,
+  "evaluations": 1727,
+  "all_stage_gradient_tolerances_satisfied": false,
+  "stage_records": [
+    {
+      "gamma": 7.196856730011514e-06,
+      "stage": 1,
+      "case": "run1",
+      "converged": true,
+      "solver_success": true,
+      "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+      "iterations": 405,
+      "evaluations": 663,
+      "gradient_inf": 4.862594987729016e-07,
+      "gradient_tolerance_satisfied": false,
+      "within_original_budget": true,
+      "attempts": [
+        {
+          "attempt": 1,
+          "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+          "converged": true,
+          "iterations": 405,
+          "evaluations": 663,
+          "final_gradient_inf": 4.862594987729016e-07,
+          "internal_restarts": []
+        }
+      ],
+      "residual_norm": 0.719955699364803,
+      "regularization_norm": 173.47814161558787,
+      "objective": 0.36746160292053803,
+      "source_initial": "same_first_case_homogeneous",
+      "axial_relative_error_percent": 8.788930254518892,
+      "transverse_relative_error_percent": 71.51503424101249,
+      "displacement_relative_error_percent": 14.57119032534015
+    },
+    {
+      "gamma": 7.196856730011514e-06,
+      "stage": 2,
+      "case": "run2",
+      "converged": true,
+      "solver_success": true,
+      "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+      "iterations": 465,
+      "evaluations": 669,
+      "gradient_inf": 2.9496855687377675e-07,
+      "gradient_tolerance_satisfied": false,
+      "within_original_budget": true,
+      "attempts": [
+        {
+          "attempt": 1,
+          "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+          "converged": true,
+          "iterations": 465,
+          "evaluations": 669,
+          "final_gradient_inf": 2.9496855687377675e-07,
+          "internal_restarts": []
+        }
+      ],
+      "residual_norm": 0.43876153886543334,
+      "regularization_norm": 86.52493531346524,
+      "objective": 0.12319570979873282,
+      "source_initial": "stage1",
+      "axial_relative_error_percent": 7.209846059049971,
+      "transverse_relative_error_percent": 69.14779651143216,
+      "displacement_relative_error_percent": 8.194927172300632
+    },
+    {
+      "gamma": 7.196856730011514e-06,
+      "stage": 3,
+      "case": "run3",
+      "converged": true,
+      "solver_success": true,
+      "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+      "iterations": 331,
+      "evaluations": 395,
+      "gradient_inf": 1.0605070958045765e-07,
+      "gradient_tolerance_satisfied": false,
+      "within_original_budget": true,
+      "attempts": [
+        {
+          "attempt": 1,
+          "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+          "converged": true,
+          "iterations": 331,
+          "evaluations": 395,
+          "final_gradient_inf": 1.0605070958045765e-07,
+          "internal_restarts": []
+        }
+      ],
+      "residual_norm": 0.4454675964269711,
+      "regularization_norm": 108.80694098217872,
+      "objective": 0.14182230468569593,
+      "source_initial": "stage2",
+      "axial_relative_error_percent": 6.035444877911008,
+      "transverse_relative_error_percent": 54.35618626113521,
+      "displacement_relative_error_percent": 6.675457514485562
+    }
+  ],
+  "residual_norm": 1.349878644396282,
+  "regularization_norm": 108.80694098217872,
+  "terminal_case_residual_norm": 0.4454675964269711,
+  "case_errors": [
+    {
+      "case": "run1",
+      "data_cost": 0.7236998356918228,
+      "axial_relative_error_percent": 18.63313078505318,
+      "transverse_relative_error_percent": 97.51551971535348,
+      "displacement_relative_error_percent": 24.34913242679015
+    },
+    {
+      "case": "run2",
+      "data_cost": 0.08816565187353773,
+      "axial_relative_error_percent": 6.756443157706806,
+      "transverse_relative_error_percent": 70.63623355973306,
+      "displacement_relative_error_percent": 7.842982693028835
+    },
+    {
+      "case": "run3",
+      "data_cost": 0.09922068973321138,
+      "axial_relative_error_percent": 6.035444877911008,
+      "transverse_relative_error_percent": 54.35618626113521,
+      "displacement_relative_error_percent": 6.675457514485562
+    }
+  ],
+  "minimum_E_MPa": 1191.050696854955,
+  "maximum_E_MPa": 1404.0238888845483
+}
