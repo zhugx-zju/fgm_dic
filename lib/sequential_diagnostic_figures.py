@@ -15,6 +15,7 @@ from .dic_calibration_curve_comparison import width_profile
 from .experiment_data import file_sha256
 from .joint_reference_diagnostic import build_common_cases
 from .sequential_lcurve_scan import verify_sources
+from .smooth_calibration_reference import make_reference
 
 
 def save(fig,path):
@@ -37,15 +38,17 @@ def plot(study:Path,output:Path,gamma_target:float):
     with np.load(root/'fields.npz') as saved:
         field=saved['E_inverse'].copy()
     values=pd.DataFrame(calibration).mean_E_MPa.to_numpy()
+    calibration_infill=pd.DataFrame(calibration).infill_percent.to_numpy()
+    smooth_reference,minimum_derivative=make_reference(calibration_infill,values)
+    reference_x=np.linspace(-48.,48.,1001)
     x=mesh.plot_x[0]-mesh.geo_l/2
-    edges=np.r_[x[0],np.arange(-40.,41.,16.),x[-1]]
     output.mkdir(parents=True)
     plt.rcParams.update({'font.family':'Microsoft YaHei','font.size':11,'svg.fonttype':'path',
         'axes.unicode_minus':False,'axes.spines.top':False,'axes.spines.right':False})
 
     def references(ax):
-        ax.plot(np.repeat(edges,2)[1:-1],np.repeat(values,2),color='black',ls='--',lw=1.2,label='单调标定：分层阶梯线')
-        ax.plot(np.arange(-48.,49.,16.),values,color='#777777',ls='-.',lw=1.1,label='单调标定：层中心趋势线')
+        ax.plot(reference_x,smooth_reference(70+.625*reference_x),color='black',lw=1.5,label='连续平滑标定分布 E(φ)')
+        ax.plot(np.arange(-48.,49.,16.),values,'o',color='black',ms=3,label='标定均值')
         ax.set(xlim=(x[0],x[-1]),ylabel='E (MPa)')
 
     fig=plt.figure(figsize=(10,7),constrained_layout=True)
@@ -91,6 +94,8 @@ def plot(study:Path,output:Path,gamma_target:float):
     save(fig,output/'gamma_comparison')
     (output/'provenance.json').write_text(json.dumps(dict(gamma_target=gamma_target,actual_gamma=gamma,
         role='Diagnostic only; no L-curve selection and no reoptimization.',
+        calibration_reference='C2 natural cubic E(infill), through calibration means; no extrapolation.',
+        minimum_analytic_reference_derivative=minimum_derivative,
         gamma_comparison=diagnostics,source_protocol_sha256=file_sha256(study/'protocol.json'),
         fields_sha256={str(path.resolve()):file_sha256(path) for path in dict.fromkeys(sources)},
         implementation_sha256=file_sha256(Path(__file__))),ensure_ascii=False,indent=2),encoding='utf-8')

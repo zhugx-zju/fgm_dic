@@ -1,6 +1,10 @@
 """Post-hoc calibration curve differences for saved full-domain sample_2 fields.
 
 No optimization, gamma reselection, or modification of the four-step results.
+
+Historical ``trend`` means piecewise-linear layer-center connections. It is
+retained for reproducibility, not the user's corrected smooth E(infill)
+reference; use lib.smooth_calibration_reference for that definition.
 """
 from __future__ import annotations
 

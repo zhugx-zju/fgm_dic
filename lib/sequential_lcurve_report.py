@@ -16,12 +16,14 @@ from matplotlib.ticker import FixedLocator, FuncFormatter, NullLocator
 import numpy as np
 import pandas as pd
 import scipy
+from scipy.interpolate import CubicSpline
 
 from fgm_asm.l_curve import select_l_curve_corner
-from .dic_calibration_curve_comparison import width_profile, metrics as reference_metrics
+from .dic_calibration_curve_comparison import CENTERS, width_profile, metrics as reference_metrics
 from .experiment_data import file_sha256
 from .joint_reference_diagnostic import build_common_cases
 from .sequential_lcurve_scan import verify_sources
+from .smooth_calibration_reference import make_reference, smooth_curve_errors
 
 
 def clean(value):
@@ -153,8 +155,14 @@ def analyze(study: Path, output: Path):
         endpoint=json.loads((source/'endpoint.json').read_text(encoding='utf-8'))
         with np.load(source/'fields.npz') as saved:
             terminal=saved['E_inverse'].copy()
-        reference=reference_metrics(mesh.plot_x[0]-mesh.geo_l/2,width_profile(mesh,terminal),
-            pd.DataFrame(calibration).mean_E_MPa.to_numpy())
+        calibration_table=pd.DataFrame(calibration)
+        values=calibration_table.mean_E_MPa.to_numpy()
+        make_reference(calibration_table.infill_percent.to_numpy(),values)
+        smooth_reference=CubicSpline(CENTERS,values,bc_type='natural',extrapolate=False)
+        legacy_reference=reference_metrics(mesh.plot_x[0]-mesh.geo_l/2,width_profile(mesh,terminal),values)
+        reference={('historical_linear_'+key[6:] if key.startswith('trend_') else key):value
+                   for key,value in legacy_reference.items()}
+        reference.update(smooth_curve_errors(mesh.plot_x[0]-mesh.geo_l/2,width_profile(mesh,terminal),smooth_reference))
         selected_metrics.extend(dict(selection=label,gamma=gamma,**error,**reference) for error in endpoint['case_errors'])
         target=output/f'selected_{label}'
         target.mkdir()
@@ -175,8 +183,8 @@ def analyze(study: Path, output: Path):
         for ax,map_ax,(label,gamma,field,profiles) in zip(np.atleast_1d(axes),np.atleast_1d(map_axes),plotted):
             for index,(profile,color) in enumerate(zip(profiles,('#0072B2','#009E73','#D55E00')),start=1):
                 ax.plot(mesh.plot_x[0]-mesh.geo_l/2,profile,color=color,lw=1.4,label=f'阶段{index}结果')
-            edges=np.r_[-mesh.geo_l/2,np.arange(-40.,41.,16.),mesh.geo_l/2]
-            ax.plot(np.repeat(edges,2)[1:-1],np.repeat(values,2),color='black',ls=':',lw=1,label='单调标定参照（不参与选γ）')
+            reference_x=np.linspace(-48.,48.,1001)
+            ax.plot(reference_x,smooth_reference(reference_x),color='black',lw=1.3,label='连续平滑标定E(φ)，不参与选γ')
             ax.set(title=f'{label}，γ={gamma:.3g}',ylabel='宽度均值 E (MPa)')
             ax.legend(frameon=False,ncol=4,fontsize=8)
             plotted_map=map_ax.pcolormesh(mesh.plot_x-mesh.geo_l/2,mesh.plot_y,field.reshape(mesh.nods_y,mesh.nods_x),
@@ -201,11 +209,11 @@ def analyze(study: Path, output: Path):
         '核验：每γ相同初值、同γ阶段间初值逐元素一致；逐阶段正演ρ与优化器值相对容差1e-8核对，η相对容差1e-9核对；同一最终场的三工况ρ同时以代价之和与加权残差拼接范数独立核对；原冻结输入哈希不变。','',
         '![逐γ阶段停止状态](stage_status.png)','', '![两种L-curve及曲率](l_curves.png)','', '![最终场的逐工况误差](endpoint_errors.png)','']
     if len(selected):
-        lines+=['| 选点曲线 | γ | 回代工况 | 轴向误差 % | 横向误差 % | 双分量误差 % | 趋势线差异 % | 分层线差异 % |',
+        lines+=['| 选点曲线 | γ | 回代工况 | 轴向误差 % | 横向误差 % | 双分量误差 % | 连续光滑参照差异 % | 分层线差异 % |',
                 '|---|---:|---|---:|---:|---:|---:|---:|']
         for r in selected.itertuples():
-            lines.append(f'| {r.selection} | {r.gamma:.4g} | {r.case} | {r.axial_relative_error_percent:.3f} | {r.transverse_relative_error_percent:.3f} | {r.displacement_relative_error_percent:.3f} | {r.trend_common_mean_absolute_relative_error_percent:.3f} | {r.layered_common_mean_absolute_relative_error_percent:.3f} |')
-        lines+=['','标定曲线差异统一为宽度均值曲线在[−48,48] mm的平均绝对相对差异。趋势线连接七层中心标定值，不视为连续材料真值。','',
+            lines.append(f'| {r.selection} | {r.gamma:.4g} | {r.case} | {r.axial_relative_error_percent:.3f} | {r.transverse_relative_error_percent:.3f} | {r.displacement_relative_error_percent:.3f} | {r.smooth_mean_absolute_relative_error_percent:.3f} | {r.layered_common_mean_absolute_relative_error_percent:.3f} |')
+        lines+=['','标定曲线差异统一为宽度均值曲线在[−48,48] mm的平均绝对相对差异。连续光滑参照由七个标定均值构造C²自然三次E(填充率)样条并核验单调不减，按既有层中心对应关系映射，不视为实测连续材料真值。历史折线结果仅保留在historical_linear_*列。','',
                 '![选定γ的阶段曲线](selected_profiles.png)','', '![选定γ的二维场](selected_modulus_maps.png)','']
     bounds=protocol.get('gamma_log10_range')
     range_arguments=f' --gamma-log10-range {bounds[0]:g} {bounds[1]:g}' if protocol.get('gamma_grid_source')=='explicit_experiment_log10_bounds' else ''

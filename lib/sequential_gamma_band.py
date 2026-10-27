@@ -1,6 +1,9 @@
 """Replay saved sequential endpoints to assess the requested gamma interval.
 
 No optimization, parameter reselection, or modification of earlier studies.
+The trend_* comparisons here retain the historical linear-center convention.
+For the user's corrected continuous smooth E(infill) definition, use
+lib.smooth_calibration_reference instead of interpreting those legacy columns.
 """
 from __future__ import annotations
 

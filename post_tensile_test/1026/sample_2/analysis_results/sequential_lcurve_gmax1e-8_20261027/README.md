@@ -1,5 +1,7 @@
 # 最大γ降低四个数量级后的顺序反演
 
+**连续参照口径已修正：** 用户所指的是随填充率变化的连续光滑E(φ)，不是层中心折线。当前正确图表见[光滑E(φ)与反演结果](smooth_reference_final/smooth_E_of_infill.png)、[修正后的模量结果图](smooth_reference_final/corrected_final_field.png)和[新误差报告](smooth_reference_final/report.md)。旧diagnostic_figures中的层中心折线仅保留作历史记录；反演数值不变，γ=1.264855e-9对新光滑参照的平均绝对相对差异为10.4018%，旧折线口径10.6701%不再代表用户指定的光滑分布。
+
 本次上限由1e-4降低至1e-8，下限保持1e-12，共50个对数均匀候选。每个γ内仍按1→2→3传递模量初值，网格、数据、载荷、初值规则和每阶段预算不变；没有干预中间迭代。扫描及自动后处理均以退出码0结束。
 
 [最终L-curve报告](report_final/report.md) · [L-curve与曲率](report_final/l_curves.png) · [阶段停止状态](report_final/stage_status.png)
