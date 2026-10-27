@@ -1,0 +1,9 @@
+test_bilinear_modulus_at_interiors_and_domain_corners (test_material_window_analysis.MaterialWindowAnalysisTests.test_bilinear_modulus_at_interiors_and_domain_corners) ... ok
+test_common_partition_integrates_shifted_meshes_and_regions_exactly (test_material_window_analysis.MaterialWindowAnalysisTests.test_common_partition_integrates_shifted_meshes_and_regions_exactly) ... ok
+test_constant_profiles_use_symmetric_normalization (test_material_window_gamma_check.ProfileDistanceTests.test_constant_profiles_use_symmetric_normalization) ... ok
+test_same_affine_profile_is_invariant_to_knots_and_interval (test_material_window_gamma_check.ProfileDistanceTests.test_same_affine_profile_is_invariant_to_knots_and_interval) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.003s
+
+OK

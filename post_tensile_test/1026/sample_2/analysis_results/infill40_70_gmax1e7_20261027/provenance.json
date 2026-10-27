@@ -1,0 +1,142 @@
+{
+  "cases": [
+    {
+      "run": 1,
+      "root": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run1_h1_infill40_70_gmax1e7_20261027",
+      "baseline": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run1_h1_infill40_70_20261027",
+      "input_arrays_identical": true,
+      "changed_configuration": [
+        "CASE_ID",
+        "CASE_OUTPUT",
+        "GAMMA_CANDIDATES",
+        "GAMMA_LOG10_RANGE",
+        "RUN_NAME"
+      ],
+      "source_sha256": {
+        "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run1_h1_infill40_70_gmax1e7_20261027\\01_prepared\\run_metadata.json": "bf7e5ee52eb47cacd01d87727fcf5607f47646b72a50954196fdda8f721197a6",
+        "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run1_h1_infill40_70_gmax1e7_20261027\\01_prepared\\fields.npz": "9d35b8626518ad025f0ae0f4beef9b451d855725a76cae57bbeb097e3a450e89",
+        "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run1_h1_infill40_70_gmax1e7_20261027\\03_inverse\\run_metadata.json": "d3a9589993cfcbdeba20be3d9e96a7a48f2fa936df9d457d33d5d8a2718ef078",
+        "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run1_h1_infill40_70_gmax1e7_20261027\\03_inverse\\selection.csv": "411cc848e24451f0892bc8ecc5bc63b35356568e5e2c4fe7116039b1bd7418d8",
+        "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run1_h1_infill40_70_20261027\\03_inverse\\run_metadata.json": "b7324fd00b2d8b430221debefc997f735dcf492f4e8defe052c7638b129dac35",
+        "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run1_h1_infill40_70_20261027\\03_inverse\\selection.csv": "49e776b753c503885d747788a5f6ac4ee4e78085d91573dafc546b7530067478"
+      },
+      "replayed_fields": [
+        {
+          "role": "original_selected",
+          "fields_path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run1_h1_infill40_70_20261027\\03_inverse\\l_curve\\gamma_7.90604e-08\\fields.npz",
+          "sha256": "9a726238c98a164c4a0acc58b426ba6855cb49623795a0506f670fc1334feeb0",
+          "replay_verified": true
+        },
+        {
+          "role": "new_selected",
+          "fields_path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run1_h1_infill40_70_gmax1e7_20261027\\03_inverse\\l_curve\\gamma_6.25055e-08\\fields.npz",
+          "sha256": "358d6889eac8c47f526c04ec62fdec888ead20c0f5b74387f92a795fe4bf37e0",
+          "replay_verified": true
+        },
+        {
+          "role": "diagnostic_target_1e-08",
+          "fields_path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run1_h1_infill40_70_gmax1e7_20261027\\03_inverse\\l_curve\\gamma_9.54095e-09\\fields.npz",
+          "sha256": "846bd5a75fa256724c4098fbb8e1a33c8a968e193951ef5aede8a1d332137960",
+          "replay_verified": true
+        },
+        {
+          "role": "diagnostic_target_1e-09",
+          "fields_path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run1_h1_infill40_70_gmax1e7_20261027\\03_inverse\\l_curve\\gamma_9.10298e-10\\fields.npz",
+          "sha256": "cf1ee631496a35061067329a560cda606d71d761fa066ed4f1e9571cb1cc7aba",
+          "replay_verified": true
+        }
+      ]
+    },
+    {
+      "run": 2,
+      "root": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run2_h1_infill40_70_gmax1e7_20261027",
+      "baseline": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run2_h1_infill40_70_20261027",
+      "input_arrays_identical": true,
+      "changed_configuration": [
+        "CASE_ID",
+        "CASE_OUTPUT",
+        "GAMMA_CANDIDATES",
+        "GAMMA_LOG10_RANGE",
+        "RUN_NAME"
+      ],
+      "source_sha256": {
+        "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run2_h1_infill40_70_gmax1e7_20261027\\01_prepared\\run_metadata.json": "9632765bf028fde94bd5114abeb862cd8375b895627ae54bbdf9a2d8db99c8ea",
+        "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run2_h1_infill40_70_gmax1e7_20261027\\01_prepared\\fields.npz": "34befb6724b4df91ddbe06fe1ed4f68f03498c4a1cc4b24fc65e38bf9610717a",
+        "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run2_h1_infill40_70_gmax1e7_20261027\\03_inverse\\run_metadata.json": "4bf9f08e750e64a54d81798650a4a2a5f49017689e7eae4c07b1fcf1aa013cf8",
+        "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run2_h1_infill40_70_gmax1e7_20261027\\03_inverse\\selection.csv": "2209cd241d034be2261af8648d8a682044bb15b16c3523b71937a8b3e20c1858",
+        "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run2_h1_infill40_70_20261027\\03_inverse\\run_metadata.json": "e9343e70b72d6fcaf6131c82fe4132601e6a94ca4050f1c1dc6f0d0fa59993df",
+        "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run2_h1_infill40_70_20261027\\03_inverse\\selection.csv": "d5dd5ff3b85e348eb871a5dfb18e2510a1f44b603fe973dbe110f6693b7debfd"
+      },
+      "replayed_fields": [
+        {
+          "role": "original_selected",
+          "fields_path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run2_h1_infill40_70_20261027\\03_inverse\\l_curve\\gamma_3.72759e-08\\fields.npz",
+          "sha256": "6da2e3c99d5f377debff7b83f0fa0fa50cbcd16e62a1703d71ce57d0000ffed0",
+          "replay_verified": true
+        },
+        {
+          "role": "diagnostic_target_1e-08",
+          "fields_path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run2_h1_infill40_70_gmax1e7_20261027\\03_inverse\\l_curve\\gamma_9.54095e-09\\fields.npz",
+          "sha256": "b559465ac32fae4cb3664c3e5b429661c06ac31c4204e0a242938ab711f8f958",
+          "replay_verified": true
+        },
+        {
+          "role": "diagnostic_target_1e-09",
+          "fields_path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run2_h1_infill40_70_gmax1e7_20261027\\03_inverse\\l_curve\\gamma_9.10298e-10\\fields.npz",
+          "sha256": "811d9d7d4f8b80641ba0a1df0538201f6b585fa6e40c471f66f9147176eb7ae4",
+          "replay_verified": true
+        }
+      ]
+    },
+    {
+      "run": 3,
+      "root": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run3_h1_infill40_70_gmax1e7_20261027",
+      "baseline": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run3_h1_infill40_70_20261027",
+      "input_arrays_identical": true,
+      "changed_configuration": [
+        "CASE_ID",
+        "CASE_OUTPUT",
+        "GAMMA_CANDIDATES",
+        "GAMMA_LOG10_RANGE",
+        "RUN_NAME"
+      ],
+      "source_sha256": {
+        "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run3_h1_infill40_70_gmax1e7_20261027\\01_prepared\\run_metadata.json": "cd7674384110fdfa036c8f764d999cb42083c135b7355c26abd59c985de09756",
+        "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run3_h1_infill40_70_gmax1e7_20261027\\01_prepared\\fields.npz": "4fb041a1ce83fd55a7c663405a0ebadc5197096eac65fd0e53ffb242218f15e7",
+        "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run3_h1_infill40_70_gmax1e7_20261027\\03_inverse\\run_metadata.json": "3c5936b0f29524bfa6faeef590d3c5d746452d80bec7157c09d30052c5bf4de7",
+        "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run3_h1_infill40_70_gmax1e7_20261027\\03_inverse\\selection.csv": "ec242a005e62f5ebe0d8e8fe57eb81a95a30aa7d6215c5d03ab05eedcb98d0d0",
+        "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run3_h1_infill40_70_20261027\\03_inverse\\run_metadata.json": "4789c55fa93991f5a3411ff8fbd0bbb6c43da77a4683f67c4bb2cfb27bfc1548",
+        "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run3_h1_infill40_70_20261027\\03_inverse\\selection.csv": "aa92dd2a6cfb1555cb9d7ed96a273602d3cc92bd41571587cca0390acfadad87"
+      },
+      "replayed_fields": [
+        {
+          "role": "original_selected",
+          "fields_path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run3_h1_infill40_70_20261027\\03_inverse\\l_curve\\gamma_7.90604e-08\\fields.npz",
+          "sha256": "a4f6cf4f07e2b261225197a8efd5fee2f638d135831c62d9369d32b469d70200",
+          "replay_verified": true
+        },
+        {
+          "role": "diagnostic_target_1e-08",
+          "fields_path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run3_h1_infill40_70_gmax1e7_20261027\\03_inverse\\l_curve\\gamma_9.54095e-09\\fields.npz",
+          "sha256": "b88f006c5ea4a6b320907dae09e58714248cdd183e2ec71cc309d6870f8e497a",
+          "replay_verified": true
+        },
+        {
+          "role": "diagnostic_target_1e-09",
+          "fields_path": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run3_h1_infill40_70_gmax1e7_20261027\\03_inverse\\l_curve\\gamma_9.10298e-10\\fields.npz",
+          "sha256": "caa05aad2b5b07c68905c45f1e3646104534af09d140ffd90b834affbbb4c5fd",
+          "replay_verified": true
+        }
+      ]
+    }
+  ],
+  "python": "3.13.2",
+  "script_sha256": "030372f5efb90b5d6471357c1e0f9acd57e93f241faa871ee034340bfde35c85",
+  "helper_sha256": {
+    "dic_gamma_sensitivity.py": "8c6eaf4fd969c98559c108d042e8c4a7f4fc256465b56c7412ffe33de16f5513",
+    "material_window_analysis.py": "052883781354ce4ef7c6718f857f6f218374335d99c4a2687357efaf96881e77"
+  },
+  "calibration_used_for_selection": false,
+  "no_optimization_in_postprocessing": true,
+  "command": "python -B -m lib.material_window_range_analysis --cases D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run1_h1_infill40_70_gmax1e7_20261027 D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run2_h1_infill40_70_gmax1e7_20261027 D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run3_h1_infill40_70_gmax1e7_20261027 --baselines D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run1_h1_infill40_70_20261027 D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run2_h1_infill40_70_20261027 D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run3_h1_infill40_70_20261027 --output D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1026\\sample_2\\analysis_results\\infill40_70_gmax1e7_20261027"
+}

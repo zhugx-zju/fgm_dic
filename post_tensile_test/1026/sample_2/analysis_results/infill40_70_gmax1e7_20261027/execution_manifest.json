@@ -1,0 +1,108 @@
+[
+  {
+    "run": 1,
+    "prepare_sample_run_setting": 1,
+    "stages": [
+      {
+        "step": 1,
+        "status": "prepared",
+        "command": "python -B -m script.step1_prepare_dic",
+        "metadata_sha256": "bf7e5ee52eb47cacd01d87727fcf5607f47646b72a50954196fdda8f721197a6",
+        "log_path": "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1026\\sample_2\\analysis_results\\infill40_70_gmax1e7_20261027\\run1_step1.log",
+        "log_sha256": "ea5b897e06f916d24d4e4bd2fe037177241e241d3519de009f732ea7ca7af902"
+      },
+      {
+        "step": 2,
+        "status": "computed",
+        "command": "python -B -m script.step2_forward_calibrated --input results\\dic_full\\sample2_1026_run1_h1_infill40_70_gmax1e7_20261027/01_prepared",
+        "metadata_sha256": "cd5fc19f7df52e9c2cb9fa376fc3ce515be8b33a0792dedc9cd67baf4dfe07fd",
+        "log_path": "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1026\\sample_2\\analysis_results\\infill40_70_gmax1e7_20261027\\run1_step2.log",
+        "log_sha256": "c74027fd7b79e0b73f3262a7e275ca44e32a0cee8ff6a224ad5456d6c0c3925c"
+      },
+      {
+        "step": 3,
+        "status": "computed",
+        "command": "python -u -B -m script.step3_inverse_dic --input results\\dic_full\\sample2_1026_run1_h1_infill40_70_gmax1e7_20261027/01_prepared",
+        "metadata_sha256": "d3a9589993cfcbdeba20be3d9e96a7a48f2fa936df9d457d33d5d8a2718ef078",
+        "log_path": "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1026\\sample_2\\analysis_results\\infill40_70_gmax1e7_20261027\\run1_step3.log",
+        "log_sha256": "9ad09cac014d746b98a5afc0c8be5acfdc8a48756efee07212a24ea92d0cf9ae"
+      },
+      {
+        "step": 4,
+        "status": "computed",
+        "command": "python -B -m script.step4_compare_results --input results\\dic_full\\sample2_1026_run1_h1_infill40_70_gmax1e7_20261027/01_prepared",
+        "metadata_sha256": "4ef5475948a1c0ee2d07e3d19649a4c2429c9b0167e3627e801682156d577537",
+        "log_path": "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1026\\sample_2\\analysis_results\\infill40_70_gmax1e7_20261027\\run1_step4.log",
+        "log_sha256": "adfd2684b9ee2a8394d3d42166ca329cb46d1831d66ee1313289bb9bc2d2570d"
+      }
+    ]
+  },
+  {
+    "run": 2,
+    "prepare_sample_run_setting": 2,
+    "stages": [
+      {
+        "step": 1,
+        "status": "prepared",
+        "command": "python -B -m script.step1_prepare_dic",
+        "metadata_sha256": "9632765bf028fde94bd5114abeb862cd8375b895627ae54bbdf9a2d8db99c8ea",
+        "log_path": "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1026\\sample_2\\analysis_results\\infill40_70_gmax1e7_20261027\\run2_step1.log",
+        "log_sha256": "21ea37bef99d19c6feb393ecb11419fe5448cb31567f4f3ad4b65ce04e42bbf0"
+      },
+      {
+        "step": 2,
+        "status": "computed",
+        "command": "python -B -m script.step2_forward_calibrated --input results\\dic_full\\sample2_1026_run2_h1_infill40_70_gmax1e7_20261027/01_prepared",
+        "metadata_sha256": "3ec38c630fa60c123d2d3e3d554add0f90faae5a1ee990f9205871a59b379872",
+        "log_path": "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1026\\sample_2\\analysis_results\\infill40_70_gmax1e7_20261027\\run2_step2.log",
+        "log_sha256": "775f4d981c630a1b5fa1df853af271ae40352eb0899eb7e463450c244be7f06a"
+      },
+      {
+        "step": 3,
+        "status": "l_curve_insufficient_corner_support",
+        "command": "python -u -B -m script.step3_inverse_dic --input results\\dic_full\\sample2_1026_run2_h1_infill40_70_gmax1e7_20261027/01_prepared",
+        "metadata_sha256": "4bf9f08e750e64a54d81798650a4a2a5f49017689e7eae4c07b1fcf1aa013cf8",
+        "log_path": "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1026\\sample_2\\analysis_results\\infill40_70_gmax1e7_20261027\\run2_step3.log",
+        "log_sha256": "3e5afeddd80bcb9c1f8df43b52ef393060cee4589db9f56bdd83d6c1a9991e71"
+      },
+      {
+        "step": 4,
+        "status": "not_run_no_selected_gamma"
+      }
+    ]
+  },
+  {
+    "run": 3,
+    "prepare_sample_run_setting": 3,
+    "stages": [
+      {
+        "step": 1,
+        "status": "prepared",
+        "command": "python -B -m script.step1_prepare_dic",
+        "metadata_sha256": "cd7674384110fdfa036c8f764d999cb42083c135b7355c26abd59c985de09756",
+        "log_path": "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1026\\sample_2\\analysis_results\\infill40_70_gmax1e7_20261027\\run3_step1.log",
+        "log_sha256": "71022957e7702219460f86da772aec5639e96f75dd68ca16d1a6d17f2f44c034"
+      },
+      {
+        "step": 2,
+        "status": "computed",
+        "command": "python -B -m script.step2_forward_calibrated --input results\\dic_full\\sample2_1026_run3_h1_infill40_70_gmax1e7_20261027/01_prepared",
+        "metadata_sha256": "b401f0164413113bf6e640072d7f6e61405c66c5008790f12d72a90ad2c33233",
+        "log_path": "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1026\\sample_2\\analysis_results\\infill40_70_gmax1e7_20261027\\run3_step2.log",
+        "log_sha256": "e1227f0631e65205786d07f41480937a194e25a9fb15c125a6e4dec6e4798600"
+      },
+      {
+        "step": 3,
+        "status": "l_curve_range_insufficient",
+        "command": "python -u -B -m script.step3_inverse_dic --input results\\dic_full\\sample2_1026_run3_h1_infill40_70_gmax1e7_20261027/01_prepared",
+        "metadata_sha256": "3c5936b0f29524bfa6faeef590d3c5d746452d80bec7157c09d30052c5bf4de7",
+        "log_path": "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1026\\sample_2\\analysis_results\\infill40_70_gmax1e7_20261027\\run3_step3.log",
+        "log_sha256": "c23fb81fb7695a1005b41c837a5022f95a6945ad70a51744726722c598fd6a3f"
+      },
+      {
+        "step": 4,
+        "status": "not_run_no_selected_gamma"
+      }
+    ]
+  }
+]

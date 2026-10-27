@@ -5,7 +5,7 @@ import json
 
 PROJECT_ROOT = Path(__file__).resolve().parent
 SAMPLE_RUN = 3  # 1/2/3分别执行四个入口；参考图不合并。
-RUN_NAME = f'sample2_1026_run{SAMPLE_RUN}_h1_infill40_70_20261027'
+RUN_NAME = f'sample2_1026_run{SAMPLE_RUN}_h1_infill40_70_gmax1e7_20261027'
 INPUTS_CONFIGURED = True
 DATA_MODE = 'dic'  # dic / synthetic_layered / synthetic_nodal
 MESH_SOURCE = 'configured_grid'  # configured_grid / dic_grid
@@ -17,7 +17,7 @@ PRIMARY_NU = .26
 NU_VALUES = (.24, .26, .28, .33)
 SYNTHETIC_NU = .26
 GAMMA_COUNT = 50
-GAMMA_LOG10_RANGE = None  # H1默认(-12,-4)，TV默认(-10,-2)。
+GAMMA_LOG10_RANGE = (-12., -7.)  # 本次只将H1扫描上限从1e-4降到1e-7，保留50点。
 MAX_ITER, MAX_FUN = 1500, 12000
 FTOL, GTOL = 1e-30, 1e-12
 EXACT_TV_SOLVER = 'primal_dual'

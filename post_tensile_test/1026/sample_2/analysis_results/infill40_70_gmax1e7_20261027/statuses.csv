@@ -1,0 +1,4 @@
+run,status,l_curve_status,l_curve_message,selected_gamma,original_selected_gamma,scan_count,scan_success_count,old_scan_success_count,gamma_min,gamma_max,log10_spacing,old_log10_spacing,curvature_peak_gamma
+1,computed,selected,Selected maximum positive discrete log-log curvature.,6.250551925273976e-08,7.906043210907701e-08,50,34,40,1e-12,1e-07,0.1020408163265305,0.1632653061224491,6.250551925273976e-08
+2,l_curve_insufficient_corner_support,insufficient_corner_support,The curvature peak is not bracketed by two valid solves on each side.,,3.7275937203149377e-08,50,45,47,1e-12,1e-07,0.1020408163265305,0.1632653061224491,4.941713361323839e-08
+3,l_curve_range_insufficient,range_insufficient,Maximum curvature is too near a scan end; use a wider gamma range.,,7.906043210907701e-08,50,40,44,1e-12,1e-07,0.1020408163265305,0.1632653061224491,7.906043210907701e-08

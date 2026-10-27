@@ -1,0 +1,489 @@
+{
+  "case_id": "project1023_sample2_1026_run1_h1_infill40_70_gmax1e7_20261027",
+  "coordinates_verified": false,
+  "registration": {
+    "mode": "material_coordinates",
+    "matrix": [
+      [
+        0.0,
+        1.0
+      ],
+      [
+        1.0,
+        0.0
+      ]
+    ],
+    "mark_reference": "roi_axial_extrema",
+    "length_scale_source": "independent_dic_calibration",
+    "specimen_length_mm": 220.0,
+    "low_infill_mark_end_distance_mm": 53.0,
+    "high_infill_mark_end_distance_mm": 53.0,
+    "material_x_sign": 1,
+    "note": "用户确认导出ROI在两条标线之间，各标线距端部53 mm；制造文件给出220 mm总长和七区界面。高填充率在位移较大端，本次原+Y端DY较大，FEM x沿原+Y，填充率沿x为40至100%。软件毫米尺度作为独立于标线间距的长度来源，尺度本身按用户口径假设有效；两标线中点对齐，不缩放DIC实际跨度为名义114 mm。DIC覆盖宽度假定为承载宽度，厚度约3.2 mm。仅沿用本次同一参考图全段坐标锚点，截取40%–70%区段；保持坐标与位移毫米尺度，截取端均匀牵引为新增边界近似。",
+    "shared_reference_confirmed": true,
+    "raw_axial_anchor_mm": -46.9145734884,
+    "manufacturing_anchor_mm": -52.963027063,
+    "anchor_prepared_metadata_sha256": "7c42c8da9d11e2c2becd704c3362d966683b8263873ef1b8e3ab2037a4ee3982",
+    "offset_mm": [
+      46.9145734884,
+      6.249324727109999
+    ]
+  },
+  "matrix": [
+    [
+      0.0,
+      1.0
+    ],
+    [
+      1.0,
+      0.0
+    ]
+  ],
+  "offset_mm": [
+    46.9145734884,
+    6.249324727109999
+  ],
+  "physical_model_mm": [
+    60.930916094500006,
+    18.43550794901,
+    3.2
+  ],
+  "shared_mesh": {
+    "nel_x": 121,
+    "nel_y": 19,
+    "hx_mm": 0.5035612900371901,
+    "hy_mm": 0.9702898920531579,
+    "source": "configured_grid",
+    "nodes": 2440,
+    "same_for_forward_and_inverse": true
+  },
+  "coverage": [
+    {
+      "case": "run1",
+      "dic_row_step_mm": 0.31246623630000026,
+      "dic_col_step_mm": 0.3124662363000006,
+      "points": 11760,
+      "frame_count": 15,
+      "points_inside": 11760,
+      "points_outside": 0,
+      "x_min_mm": 0.0,
+      "x_max_mm": 60.930916094500006,
+      "y_min_mm": 0.0,
+      "y_max_mm": 18.43550794901
+    }
+  ],
+  "force_pairing": {
+    "run1": {
+      "mean_corrected_force_N": 229.2224,
+      "provenance": "用户明确接受假设：第1次名义末载280 N减去记录首载50.77760000 N，增量229.22240000 N。候选窗口无同期载荷；假定末端保持名义载荷及记录起载对应DIC参考图，二者均未同步验证。",
+      "reference": "force_increment_from_record_start",
+      "model_end_force_N": 229.2224,
+      "uniform_traction_MPa": 3.8855452314155894,
+      "load_section_width_mm": 18.43550794901,
+      "force_reference_note": "用户明确接受假设：第1次名义末载280 N减去记录首载50.77760000 N，增量229.22240000 N。候选窗口无同期载荷；假定末端保持名义载荷及记录起载对应DIC参考图，二者均未同步验证。"
+    }
+  },
+  "scope": "conditional comparison under explicit registration assumptions",
+  "primary_nu_prespecified": 0.26,
+  "objective_definition": "0.5*r.T@W_area@r + 0.5*gamma*integral(|grad(E)|^2); no modulus or noise normalization",
+  "prepared_metadata_sha256": "bf7e5ee52eb47cacd01d87727fcf5607f47646b72a50954196fdda8f721197a6",
+  "prepared_fields_sha256": "9d35b8626518ad025f0ae0f4beef9b451d855725a76cae57bbeb097e3a450e89",
+  "workflow": "dic_case_inverse",
+  "status": "computed",
+  "evaluation_scope": "fit_only_no_independent_validation",
+  "force_reference": "force_increment_from_record_start",
+  "force_reference_note": "用户明确接受假设：第1次名义末载280 N减去记录首载50.77760000 N，增量229.22240000 N。候选窗口无同期载荷；假定末端保持名义载荷及记录起载对应DIC参考图，二者均未同步验证。",
+  "domain_geometry": {
+    "source": "dic_reference_bounds",
+    "source_platform": "run1",
+    "load_section_width_mm": 18.43550794901,
+    "lateral_boundary": "traction_free_approximation",
+    "material_position": "shared_reference_material_coordinates_unit_scale"
+  },
+  "material_registration": {
+    "method": "shared_reference_material_coordinates_unit_scale",
+    "manufacturing_x_offset_mm": -52.963027063,
+    "manufacturing_x_fem_coefficient": 1,
+    "manufacturing_x_relation": "manufacturing_x = 1 * FEM_x + -52.963027063 mm",
+    "infill_order_along_fem_x": [
+      40,
+      50,
+      60,
+      70
+    ],
+    "manufacturing_roi_x_mm": [
+      -52.963027063,
+      7.9678890315000075
+    ],
+    "manufacturing_mark_x_mm": [
+      -57.0,
+      57.0
+    ],
+    "raw_axial_anchor_mm": -46.9145734884,
+    "manufacturing_anchor_mm": -52.963027063,
+    "anchor_prepared_metadata_sha256": "7c42c8da9d11e2c2becd704c3362d966683b8263873ef1b8e3ab2037a4ee3982",
+    "length_scale_factor": 1.0,
+    "direction_note": "用户确认导出ROI在两条标线之间，各标线距端部53 mm；制造文件给出220 mm总长和七区界面。高填充率在位移较大端，本次原+Y端DY较大，FEM x沿原+Y，填充率沿x为40至100%。软件毫米尺度作为独立于标线间距的长度来源，尺度本身按用户口径假设有效；两标线中点对齐，不缩放DIC实际跨度为名义114 mm。DIC覆盖宽度假定为承载宽度，厚度约3.2 mm。仅沿用本次同一参考图全段坐标锚点，截取40%–70%区段；保持坐标与位移毫米尺度，截取端均匀牵引为新增边界近似。",
+    "transverse_location": "internal DIC ROI bounds; no measured specimen edge registration"
+  },
+  "displacement_component_weights": {
+    "ux": 1.0,
+    "uy": 1.0
+  },
+  "gamma_selection_method": "l_curve",
+  "l_curve_enabled": true,
+  "selected_gamma": 6.250551925273976e-08,
+  "gamma_at_scan_boundary": false,
+  "scan_initialization": "fit-DIC homogeneous initialization, then decreasing-gamma converged continuation",
+  "initialization": {
+    "source": "homogeneous_dic_fit",
+    "uniform_E_MPa": 940.8389756883389,
+    "fit_cases": [
+      "run1"
+    ],
+    "nu": 0.26,
+    "uses_calibration": false,
+    "uses_prediction_cases": false
+  },
+  "final_initialization": "selected L-curve field, identical for all nu",
+  "configuration": {
+    "PROJECT_ROOT": "D:\\MyProject\\uniform_pressure_experiment_1023",
+    "SAMPLE_RUN": 1,
+    "RUN_NAME": "sample2_1026_run1_h1_infill40_70_gmax1e7_20261027",
+    "INPUTS_CONFIGURED": true,
+    "DATA_MODE": "dic",
+    "MESH_SOURCE": "configured_grid",
+    "CONFIGURED_ELEMENTS": [
+      121,
+      19
+    ],
+    "REGULARIZATION_MODE": "gradient",
+    "TV_DELTA": 10.0,
+    "DISPLACEMENT_COMPONENT_WEIGHTS": [
+      1.0,
+      1.0
+    ],
+    "PRIMARY_NU": 0.26,
+    "NU_VALUES": [
+      0.24,
+      0.26,
+      0.28,
+      0.33
+    ],
+    "SYNTHETIC_NU": 0.26,
+    "GAMMA_COUNT": 50,
+    "GAMMA_LOG10_RANGE": [
+      -12.0,
+      -7.0
+    ],
+    "MAX_ITER": 1500,
+    "MAX_FUN": 12000,
+    "FTOL": 1e-30,
+    "GTOL": 1e-12,
+    "EXACT_TV_SOLVER": "primal_dual",
+    "EXACT_TV_PRIMAL_STEP": 20000000.0,
+    "EXACT_TV_COUPLING": 0.9,
+    "EXACT_TV_OPTIONS": {
+      "max_outer": 12000,
+      "max_inner": 150,
+      "stationarity_atol": 1e-09,
+      "stationarity_rtol": 0.001,
+      "primal_atol": 1e-06,
+      "primal_rtol": 0.0001,
+      "gap_atol": 1e-09,
+      "gap_rtol": 0.0001,
+      "adapt_interval": 10
+    },
+    "SAMPLE_ROOT": "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1026\\sample_2",
+    "FORCE_REFERENCE_NOTE": "用户明确接受假设：第1次名义末载280 N减去记录首载50.77760000 N，增量229.22240000 N。候选窗口无同期载荷；假定末端保持名义载荷及记录起载对应DIC参考图，二者均未同步验证。",
+    "PLATFORMS": {
+      "run1": {
+        "folder": "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1026\\sample_2\\1\\280N",
+        "stages": [
+          591,
+          605
+        ],
+        "run": 1,
+        "setting_N": 280,
+        "force_N": 229.2224,
+        "force_note": "用户明确接受假设：第1次名义末载280 N减去记录首载50.77760000 N，增量229.22240000 N。候选窗口无同期载荷；假定末端保持名义载荷及记录起载对应DIC参考图，二者均未同步验证。"
+      }
+    },
+    "FIT_CASES": [
+      "run1"
+    ],
+    "PREDICT_CASES": [],
+    "FORCE_PAIRING_CSV": "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1026\\sample_2\\selected_dic_windows.csv",
+    "FORCE_REFERENCE": "force_increment_from_record_start",
+    "FORCE_ASSUMED": true,
+    "DIC_UNIT": "mm",
+    "DIC_COORDINATE_STATE": "deformed",
+    "DISPLACEMENT_REFERENCE": "initial_reference_image",
+    "DOMAIN_SOURCE": "dic_reference_bounds",
+    "GEO_L": 60.930916094500006,
+    "GEO_H": 18.43550794901,
+    "THICKNESS": 3.2,
+    "LOAD_SECTION_WIDTH": 18.43550794901,
+    "INTERNAL_SIDE_BOUNDARY": "traction_free_approximation",
+    "REGION_INFILL_PERCENT": [
+      40,
+      50,
+      60,
+      70
+    ],
+    "REGION_BOUNDARIES_MANUFACTURING_X": [
+      -40.0,
+      -24.0,
+      -8.0
+    ],
+    "REGION_BOUNDARIES_X": [
+      12.963027062999998,
+      28.963027063,
+      44.963027063
+    ],
+    "REGION_BOUNDARIES_CENTERED_X": [],
+    "CALIBRATION_CSV": "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1023\\analysis_results\\individual_3pct_monotone_20261026_final\\group_summary.csv",
+    "CALIBRATION_METHOD": "individual_window_joint_3pct_monotone",
+    "REGISTRATION": {
+      "mode": "material_coordinates",
+      "matrix": [
+        [
+          0.0,
+          1.0
+        ],
+        [
+          1.0,
+          0.0
+        ]
+      ],
+      "mark_reference": "roi_axial_extrema",
+      "length_scale_source": "independent_dic_calibration",
+      "specimen_length_mm": 220.0,
+      "low_infill_mark_end_distance_mm": 53.0,
+      "high_infill_mark_end_distance_mm": 53.0,
+      "material_x_sign": 1,
+      "note": "用户确认导出ROI在两条标线之间，各标线距端部53 mm；制造文件给出220 mm总长和七区界面。高填充率在位移较大端，本次原+Y端DY较大，FEM x沿原+Y，填充率沿x为40至100%。软件毫米尺度作为独立于标线间距的长度来源，尺度本身按用户口径假设有效；两标线中点对齐，不缩放DIC实际跨度为名义114 mm。DIC覆盖宽度假定为承载宽度，厚度约3.2 mm。仅沿用本次同一参考图全段坐标锚点，截取40%–70%区段；保持坐标与位移毫米尺度，截取端均匀牵引为新增边界近似。",
+      "shared_reference_confirmed": true,
+      "raw_axial_anchor_mm": -46.9145734884,
+      "manufacturing_anchor_mm": -52.963027063,
+      "anchor_prepared_metadata_sha256": "7c42c8da9d11e2c2becd704c3362d966683b8263873ef1b8e3ab2037a4ee3982",
+      "offset_mm": [
+        46.9145734884,
+        6.249324727109999
+      ]
+    },
+    "OUTSIDE_POINT_POLICY": "reject",
+    "MATERIAL_ANCHOR_PREPARED": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run1_h1_monotone_20261026\\01_prepared\\run_metadata.json",
+    "MATERIAL_WINDOW_MM": [
+      -57.0,
+      8.0
+    ],
+    "CASE_ID": "project1023_sample2_1026_run1_h1_infill40_70_gmax1e7_20261027",
+    "CASE_OUTPUT": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run1_h1_infill40_70_gmax1e7_20261027",
+    "NEL_X": 121,
+    "NEL_Y": 19,
+    "GAMMA_CANDIDATES": [
+      1e-12,
+      1.2648552168552957e-12,
+      1.5998587196060573e-12,
+      2.0235896477251556e-12,
+      2.559547922699533e-12,
+      3.23745754281764e-12,
+      4.094915062380419e-12,
+      5.179474679231202e-12,
+      6.551285568595496e-12,
+      8.28642772854686e-12,
+      1.0481131341546874e-11,
+      1.3257113655901109e-11,
+      1.67683293681101e-11,
+      2.1209508879201924e-11,
+      2.6826957952797272e-11,
+      3.3932217718953296e-11,
+      4.2919342601287785e-11,
+      5.4286754393238595e-11,
+      6.866488450042999e-11,
+      8.68511373751352e-11,
+      1.0985411419875573e-10,
+      1.389495494373136e-10,
+      1.7575106248547894e-10,
+      2.222996482526191e-10,
+      2.8117686979742364e-10,
+      3.5564803062231214e-10,
+      4.498432668969453e-10,
+      5.689866029018305e-10,
+      7.196856730011529e-10,
+      9.102981779915227e-10,
+      1.151395399326448e-09,
+      1.4563484775012444e-09,
+      1.8420699693267164e-09,
+      2.3299518105153718e-09,
+      2.94705170255181e-09,
+      3.727593720314938e-09,
+      4.71486636345739e-09,
+      5.9636233165946364e-09,
+      7.543120063354607e-09,
+      9.540954763499964e-09,
+      1.206792640639329e-08,
+      1.5264179671752334e-08,
+      1.9306977288832496e-08,
+      2.4420530945486498e-08,
+      3.0888435964774783e-08,
+      3.906939937054621e-08,
+      4.9417133613238385e-08,
+      6.250551925273976e-08,
+      7.906043210907701e-08,
+      1e-07
+    ],
+    "MANUFACTURING_X_SIGN": 1,
+    "MANUFACTURING_X_OFFSET_MM": -52.963027063,
+    "MATERIAL_REGISTRATION": {
+      "method": "shared_reference_material_coordinates_unit_scale",
+      "manufacturing_x_offset_mm": -52.963027063,
+      "manufacturing_x_fem_coefficient": 1,
+      "manufacturing_x_relation": "manufacturing_x = 1 * FEM_x + -52.963027063 mm",
+      "infill_order_along_fem_x": [
+        40,
+        50,
+        60,
+        70
+      ],
+      "manufacturing_roi_x_mm": [
+        -52.963027063,
+        7.9678890315000075
+      ],
+      "manufacturing_mark_x_mm": [
+        -57.0,
+        57.0
+      ],
+      "raw_axial_anchor_mm": -46.9145734884,
+      "manufacturing_anchor_mm": -52.963027063,
+      "anchor_prepared_metadata_sha256": "7c42c8da9d11e2c2becd704c3362d966683b8263873ef1b8e3ab2037a4ee3982",
+      "length_scale_factor": 1.0,
+      "direction_note": "用户确认导出ROI在两条标线之间，各标线距端部53 mm；制造文件给出220 mm总长和七区界面。高填充率在位移较大端，本次原+Y端DY较大，FEM x沿原+Y，填充率沿x为40至100%。软件毫米尺度作为独立于标线间距的长度来源，尺度本身按用户口径假设有效；两标线中点对齐，不缩放DIC实际跨度为名义114 mm。DIC覆盖宽度假定为承载宽度，厚度约3.2 mm。仅沿用本次同一参考图全段坐标锚点，截取40%–70%区段；保持坐标与位移毫米尺度，截取端均匀牵引为新增边界近似。",
+      "transverse_location": "internal DIC ROI bounds; no measured specimen edge registration"
+    }
+  },
+  "environment": {
+    "python": "3.13.2 | packaged by Anaconda, Inc. | (main, Feb  6 2025, 18:49:14) [MSC v.1929 64 bit (AMD64)]",
+    "executable": "D:\\miniconda3\\python.exe",
+    "numpy": "2.4.0",
+    "scipy": "1.17.1",
+    "platform": "Windows-11-10.0.26300-SP0",
+    "git_revision": "4646939e5f59f61a98422ae16ec6ef8b07a98761",
+    "git_dirty": true,
+    "command": [
+      "D:\\MyProject\\uniform_pressure_experiment_1023\\script\\step3_inverse_dic.py",
+      "--input",
+      "results/dic_full/sample2_1026_run1_h1_infill40_70_gmax1e7_20261027/01_prepared"
+    ]
+  },
+  "source_sha256": {
+    "dic_case_config.py": "872259b3945c619958f88363f1fb212965de2b140d3ba97ccb778dfce396ea14",
+    "fgm_asm\\exact_tv.py": "979814d5ef8e431883c0333660723538461ec8fd144232bbc17c3e33044ce6e7",
+    "fgm_asm\\fem_forward.py": "bde2f57ef5ef7d091f80fa950c79a898f7878fec4424ea5abc2892465d7a8266",
+    "fgm_asm\\grf.py": "ffd2705ed28c642e83299149d352695235bfa383abae3870e8f05292a4c1d28c",
+    "fgm_asm\\inverse_solver.py": "32ee38eac13280a349b9a8fcc99b62ae5494db8db2d90358471c8c5022f28646",
+    "fgm_asm\\load_case.py": "ff8761cd9c709580258af1192c59715a4260ce2a3417edcb8620d7662e65aa56",
+    "fgm_asm\\l_curve.py": "2a376d962782df76bc75603ebd16d46bcf6b9c60103b709a30330baff7f06eee",
+    "fgm_asm\\material.py": "7982752e658a7d722f76209fc978e2a8930dcf0f22ed121617cb2ada04805cbc",
+    "fgm_asm\\mesh.py": "1024656e9608b8afcc7ec6e3908a9adbf8991fa64914e6b93565cb8756bd7432",
+    "fgm_asm\\observation.py": "a9f8b7bcdf48e627933b3e6bcae1ad8f087cfa19d4daf7970f1c0f1c997eede7",
+    "fgm_asm\\regularization.py": "aabba467ec8acd83f1a46671dfe58b26aacded0fabc8f945a59c4c73cd0082ab",
+    "fgm_asm\\research.py": "3a86f6fdd73d8d5e102f2ef0141c9e9ced2159a7147fe545b8ad8017b0a6ea93",
+    "fgm_asm\\tgv.py": "abdef11e675718111bdd9630d56adcbd902152b1577a3a79af2c121186e846af",
+    "fgm_asm\\__init__.py": "eea06c1e7cf5ffe79e033adf820c112401b646430f4bcf3655fbdc13862c9c34",
+    "lib\\calibration_reference_update.py": "36a1ff0c422909578c3433d9578cc03aa0c36c7a4011e053c23b8cf70a83fb6c",
+    "lib\\config_utils.py": "091f1c7135c1521de1e4a78698b960a61027ce597359de9dfed18f1f9646d25c",
+    "lib\\dic_calibration_curve_comparison.py": "a7694821865c45c24a7c3b9a09dcdc7b1ef9f7a003c1e786792bd95b218c0904",
+    "lib\\dic_case_reporting.py": "9908df0add7597421ae572d7b8658263348ec1a44d4907e96e735be3c05503a0",
+    "lib\\dic_case_workflow.py": "9196b0223688ff74d65b0896b532df03b757e5f9bf41c917e9fd4a262c78e7db",
+    "lib\\dic_frame_selection.py": "6ee5b336463b2d46ad325c827cf73a84492ca19182f4300fd2b3ca7b31a4c10d",
+    "lib\\dic_gamma_sensitivity.py": "8c6eaf4fd969c98559c108d042e8c4a7f4fc256465b56c7412ffe33de16f5513",
+    "lib\\dic_gamma_stability.py": "7c41e729303f148b8a3cc654b172aac2225602b6f89b2a74faf37ac698c29d9f",
+    "lib\\dic_gamma_stability_report.py": "f6760b974e2a940fa4f2a93d38c5f11fb7094e774c1a418e6a0728e01cb61eff",
+    "lib\\dic_preprocessing.py": "5d7627153a08062efff64384f84ea459db7ff5af37103b1bf7d82df8bca4f124",
+    "lib\\experiment_data.py": "0463994916d6f68390a7d360e397853cd9fafcf7f2f0dad1dcd804ec73d3af2b",
+    "lib\\io_utils.py": "be64bd808fdb2cc75c19208326cc38d572369f08cdf2f8749ff2a24b2f8b3e55",
+    "lib\\joint_reference_diagnostic.py": "ccfdba3c0966d131b986acbbb3b5aaeb1d7fad97be2e6666b377703088ca41dd",
+    "lib\\material_window_analysis.py": "052883781354ce4ef7c6718f857f6f218374335d99c4a2687357efaf96881e77",
+    "lib\\material_window_gamma_check.py": "e06c48987fe4d4d51200405821f192c2464e60b1244b23a30e6d105327effe92",
+    "lib\\research_reporting.py": "a347d23bbf0f8e12fdacd496607cee45585ad7c404e3372aebf179b5f93d71b2",
+    "lib\\sample2_result_analysis.py": "09d2a3b2bc9bfe61647704553dc256515a83187efaff2aa89972badb1710fd58",
+    "lib\\sequential_case_diagnostic.py": "a69029c3260bc8acb08e313d03b71e163204e2c63ccce4c15a514e03655c7965",
+    "lib\\sequential_gamma_band.py": "6c6d784642642a8387e840d1315091107585dbeb8679066852a8d86175857c65",
+    "lib\\sequential_lcurve_report.py": "17d18763717fe851973040f30bc0b82fae49948921c7f350b3cb7b25aadf7a0b",
+    "lib\\sequential_lcurve_scan.py": "de852c91caa3910c83b412252d2a412138df5432133b52e85bba4d74677f631e",
+    "lib\\synthetic_recovery.py": "10dd9678f6d2667a046054ade24825da7742541cc6dbf967a3f05574e767f495",
+    "lib\\tensile_calibration.py": "d68f5b7c905c82bc89aedbf717171dbdf6c2871e39c3538ef7bfd6dfe187524a",
+    "lib\\tensile_fit_standard.py": "47d6a1fb83d164cddfe8edefbe9f7934043a37d7ef0f4617f1bf1204ef1bb222",
+    "lib\\uniform_calibration_comparison.py": "95e68dff76bd8c4f2becacc6f90029862b3397367f8a2ce34136b2d720b3465f",
+    "lib\\uniform_sample_analysis.py": "bfec3fa24e1f5bab12febc28b5f34795668011c06472ee49ba3c208604c33975",
+    "lib\\verify_tensile_calibration.py": "de20f6fe49bad33c7ca7869ce53a67467f427ffd9369b374212ff0e86ad4b036",
+    "lib\\__init__.py": "cee96f9d84d28c0a84b710640de16b3544a2187987c25735016fc188df7db10e",
+    "script\\step1_prepare_dic.py": "a1da0c1ace622027790f47301f2b372db0493a5d171388e638eccc84523209cc",
+    "script\\step2_forward_calibrated.py": "49cc7f57c5d79c3e21c99a21aad378447bc6b71d3259b88794ffe5ca958e2977",
+    "script\\step3_inverse_dic.py": "9d8e740103b99a9b10f9ca17d4ebc6fb704a73989af971dd64d266e8422dd893",
+    "script\\step4_compare_results.py": "11a4b81b212d1f442f62f4f8152c08b340cc0366efee946fa261dfb45e5126d9",
+    "script\\__init__.py": "d49f1e106b2e6e10d230c915183ef7d43390802a159c80aa118c8980e8be421a"
+  },
+  "l_curve_status": "selected",
+  "l_curve_message": "Selected maximum positive discrete log-log curvature.",
+  "solvers": [
+    {
+      "nu": 0.24,
+      "converged": true,
+      "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+      "n_iterations": 153,
+      "n_evaluations": 270,
+      "final_cost": 0.013909264136589264,
+      "regularization_mode": "gradient",
+      "residual_norm": 0.15220155475679323,
+      "regularization_norm": 272.84586484718324,
+      "final_gradient_inf": 2.0624277953153615e-09,
+      "line_search_restarts": [],
+      "gradient_tolerance_satisfied": false
+    },
+    {
+      "nu": 0.26,
+      "converged": true,
+      "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+      "n_iterations": 1,
+      "n_evaluations": 13,
+      "final_cost": 0.016146847877197185,
+      "regularization_mode": "gradient",
+      "residual_norm": 0.16614485460680947,
+      "regularization_norm": 273.9100275853882,
+      "final_gradient_inf": 3.398843888491798e-09,
+      "line_search_restarts": [],
+      "gradient_tolerance_satisfied": false
+    },
+    {
+      "nu": 0.28,
+      "converged": true,
+      "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+      "n_iterations": 154,
+      "n_evaluations": 220,
+      "final_cost": 0.01860642871972593,
+      "regularization_mode": "gradient",
+      "residual_norm": 0.1802268185090903,
+      "regularization_norm": 275.1213133936667,
+      "final_gradient_inf": 5.340722965619987e-09,
+      "line_search_restarts": [],
+      "gradient_tolerance_satisfied": false
+    },
+    {
+      "nu": 0.33,
+      "converged": true,
+      "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+      "n_iterations": 168,
+      "n_evaluations": 261,
+      "final_cost": 0.025713688528824736,
+      "regularization_mode": "gradient",
+      "residual_norm": 0.2157904912328914,
+      "regularization_norm": 278.89529646414184,
+      "final_gradient_inf": 3.1865001126214743e-09,
+      "line_search_restarts": [],
+      "gradient_tolerance_satisfied": false
+    }
+  ]
+}
