@@ -4,6 +4,8 @@
 
 [最终L-curve报告](report_final/report.md) · [L-curve与曲率](report_final/l_curves.png) · [阶段停止状态](report_final/stage_status.png)
 
+[γ=1.26e-9模量曲线与二维场（诊断）](diagnostic_figures/final_field.png) · [不同γ结果对照](diagnostic_figures/gamma_comparison.png) · [初值传递各阶段曲线](diagnostic_figures/stage_profiles.png)。这些图直接读取已保存字段，没有重新优化，均不标为L-curve选定结果；PNG与SVG同时保存。
+
 共执行112个阶段，30条完整链有效、20个γ无效。主曲线与末工况对照均返回`insufficient_corner_support`，没有选定新的γ。可计算点中最大正曲率位于5.689866e-9；邻域中的8.286428e-9末阶段线搜索异常，因此不满足原规则要求的两侧有效点支撑。未采用边界、标定值或人工指定点补选。不能由此断言区间不存在拐点，只能说当前有效数值点不足以确认。
 
 以下仅为预先指定目标附近的有效诊断点，**不是L-curve选定结果**。参考曲线误差均为制造坐标[−48,48] mm上的平均绝对相对差异。
