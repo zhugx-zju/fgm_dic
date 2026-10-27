@@ -1,0 +1,194 @@
+[
+  {
+    "run": 1,
+    "stages": [
+      {
+        "stage": 1,
+        "status": "prepared",
+        "command": "python -B -m script.step1_prepare_dic",
+        "metadata_sha256": "bf6b6da102323d566583b6e2a70c10481252c9321329e6b6569db9bb05870f3a",
+        "log_path": "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1026\\sample_2\\analysis_results\\infill40_70_h1_20261027\\run1_step1.log",
+        "log_sha256": "410e2c5eded9e567c4b2ed70ed73ca37c90fb14e43a734f03af93c3bc5c1bcfe"
+      },
+      {
+        "stage": 2,
+        "status": "computed",
+        "command": "python -B -m script.step2_forward_calibrated --input results\\dic_full\\sample2_1026_run1_h1_infill40_70_20261027/01_prepared",
+        "metadata_sha256": "e9424592f3795e0a528d4347f2f0519adb07127d2b764427df46df391c8f4f1b",
+        "log_path": "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1026\\sample_2\\analysis_results\\infill40_70_h1_20261027\\run1_step2.log",
+        "log_sha256": "51bb1b216e034fa71577d96c85cc20c5325962114db59d9b55bbb72bbd89249d"
+      },
+      {
+        "stage": 3,
+        "status": "inverse_not_converged",
+        "command": "python -u -B -m script.step3_inverse_dic --input results\\dic_full\\sample2_1026_run1_h1_infill40_70_20261027/01_prepared",
+        "metadata_sha256": "b7324fd00b2d8b430221debefc997f735dcf492f4e8defe052c7638b129dac35",
+        "log_path": "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1026\\sample_2\\analysis_results\\infill40_70_h1_20261027\\run1_step3.log",
+        "log_sha256": "d91ca1db74a21abbbb10c03c0e0d98919d8ce8e4a5ef341c2ba1643533dfdf24"
+      },
+      {
+        "stage": 4,
+        "status": "inverse_not_converged",
+        "command": "python -B -m script.step4_compare_results --input results\\dic_full\\sample2_1026_run1_h1_infill40_70_20261027/01_prepared",
+        "metadata_sha256": "f1af88162c9879083de4086eb3863c087ccf17d4d38107d6515daf200ef1c027",
+        "log_path": "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1026\\sample_2\\analysis_results\\infill40_70_h1_20261027\\run1_step4.log",
+        "log_sha256": "59dd48f32a1de913a3287d67927470078bf0b0844cc8a50807c1cb473b598f5d"
+      }
+    ],
+    "prepare_sample_run_setting": 1,
+    "selected_scan_solver": {
+      "converged": true,
+      "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+      "n_iterations": 185,
+      "n_evaluations": 272,
+      "final_cost": 0.01675125328709108,
+      "regularization_mode": "gradient",
+      "residual_norm": 0.16697068013844202,
+      "regularization_norm": 266.69567871896976,
+      "final_gradient_inf": 5.624646880214866e-09,
+      "line_search_restarts": []
+    },
+    "primary_final_solver": {
+      "nu": 0.26,
+      "converged": false,
+      "message": "ABNORMAL: ",
+      "n_iterations": 0,
+      "n_evaluations": 32,
+      "final_cost": 0.01675125328709108,
+      "regularization_mode": "gradient",
+      "residual_norm": 0.16697068013844202,
+      "regularization_norm": 266.69567871896976,
+      "final_gradient_inf": 5.624646880214866e-09,
+      "line_search_restarts": [],
+      "gradient_tolerance_satisfied": false
+    }
+  },
+  {
+    "run": 2,
+    "stages": [
+      {
+        "stage": 1,
+        "status": "prepared",
+        "command": "python -B -m script.step1_prepare_dic",
+        "metadata_sha256": "52b9a1fa981ac9c1d67b25eab37e9f9a72df838c9d1869c73702b666dbf846c0",
+        "log_path": "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1026\\sample_2\\analysis_results\\infill40_70_h1_20261027\\run2_step1.log",
+        "log_sha256": "f23b14c241145405cc98333f7f125c73e6c10123430d999e85fa4595d53fa83c"
+      },
+      {
+        "stage": 2,
+        "status": "computed",
+        "command": "python -B -m script.step2_forward_calibrated --input results\\dic_full\\sample2_1026_run2_h1_infill40_70_20261027/01_prepared",
+        "metadata_sha256": "b921361164c491c25e24dd548adb758ff3b7ff947ab6d4c78bb19b25d3445fba",
+        "log_path": "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1026\\sample_2\\analysis_results\\infill40_70_h1_20261027\\run2_step2.log",
+        "log_sha256": "64852a83cab8eb0a9678c22d798fa18414fc2c5c20f742e5a28d61245376987a"
+      },
+      {
+        "stage": 3,
+        "status": "computed",
+        "command": "python -u -B -m script.step3_inverse_dic --input results\\dic_full\\sample2_1026_run2_h1_infill40_70_20261027/01_prepared",
+        "metadata_sha256": "e9343e70b72d6fcaf6131c82fe4132601e6a94ca4050f1c1dc6f0d0fa59993df",
+        "log_path": "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1026\\sample_2\\analysis_results\\infill40_70_h1_20261027\\run2_step3.log",
+        "log_sha256": "073507463f9764d64847759b9061c335d0b22c1220535561826afbaea5561ab0"
+      },
+      {
+        "stage": 4,
+        "status": "computed",
+        "command": "python -B -m script.step4_compare_results --input results\\dic_full\\sample2_1026_run2_h1_infill40_70_20261027/01_prepared",
+        "metadata_sha256": "56e04c49d69f48b797db8792a6fcb6fbfbeb1fe6614519f92130eaa3726fd0b5",
+        "log_path": "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1026\\sample_2\\analysis_results\\infill40_70_h1_20261027\\run2_step4.log",
+        "log_sha256": "e03f1150aca68429507cd2601cb3c8c3047e0aa297c70193d601646e6dfe9245"
+      }
+    ],
+    "prepare_sample_run_setting": 2,
+    "selected_scan_solver": {
+      "converged": true,
+      "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+      "n_iterations": 174,
+      "n_evaluations": 263,
+      "final_cost": 0.00294651106504433,
+      "regularization_mode": "gradient",
+      "residual_norm": 0.06783799028546786,
+      "regularization_norm": 186.10316003413692,
+      "final_gradient_inf": 1.0456871531968118e-09,
+      "line_search_restarts": []
+    },
+    "primary_final_solver": {
+      "nu": 0.26,
+      "converged": true,
+      "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+      "n_iterations": 5,
+      "n_evaluations": 132,
+      "final_cost": 0.0029465110650438568,
+      "regularization_mode": "gradient",
+      "residual_norm": 0.06783799028546085,
+      "regularization_norm": 186.1031600341373,
+      "final_gradient_inf": 1.045685474934858e-09,
+      "line_search_restarts": [],
+      "gradient_tolerance_satisfied": false
+    }
+  },
+  {
+    "run": 3,
+    "stages": [
+      {
+        "stage": 1,
+        "status": "prepared",
+        "command": "python -B -m script.step1_prepare_dic",
+        "metadata_sha256": "b29ead67b3dc0fb8efff3b46af95791299f152f5cb886bea857bd257d38896b6",
+        "log_path": null,
+        "log_sha256": null
+      },
+      {
+        "stage": 2,
+        "status": "computed",
+        "command": "python -B -m script.step2_forward_calibrated --input results\\dic_full\\sample2_1026_run3_h1_infill40_70_20261027/01_prepared",
+        "metadata_sha256": "c12141c1fe926792108db928f06d20e9233dab8bd81165694034ea8bdc50f482",
+        "log_path": "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1026\\sample_2\\analysis_results\\infill40_70_h1_20261027\\run3_step2.log",
+        "log_sha256": "4cb326bf1cd4578666e9afb385b94c961f60124420dba255faa8651508f9e469"
+      },
+      {
+        "stage": 3,
+        "status": "inverse_not_converged",
+        "command": "python -u -B -m script.step3_inverse_dic --input results\\dic_full\\sample2_1026_run3_h1_infill40_70_20261027/01_prepared",
+        "metadata_sha256": "4789c55fa93991f5a3411ff8fbd0bbb6c43da77a4683f67c4bb2cfb27bfc1548",
+        "log_path": "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1026\\sample_2\\analysis_results\\infill40_70_h1_20261027\\run3_step3.log",
+        "log_sha256": "d58860457d70722420dbc081902f4cf418f3f7caf39e89506651b39132650858"
+      },
+      {
+        "stage": 4,
+        "status": "inverse_not_converged",
+        "command": "python -B -m script.step4_compare_results --input results\\dic_full\\sample2_1026_run3_h1_infill40_70_20261027/01_prepared",
+        "metadata_sha256": "d3944e55b0c816d9f4f1e902152edfe27b2a9acb39dcfe18669ae9246ffee650",
+        "log_path": "D:\\MyProject\\uniform_pressure_experiment_1023\\post_tensile_test\\1026\\sample_2\\analysis_results\\infill40_70_h1_20261027\\run3_step4.log",
+        "log_sha256": "d5864aa99829a7a286d40c7c519f5e1262ed6a7e17e88d1c55bc655c3dec9b51"
+      }
+    ],
+    "prepare_sample_run_setting": 3,
+    "selected_scan_solver": {
+      "converged": true,
+      "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+      "n_iterations": 196,
+      "n_evaluations": 263,
+      "final_cost": 0.005930470486070396,
+      "regularization_mode": "gradient",
+      "residual_norm": 0.09452085026322582,
+      "regularization_norm": 192.40360705017068,
+      "final_gradient_inf": 7.078531921818809e-10,
+      "line_search_restarts": []
+    },
+    "primary_final_solver": {
+      "nu": 0.26,
+      "converged": true,
+      "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+      "n_iterations": 3,
+      "n_evaluations": 73,
+      "final_cost": 0.005930470486070188,
+      "regularization_mode": "gradient",
+      "residual_norm": 0.09452085026322361,
+      "regularization_norm": 192.40360705017073,
+      "final_gradient_inf": 7.07852869770648e-10,
+      "line_search_restarts": [],
+      "gradient_tolerance_satisfied": false
+    }
+  }
+]

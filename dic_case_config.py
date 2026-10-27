@@ -1,9 +1,11 @@
-"""唯一日常配置：1026 sample_2七区试样，逐次独立自由二维H1反演。"""
+"""唯一日常配置：1026 sample_2的40%–70%区段，逐次独立自由二维H1反演。"""
 from pathlib import Path
+import hashlib
+import json
 
 PROJECT_ROOT = Path(__file__).resolve().parent
 SAMPLE_RUN = 3  # 1/2/3分别执行四个入口；参考图不合并。
-RUN_NAME = f'sample2_1026_run{SAMPLE_RUN}_h1_monotone_20261026'
+RUN_NAME = f'sample2_1026_run{SAMPLE_RUN}_h1_infill40_70_20261027'
 INPUTS_CONFIGURED = True
 DATA_MODE = 'dic'  # dic / synthetic_layered / synthetic_nodal
 MESH_SOURCE = 'configured_grid'  # configured_grid / dic_grid
@@ -74,6 +76,27 @@ REGISTRATION = {
             '两标线中点对齐，不缩放DIC实际跨度为名义114 mm。DIC覆盖宽度假定为承载宽度，厚度约3.2 mm。',
 }
 OUTSIDE_POINT_POLICY = 'reject'
+
+# 只继承同一次、同一参考图全段准备结果的材料坐标，绝不读取其模量或γ。
+# 裁剪后不能再将新区段中点对齐试样中点。各次参考图之间不共享锚点。
+MATERIAL_ANCHOR_PREPARED = (PROJECT_ROOT / 'results' / 'dic_full' /
+    f'sample2_1026_run{SAMPLE_RUN}_h1_monotone_20261026' / '01_prepared' / 'run_metadata.json')
+_anchor_bytes = MATERIAL_ANCHOR_PREPARED.read_bytes()
+_anchor = json.loads(_anchor_bytes)
+_source_platform = _anchor['configuration']['PLATFORMS'][_name]
+if (Path(_source_platform['folder']).resolve() != Path(PLATFORMS[_name]['folder']).resolve()
+        or tuple(_source_platform['stages']) != tuple(PLATFORMS[_name]['stages'])):
+    raise ValueError('区段裁剪锚点必须来自本次相同帧号和参考图')
+MATERIAL_WINDOW_MM = (-57., 8.)
+REGION_INFILL_PERCENT = (40, 50, 60, 70)
+REGION_BOUNDARIES_MANUFACTURING_X = (-40., -24., -8.)
+REGISTRATION = dict(REGISTRATION, mode='material_coordinates',
+    shared_reference_confirmed=True,
+    raw_axial_anchor_mm=-_anchor['offset_mm'][0],
+    manufacturing_anchor_mm=_anchor['material_registration']['manufacturing_x_offset_mm'],
+    anchor_prepared_metadata_sha256=hashlib.sha256(_anchor_bytes).hexdigest(),
+    note=REGISTRATION['note'] + '仅沿用本次同一参考图全段坐标锚点，截取40%–70%区段；'
+         '保持坐标与位移毫米尺度，截取端均匀牵引为新增边界近似。')
 
 if not RUN_NAME or RUN_NAME in ('.', '..') or any(c in RUN_NAME for c in '<>:"/\\|?*'):
     raise ValueError('RUN_NAME必须为单个目录名')

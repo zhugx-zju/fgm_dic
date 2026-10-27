@@ -1,0 +1,134 @@
+[
+  {
+    "run": 1,
+    "root": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run1_h1_infill40_70_20261027",
+    "baseline": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run1_h1_monotone_20261026",
+    "extraction": {
+      "method": "continuous_material_coordinate_window_no_resampling",
+      "requested_manufacturing_bounds_mm": [
+        -57.0,
+        8.0
+      ],
+      "available_manufacturing_bounds_mm": [
+        -52.963027063,
+        52.963027063
+      ],
+      "selected_manufacturing_bounds_mm": [
+        -52.963027063,
+        7.9678890315000075
+      ],
+      "unavailable_requested_end_mm": [
+        4.036972937000002,
+        0.0
+      ],
+      "boundary_sampling_remainder_mm": [
+        0.0,
+        0.03211096849999251
+      ],
+      "input_points": 20400,
+      "selected_points": 11760,
+      "selected_grid_shape": [
+        196,
+        60
+      ]
+    },
+    "exact_raw_data_subset_verified": true,
+    "coordinate_map_verified": true,
+    "matched_force_weights_settings_verified": true,
+    "all_raw_source_hashes_verified": true,
+    "fresh_forward_replay_verified_all_nu": true,
+    "residual_atol_mm": 1e-10,
+    "anchor_metadata_sha256": "7c42c8da9d11e2c2becd704c3362d966683b8263873ef1b8e3ab2037a4ee3982",
+    "inverse_metadata_sha256": "b7324fd00b2d8b430221debefc997f735dcf492f4e8defe052c7638b129dac35",
+    "l_curve_status": "selected",
+    "inverse_status": "inverse_not_converged"
+  },
+  {
+    "run": 2,
+    "root": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run2_h1_infill40_70_20261027",
+    "baseline": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run2_h1_monotone_20261026",
+    "extraction": {
+      "method": "continuous_material_coordinate_window_no_resampling",
+      "requested_manufacturing_bounds_mm": [
+        -57.0,
+        8.0
+      ],
+      "available_manufacturing_bounds_mm": [
+        -52.887468776800006,
+        52.887468776800006
+      ],
+      "selected_manufacturing_bounds_mm": [
+        -52.887468776800006,
+        7.823590059899999
+      ],
+      "unavailable_requested_end_mm": [
+        4.112531223199994,
+        0.0
+      ],
+      "boundary_sampling_remainder_mm": [
+        0.0,
+        0.176409940100001
+      ],
+      "input_points": 20340,
+      "selected_points": 11700,
+      "selected_grid_shape": [
+        195,
+        60
+      ]
+    },
+    "exact_raw_data_subset_verified": true,
+    "coordinate_map_verified": true,
+    "matched_force_weights_settings_verified": true,
+    "all_raw_source_hashes_verified": true,
+    "fresh_forward_replay_verified_all_nu": true,
+    "residual_atol_mm": 1e-10,
+    "anchor_metadata_sha256": "408f1286c2718cf07f4ce23509b07c5b2c02085f9d385f684b7f3f0daa1ce677",
+    "inverse_metadata_sha256": "e9343e70b72d6fcaf6131c82fe4132601e6a94ca4050f1c1dc6f0d0fa59993df",
+    "l_curve_status": "selected",
+    "inverse_status": "computed"
+  },
+  {
+    "run": 3,
+    "root": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run3_h1_infill40_70_20261027",
+    "baseline": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run3_h1_monotone_20261026",
+    "extraction": {
+      "method": "continuous_material_coordinate_window_no_resampling",
+      "requested_manufacturing_bounds_mm": [
+        -57.0,
+        8.0
+      ],
+      "available_manufacturing_bounds_mm": [
+        -54.52759643245,
+        54.52759643245
+      ],
+      "selected_manufacturing_bounds_mm": [
+        -54.52759643245,
+        7.881569989950009
+      ],
+      "unavailable_requested_end_mm": [
+        2.4724035675500033,
+        0.0
+      ],
+      "boundary_sampling_remainder_mm": [
+        0.0,
+        0.1184300100499911
+      ],
+      "input_points": 20740,
+      "selected_points": 11895,
+      "selected_grid_shape": [
+        195,
+        61
+      ]
+    },
+    "exact_raw_data_subset_verified": true,
+    "coordinate_map_verified": true,
+    "matched_force_weights_settings_verified": true,
+    "all_raw_source_hashes_verified": true,
+    "fresh_forward_replay_verified_all_nu": true,
+    "residual_atol_mm": 1e-10,
+    "anchor_metadata_sha256": "5cf8e8b9e302a635c7d35a5b80db2ca9c9d68f35c2ac186b8b9caee9b11bfc2f",
+    "inverse_metadata_sha256": "4789c55fa93991f5a3411ff8fbd0bbb6c43da77a4683f67c4bb2cfb27bfc1548",
+    "l_curve_status": "selected",
+    "inverse_status": "inverse_not_converged"
+  }
+]

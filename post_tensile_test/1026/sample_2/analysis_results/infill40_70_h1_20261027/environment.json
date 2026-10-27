@@ -1,0 +1,8 @@
+{
+  "python": "3.13.2",
+  "numpy": "2.4.0",
+  "pandas": "2.3.3",
+  "git_head": "982db7c27d18abc8a92fe1603bf3cddddd98da2f",
+  "source_sha256": "052883781354ce4ef7c6718f857f6f218374335d99c4a2687357efaf96881e77",
+  "command": "python -B -m lib.material_window_analysis --cases results\\dic_full\\sample2_1026_run1_h1_infill40_70_20261027 results\\dic_full\\sample2_1026_run2_h1_infill40_70_20261027 results\\dic_full\\sample2_1026_run3_h1_infill40_70_20261027 --baselines results\\dic_full\\sample2_1026_run1_h1_monotone_20261026 results\\dic_full\\sample2_1026_run2_h1_monotone_20261026 results\\dic_full\\sample2_1026_run3_h1_monotone_20261026 --output post_tensile_test\\1026\\sample_2\\analysis_results\\infill40_70_h1_20261027"
+}
