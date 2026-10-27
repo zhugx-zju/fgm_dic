@@ -1,0 +1,155 @@
+{
+  "source_cases": [
+    {
+      "case": "run1",
+      "source": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run1_h1_monotone_20261026",
+      "source_geometry_mm": [
+        105.926054126,
+        18.43550794901
+      ],
+      "common_geometry_mm": [
+        105.77493755360001,
+        18.43550794901
+      ],
+      "translation_mm": [
+        -0.07555828619999261,
+        0.0
+      ],
+      "length_scale": 1.0,
+      "points_original": 20400,
+      "points_kept": 20280,
+      "force_common_N": 229.2224,
+      "original_force_N": 229.2224,
+      "traction_MPa": 3.8855452314155894,
+      "homogeneous_dic_E_MPa": 1091.7430131218891,
+      "registration_verified": false,
+      "reference_policy": "Each independent reference has its own three eliminated rigid modes.",
+      "prepared_metadata_sha256": "7c42c8da9d11e2c2becd704c3362d966683b8263873ef1b8e3ab2037a4ee3982",
+      "prepared_fields_sha256": "fb6c2b4a709395d2792b0c04f6713ed746001cad7ca2b2cf3151797545a55b71"
+    },
+    {
+      "case": "run2",
+      "source": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run2_h1_monotone_20261026",
+      "source_geometry_mm": [
+        105.77493755360001,
+        18.4636725353
+      ],
+      "common_geometry_mm": [
+        105.77493755360001,
+        18.43550794901
+      ],
+      "translation_mm": [
+        0.0,
+        -0.01408229314499998
+      ],
+      "length_scale": 1.0,
+      "points_original": 20340,
+      "points_kept": 19662,
+      "force_common_N": 308.90886884863187,
+      "original_force_N": 309.3808,
+      "traction_MPa": 5.236309288694234,
+      "homogeneous_dic_E_MPa": 1322.9661881061966,
+      "registration_verified": false,
+      "reference_policy": "Each independent reference has its own three eliminated rigid modes.",
+      "prepared_metadata_sha256": "408f1286c2718cf07f4ce23509b07c5b2c02085f9d385f684b7f3f0daa1ce677",
+      "prepared_fields_sha256": "f68fd6b334580970c5d2b4ed95c11727441786e4f0e86d5ecd1e0f7ef45afc6e"
+    },
+    {
+      "case": "run3",
+      "source": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run3_h1_monotone_20261026",
+      "source_geometry_mm": [
+        109.0551928649,
+        19.3018040506
+      ],
+      "common_geometry_mm": [
+        105.77493755360001,
+        18.43550794901
+      ],
+      "translation_mm": [
+        -1.6401276556499909,
+        -0.4331480507950012
+      ],
+      "length_scale": 1.0,
+      "points_original": 20740,
+      "points_kept": 18696,
+      "force_common_N": 379.86510026839596,
+      "original_force_N": 397.7152,
+      "traction_MPa": 6.439087231130425,
+      "homogeneous_dic_E_MPa": 1300.1835438252415,
+      "registration_verified": false,
+      "reference_policy": "Each independent reference has its own three eliminated rigid modes.",
+      "prepared_metadata_sha256": "5cf8e8b9e302a635c7d35a5b80db2ca9c9d68f35c2ac186b8b9caee9b11bfc2f",
+      "prepared_fields_sha256": "8f0592b39282979f133eb7f90ba4e04c82406e18f799bf0825e69d7795b486e6"
+    }
+  ],
+  "gamma": 1.2648552168552956e-09,
+  "common_geometry_mm": [
+    105.77493755360001,
+    18.43550794901,
+    3.2
+  ],
+  "elements": [
+    121,
+    19
+  ],
+  "nu": 0.26,
+  "max_iter_per_stage": 1500,
+  "max_fun_per_stage": 12000,
+  "ftol": 1e-30,
+  "gtol": 1e-12,
+  "stage_objective": "0.5*r_current.T@W_current@r_current + 0.5*gamma*integral(|grad E|^2)",
+  "transfer": "E_initial_next = E_final_previous, elementwise identical; fresh L-BFGS history each stage.",
+  "retained_earlier_objectives": false,
+  "penalty_to_previous_field": false,
+  "initial_information": {
+    "run1": {
+      "source": "homogeneous_dic_fit",
+      "uniform_E_MPa": 1091.7430131218891,
+      "fit_cases": [
+        "run1"
+      ],
+      "nu": 0.26,
+      "uses_calibration": false,
+      "uses_prediction_cases": false
+    },
+    "run2": {
+      "source": "homogeneous_dic_fit",
+      "uniform_E_MPa": 1322.9661881061966,
+      "fit_cases": [
+        "run2"
+      ],
+      "nu": 0.26,
+      "uses_calibration": false,
+      "uses_prediction_cases": false
+    },
+    "run3": {
+      "source": "homogeneous_dic_fit",
+      "uniform_E_MPa": 1300.1835438252415,
+      "fit_cases": [
+        "run3"
+      ],
+      "nu": 0.26,
+      "uses_calibration": false,
+      "uses_prediction_cases": false
+    }
+  },
+  "orders": {
+    "forward": [
+      "run1",
+      "run2",
+      "run3"
+    ],
+    "reverse": [
+      "run3",
+      "run2",
+      "run1"
+    ]
+  },
+  "first_stage_reuse": "Identical current-only initialization, target and budget: reuse its independent baseline result.",
+  "calibration_used_in_fit": false,
+  "selection": "Fixed existing candidate for a protocol comparison; no formal gamma reselection.",
+  "coordinate_scope": "Same conditional common-center registration as the preceding joint experiment; no physical point-registration certification.",
+  "budget_scope": "Same budget per stage; a three-stage chain has three stage budgets, not one single-case total budget.",
+  "implementation_sha256": "a69029c3260bc8acb08e313d03b71e163204e2c63ccce4c15a514e03655c7965",
+  "shared_preparation_implementation_sha256": "ccfdba3c0966d131b986acbbb3b5aaeb1d7fad97be2e6666b377703088ca41dd"
+}

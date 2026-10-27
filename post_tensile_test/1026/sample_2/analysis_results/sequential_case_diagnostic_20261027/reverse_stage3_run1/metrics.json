@@ -1,0 +1,20 @@
+{
+  "job": "reverse_stage3_run1",
+  "optimized_case": "run1",
+  "initial_source": "reverse_stage2_run2",
+  "gamma": 1.2648552168552956e-09,
+  "converged": true,
+  "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+  "iterations": 149,
+  "evaluations": 275,
+  "final_gradient_inf": 4.678889645670458e-10,
+  "gradient_tolerance_satisfied": false,
+  "field_difference_from_current_independent_percent": 1.325573362895181e-05,
+  "trend_common_mean_absolute_relative_error_percent": 23.324763578433075,
+  "trend_common_l2_relative_error_percent": 23.654367185781524,
+  "layered_common_mean_absolute_relative_error_percent": 23.079340884453924,
+  "layered_common_l2_relative_error_percent": 24.202412366663474,
+  "layered_full_mean_absolute_relative_error_percent": 22.001121423683472,
+  "layered_full_l2_relative_error_percent": 23.1923413895944,
+  "seven_region_mean_absolute_relative_error_percent": 21.610048028967714
+}

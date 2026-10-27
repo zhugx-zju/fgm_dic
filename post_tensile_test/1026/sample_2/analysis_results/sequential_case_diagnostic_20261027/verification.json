@@ -1,0 +1,15 @@
+{
+  "implementation_sha256": "a69029c3260bc8acb08e313d03b71e163204e2c63ccce4c15a514e03655c7965",
+  "result_fields_sha256": {
+    "forward_stage2_run2\\fields.npz": "ea8050ca6e095877d5ce392edc0ab7a338091fca410b443c37a707fe47aa6a09",
+    "forward_stage3_run3\\fields.npz": "38c9af26a657d6d3bcd513f932b37a86306d503e2b2ccaf01ee604a3e3c4a939",
+    "independent_run1\\fields.npz": "adee9d5529dd494f7206a19621a738384ebc343e26c308359a1c14b0f0321fcd",
+    "independent_run2\\fields.npz": "d162daecdbbf4e411a91e5e692b7f9413c0d888d12d33c1e99d71b87838e763a",
+    "independent_run3\\fields.npz": "02ec32cc1ecc5ea8055e56499e2f7c62b634a876f81351b3a0958327d465a2ad",
+    "reverse_stage2_run2\\fields.npz": "00c664d457cd11c2f82538b5834f5a89e072e9fc7ab0180ed8a4742a840d1b83",
+    "reverse_stage3_run1\\fields.npz": "63cc67c050994d57fc948d9cfea08bfcedbd17eb7777a0f471426d4ef01512e4"
+  },
+  "initial_transfer_checked_elementwise": true,
+  "current_target_residual_replayed": true,
+  "original_sources_verified_unchanged": true
+}

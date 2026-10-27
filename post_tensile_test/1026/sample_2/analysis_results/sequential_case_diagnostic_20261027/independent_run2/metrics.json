@@ -1,0 +1,20 @@
+{
+  "job": "independent_run2",
+  "optimized_case": "run2",
+  "initial_source": "current_case_homogeneous_dic",
+  "gamma": 1.2648552168552956e-09,
+  "converged": false,
+  "message": "ABNORMAL: ",
+  "iterations": 149,
+  "evaluations": 273,
+  "final_gradient_inf": 1.0069337763515671e-09,
+  "gradient_tolerance_satisfied": false,
+  "field_difference_from_current_independent_percent": 0.0,
+  "trend_common_mean_absolute_relative_error_percent": 8.87858933011252,
+  "trend_common_l2_relative_error_percent": 11.83821064148097,
+  "layered_common_mean_absolute_relative_error_percent": 8.967735047637836,
+  "layered_common_l2_relative_error_percent": 12.792401160792243,
+  "layered_full_mean_absolute_relative_error_percent": 8.541451417602056,
+  "layered_full_l2_relative_error_percent": 12.067335106576142,
+  "seven_region_mean_absolute_relative_error_percent": 7.9838656621244
+}

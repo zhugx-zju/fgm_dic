@@ -1,0 +1,7 @@
+sequence,stage,job,optimized_case,reused_identical_first_stage
+forward,1,independent_run1,run1,True
+forward,2,forward_stage2_run2,run2,False
+forward,3,forward_stage3_run3,run3,False
+reverse,1,independent_run3,run3,True
+reverse,2,reverse_stage2_run2,run2,False
+reverse,3,reverse_stage3_run1,run1,False
