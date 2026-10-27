@@ -1,0 +1,22 @@
+{
+  "job": "single3",
+  "gamma": 1.2648552168552956e-09,
+  "fit_cases": [
+    "run3"
+  ],
+  "converged": true,
+  "stop_message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+  "iterations": 156,
+  "evaluations": 188,
+  "final_gradient_inf": 2.179268275931493e-10,
+  "gradient_tolerance_satisfied": false,
+  "min_E_MPa": 759.507806113668,
+  "max_E_MPa": 2337.0663986678474,
+  "trend_common_mean_absolute_relative_error_percent": 10.670119657895492,
+  "trend_common_l2_relative_error_percent": 14.607817852822668,
+  "layered_common_mean_absolute_relative_error_percent": 10.639780211313742,
+  "layered_common_l2_relative_error_percent": 15.576496303764092,
+  "layered_full_mean_absolute_relative_error_percent": 10.623130722483157,
+  "layered_full_l2_relative_error_percent": 15.021591909754909,
+  "seven_region_mean_absolute_relative_error_percent": 10.290862263753402
+}

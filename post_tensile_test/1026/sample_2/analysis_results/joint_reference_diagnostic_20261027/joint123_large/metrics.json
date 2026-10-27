@@ -1,0 +1,24 @@
+{
+  "job": "joint123_large",
+  "gamma": 3.620377921917988e-08,
+  "fit_cases": [
+    "run1",
+    "run2",
+    "run3"
+  ],
+  "converged": false,
+  "stop_message": "ABNORMAL: ",
+  "iterations": 174,
+  "evaluations": 327,
+  "final_gradient_inf": 1.6301185180617617e-09,
+  "gradient_tolerance_satisfied": false,
+  "min_E_MPa": 930.1743852056251,
+  "max_E_MPa": 2020.1226284351576,
+  "trend_common_mean_absolute_relative_error_percent": 13.291963567044478,
+  "trend_common_l2_relative_error_percent": 16.640465110707684,
+  "layered_common_mean_absolute_relative_error_percent": 13.031989357862749,
+  "layered_common_l2_relative_error_percent": 17.716549342170687,
+  "layered_full_mean_absolute_relative_error_percent": 13.017812157921767,
+  "layered_full_l2_relative_error_percent": 18.12144674827087,
+  "seven_region_mean_absolute_relative_error_percent": 12.951330584761758
+}

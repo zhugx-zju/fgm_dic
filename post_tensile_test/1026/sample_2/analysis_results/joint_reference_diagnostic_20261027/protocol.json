@@ -1,0 +1,130 @@
+{
+  "scope": "conditional_shared_modulus_feasibility; not formal gamma selection",
+  "source_cases": [
+    {
+      "case": "run1",
+      "source": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run1_h1_monotone_20261026",
+      "source_geometry_mm": [
+        105.926054126,
+        18.43550794901
+      ],
+      "common_geometry_mm": [
+        105.77493755360001,
+        18.43550794901
+      ],
+      "translation_mm": [
+        -0.07555828619999261,
+        0.0
+      ],
+      "length_scale": 1.0,
+      "points_original": 20400,
+      "points_kept": 20280,
+      "force_common_N": 229.2224,
+      "original_force_N": 229.2224,
+      "traction_MPa": 3.8855452314155894,
+      "homogeneous_dic_E_MPa": 1091.7430131218891,
+      "registration_verified": false,
+      "reference_policy": "Each independent reference has its own three eliminated rigid modes.",
+      "prepared_metadata_sha256": "7c42c8da9d11e2c2becd704c3362d966683b8263873ef1b8e3ab2037a4ee3982",
+      "prepared_fields_sha256": "fb6c2b4a709395d2792b0c04f6713ed746001cad7ca2b2cf3151797545a55b71"
+    },
+    {
+      "case": "run2",
+      "source": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run2_h1_monotone_20261026",
+      "source_geometry_mm": [
+        105.77493755360001,
+        18.4636725353
+      ],
+      "common_geometry_mm": [
+        105.77493755360001,
+        18.43550794901
+      ],
+      "translation_mm": [
+        0.0,
+        -0.01408229314499998
+      ],
+      "length_scale": 1.0,
+      "points_original": 20340,
+      "points_kept": 19662,
+      "force_common_N": 308.90886884863187,
+      "original_force_N": 309.3808,
+      "traction_MPa": 5.236309288694234,
+      "homogeneous_dic_E_MPa": 1322.9661881061966,
+      "registration_verified": false,
+      "reference_policy": "Each independent reference has its own three eliminated rigid modes.",
+      "prepared_metadata_sha256": "408f1286c2718cf07f4ce23509b07c5b2c02085f9d385f684b7f3f0daa1ce677",
+      "prepared_fields_sha256": "f68fd6b334580970c5d2b4ed95c11727441786e4f0e86d5ecd1e0f7ef45afc6e"
+    },
+    {
+      "case": "run3",
+      "source": "D:\\MyProject\\uniform_pressure_experiment_1023\\results\\dic_full\\sample2_1026_run3_h1_monotone_20261026",
+      "source_geometry_mm": [
+        109.0551928649,
+        19.3018040506
+      ],
+      "common_geometry_mm": [
+        105.77493755360001,
+        18.43550794901
+      ],
+      "translation_mm": [
+        -1.6401276556499909,
+        -0.4331480507950012
+      ],
+      "length_scale": 1.0,
+      "points_original": 20740,
+      "points_kept": 18696,
+      "force_common_N": 379.86510026839596,
+      "original_force_N": 397.7152,
+      "traction_MPa": 6.439087231130425,
+      "homogeneous_dic_E_MPa": 1300.1835438252415,
+      "registration_verified": false,
+      "reference_policy": "Each independent reference has its own three eliminated rigid modes.",
+      "prepared_metadata_sha256": "5cf8e8b9e302a635c7d35a5b80db2ca9c9d68f35c2ac186b8b9caee9b11bfc2f",
+      "prepared_fields_sha256": "8f0592b39282979f133eb7f90ba4e04c82406e18f799bf0825e69d7795b486e6"
+    }
+  ],
+  "geometry_mm": [
+    105.77493755360001,
+    18.43550794901,
+    3.2
+  ],
+  "configured_elements": [
+    121,
+    19
+  ],
+  "physical_registration": "Assumed common axial/transverse centers under earlier conditional placement; no matching landmarks.",
+  "independent_reference_images": true,
+  "shared_material_assumption": "One time-invariant linear isotropic E(x,y), nu=0.26; different preload references assumed compatible.",
+  "force_reference": "Unverified nominal end force minus record start force from each frozen input.",
+  "case_weights": "Unmodified area weights; raw displacement units; no per-force or per-error normalization.",
+  "regularization": "0.5*sum_c r_c.T W_c r_c + 0.5*gamma*integral(|grad E|^2)",
+  "diagnostic_gamma_rule": "gamma = number of fit cases * base_gamma. This equals mean data cost + base_gamma/2*H1, preserves duplicate-case equivalence, and is not an L-curve choice.",
+  "base_gamma": 1.2648552168552956e-09,
+  "initial": {
+    "source": "homogeneous_dic_fit",
+    "uniform_E_MPa": 1263.1149196968317,
+    "fit_cases": [
+      "run1",
+      "run2",
+      "run3"
+    ],
+    "nu": 0.26,
+    "uses_calibration": false,
+    "uses_prediction_cases": false
+  },
+  "max_iter": 1500,
+  "max_fun": 12000,
+  "ftol": 1e-30,
+  "gtol": 1e-12,
+  "nu": 0.26,
+  "calibration_used_in_fit": false,
+  "implementation_sha256": "9992db14c6d202156b4eb9441dcaeda1b25545b3832b882a2b797b127ed222c8",
+  "kernel_checks": {
+    "seed": 20261027,
+    "finite_difference_log_step": 0.0001,
+    "directional_adjoint": 0.01947456100590949,
+    "directional_finite_difference": 0.019474560929780282,
+    "sum_objective_and_gradient_checked": true,
+    "linear_force_scaling_checked": true
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "optimization_implementation_sha256": "9992db14c6d202156b4eb9441dcaeda1b25545b3832b882a2b797b127ed222c8",
+  "postprocessing_implementation_sha256": "ccfdba3c0966d131b986acbbb3b5aaeb1d7fad97be2e6666b377703088ca41dd",
+  "result_fields_sha256": {
+    "joint123_large\\fields.npz": "d1b4f101734dee67c9817b0ca90e5935b38d7052ed936ad0e0e17f1282c24a36",
+    "joint123_middle\\fields.npz": "b0de606f953a4bd188e26ae1a5aa1f669de5beefbb06cefe410f4d8796079bdb",
+    "joint123_small\\fields.npz": "dfa640fe75ccf6431934b4c08b23a616ac82897ef0774e99fce1ff0d0f6b35f6",
+    "joint23_small\\fields.npz": "5078a06cb3ff5fc6c6a28baebd41a2a2a208d510cd37641022b8e5c17c021552",
+    "single1\\fields.npz": "929c91f0573ce5cfe8b64b66d0fba049a334be90c28fe06059de1e0a6cf48193",
+    "single2\\fields.npz": "1d7263620b1a56331843adebd6e9dfecb3701595bfcb3371bb36f8dbcbe2ba78",
+    "single3\\fields.npz": "797a9d0ee5c48f632bf92c150e192396407f79d5dea324c11e3ab15c3f228efa"
+  },
+  "original_sources_verified_unchanged": true
+}
