@@ -10,6 +10,8 @@
 
 [标定模量对照](post_tensile_test/1026/60sample/analysis_results/h1_calibration_comparison_20261026/report.md)补充绝对水平核验：相对60%默认独立标定1173.52 MPa，三次反演均值分别偏高79.56%、44.31%、24.96%。第3次空间较均匀仍不代表与标定一致；约束选段1276.05 MPa另作明确标注的对照，不据此调γ或载荷。
 
+[选帧时序核验](post_tensile_test/1026/60sample/analysis_results/frame_timing_check_20261027/report.md)：反演输入与原15帧逐点均值完全一致，没有导入缩小；现有窗口内平均相对最大仿射应变降低约0.88%、0.32%、1.75%。第3次同期载荷接近380 N峰值，第1/2次所选时刻的真实载荷仍缺失；峰值附近完整全场尚不能直接比较。
+
 当前材料参数见[1023拉伸标定报告](post_tensile_test/1023/analysis_results/modulus_20261026_28_final/analysis_report.md)及[分组参数表](post_tensile_test/1023/analysis_results/modulus_20261026_28_final/group_summary.csv)。只使用本次试样的独立标定，不进行不同批次的填充率结果比较。
 
 按逐根线性段重新分析，并检查组内单根偏差≤3%、组均值随填充率不减的要求，见[逐根与约束选段报告](post_tensile_test/1023/analysis_results/individual_3pct_monotone_20261026_final/analysis_report.md)。其中3%一致性和单调性作为显式选段约束，不是独立验证结论；原独立标定和默认配置保留。
