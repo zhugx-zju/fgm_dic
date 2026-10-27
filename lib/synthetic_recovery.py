@@ -174,7 +174,7 @@ def write_recovery_report(root: str | Path) -> list[dict]:
     import html
     import matplotlib.pyplot as plt
     from .dic_case_workflow import load_prepared
-    from .dic_preprocessing import save_dic_comparison
+    from .dic_preprocessing import save_dic_comparison, relative_displacement_errors
     from .results_io import _json_value, plot_modulus_comparison
 
     root = Path(root)
@@ -236,9 +236,8 @@ def write_recovery_report(root: str | Path) -> list[dict]:
                 u, _ = solve_forward(mesh, case.bc_info['tensile_end_force'], cfg.THICKNESS,
                                      cfg.PRIMARY_NU, E)
                 state = evaluate_observation(case, u)
-                residual = state['residual'].reshape(-1, 2)
-                errors = np.sqrt(np.mean(residual**2, axis=0))*1000
-                displacement.append({'case': case.name, 'ux_um': errors[0], 'uy_um': errors[1]})
+                errors = relative_displacement_errors(case, state['prediction'])
+                displacement.append({'case': case.name, **errors})
                 states.append(state)
             gamma = record.get('gamma', record.get('selected_gamma'))
             rows.append({'representation': name, 'run': label, 'gamma': gamma, **metrics,
@@ -248,7 +247,9 @@ def write_recovery_report(root: str | Path) -> list[dict]:
                          'gradient_tolerance_satisfied': solver['final_gradient_inf'] <= cfg.GTOL,
                          'final_gradient_inf': solver['final_gradient_inf'],
                          'stop_message': solver['message'],
-                         **{f"{r['case']}_{c}_um": r[c+'_um'] for r in displacement for c in ('ux', 'uy')}})
+                         **{f"{r['case']}_{key}": r[key] for r in displacement
+                            for key in ('axial_relative_error_percent', 'transverse_relative_error_percent',
+                                        'displacement_relative_error_percent')}})
             profile = np.trapz(E.reshape(mesh.nods_y, mesh.nods_x), mesh.plot_y[:, 0], axis=0)/cfg.GEO_H
             labels = {'experimental_gamma': 'Synthetic, experimental gamma',
                       'weak_gamma': 'Synthetic, weak gamma', 'synthetic_l_curve': 'Synthetic, own L-curve'}
@@ -290,18 +291,19 @@ def write_recovery_report(root: str | Path) -> list[dict]:
     if len(selected) == 1:
         result = selected.iloc[0]
         key_result = (f'<p><strong>结论：分层正问题的无噪声位移可以恢复接近给定值的模量分布。</strong>'
-                      f'按原50点L-curve自动选参，模量全场相对RMS误差为{result.modulus_relative_rms_percent:.2f}%，'
+                      f'按原50点L-curve自动选参，模量全场相对误差为{result.modulus_relative_rms_percent:.2f}%，'
                       f'七区均值平均绝对偏差为{result.regional_mean_absolute_error_percent:.2f}%。'
                       '真实DIC基线七区均值相对独立标定的平均绝对偏差约15.00%；该标定不是分区试样的已知真值。'
                       '结果支持实验输入与模型之间存在额外不一致，不能单独归因为DIC测量精度。</p>')
     quick = frame.rename(columns={
         'representation': '真值表示', 'run': '反演参数来源',
-        'modulus_relative_rms_percent': '模量全场相对RMS(%)',
+        'modulus_relative_rms_percent': '模量全场相对误差(%)',
         'regional_mean_absolute_error_percent': '七区均值平均绝对偏差(%)',
-        '180N_ux_um': '180N轴向RMSE(μm)', '180N_uy_um': '180N横向RMSE(μm)',
+        '180N_axial_relative_error_percent': '180N轴向相对误差(%)',
+        '180N_transverse_relative_error_percent': '180N横向相对误差(%)',
     })
-    quick = quick[['真值表示', '反演参数来源', '模量全场相对RMS(%)',
-                   '七区均值平均绝对偏差(%)', '180N轴向RMSE(μm)', '180N横向RMSE(μm)']]
+    quick = quick[['真值表示', '反演参数来源', '模量全场相对误差(%)',
+                   '七区均值平均绝对偏差(%)', '180N轴向相对误差(%)', '180N横向相对误差(%)']]
     quick['真值表示'] = quick['真值表示'].replace({'nodal': '节点Q4', 'layered': '突变分层'})
     quick['反演参数来源'] = quick['反演参数来源'].replace({
         'experimental_gamma': '沿用实验γ', 'weak_gamma': '预设弱γ诊断', 'synthetic_l_curve': '各自50点L-curve'})

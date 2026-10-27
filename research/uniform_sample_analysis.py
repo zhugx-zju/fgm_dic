@@ -16,7 +16,7 @@ import pandas as pd
 from fgm_asm.load_case import evaluate_observation
 from fgm_asm.research import solve_forward
 from lib.dic_case_workflow import homogeneous_dic_initial, load_prepared
-from lib.dic_preprocessing import dic_relative_error_scale
+from lib.dic_preprocessing import dic_relative_error_scale, relative_displacement_errors
 from lib.experiment_data import file_sha256
 
 
@@ -46,7 +46,8 @@ def error_statistics(case, mesh, field, thickness, nu):
     weights = case.observation.weight_vector.reshape(-1, 2)
     rmse = np.sqrt(np.sum(weights*residual**2, axis=0)/weights.sum(axis=0))
     scale = dic_relative_error_scale(case)
-    return dict(rms_mm=float(state['weighted_rms']), axial_rmse_mm=float(rmse[0]),
+    return dict(**relative_displacement_errors(case, state['prediction']),
+                rms_mm=float(state['weighted_rms']), axial_rmse_mm=float(rmse[0]),
                 transverse_rmse_mm=float(rmse[1]), axial_relative_RMSE_percent=float(100*rmse[0]/scale[0]),
                 transverse_relative_RMSE_percent=float(100*rmse[1]/scale[1]),
                 axial_DIC_deformation_RMS_mm=float(scale[0]), transverse_DIC_deformation_RMS_mm=float(scale[1]))
@@ -69,6 +70,10 @@ def analyze(case_roots: list[Path], audit_path: Path, output: Path):
                       length_mm=mesh.geo_l, width_mm=mesh.geo_h,
                       selected_gamma=meta.get('selected_gamma'), l_curve_status=meta.get('l_curve_status'),
                       inverse_status=meta['status'])
+        deformation = evaluate_observation(case, np.zeros(mesh.n_dof))['residual']
+        deformation_norm = float(np.sqrt(np.sum(case.observation.weight_vector*deformation**2)))
+        if not np.isfinite(deformation_norm) or deformation_norm <= 0:
+            raise ValueError('DIC deformation is zero; a relative displacement error is undefined')
         provenance.append(dict(case_directory=str(root.resolve()),
                                inverse_metadata_sha256=file_sha256(meta_path),
                                prepared_fields_sha256=file_sha256(root/'01_prepared'/'fields.npz')))
@@ -95,7 +100,8 @@ def analyze(case_roots: list[Path], audit_path: Path, output: Path):
             p = trial/'fields.npz'
             with np.load(p) as fields:
                 stats = area_statistics(mesh, fields['E_inverse'])
-            scans.append(dict(run=run, **record, **stats))
+            scans.append(dict(run=run, **record, **stats,
+                displacement_relative_error_percent=100*record['residual_norm']/deformation_norm))
         if meta.get('selected_gamma') is None:
             continue
         for solver in meta['solvers']:
@@ -146,11 +152,19 @@ def analyze(case_roots: list[Path], audit_path: Path, output: Path):
             ax.fill_between(x, mean-sd, mean+sd, color=colors[run], alpha=.15)
         ax.set(xlabel='Axial x (mm)', ylabel='Width mean E (MPa)', title='Shading: transverse spatial SD (not uncertainty)')
         ax.legend(); _save_figure(fig, output/'axial_profiles')
+    plot_gamma_tradeoff(scan_table, output)
+    _write_report(table, audit, provenance, output)
+    print(table.to_string(index=False))
+
+
+def plot_gamma_tradeoff(scan_table, output):
+    """Plot saved relative displacement errors; no equilibrium solves or scans."""
+    colors = {1:'#0072B2', 2:'#D55E00', 3:'#009E73'}
     fig, axes = plt.subplots(1, 2, figsize=(10, 4), layout='constrained')
     for run, group in scan_table.groupby('run'):
         group = group.sort_values('gamma')
         valid = group.converged.astype(bool)
-        for ax, y in zip(axes, ('residual_norm', 'spatial_CV_percent')):
+        for ax, y in zip(axes, ('displacement_relative_error_percent', 'spatial_CV_percent')):
             ax.semilogx(group.gamma, group[y].where(valid), color=colors[run], label=f'Run {run}')
             ax.semilogx(group.gamma[~valid], group.loc[~valid, y], 'x', color=colors[run],
                         markersize=4, alpha=.45)
@@ -158,17 +172,17 @@ def analyze(case_roots: list[Path], audit_path: Path, output: Path):
             if not selected.empty:
                 ax.plot(selected.gamma, selected[y], '*', color=colors[run], markersize=11)
             ax.set_xlabel(r'$\gamma$')
-    axes[0].set_ylabel('Area-weighted displacement residual norm (mm$^2$)')
+    axes[0].set_ylabel('Displacement relative error (%)')
     axes[1].set_ylabel('Spatial CV of E (%)'); axes[0].legend()
     fig.suptitle('Stars: selected gamma; crosses: failed solves, excluded from selection', fontsize=11)
     _save_figure(fig, output/'gamma_tradeoff')
-    _write_report(table, audit, provenance, output)
-    print(table.to_string(index=False))
 
 
 def _save_figure(fig, path):
     for extension in ('png', 'svg'):
         fig.savefig(path.with_suffix('.'+extension), dpi=300)
+    svg = path.with_suffix('.svg')
+    svg.write_text('\n'.join(line.rstrip() for line in svg.read_text(encoding='utf-8').splitlines())+'\n', encoding='utf-8')
     plt.close(fig)
 
 
@@ -176,7 +190,7 @@ def _write_report(table, audit, provenance, output):
     primary = table[(table.model == 'H1') & (table.nu == .26)]
     conclusions = ['三次均获得L-curve所选解，但不能认定三次稳定恢复了均匀模量场。第3次最接近均匀，仍存在沿轴向的平缓趋势；第1、2次非均匀程度更大。未事先规定均匀性验收阈值，以下为定量描述。']
     for row in primary.to_dict('records'):
-        conclusions.append(f"第{row['run']}次：面积均值{row['mean_E_MPa']:.2f} MPa，空间CV={row['spatial_CV_percent']:.2f}%，内部CV={row['interior_CV_percent']:.2f}%；轴向/横向相对RMSE分别{row['axial_relative_RMSE_percent']:.2f}%/{row['transverse_relative_RMSE_percent']:.2f}%。")
+        conclusions.append(f"第{row['run']}次：面积均值{row['mean_E_MPa']:.2f} MPa，空间CV={row['spatial_CV_percent']:.2f}%，内部CV={row['interior_CV_percent']:.2f}%；轴向/横向相对误差分别{row['axial_relative_error_percent']:.2f}%/{row['transverse_relative_error_percent']:.2f}%。")
     lines = ['# 1026 均匀 60% 试样：自由二维 H1 反演', '', *conclusions, '',
              '三次独立参考图分别反演，不合并为多载荷同参考数据。厚度约3.2 mm，长宽取各自DIC参考坐标跨度；原Y换为FEM轴向x，原X换为横向y，坐标和位移保持同一毫米尺度。', '',
              '模型为平面应力、两端均匀牵引及侧面自由；主ν=0.26，ν=0.24/0.28/0.33为同γ敏感性比较。每次121×19单元、2440个独立节点模量；目标为0.5*r.T@W_area@r+0.5*γ*∫|∇E|²，不强制均匀。', '',
@@ -186,15 +200,15 @@ def _write_report(table, audit, provenance, output):
         lines.append(f"| {r} | {a['length_mm']:.3f}×{a['width_mm']:.3f} | {a['start_force_N']:.5f} | {a['end_force_N']:.5f} | {a['delta_force_N']:.5f} | {'用户假定平台末载，无同期载荷' if a['end_force_assumed'] else '记录最后一条'} |")
     lines += ['', '**参考状态限制：** 始末差值按用户指定口径计算。尤其第3次起始记录已为250.72479 N，早于该记录起点的DIC参考帧载荷尚未同步核实。因此绝对模量依赖此参考对应关系、DIC覆盖宽度等于承载宽度以及厚度近似值。第3次窗口均值379.6495967 N与末记录379.78479 N相差0.13519 N，相当于本次增量的0.105%。', '',
               '扫描若仅因L-BFGS线搜索异常缺少拐点支撑，使用项目既有--resume恢复接口：只重置该候选的L-BFGS历史，迭代与函数调用累计仍限制在原1500/12000预算内。原候选、恢复候选和恢复前选参表分别保留；不追加预算，不依据均匀程度或标定结果补选γ。', '',
-              '| 次数 | 模型 | ν | γ | 面积均值 MPa | 空间CV % | 内部CV % | 轴向相对RMSE % | 横向相对RMSE % |', '|---|---|---:|---:|---:|---:|---:|---:|---:|']
+              '| 次数 | 模型 | ν | γ | 面积均值 MPa | 空间CV % | 内部CV % | 轴向相对误差 % | 横向相对误差 % |', '|---|---|---:|---:|---:|---:|---:|---:|---:|']
     for row in table.to_dict('records'):
         if row['nu'] != .26:
             continue
         gamma = f"{row['selected_gamma']:.3g}" if row['model'] == 'H1' else '—'
-        lines.append(f"| {row['run']} | {row['model']} | {row['nu']:.2f} | {gamma} | {row['mean_E_MPa']:.2f} | {row['spatial_CV_percent']:.2f} | {row.get('interior_CV_percent',float('nan')):.2f} | {row['axial_relative_RMSE_percent']:.2f} | {row['transverse_relative_RMSE_percent']:.2f} |")
+        lines.append(f"| {row['run']} | {row['model']} | {row['nu']:.2f} | {gamma} | {row['mean_E_MPa']:.2f} | {row['spatial_CV_percent']:.2f} | {row.get('interior_CV_percent',float('nan')):.2f} | {row['axial_relative_error_percent']:.2f} | {row['transverse_relative_error_percent']:.2f} |")
     lines += ['', 'CV=面积加权空间标准差/面积均值，不是参数不确定性。内部统计仅用轴向与横向各10%—90%范围内的Gauss点；全域一、二阶矩使用Q4的2×2 Gauss积分。未预设通过/失败阈值。横向阴影是空间SD，不是置信区间。', '',
               '相对位移误差的分母为DIC去掉两平移和一微小转动后的相应分量RMS，全部测点共用，不逐点除以过零位移。这里只移除刚体模式，不删除仿射伸长/收缩。', '',
-              '均匀基线只有一个E参数，采用相同几何、载荷、ν、观测位置和面积权重。其拟合模量同时用均匀有限元解和解析单轴柔度的独立计算核验到相对1e-7。保存反演场重新正演得到的残差与已保存轴向RMSE核验一致；全部ν的停止信息和GTOL状态见uniformity_summary.csv。函数下降停止不等于满足梯度阈值。', '',
+              '均匀基线只有一个E参数，采用相同几何、载荷、ν、观测位置和面积权重。其拟合模量同时用均匀有限元解和解析单轴柔度的独立计算核验到相对1e-7。保存反演场重新正演得到的残差与已保存残差核验一致；全部ν的停止信息和GTOL状态见uniformity_summary.csv。函数下降停止不等于满足梯度阈值。', '',
               '同一数据用于反演和回代，以上是拟合检查，没有独立物理验证。较大γ必然更偏好均匀场，因此应结合gamma_tradeoff与均匀基线判断；不能通过挑选最均匀的候选宣称恢复成功。正反演使用同一标量各向同性模型，空间变化也可能吸收边界、各向异性、参考状态或DIC系统误差，不能直接认定为材料真实非均匀。', '',
               '全域仿射应变诊断（原DIC轴，不作为材料泊松比测量）：']
     for r, a in audit.items():

@@ -23,6 +23,27 @@ from lib.experiment_data import file_sha256
 from .uniform_sample_analysis import area_statistics
 
 
+def plot_displacement_errors(table, output):
+    """Redraw percent errors, also accepting historical percent-column names."""
+    plt.rcParams.update({'font.family': 'Microsoft YaHei', 'font.size': 10,
+                         'axes.unicode_minus': False, 'svg.fonttype': 'path'})
+    table = table.copy()
+    for component in ('axial', 'transverse'):
+        key = f'{component}_relative_error_percent'
+        if key not in table:
+            table[key] = table[f'{component}_relative_RMSE_percent']
+    main = table[np.isclose(table.nu, table.primary_nu)]
+    fig, axes = plt.subplots(1, 2, figsize=(10, 3.6), constrained_layout=True)
+    for ax, key, title in zip(axes, ('axial_relative_error_percent', 'transverse_relative_error_percent'),
+                              ('轴向位移相对误差', '横向位移相对误差')):
+        for offset, model, label, color in ((-.18, 'forward', '标定正演', '#D55E00'), (.18, 'inverse', '反演回代', '#0072B2')):
+            sub = main[main.model == model].sort_values('run')
+            ax.bar(sub.run+offset, sub[key], width=.33, label=label, color=color)
+        ax.set(xticks=sorted(main.run.unique()), xlabel='加载次数', ylabel='相对误差 (%)', title=title)
+    axes[0].legend(frameon=False, fontsize=9)
+    save_figure(fig, Path(output)/'displacement_errors')
+
+
 def analyze(roots: list[Path], audit_path: Path, output: Path) -> None:
     output.mkdir(parents=True, exist_ok=True)
     if any((output/name).exists() for name in ('report.md', 'summary.csv', 'modulus_fields.png')):
@@ -147,16 +168,7 @@ def analyze(roots: list[Path], audit_path: Path, output: Path) -> None:
     axes[0].legend(ncol=4, fontsize=9, frameon=False, loc='upper left')
     axes[-1].set_xlabel('制造坐标 ξ (mm)；两标线名义位置 ±57 mm，DIC 保持实际跨度')
     save_figure(fig, output/'axial_profiles')
-    main = table[np.isclose(table.nu, table.primary_nu)]
-    fig, axes = plt.subplots(1, 2, figsize=(10, 3.6), constrained_layout=True)
-    for ax, key, title in zip(axes, ('axial_relative_error_percent', 'transverse_relative_error_percent'),
-                              ('轴向位移相对误差', '横向位移相对误差')):
-        for offset, model, label, color in ((-.18, 'forward', '单调约束标定正演', '#D55E00'), (.18, 'inverse', '反演回代', '#0072B2')):
-            sub = main[main.model == model].sort_values('run')
-            ax.bar(sub.run+offset, sub[key], width=.33, label=label, color=color)
-        ax.set(xticks=[1, 2, 3], xlabel='加载次数', ylabel='相对误差 (%)', title=title)
-    axes[0].legend(frameon=False, fontsize=9)
-    save_figure(fig, output/'displacement_errors')
+    plot_displacement_errors(table, output)
     lines = ['# 1026 sample_2：三次独立参考图的四步自由二维 H1 反演', '',
              '**结论：** 使用随填充率不减的标定分布重新正演及比较。三次反演得到沿高填充率端增大的模量趋势，但绝对模量与约束标定参照仍有差异，尤其100%区偏低。第2、3次宽度均值曲线较接近，第1次整体偏低。', '',
              '标定来源为 individual_3pct_monotone_20261026_final/group_summary.csv，fit_method=individual_window_joint_3pct_monotone。40%至100%均值依次为985.32/1119.96/1276.05/1472.30/1623.17/2055.18/2566.71 MPa。每组4根，保留各组SD；组内3%及随填充率不减是标定选窗的显式约束，未施加到空间反演。', '',
